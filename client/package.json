@@ -6,7 +6,8 @@
   "scripts": {
     "test": "test",
     "start": "webpack serve --open",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "set-abi": "node ./scripts/setAbi.js"
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +39,7 @@
     "eslint-webpack-plugin": "^2.5.4",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
+    "mkdirp": "^0.5.5",
     "prettier": "2.3.0",
     "regenerator-runtime": "^0.13.7",
     "sass": "^1.34.1",

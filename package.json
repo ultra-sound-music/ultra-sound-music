@@ -10,7 +10,7 @@
     "stop-db": "cd api && npm run stop-db",
     "start-client": "cd client && npm start",
     "deploy-contracts": "cd contracts && npm run deploy-contracts && cd .. && npm run set-abi",
-    "set-abi": "node scripts/setAbi.js"
+    "set-abi": "node scripts/setAbiToClient.js"
   },
   "repository": {
     "type": "git",
