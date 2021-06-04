@@ -1,5 +1,18 @@
 # Ultra Sound Music
 
+## Quick Start
+
+```
+npm run start-blockchain
+
+// Then, open another terminal
+npm run deploy-contracts
+npm run start-api
+
+// Then, open a third terminal
+npm run start-client
+```
+
 ## Client
 
 ```

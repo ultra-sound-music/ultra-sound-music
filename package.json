@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-blockchain": "cd contracts && npm start",
-    "start-api": "cd api && npm run start-db && npm start",
+    "start-api": "cd api && npm start",
     "stop-db": "cd api && npm run stop-db",
     "start-client": "cd client && npm start",
     "deploy-contracts": "cd contracts && npm run deploy-contracts && cd .. && npm run set-abi",
