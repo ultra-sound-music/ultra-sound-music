@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "webpack serve --open",
+    "start": "webpack serve",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "set-abi": "node ./scripts/setAbi.js"
   },
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
+    "@babel/eslint-parser": "^7.14.4",
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",

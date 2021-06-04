@@ -10,11 +10,13 @@ extends:
   - eslint:recommended
   - plugin:react/recommended
   - prettier
+parser: '@babel/eslint-parser'
 parserOptions:
-  ecmaFeatures:
-    jsx: true
-  ecmaVersion: 12
   sourceType: module
+  requireConfigFile: false
+  allowImportExportEverywhere: false
+  ecmaFeatures:
+    globalReturn: false
 overrides:
   - files:
       - '*.ts'
