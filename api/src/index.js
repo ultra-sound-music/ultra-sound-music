@@ -21,7 +21,7 @@ const nullAddress = "0x0000000000000000000000000000000000000000";
 
 // start express app
 const app = express();
-const port = 3001;
+const port = 9001;
 
 
 const customHttpProvider = new ethers.providers.JsonRpcProvider(process.env.ETH_PROVIDER);

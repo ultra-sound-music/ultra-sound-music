@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const webserverDomain = `//${document.location.host}`;
-const apiDomain = webserverDomain.replace('3000', '3001');
+const apiDomain = webserverDomain.replace('9000', '9001');
 
 export async function createMetaDataUri({
   name,
