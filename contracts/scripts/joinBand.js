@@ -1,14 +1,13 @@
 
 const hre = require("hardhat");
-
-const deployedAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+const constants = require("constants");
 
 async function main() {
 
 
   try {
     const UltraSoundMusic = await hre.ethers.getContractFactory("UltraSoundMusic");
-    const contract = await UltraSoundMusic.attach(deployedAddress);
+    const contract = await UltraSoundMusic.attach(constants.NFT_DEPLOYED_ADDRESS);
   
   // Now you can call functions of the contract
     await contract.joinBand(5, 104);
