@@ -1,0 +1,8 @@
+{
+  "babelrcRoots": [
+    ".",
+    "./client/*",
+    "./api/*",
+    "./contracts/*"
+  ]
+}
