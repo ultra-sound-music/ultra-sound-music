@@ -31,7 +31,6 @@ export class ArtistControls extends React.Component {
 
   async createBand() {
     const provider = metaMask.getProvider();
-    const contract = new ethers.Contract(constants.CONTRACT_ADDRESS, usmAbi, provider);
     const writeContract = new ethers.Contract(constants.CONTRACT_ADDRESS, usmAbi, provider.getSigner());
     try {
       const { data } = await api.createMetaDataUri({

@@ -1,7 +1,5 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 
 import Search from './Search';
 import Entities from './Entities';

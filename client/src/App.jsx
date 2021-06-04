@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   HashRouter as Router,
   Switch,
@@ -12,7 +11,6 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import CollectionNav from './components/CollectionNav';
 import About from './components/About';
 import User from './components/User';
 import Alert from './components/Alert';
@@ -52,14 +50,14 @@ export class App extends React.Component {
     });
 
     if (window.ethereum) {
-      ethereum.on('chainChanged', (chainId) => {
+      window.ethereum.on('chainChanged', (chainId) => {
         this.setState({
           isConnectedToNetwork: !!chainId,
           chainId
         });
       });
   
-      ethereum.on('accountsChanged', (accounts) => {
+      window.ethereum.on('accountsChanged', (accounts) => {
         const accountId = accounts[0];
         this.setState({
           isConnectedToAccount: !!accountId,

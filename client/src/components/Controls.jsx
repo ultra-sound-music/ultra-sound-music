@@ -19,6 +19,7 @@ const BUTTON_WIDTH = "110px"
 
 export class Controls extends React.Component {
   static propTypes = {
+    showModal: PropTypes.func,
     accountId: PropTypes.string,
     updateTransactionHash: PropTypes.func
   }

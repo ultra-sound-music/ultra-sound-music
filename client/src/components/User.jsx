@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { debug } from 'tone';
 import MetaMaskButton from './MetaMaskButton';
 import ArtistControls from './ArtistControls';
 import Controls from './Controls';

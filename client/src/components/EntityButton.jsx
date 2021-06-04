@@ -144,7 +144,7 @@ export class EntityButton extends React.Component {
         this.setState({currentPlayState: await togglePlayback(this.props.addresses) })
       };
     } else if (tokenType === 'band') {
-      if (false && hasAlreadyPublishedTrack) {
+      if (hasAlreadyPublishedTrack) {
         ctaText = 'Already published track';
         isDisabled = true;
       } else if (isMember && numBandMembersNeeded === 0) {
