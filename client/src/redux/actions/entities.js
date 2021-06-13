@@ -6,11 +6,11 @@ export function init() {
   }
 }
 
-export function setEntities(entities) {
+export function setTokens(tokens) {
   return {
-    type: ActionTypes.SET_ENTITIES,
+    type: ActionTypes.SET_TOKENS,
     data: {
-      entities
+      tokens
     }
   };
 }

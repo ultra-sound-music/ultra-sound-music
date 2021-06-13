@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import * as Utils from '../../utils';
-import * as entities from './entities';
+import * as tokens from './tokens';
 import * as modal from './modal';
 import * as web3 from './web3';
 
 export const hasMintedAnArtist = createSelector(
   web3.getAccountAddress,
-  entities.getArtists,
+  tokens.selectAllArtists,
   (accountAddress, artists) => {
     return artists.some((artist) => {
       return Utils.account.areSameAccount(artist.owner, accountAddress);
@@ -16,7 +16,7 @@ export const hasMintedAnArtist = createSelector(
 
 export const hasMintedABand = createSelector(
   web3.getAccountAddress,
-  entities.getBands,
+  tokens.selectAllBands,
   (accountAddress, bands) => {
     return bands.some((band) => {
       return Utils.account.areSameAccount(band.owner, accountAddress);
@@ -33,7 +33,7 @@ export const hasMintedATrack = createSelector(
 
 export const isMemberOfBand = createSelector(
   web3.getAccountAddress,
-  entities.getBands,
+  tokens.selectAllBands,
   (accountAddress, bands) => {
     // @todo not sure if owner is the right prop here
     return bands.members.some((band) => {
@@ -42,30 +42,30 @@ export const isMemberOfBand = createSelector(
   }
 );
 
-export const entityIsOwned = createSelector(
+export const tokenIsOwned = createSelector(
   web3.getAccountAddress,
-  entities.getEntities,
-  (entity, currentAccountId) => {
-    return Utils.account.areSameAccount(entity.owner, currentAccountId);
+  tokens.selectAllTokens,
+  (token, currentAccountId) => {
+    return Utils.account.areSameAccount(token.owner, currentAccountId);
   }
 )
 
 // @TODO Update these...
 
-export function hasAlreadyPublishedTrack(entity, currentAccountId) {
+export function hasAlreadyPublishedTrack(token, currentAccountId) {
   // @todo 
-  return entity.tokenType === 'band' && Utils.account.areSameAccount(entity.metadata.artistDNA, currentAccountId);
+  return token.tokenType === 'band' && Utils.account.areSameAccount(token.metadata.artistDNA, currentAccountId);
 }
 
-export function getOwnedArtists(entities, currentAccountId) {
-  return entities.filter((entity) => {
-    return entity.tokenType === 'artist' && Utils.account.areSameAccount(entity.owner, currentAccountId);
+export function getOwnedArtists(tokens, currentAccountId) {
+  return tokens.filter((token) => {
+    return token.tokenType === 'artist' && Utils.account.areSameAccount(token.owner, currentAccountId);
   })
 }
 
 
 export {
-  entities,
+  tokens,
   modal,
   web3
 };

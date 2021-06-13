@@ -18,7 +18,7 @@ export async function createMetaDataUri({
 }
 
 
-export async function getAllEntities() {
+export async function getAllTokens() {
   return axios.get(`${apiDomain}/cache/tokens/all`, {
     headers: {"Access-Control-Allow-Origin": "*"}
   });

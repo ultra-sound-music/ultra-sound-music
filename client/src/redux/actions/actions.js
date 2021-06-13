@@ -17,14 +17,3 @@ export function setTransaction(transactionId) {
     }
   };
 }
-
-export function setEntities(entities) {
-  return {
-    type: ActionTypes.SET_ENTITIES,
-    data: {
-      entities
-    }
-  };
-}
-
-

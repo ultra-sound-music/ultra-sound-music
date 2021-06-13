@@ -4,7 +4,7 @@ export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';
 
 export const INIT_ENTITIES = 'INIT_ENTITIES';
-export const SET_ENTITIES = 'SET_ENTITIES';
+export const SET_TOKENS = 'SET_TOKENS';
 
 export const INIT_WEB3 = 'INIT_WEB3';
 export const INIT_WEB3_SUCCESS = 'INIT_WEB3_SUCCESS';
