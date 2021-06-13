@@ -9,7 +9,7 @@ import { ethers } from 'ethers';
 import usmAbi from '../lib/usmAbi';
 import { togglePlayback } from '../audio'
 import * as metaMask from '../utils/metaMask';
-import * as api from '../api'
+import * as api from '../services'
 import * as Actions from '../redux/actions';
 import * as entityUtils from '../utils/entities';
 import * as constants from '../constants';
@@ -87,8 +87,8 @@ export class EntityButton extends React.Component {
 
   async publishTrack() {
     const provider = metaMask.getProvider();
-    // const contract = new ethers.Contract(constants.CONTRACT_ADDRESS, usmAbi, provider);
-    const writeContract = new ethers.Contract(constants.CONTRACT_ADDRESS, usmAbi, provider.getSigner());
+    // const contract = new ethers.Contract(constants.web3.CONTRACT_ADDRESS, usmAbi, provider);
+    const writeContract = new ethers.Contract(constants.web3.CONTRACT_ADDRESS, usmAbi, provider.getSigner());
     try {
       const { data } = await api.createMetaDataUri({
         name: this.nameRef.current.value,

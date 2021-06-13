@@ -12,7 +12,7 @@ import { togglePlayback } from '../audio'
 import * as Actions from '../redux/actions';
 import * as metaMask from '../utils/metaMask';
 import usmAbi from '../lib/usmAbi';
-import * as api from '../api';
+import * as api from '../services';
 import * as constants from '../constants';
 
 const BUTTON_WIDTH = "110px"
@@ -48,8 +48,8 @@ export class Controls extends React.Component {
 
   async createArtist() {
     const provider = metaMask.getProvider();
-    // const contract = new ethers.Contract(constants.CONTRACT_ADDRESS, usmAbi, provider);
-    const writeContract = new ethers.Contract(constants.CONTRACT_ADDRESS, usmAbi, provider.getSigner());
+    // const contract = new ethers.Contract(constants.web3.CONTRACT_ADDRESS, usmAbi, provider);
+    const writeContract = new ethers.Contract(constants.web3.CONTRACT_ADDRESS, usmAbi, provider.getSigner());
     try {
       const { data } = await api.createMetaDataUri({
         name: this.nameRef.current.value || 'NO NAME',

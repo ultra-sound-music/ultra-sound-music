@@ -7,7 +7,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import { ethers } from 'ethers';
 import * as Actions from '../redux/actions'
 import usmAbi from '../lib/usmAbi';
-import * as api from '../api';
+import * as api from '../services';
 import * as entitiesUtils from '../utils/entities';
 import * as metaMask from '../utils/metaMask';
 import * as constants from '../constants';
@@ -31,7 +31,7 @@ export class ArtistControls extends React.Component {
 
   async createBand() {
     const provider = metaMask.getProvider();
-    const writeContract = new ethers.Contract(constants.CONTRACT_ADDRESS, usmAbi, provider.getSigner());
+    const writeContract = new ethers.Contract(constants.web3.CONTRACT_ADDRESS, usmAbi, provider.getSigner());
     try {
       const { data } = await api.createMetaDataUri({
         name: this.nameRef.current.value,
