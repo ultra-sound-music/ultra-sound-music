@@ -10,6 +10,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { ethers } from 'ethers';
 import { togglePlayback } from '../audio'
 import * as Actions from '../redux/actions';
+import * as Selectors from '../redux/selectors';
 import * as metaMask from '../utils/metaMask';
 import usmAbi from '../lib/usmAbi';
 import * as api from '../services';
@@ -121,8 +122,14 @@ export class Controls extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
+export function mapStateToProps(state) {
+  return {
+    accountId: Selectors.web3.getAccountAddress(state)
+  }
+}
+
+export const mapDispatchToProps = {
   showModal: Actions.showModal
 };
 
-export default connect(null, mapDispatchToProps)(Controls);
+export default connect(mapStateToProps, mapDispatchToProps)(Controls);
