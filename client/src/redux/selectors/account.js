@@ -1,5 +1,3 @@
-import { createSelector } from 'reselect';
-
 export function hasAlreadyPublishedTrack(entity, currentAccountId) {
   // @todo 
   return entity.tokenType === 'band' && areSameAccount(entity.metadata.artistDNA, currentAccountId);

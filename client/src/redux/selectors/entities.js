@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect'
+import { createSelector } from '@reduxjs/toolkit';
 import * as Constants from '../../constants';
 
 export function getEntities(state) {
