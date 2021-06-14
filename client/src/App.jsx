@@ -53,26 +53,24 @@ export class App extends React.Component {
                 </Nav>
               </Navbar>
 
-              <Row>
-                <Col>
-                  <Switch>
-                    <Route path="/about">
+              <Switch>
+                <Route path="/about">
+                  <Row>
+                    <Col>
                       <About />
-                    </Route>
-                    <Route path="/">
-                      <User />
-                      <Switch>
-                        <Route path="/myCollection">
-                          {/* <Searchable onlyOwned={true} /> */}
-                        </Route>
-                        <Route path="/">
-                          {/* <Searchable /> */}
-                        </Route>
-                      </Switch>
-                    </Route>
-                  </Switch>
-                </Col>
-              </Row>              
+                    </Col>
+                  </Row>
+                </Route>
+
+                <Route path="/">
+                  <Row>
+                    <Col><User /></Col>
+                  </Row>
+                  <Row>
+                    <Col><Searchable /></Col>
+                  </Row>
+                </Route>
+              </Switch>             
             </Container>
           </div>
         </Router>

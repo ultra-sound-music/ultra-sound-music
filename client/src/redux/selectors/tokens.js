@@ -6,25 +6,28 @@ const tokenSelectors = tokensAdapter.getSelectors((state) => state.tokens)
 
 export const {
   selectIds: selectTokenIds, 
-  selectEntities: selectTokensEntities,
-  selectAll: selectAllTokens,
+  selectEntities: selectTokenEntities,
+  selectAll: selectAllTokenEntities,
   selectTotal: selectTokenTotal,
   selectById: selectTokenById
 } = tokenSelectors;
 
-export const selectAllBands = createSelector(
-  selectAllTokens,
-  (tokens) => {
-    return tokens.filter((token) => token.type === Constants.entities.tokenTypes.BAND)
-  }
+export const selectPlayableSourceByTokenId = createSelector(
+  selectTokenById,
+  (token) => token.metadata.artistDNA // @TODO suport tracks
+)
+
+export const selectAllBandEntities = createSelector(
+  selectAllTokenEntities,
+  (tokens) => tokens.filter((token) => token.type === Constants.entities.tokenType.BAND)
 );
 
-export const selectAllArtists = createSelector(
-  selectAllTokens,
-  (tokens) => tokens.filter((token) => token.type === Constants.entities.tokenTypes.ARTIST)
+export const selectAllArtistEntities = createSelector(
+  selectAllTokenEntities,
+  (tokens) => tokens.filter((token) => token.type === Constants.entities.tokenType.ARTIST)
 );
 
-export const selectAllTracks = createSelector(
-  selectAllTokens,
-  (tokens) => tokens.filter((token) => token.type === Constants.entities.tokenTypes.TRACKS)
+export const selectAllTrackEntities = createSelector(
+  selectAllTokenEntities,
+  (tokens) => tokens.filter((token) => token.type === Constants.entities.tokenType.TRACKS)
 );

@@ -1,4 +1,4 @@
-export const tokenTypes = Object.freeze({
+export const tokenType = Object.freeze({
   ARTIST: 'artist',
   BAND: 'band',
   TRACK: 'track'

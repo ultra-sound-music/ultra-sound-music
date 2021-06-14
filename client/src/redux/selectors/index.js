@@ -1,12 +1,38 @@
 import { createSelector } from '@reduxjs/toolkit';
 import * as Utils from '../../utils';
+import * as playback from './playback';
 import * as tokens from './tokens';
 import * as modal from './modal';
 import * as web3 from './web3';
 
+export const getOwnedTokens = createSelector(
+  web3.getAccountAddress,
+  tokens.selectAllTokenEntities,
+  (accountAddress, tokenEntities) => {
+    return tokenEntities.filter((token) => {
+      return token.owner === accountAddress;      
+    });
+  }
+)
+
+export const getBandsWithPublishedTracks = createSelector(
+  web3.getAccountAddress,
+  tokens.selectAllBandEntities,
+  (accountAddress, bands) => []
+)
+
+export const getPlayingTokenId = createSelector(
+  playback.selectActiveSource,
+  (address) => {
+    return 123
+  }
+)
+
+/// OLD
+
 export const hasMintedAnArtist = createSelector(
   web3.getAccountAddress,
-  tokens.selectAllArtists,
+  tokens.selectAllArtistEntities,
   (accountAddress, artists) => {
     return artists.some((artist) => {
       return Utils.account.areSameAccount(artist.owner, accountAddress);
@@ -16,7 +42,7 @@ export const hasMintedAnArtist = createSelector(
 
 export const hasMintedABand = createSelector(
   web3.getAccountAddress,
-  tokens.selectAllBands,
+  tokens.selectAllBandEntities,
   (accountAddress, bands) => {
     return bands.some((band) => {
       return Utils.account.areSameAccount(band.owner, accountAddress);
@@ -33,7 +59,7 @@ export const hasMintedATrack = createSelector(
 
 export const isMemberOfBand = createSelector(
   web3.getAccountAddress,
-  tokens.selectAllBands,
+  tokens.selectAllBandEntities,
   (accountAddress, bands) => {
     // @todo not sure if owner is the right prop here
     return bands.members.some((band) => {
@@ -44,9 +70,9 @@ export const isMemberOfBand = createSelector(
 
 export const tokenIsOwned = createSelector(
   web3.getAccountAddress,
-  tokens.selectAllTokens,
-  (token, currentAccountId) => {
-    return Utils.account.areSameAccount(token.owner, currentAccountId);
+  tokens.selectAllTokenEntities,
+  (accountAddress, tokenEntities) => {
+    return tokenEntities.some((token) => Utils.account.areSameAccount(token.owner, accountAddress));
   }
 )
 
@@ -65,6 +91,7 @@ export function getOwnedArtists(tokens, currentAccountId) {
 
 
 export {
+  playback,
   tokens,
   modal,
   web3
