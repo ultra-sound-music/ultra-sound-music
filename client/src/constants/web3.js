@@ -5,7 +5,19 @@ export const networkStatus = Object.freeze({
   INSTALLING: 'INSTALLING',
   NOT_CONNECTED: 'NOT_CONNECTED',
   CONNECTED: 'CONNECTED',
-  CONNECTING: 'CONNECTING'
+  CONNECTING: 'CONNECTING',
+  PROCESSING_TRANSACTION: 'PROCESSING_TRANSACTION'
+});
+
+export const transactionStatus = Object.freeze({
+  SUBMITTED: 'SUBMITTED',
+  APPROVED: 'APPROVED',
+  MINED: 'MINED',
+  FAILED: 'FAILED'
+});
+
+export const transactionErrorCodes = Object.freeze({
+  
 });
 
 export const providerEventNames = Object.freeze({

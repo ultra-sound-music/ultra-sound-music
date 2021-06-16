@@ -34,7 +34,7 @@ export class TokenCard extends React.Component {
 }
 
 export function mapStateToProps(state, { tokenId }) {
-  const { tokenType, metadata } = Selectors.tokens.selectTokenById(state, tokenId); 
+  const { tokenType, metadata } = Selectors.usm.selectTokenById(state, tokenId); 
 
   return {
     tokenType,

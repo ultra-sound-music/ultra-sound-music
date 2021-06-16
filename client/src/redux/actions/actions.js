@@ -8,12 +8,3 @@ export function setWallet({address}) {
     }
   };
 }
-
-export function setTransaction(transactionId) {
-  return {
-    type: ActionTypes.SET_TRANSACTION,
-    data: {
-      transactionId      
-    }
-  };
-}

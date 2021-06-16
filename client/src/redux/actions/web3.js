@@ -44,11 +44,32 @@ export function updateNetworkChain(chainId) {
   }
 }
 
-export function setTransaction(transactionId) {
+export function addTransaction({ method, key, transactionId, block, status, errorCode, errorMessage }) {
   return {
-    type: ActionTypes.SET_TRANSACTION,
+    type: ActionTypes.ADD_TRANSACTION,
     data: {
-      transactionId
+      method,
+      key,
+      transactionId,
+      block,
+      status,
+      errorCode,
+      errorMessage
     }
-  }
+  };
+}
+
+export function updateTransaction({ method, key, transactionId, block, status, errorCode, errorMessage }) {
+  return {
+    type: ActionTypes.UPDATE_TRANSACTION,
+    data: {
+      method,
+      key,
+      transactionId,
+      block,
+      status,
+      errorCode,
+      errorMessage      
+    }
+  };
 }

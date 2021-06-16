@@ -23,7 +23,7 @@ export class Searchable extends React.Component {
 
 export function mapStateToProps(state) {
   return {
-    tokenIds: Selectors.tokens.selectTokenIds(state)
+    tokenIds: Selectors.usm.selectTokenIds(state)
   }
 }
 

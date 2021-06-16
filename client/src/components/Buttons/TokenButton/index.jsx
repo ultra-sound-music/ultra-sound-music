@@ -12,10 +12,10 @@ export class TokenButton extends React.Component {
 
   render() {
     switch (this.props.tokenType) {
-      case Constants.entities.tokenType.ARTIST:
-      case Constants.entities.tokenType.TRACK:                  
+      case Constants.usm.tokenType.ARTIST:
+      case Constants.usm.tokenType.TRACK:                  
         return <PlaybackButton tokenId={this.props.tokenId} />
-      case Constants.entities.tokenType.BAND:
+      case Constants.usm.tokenType.BAND:
         return <CreateTrackButton tokenId={this.props.tokenId} />
       default:
         return null;

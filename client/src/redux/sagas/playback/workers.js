@@ -15,7 +15,7 @@ export function* toggle({ data }) {
     source = yield select(Selectors.playback.selectActiveSource);
   }
 
-  const playableSource = typeof source === 'string' ? source : yield select(Selectors.tokens.selectPlayableSourceByTokenId, source);
+  const playableSource = typeof source === 'string' ? source : yield select(Selectors.usm.selectPlayableSourceByTokenId, source);
   const playbacktoggler = Array.isArray(playableSource) ? toggleTrackAudioPlayback : togglePlayback;
   try {
     const isPlaying = yield call(playbacktoggler, playableSource);

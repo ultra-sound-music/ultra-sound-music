@@ -1,5 +1,4 @@
 import { ethers } from 'ethers';
-import { debug } from 'tone';
 
 const methods = {
   CONNECT_WALLET: 'eth_requestAccounts',
@@ -7,7 +6,6 @@ const methods = {
 }
 
 let provider = null;
-let signer = null;
 const ethereum = window.ethereum ?? null;
 const web3IsAvailable = !!ethereum;
 
@@ -18,6 +16,10 @@ export async function initialize() {
 
   provider = new ethers.providers.Web3Provider(ethereum);
   return getConnectedAccount();
+}
+
+export function getProvider() {
+  return provider;
 }
 
 export function bindCoreEventListeners(emit, ethereum, listeners = {}) {

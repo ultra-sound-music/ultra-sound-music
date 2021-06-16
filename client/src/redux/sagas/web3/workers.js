@@ -1,4 +1,4 @@
-import { select, call, fork, put, takeEvery } from 'redux-saga/effects'
+import { select, call, fork, put } from 'redux-saga/effects'
 import * as Utils from '../../../utils';
 import * as Constants from '../../../constants';
 import * as Actions from '../../actions';
@@ -9,10 +9,10 @@ export function* init() {
   const isInitialized = yield select(Selectors.web3.getIsInitialized);
   if (isInitialized) {
     return;
-  }  
+  }
 
   const connectedAccount = yield call(Utils.web3.initialize);
-  yield fork(startWatchingForEthereumEvents);
+  yield fork(Helpers.startWatchingForEthereumEvents);
 
   if (connectedAccount) {
     const chainId = yield call(Utils.web3.getChainId);
@@ -20,18 +20,6 @@ export function* init() {
   }
 
   yield put(Actions.web3.initWeb3Success());
-}
-
-export function* startWatchingForEthereumEvents() {
-  const ethereum = Utils.web3.getEthereumProvider();
-  if (!ethereum) {
-    return;
-  }
-
-  const ethereumEventChannel = Helpers.createEthereumEventChannel(ethereum)
-  yield takeEvery(ethereumEventChannel, function* (action) {
-    yield put(action);
-  });
 }
 
 export function* installWallet() {

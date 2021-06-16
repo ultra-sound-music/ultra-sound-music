@@ -24,10 +24,10 @@ export class PlaybackButton extends React.Component {
 
   onClick = () => {
     if (this.props.isTokenPlaying) {
-      this.setState({showAsPlaying: true});
+      this.setState({showAsPlaying: false});
       this.props.stop();
     } else {
-      this.setState({showAsPlaying: false});
+      this.setState({showAsPlaying: true});
       this.props.play({ source: this.props.source });
     }
   }

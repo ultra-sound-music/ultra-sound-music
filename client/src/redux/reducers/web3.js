@@ -8,7 +8,7 @@ const initialState = {
   networkStatus: Constants.web3.NOT_AVAILABLE,
   address: null,
   chainId: null,
-  transactions: []  
+  transactions: []
 };
 
 function initWeb3Success(state) {
@@ -25,9 +25,30 @@ function updateNetworkChain(state, { data }) {
   state.chainId = data?.chainId ?? initialState.chainId;
 }
 
-function setTransaction(state, { data }) {
-  const transactionId = data?.transactionId || '';
-  state.transactionId = transactionId;
+function addTransaction(state, { data }) {
+  const {
+    method,
+    key,
+    transactionId,
+    block,
+    status = Constants.web3.transactionStatus.SUBMITTED,
+    errorCode,
+    errorMessage
+  } = data;
+
+  state.transactions.push({
+    method,
+    key,
+    transactionId,
+    block,
+    status,
+    errorCode,
+    errorMessage    
+  });
+}
+
+function updateTransaction(state, { data }) {
+  // @TODO
 }
 
 export default createReducer(initialState, (builder) => {
@@ -35,5 +56,6 @@ export default createReducer(initialState, (builder) => {
     .addCase(ActionTypes.INIT_WEB3_SUCCESS, initWeb3Success)
     .addCase(ActionTypes.UPDATE_NETWORK_STATUS, updateNetworkStatus)
     .addCase(ActionTypes.UPDATE_NETWORK_CHAIN, updateNetworkChain)
-    .addCase(ActionTypes.SET_TRANSACTION, setTransaction)
+    .addCase(ActionTypes.ADD_TRANSACTION, addTransaction)
+    .addCase(ActionTypes.UPDATE_TRANSACTION, updateTransaction)
 });

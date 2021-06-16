@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import * as Constants from '../../constants';
 import tokensAdapter from '../utils/tokensAdapter';
 
-const tokenSelectors = tokensAdapter.getSelectors((state) => state.tokens)
+const tokenSelectors = tokensAdapter.getSelectors((state) => state.usm)
 
 export const {
   selectIds: selectTokenIds, 
@@ -19,15 +19,15 @@ export const selectPlayableSourceByTokenId = createSelector(
 
 export const selectAllBandEntities = createSelector(
   selectAllTokenEntities,
-  (tokens) => tokens.filter((token) => token.type === Constants.entities.tokenType.BAND)
+  (tokens) => tokens.filter((token) => token.type === Constants.usm.tokenType.BAND)
 );
 
 export const selectAllArtistEntities = createSelector(
   selectAllTokenEntities,
-  (tokens) => tokens.filter((token) => token.type === Constants.entities.tokenType.ARTIST)
+  (tokens) => tokens.filter((token) => token.type === Constants.usm.tokenType.ARTIST)
 );
 
 export const selectAllTrackEntities = createSelector(
   selectAllTokenEntities,
-  (tokens) => tokens.filter((token) => token.type === Constants.entities.tokenType.TRACKS)
+  (tokens) => tokens.filter((token) => token.type === Constants.usm.tokenType.TRACKS)
 );
