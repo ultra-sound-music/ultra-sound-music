@@ -48,7 +48,31 @@ function addTransaction(state, { data }) {
 }
 
 function updateTransaction(state, { data }) {
-  // @TODO
+  const {
+    key,
+    transactionId,
+    block,
+    status = Constants.web3.transactionStatus.SUBMITTED,
+    errorCode,
+    errorMessage
+  } = data;
+
+  const updatedTransactions = state.transactions.map((tx) => {
+    if( tx.key === key ) {
+      tx = Object.assign(tx, {
+        transactionId,
+        block,
+        status,
+        errorCode,
+        errorMessage
+      });
+      return tx;
+    }
+
+    return tx;
+  });
+
+  state.transactions = updatedTransactions;  
 }
 
 export default createReducer(initialState, (builder) => {

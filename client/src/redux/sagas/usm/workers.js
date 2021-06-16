@@ -32,7 +32,7 @@ export function* fetchAllTokens() {
   yield put(Actions.usm.setTokens(tokens));
 }
 
-export function* createArtist({ data }) {
+export function* createArtist({ type, data }) {
   const {
     name,
     description
