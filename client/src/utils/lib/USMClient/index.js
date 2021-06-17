@@ -61,7 +61,7 @@ export default class USMClient {
     }
     const { data } = await this.createMetadataUri(metadata);
     const transaction = await this.writeContract.createArtist(data.metadataUri);
-    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, metadata}))
+    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, metadata }))
     
     return transaction;
   }
@@ -78,7 +78,7 @@ export default class USMClient {
     };
     const { data } = await this.createMetadataUri(metadata);
     const transaction = await this.writeContract.startBand(bandLeaderTokenId, data.metadataUri);    
-    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, metadata}))
+    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, metadata }))
   }
 
   async joinBand({ artistId, tokenId }, onComplete) {
