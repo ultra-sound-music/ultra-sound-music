@@ -12,31 +12,31 @@ export class Token extends React.Component {
       <div className='Token'>
         This is the token page for tokenId: {this.props.match.params.tokenId}
 
-        -- artist --
-        - IMAGE
-        - NAME
-        - DESCRIPTION        
-        [PLAYBACK]
-        [CREATE BAND]
-        [INVITE TO JOIN BAND]
+        <h2>-- artist --</h2>
+        <div>- IMAGE</div>
+        <div>- NAME</div>
+        <div>- DESCRIPTION</div>
+        <div>[PLAYBACK]</div>
+        <div>[CREATE BAND]</div>
+        <div>[INVITE TO JOIN BAND]</div>
 
-        -- bands ---
-        - IMAGE
-        - NAME
-        - DESCRIPTION
-        - BAND MEMBERS
-        - LINKS TO OTHER INCARNATIONS OF THE SAME BAND
-        [JOIN BAND]
-        [REQUEST TO JOIN BAND]
-        [PUBLISH TRACK]
+        <h2>-- bands --</h2>
+        <div>- IMAGE</div>
+        <div>- NAME</div>
+        <div>- DESCRIPTION</div>
+        <div>- BAND MEMBERS</div>
+        <div>- LINKS TO OTHER INCARNATIONS OF THE SAME BAND</div>
+        <div>[JOIN BAND]</div>
+        <div>[REQUEST TO JOIN BAND]</div>
+        <div>[PUBLISH TRACK]</div>
 
-        -- track --
-        - IMAGE
-        - NAME
-        - DESCRIPTION
-        - BAND
-        - PUBLISHER (artist who minted the track)
-        [PLAYBACK]
+        <h2>-- track --</h2>
+        <div>- IMAGE</div>
+        <div>- NAME</div>
+        <div>- DESCRIPTION</div>
+        <div>- BAND</div>
+        <div>- PUBLISHER (artist who minted the track)</div>
+        <div>[PLAYBACK]</div>
       </div>      
     );
   }

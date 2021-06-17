@@ -1,6 +1,7 @@
 import React  from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 
 import * as Selectors from '../../../redux/selectors';
@@ -20,15 +21,19 @@ export class TokenCard extends React.Component {
       tokenType
     } = this.props;
 
+    const tokenUrl = `/token/${tokenId}`;
+
     return (
-      <Card className='TokenCard'>
-        {/* @TODO Render drop down menu with additional card options */}
-        <Card.Body>
-          <Card.Title>{this.props.name}</Card.Title>
-          <Card.Text>{this.props.description}</Card.Text>
-          <TokenButton tokenId={tokenId} tokenType={tokenType} />
-        </Card.Body>
-      </Card>  
+      <Link to={tokenUrl}>
+        <Card className='TokenCard'>
+          {/* @TODO Render drop down menu with additional card options */}
+          <Card.Body>
+            <Card.Title>{this.props.name}</Card.Title>
+            <Card.Text>{this.props.description}</Card.Text>
+            <TokenButton tokenId={tokenId} tokenType={tokenType} />
+          </Card.Body>
+        </Card>
+      </Link>
     );   
   }
 }
