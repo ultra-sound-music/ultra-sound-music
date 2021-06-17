@@ -19,6 +19,3 @@ Tokens.propTypes = {
 };
 
 export default Tokens;
-
-
-// key={id}>

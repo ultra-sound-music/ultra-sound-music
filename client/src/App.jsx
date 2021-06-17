@@ -13,6 +13,7 @@ import Col from 'react-bootstrap/Col';
 import About from './components/About';
 import User from './components/User';
 import Alert from './components/Alert';
+import Token from './components/Tokens/Token';
 import Searchable from './components/Searchable';
 import NetworkButton from './components/Buttons/NetworkButton'
 
@@ -61,6 +62,12 @@ export class App extends React.Component {
                     </Col>
                   </Row>
                 </Route>
+
+                <Route path="/tokens/:tokenId">
+                  <Row>
+                    <Col><Token /></Col>
+                  </Row>
+                </Route>                
 
                 <Route path="/">
                   <Row>
