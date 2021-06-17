@@ -63,7 +63,7 @@ export class App extends React.Component {
                   </Row>
                 </Route>
 
-                <Route path="/tokens/:tokenId">
+                <Route path="/token/:tokenId">
                   <Row>
                     <Col><Token /></Col>
                   </Row>
