@@ -48,6 +48,7 @@ export default class USMClient {
     return response?.data;
   }
 
+  // @TODO pass in an onError callback
   async createArtist({ name, description }, onComplete) {
     if (!name || !description) {
       throw new Error('Missing required information');
@@ -65,16 +66,35 @@ export default class USMClient {
     return transaction;
   }
 
-  createBand() {
+  // @TODO pass in an onError callback
+  async createBand({ name, description, bandLeaderTokenId }, onComplete) {
+    if (!name || !description) {
+      throw new Error('Missing required information');
+    }
 
+    const metadata = {
+      name,
+      description
+    };
+    const { data } = await this.createMetadataUri(metadata);
+    const transaction = await this.writeContract.startBand(bandLeaderTokenId, data.metadataUri);    
+    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, metadata}))
   }
 
-  joinBand() {
-
+  async joinBand({ artistId, tokenId }, onComplete) {
+    // @todo need artistId - however, the current account can have multiple artists to join from
+    const transaction = await this.writeContract.joinBand(artistId, tokenId);
+    this.writeContract.once(transaction, (transaction) => onComplete({ transaction }));
   }
 
-  createTrack() {
-
+  async createTrack({ name, description, artistId, tokenId }, onComplete) {
+      const metadata = {
+        name,
+        description
+      };
+      const { data } = await this.createMetaDataUri(metadata);
+      const transaction = await this.writeContract.createTrack(artistId, tokenId, data.metadataUri);
+      this.writeContract.once(transaction, (transaction) => onComplete({ transaction }));
   }
 
   inviteToJoinBand() {
