@@ -1,6 +1,5 @@
 import { ethers } from 'ethers';
 import axios from 'axios';
-import { debug } from '../../logger';
 
 const noop = () => {};
 
@@ -26,7 +25,7 @@ export default class USMClient {
     this.writeContract = new ethers.Contract(contractAddress, abi, signer);
   }
 
-  async createMetaDataUri({
+  async createMetadataUri({
     name,
     description,
     artistDNA
@@ -49,48 +48,21 @@ export default class USMClient {
     return response?.data;
   }
 
-  async createArtist({ name, description }) {
-    // if (!name || !description) {
-    //   throw new Error('Missing required information')
-    // }
+  async createArtist({ name, description }, onComplete) {
+    if (!name || !description) {
+      throw new Error('Missing required information');
+    }
 
-    const { data } = await this.createMetaDataUri({
+    const metadata = {
       name,
       description,
       artistDNA: this.currentAccountAddress
-    });
-
-    const transactionId = await this.writeContract.createArtist(data.metadataUri);
-
-    
-    let onCompleteCallback;
-    // Not sure if its better bind listeners on the contract or on the provider...gonna go with contract for now...
-    this.writeContract.once(transactionId, (transaction) => {
-      onCompleteCallback(transaction)
-    })
-    
-    return {
-      transactionId,
-      onComplete: (fn) => onCompleteCallback = fn
     }
-
-    // @Todo abstract this and share it across all write operations
-//     let onApprovedCallback;
-//     let onCompleteCallback;
-//     return (resolve, reject) => {
-// debugger;
-//     }
-
-    // return new Promise((resolve, reject) => {
-    //   this.listenForTransactionUpdate(txid, 'approved', onApprovedCallback, reject);
-    //   this.listenForTransactionUpdate(txid, 'complete', onCompleteCallback, reject);
-
-    //   resolve({
-    //     txid, 
-    //     onApprovedCallback: (fn) => onApprovedCallback = fn,
-    //     onCompleteCallback: (fn) => onCompleteCallback = fn
-    //   });
-    // });
+    const { data } = await this.createMetadataUri(metadata);
+    const transaction = await this.writeContract.createArtist(data.metadataUri);
+    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, metadata}))
+    
+    return transaction;
   }
 
   createBand() {

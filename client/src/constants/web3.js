@@ -11,7 +11,7 @@ export const networkStatus = Object.freeze({
 
 export const transactionStatus = Object.freeze({
   SUBMITTED: 'SUBMITTED',
-  APPROVED: 'APPROVED',
+  AUTHORIZED: 'AUTHORIZED',
   MINED: 'MINED',
   FAILED: 'FAILED'
 });

@@ -4,6 +4,7 @@ import * as Constants from '../../../constants';
 import * as Utils from '../../../utils';
 import * as Actions from '../../../redux/actions';
 import * as Selectors from '../../../redux/selectors';
+import * as Helpers from './helpers';
 
 let usmClient;
 
@@ -13,7 +14,6 @@ export function* init() {
   
   const webserverDomain = `//${document.location.host}`;
   const apiHost = webserverDomain.replace('9000', '9001');
-
   usmClient = new USMClient({
     contractAddress: Constants.web3.CONTRACT_ADDRESS,
     abi,
@@ -32,7 +32,7 @@ export function* fetchAllTokens() {
   yield put(Actions.usm.setTokens(tokens));
 }
 
-export function* createArtist({ type, data }) {
+export function* createArtist({ data }) {
   const {
     name,
     description
@@ -45,26 +45,18 @@ export function* createArtist({ type, data }) {
   }));
 
   try {
-    const { transactionId, onComplete } = yield call([usmClient, 'createArtist'], { artistDNA, name, description });
-    onComplete(function* (transaction) {
-      yield put(Actions.web3.updateTransaction({
-        key: artistDNA,
-        block: transaction.block,
-        status: Constants.web3.transactionStatus.MINED
-      }));
-    });
-
+    const { transaction } = yield call([usmClient, 'createArtist'], { artistDNA, name, description }, Helpers.onCreateArtistComplete);
     yield put(Actions.web3.updateTransaction({
       key: artistDNA,
-      transactionId,
-      status: Constants.web3.transactionStatus.APPROVED
+      transactionId: transaction.hash,
+      status: Constants.web3.transactionStatus.AUTHORIZED
     }));
   } catch (error) {
     yield put(Actions.web3.updateTransaction({
       key: artistDNA,
       status: Constants.web3.transactionStatus.FAILED,
-      errorCode: '',
-      errorMessage: ''
+      errorCode: error.code,
+      errorMessage: error.message
     }));
   }
 }

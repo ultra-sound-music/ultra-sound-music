@@ -6,6 +6,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import * as Actions from '../../../redux/actions';
 import * as Selectors from '../../../redux/selectors';
 
+import './CreateArtistButton.scss';
+
 export class CreateArtistButton extends React.Component {
   static propTypes = {
     accountAddress: PropTypes.string,
@@ -20,19 +22,22 @@ export class CreateArtistButton extends React.Component {
 
   renderSpinner() {
     if (this.props.isProcessing) {
-      <Spinner
-        as="span"
-        animation="border"
-        size="sm"
-        role="status"
-        aria-hidden="true"
-      />
+      return (
+        <Spinner
+          className="CreateArtistButton__spinner"
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+      );
     }
   }
 
   render() {
     return (
-      <Button onClick={this.onClick} disabled={this.props.isProcessing}>{this.renderSpinner()}Create Artist</Button>
+      <Button className='CreateArtistButton' onClick={this.onClick} disabled={this.props.isProcessing}>{this.renderSpinner()}Create Artist</Button>
     );
   }
 }

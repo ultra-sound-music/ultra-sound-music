@@ -30,6 +30,17 @@ export function getAccountChangedAction(accounts) {
   }
 }
 
+
+// @TODO - Is this the same thing as changing Chains?  Should I update the event that triggers getAccountChangedAction()?
+// Got this from https://docs.ethers.io/v5/concepts/best-practices/  
+// const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+// provider.on("network", (newNetwork, oldNetwork) => {
+//     if (oldNetwork) {
+//         window.location.reload();
+//     }
+// });
+
+
 export function getChainChangedAction(chainId) {
   return Actions.web3.updateNetworkChain(chainId);
 }
