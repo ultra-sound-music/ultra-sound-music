@@ -8,7 +8,7 @@ export default class USMClient {
     contractAddress,
     abi,
     apiHost,
-    currentAccountAddress,
+    accountAddress,
     provider,
     logger = {
       info: noop,
@@ -18,11 +18,15 @@ export default class USMClient {
     const signer = provider.getSigner();
 
     this.apiHost = apiHost;
-    this.currentAccountAddress = currentAccountAddress;
+    this.accountAddress = accountAddress;
     this.provider = provider;
     this.logger = logger;
     this.signer = signer;
     this.writeContract = new ethers.Contract(contractAddress, abi, signer);
+  }
+
+  updateAccount({ accountAddress }) {
+    this.accountAddress = accountAddress;
   }
 
   async createMetadataUri({
@@ -57,7 +61,7 @@ export default class USMClient {
     const metadata = {
       name,
       description,
-      artistDNA: this.currentAccountAddress
+      artistDNA: this.accountAddress
     }
     const { data } = await this.createMetadataUri(metadata);
     const transaction = await this.writeContract.createArtist(data.metadataUri);

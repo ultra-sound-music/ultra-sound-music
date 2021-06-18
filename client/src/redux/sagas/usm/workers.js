@@ -18,13 +18,20 @@ export function* init() {
     contractAddress: Constants.web3.CONTRACT_ADDRESS,
     abi,
     apiHost,
-    currentAccountAddress: yield select(Selectors.web3.getAccountAddress),
+    accountAddress: yield select(Selectors.web3.getAccountAddress),
     provider: Utils.web3.getProvider(),
     logger: Utils.logger
   });
 
   const tokens = yield call([usmClient, 'fetchAll']);
   yield put(Actions.usm.setTokens({ tokens }));
+}
+
+export function* update({ data }) {
+  const newAccountAddress = data?.address;
+  if (newAccountAddress !== usmClient.accountAddress) {
+    yield call([usmClient, 'updateAccount'], { accountAddress: newAccountAddress });
+  }
 }
 
 export function* fetchAllTokens() {

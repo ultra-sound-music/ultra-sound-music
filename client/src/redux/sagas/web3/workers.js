@@ -8,11 +8,13 @@ import * as Helpers from './helpers';
 export function* init() {
   const isInitialized = yield select(Selectors.web3.getIsInitialized);
   if (isInitialized) {
-    return;
+    return; // @TODO clear out old event bindings and allow saga to re-init
   }
 
   const connectedAccount = yield call(Utils.web3.initialize);
-  yield fork(Helpers.startWatchingForEthereumEvents);
+  if (yield call(Utils.web3.getIsWeb3sAvailable)) {
+    yield fork(Helpers.startWatchingForEthereumEvents);
+  }
 
   if (connectedAccount) {
     const chainId = yield call(Utils.web3.getChainId);

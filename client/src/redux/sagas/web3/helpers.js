@@ -24,7 +24,7 @@ export function* startWatchingForEthereumEvents() {
 export function getAccountChangedAction(accounts) {
   const account = accounts?.[0];
   if (account) {
-    return Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.CONNECTED);
+    return Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.CONNECTED, account);
   } else {
     return Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.NOT_CONNECTED);
   }

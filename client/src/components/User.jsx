@@ -33,13 +33,11 @@ export class User extends React.Component {
       content = <Controls />;
     }
 
-    const canvas = <Canvas addresses={[accountAddress]} />;
-
     return (
       <div className="User">
         <Row>
           <Col>
-            {canvas}
+            <Canvas addresses={[accountAddress]} />
             {content}
           </Col>
         </Row>

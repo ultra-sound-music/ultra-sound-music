@@ -7,10 +7,10 @@ const methods = {
 
 let provider = null;
 const ethereum = window.ethereum ?? null;
-const web3IsAvailable = !!ethereum;
+const isWeb3sAvailable = !!ethereum;
 
 export async function initialize() {
-  if (!web3IsAvailable) {
+  if (!isWeb3sAvailable) {
     return null;
   }
 
@@ -20,6 +20,10 @@ export async function initialize() {
 
 export function getProvider() {
   return provider;
+}
+
+export function getIsWeb3sAvailable() {
+  return isWeb3sAvailable;
 }
 
 export function bindCoreEventListeners(emit, ethereum, listeners = {}) {
