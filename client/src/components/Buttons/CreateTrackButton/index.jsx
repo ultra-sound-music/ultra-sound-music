@@ -7,8 +7,9 @@ import * as Selectors from '../../../redux/selectors';
 
 export class CreateTrackButton extends React.Component {
   static propTypes = {
-    isTokenPlaying: PropTypes.bool,
     tokenId: PropTypes.number,
+    isOwned: PropTypes.bool,
+    numBandMembers: PropTypes.number,
     play: PropTypes.func,
     stop: PropTypes.func
   }
@@ -24,7 +25,7 @@ export class CreateTrackButton extends React.Component {
   }
 
   isDisabled() {
-    return false;
+    return !(this.props.isOwned || this.props.numBandMembers >= 4);
   }
 
   render() {
@@ -38,9 +39,11 @@ export function mapStateToProps(state, { tokenId }) {
 
   const bandsWithPublishedTracks = Selectors.getBandsWithPublishedTracks(state);
   const hasPublishedTrack = bandsWithPublishedTracks.some((bandTokenId) => bandTokenId === tokenId);
+  const numBandMembers = Selectors.usm.getNumBandMembers(state);
 
   return {
     isOwned,
+    numBandMembers,
     hasPublishedTrack
   };
 }

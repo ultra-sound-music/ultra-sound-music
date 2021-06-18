@@ -8,7 +8,7 @@ export function Tokens (props) {
   return (
     <div className="Tokens">
       {props.tokenIds.map((id) => {
-        return <div key={id}><TokenCard tokenId={id} /></div>;
+        return <TokenCard key={id} tokenId={id} />
       })}
     </div>
   )

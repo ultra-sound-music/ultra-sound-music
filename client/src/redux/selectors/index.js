@@ -15,15 +15,21 @@ export const getOwnedTokens = createSelector(
   }
 )
 
+export const isOwnedToken = createSelector(
+  web3.getAccountAddress,
+  usm.selectTokenById,
+  (accountAddress, { owner }) => accountAddress === owner
+)
+
 export const getBandsWithPublishedTracks = createSelector(
   web3.getAccountAddress,
   usm.selectAllBandEntities,
-  (accountAddress, bands) => []
+  () => []
 )
 
 export const getPlayingTokenId = createSelector(
   playback.selectActiveSource,
-  (address) => {
+  () => {
     return 123
   }
 )

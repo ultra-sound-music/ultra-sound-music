@@ -25,12 +25,13 @@ export function createArtist({name, description}) {
   };
 }
 
-export function createBand({name, description}) {
+export function startBand({name, description, bandLeaderTokenId}) {
   return {
-    type: ActionTypes.CREATE_BAND_REQUEST,
+    type: ActionTypes.START_BAND_REQUEST,
     data: {
       name,
-      description
+      description,
+      bandLeaderTokenId
     }    
   };
 }

@@ -2,22 +2,27 @@ import React  from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import truncate from 'lodash/truncate';
-import * as Selectors from '../../../redux/selectors';
-import * as Constants from '../../../constants';
 import Button from '../Button';
-import ConnectButton from '../ConnectButton';
+import * as Selectors from '../../../redux/selectors';
+import * as Actions from  '../../../redux/actions';
+import * as Constants from '../../../constants';
 
 export class NetworkButton extends React.Component {
   static propTypes = {
     networkStatus: PropTypes.string,
-    address: PropTypes.string
+    address: PropTypes.string,
+    connectWallet: PropTypes.func
   }
+
+  onConnectClick = () => {
+    this.props.connectWallet();
+  }  
 
   render() {
     switch (this.props.networkStatus) {
-      case Constants.web3.networkStatus.NOT_INSTALLED:
+      case Constants.web3.networkStatus.NOT_AVAILABLE:
       case Constants.web3.networkStatus.NOT_CONNECTED:
-        return <ConnectButton />;
+        return <Button onClick={this.onClickConnect}>Connect</Button>;
       case Constants.web3.networkStatus.INSTALLING:
         return <Button disabled>Installing...</Button>
       case Constants.web3.networkStatus.CONNECTING:
@@ -37,6 +42,10 @@ function mapStateToProps(state) {
     networkStatus: Selectors.web3.getNetworkStatus(state),
     address: Selectors.web3.getAccountAddress(state)
   };
+}
+
+export const mapDispatchToProps = {
+  connectWallet: Actions.web3.connectWallet  
 }
 
 export default connect(mapStateToProps)(NetworkButton);

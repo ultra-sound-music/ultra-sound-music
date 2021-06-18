@@ -31,3 +31,13 @@ export const selectAllTrackEntities = createSelector(
   selectAllTokenEntities,
   (tokens) => tokens.filter((token) => token.type === Constants.usm.tokenType.TRACKS)
 );
+
+export const selectTokenType = createSelector(
+  selectTokenById,
+  (token) => token?.tokenType || null
+);
+
+export const getNumBandMembers = createSelector(
+  selectTokenById,
+  (token) => token?.members?.length
+)

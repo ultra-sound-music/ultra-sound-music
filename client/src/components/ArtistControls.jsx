@@ -72,7 +72,7 @@ export class ArtistControls extends React.Component {
 }
 
 const mapDispatchToProps = {
-  showModal: Actions.showModal
+  showModal: Actions.ui.showModal
 };
 
 export default connect(null, mapDispatchToProps)(ArtistControls);

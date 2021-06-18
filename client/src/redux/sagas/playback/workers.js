@@ -9,7 +9,7 @@ export function* init() {
 
 export function* toggle({ data }) {
   let source = data?.source;
-  
+
   // If we didn't pass a source in, maybe this is a "stop" command, in which case we get what's currently playing...
   if (!source) {
     source = yield select(Selectors.playback.selectActiveSource);

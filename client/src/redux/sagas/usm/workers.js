@@ -27,7 +27,7 @@ export function* init() {
   yield put(Actions.usm.setTokens({ tokens }));
 }
 
-export function* update({ data }) {
+export function* updateNetworkStatus({ data }) {
   const newAccountAddress = data?.address;
   if (newAccountAddress !== usmClient.accountAddress) {
     yield call([usmClient, 'updateAccount'], { accountAddress: newAccountAddress });
@@ -52,13 +52,18 @@ export function* createArtist({ data }) {
   }));
 
   try {
-    const { transaction } = yield call([usmClient, 'createArtist'], { artistDNA, name, description }, Helpers.onCreateArtistComplete);
+    const transaction = yield call([usmClient, 'createArtist'], { artistDNA, name, description }, Helpers.onCreateArtistComplete);
     yield put(Actions.web3.updateTransaction({
       key: artistDNA,
       transactionId: transaction.hash,
       status: Constants.web3.transactionStatus.AUTHORIZED
     }));
   } catch (error) {
+    console.error(error);
+    yield put(Actions.ui.showModal({
+      title: 'Error',
+      bodyText: error.message
+    }));
     yield put(Actions.web3.updateTransaction({
       key: artistDNA,
       status: Constants.web3.transactionStatus.FAILED,
@@ -68,19 +73,36 @@ export function* createArtist({ data }) {
   }
 }
 
-export function* createBand(name, description) {
+export function* startBand({ data }) {
   if (!usmClient) {
     throw new Error('USM not initialized');
   }
 
-  function onComplete() {
-
-  }
+  const {
+    name,
+    description,
+    bandLeaderTokenId
+  } = data;
 
   try {
-    yield call(usmClient.createBand, name, description, onComplete);
+    const transaction = yield call([usmClient, 'startBand'], { name, description, bandLeaderTokenId }, Helpers.onCreateBandComplete);
+    yield put(Actions.web3.updateTransaction({
+      key: bandLeaderTokenId,
+      transactionId: transaction.hash,
+      status: Constants.web3.transactionStatus.AUTHORIZED
+    }));    
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    yield put(Actions.ui.showModal({
+      title: 'Error',
+      bodyText: error.message
+    }));
+    yield put(Actions.web3.updateTransaction({
+      key: bandLeaderTokenId,
+      status: Constants.web3.transactionStatus.FAILED,
+      errorCode: error.code,
+      errorMessage: error.message
+    }));
   }
 }
 

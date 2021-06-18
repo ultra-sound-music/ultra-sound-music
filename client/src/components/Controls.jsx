@@ -72,7 +72,7 @@ export function mapStateToProps(state) {
 }
 
 export const mapDispatchToProps = {
-  showModal: Actions.showModal
+  showModal: Actions.ui.showModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

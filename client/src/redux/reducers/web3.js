@@ -5,7 +5,7 @@ import * as ActionTypes from '../actionTypes';
 
 const initialState = {
   isInitialized: false,
-  networkStatus: Constants.web3.NOT_AVAILABLE,
+  networkStatus: Constants.web3.networkStatus.NOT_AVAILABLE,
   address: null,
   chainId: null,
   transactions: []
