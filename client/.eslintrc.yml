@@ -16,6 +16,9 @@ parserOptions:
   allowImportExportEverywhere: false
   ecmaFeatures:
     globalReturn: false
+rules:
+  no-debugger: 0
+  no-unused-vars: 1
 overrides:
   - files:
       - '*.ts'

@@ -52,7 +52,7 @@ export function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  hideModal: Actions.hideModal
+  hideModal: Actions.ui.hideModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Alert);
