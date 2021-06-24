@@ -1,21 +1,23 @@
 
 const hre = require("hardhat");
-const constants = require("constants");
+const {NFT_DEPLOYED_ADDRESS} = require("./constants");
 
 const testURI= "https://storageapi.fleek.co/dongambas-team-bucket/1622333162829"
 
 async function main() {
 
 
-  try {
-    const UltraSoundMusic = await hre.ethers.getContractFactory("UltraSoundMusic");
-    const contract = await UltraSoundMusic.attach(constants.NFT_DEPLOYED_ADDRESS);
-  
-  // Now you can call functions of the contract
-    await contract.createArtist(testURI);
-    const artistId = await contract.artistCount()
-    await contract.startBand(artistId, testURI)
 
+
+  try {
+    const addresses = await ethers.getSigners();
+    const UltraSoundMusic = await hre.ethers.getContractFactory("UltraSoundMusic");
+    const contract = await UltraSoundMusic.attach(NFT_DEPLOYED_ADDRESS);
+     
+    await Promise.all(addresses.map(async address => {      
+      const c = await contract.connect(address);
+      return c.createArtist(testURI)
+    }))    
     
   } catch (error) {
     console.log(error)
