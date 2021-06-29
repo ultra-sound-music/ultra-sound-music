@@ -19,11 +19,6 @@ export class PlaybackButton extends React.Component {
     stop: PropTypes.func
   }
 
-  constructor(props) {
-    super();
-
-  }
-
   onClick = () => {
     if (this.props.isTokenPlaying) {
       this.props.stop();
@@ -42,10 +37,10 @@ export class PlaybackButton extends React.Component {
 }
 
 export function mapStateToProps(state, { tokenId, address }) {
-  const source = tokenId || address
+  const source = tokenId || address;
   return {
     source,
-    isTokenPlaying: Selectors.playback.selectActiveSource(state) === source,
+    isTokenPlaying: source && Selectors.playback.selectActiveSource(state) === source,
   };
 }
 

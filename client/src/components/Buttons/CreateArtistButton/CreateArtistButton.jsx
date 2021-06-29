@@ -12,12 +12,21 @@ export class CreateArtistButton extends React.Component {
   static propTypes = {
     accountAddress: PropTypes.string,
     isProcessing: PropTypes.bool,
-    getArtistData: PropTypes.func,
+    name: PropTypes.string,
+    description: PropTypes.string,
     createArtist: PropTypes.func
   }
 
   onClick = () => {
-    this.props.createArtist(this.props.getArtistData());
+    const {
+      name,
+      description
+    } = this.props;
+
+    this.props.createArtist({
+      name,
+      description
+    });
   }
 
   renderSpinner() {
@@ -35,9 +44,17 @@ export class CreateArtistButton extends React.Component {
     }
   }
 
+  isDisabled() {
+    const {
+      name,
+    } = this.props;
+
+    return !(name && name.length > 1);
+  }  
+
   render() {
     return (
-      <Button className='CreateArtistButton' onClick={this.onClick} disabled={this.props.isProcessing}>{this.renderSpinner()}Create Artist</Button>
+      <Button className='CreateArtistButton' onClick={this.onClick} disabled={this.props.isProcessing || this.isDisabled()}>{this.renderSpinner()}Create Artist</Button>
     );
   }
 }

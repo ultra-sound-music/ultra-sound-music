@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import * as Constants from '../../constants';
 import * as Utils from '../../utils';
 import * as playback from './playback';
 import * as usm from './usm';
@@ -14,6 +15,11 @@ export const getOwnedTokens = createSelector(
     });
   }
 )
+
+export const getOwnedArtists = createSelector(
+  getOwnedTokens,
+  (tokens) => tokens.filter((token) => token.tokenType === 'artist')
+);
 
 export const isOwnedToken = createSelector(
   web3.getAccountAddress,
@@ -32,6 +38,39 @@ export const getPlayingTokenId = createSelector(
   () => {
     return 123
   }
+)
+
+export const getActiveArtist = createSelector(
+  usm.getActiveArtist,
+  getOwnedArtists,
+  (activeArtist, ownedArtists) => {
+    return activeArtist || ownedArtists[0];
+  }
+)
+
+export const getActiveArtistId = createSelector(
+  getActiveArtist,
+  (artist) => artist?.tokenId ?? null
+)
+
+export const isMemberOfBand = createSelector(
+  usm.selectTokenById,
+  getActiveArtistId,
+  (token, activeArtistId) => token.tokenType === 'band' && token?.members.some((member) => member.artistId === activeArtistId)
+);
+
+export const canJoinBand = createSelector(
+  isMemberOfBand,
+  usm.getNumBandMembers,
+  (isMemberOfBand, numBandMembers) => {
+    return !isMemberOfBand && (numBandMembers < Constants.usm.MAX_BAND_MEMBERS)
+  }
+)
+
+export const canInviteToJoinBand = createSelector(
+  isMemberOfBand,
+  usm.getNumBandMembers,
+  (isMemberOfBand, numBandMembers) => isMemberOfBand && (numBandMembers < Constants.usm.MAX_BAND_MEMBERS)  
 )
 
 /// OLD
@@ -63,17 +102,6 @@ export const hasMintedATrack = createSelector(
   }
 )
 
-export const isMemberOfBand = createSelector(
-  web3.getAccountAddress,
-  usm.selectAllBandEntities,
-  (accountAddress, bands) => {
-    // @todo not sure if owner is the right prop here
-    return bands.members.some((band) => {
-      return Utils.account.areSameAccount(band.owner, accountAddress);
-    });
-  }
-);
-
 export const tokenIsOwned = createSelector(
   web3.getAccountAddress,
   usm.selectAllTokenEntities,
@@ -88,13 +116,6 @@ export function hasAlreadyPublishedTrack(token, currentAccountId) {
   // @todo 
   return token.tokenType === 'band' && Utils.account.areSameAccount(token.metadata.artistDNA, currentAccountId);
 }
-
-export function getOwnedArtists(tokens, currentAccountId) {
-  return tokens.filter((token) => {
-    return token.tokenType === 'artist' && Utils.account.areSameAccount(token.owner, currentAccountId);
-  })
-}
-
 
 export {
   playback,

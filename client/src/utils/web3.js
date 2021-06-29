@@ -86,19 +86,3 @@ export async function getChainId() {
 export function getEthereumProvider() {
   return ethereum;
 }
-
-export async function createArtist() {
-
-}
-
-export async function createBand() {
-  
-}
-
-export async function joinBand() {
-  
-}
-
-export async function createTrack() {
-  
-}
