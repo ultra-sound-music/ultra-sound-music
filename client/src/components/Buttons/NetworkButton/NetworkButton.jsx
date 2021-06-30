@@ -22,7 +22,7 @@ export class NetworkButton extends React.Component {
     switch (this.props.networkStatus) {
       case Constants.web3.networkStatus.NOT_AVAILABLE:
       case Constants.web3.networkStatus.NOT_CONNECTED:
-        return <Button onClick={this.onClickConnect}>Connect</Button>;
+        return <Button onClick={this.onConnectClick}>Connect</Button>;
       case Constants.web3.networkStatus.INSTALLING:
         return <Button disabled>Installing...</Button>
       case Constants.web3.networkStatus.CONNECTING:
@@ -48,4 +48,4 @@ export const mapDispatchToProps = {
   connectWallet: Actions.web3.connectWallet  
 }
 
-export default connect(mapStateToProps)(NetworkButton);
+export default connect(mapStateToProps, mapDispatchToProps)(NetworkButton);

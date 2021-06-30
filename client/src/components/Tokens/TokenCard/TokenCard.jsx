@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
+import Nav from 'react-bootstrap/Nav';
 
 import PlaybackButton from '../../Buttons/PlaybackButton';
 import CreateTrackButton from '../../Buttons/CreateTrackButton';
@@ -49,6 +50,11 @@ export class TokenCard extends React.Component {
 
     return (
       <Card className='TokenCard'>
+        <Card.Header>
+          <Nav className="mr-auto">
+            {this.props.tokenType}
+          </Nav>
+        </Card.Header>
         {/* @TODO Render drop down menu with additional card options */}
         <Card.Body>
           <Card.Title>{this.props.name}<Link to={tokenUrl}> &gt;&gt;&gt;</Link></Card.Title>
