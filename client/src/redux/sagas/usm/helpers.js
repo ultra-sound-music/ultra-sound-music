@@ -9,6 +9,7 @@ export function onCreateArtistComplete({ metadata, transaction }) {
     transaction,
     status: Constants.web3.transactionStatus.MINED
   }));
+  store.dispatch(Actions.usm.fetchAllTokens());
 }
 
 export function onCreateBandComplete({ metadata, transaction }) {
@@ -17,5 +18,16 @@ export function onCreateBandComplete({ metadata, transaction }) {
     key: metadata.bandLeaderTokenId,
     transaction,
     status: Constants.web3.transactionStatus.MINED
-  }));  
+  }));
+  store.dispatch(Actions.usm.fetchAllTokens());
+}
+
+export function onJoinBandComplete({ transaction }) {
+  const store = ReduxUtils.getStore();
+  store.dispatch(Actions.web3.updateTransaction({
+    key: 'joinBand-@TODO', // define proper way to key off of each call
+    transaction,
+    status: Constants.web3.transactionStatus.MINED
+  }));
+  store.dispatch(Actions.usm.fetchAllTokens());
 }

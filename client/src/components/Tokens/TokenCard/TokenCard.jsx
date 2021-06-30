@@ -7,6 +7,8 @@ import Nav from 'react-bootstrap/Nav';
 
 import PlaybackButton from '../../Buttons/PlaybackButton';
 import CreateTrackButton from '../../Buttons/CreateTrackButton';
+import JoinBandButton from '../../Buttons/JoinBandButton'
+import InviteToBandButton from '../../Buttons/InviteToBandButton';
 import * as Constants from '../../../constants';
 import * as Selectors from '../../../redux/selectors';
 
@@ -14,8 +16,11 @@ import './TokenCard.scss';
 
 export class TokenCard extends React.Component {
   static propTypes = {
+    accountAddress: PropTypes.string,
     tokenId: PropTypes.number.isRequired,
     tokenType: PropTypes.string,
+    canJoinBand: PropTypes.bool,
+    canInviteToJoinBand: PropTypes.bool,
     name: PropTypes.string,
     description: PropTypes.string
   };
@@ -26,6 +31,14 @@ export class TokenCard extends React.Component {
       case Constants.usm.tokenType.TRACK:                  
         return <PlaybackButton tokenId={this.props.tokenId} />
       case Constants.usm.tokenType.BAND:
+        if (!this.props.accountAddress) {
+          return;
+        }
+        if (this.props.canJoinBand) {
+          return <JoinBandButton tokenId={this.props.tokenId} />  
+        } else if (this.props.canInviteToJoinBand) {
+          return <InviteToBandButton tokenId={this.props.tokenId} />
+        }
         return <CreateTrackButton tokenId={this.props.tokenId} />
       default:
         return null;
@@ -57,8 +70,11 @@ export function mapStateToProps(state, { tokenId }) {
   const { tokenType, metadata } = Selectors.usm.selectTokenById(state, tokenId); 
 
   return {
+    accountAddress: Selectors.web3.getAccountAddress(state),
     tokenType,
     tokenId,
+    canJoinBand: Selectors.canJoinBand(state, tokenId),
+    canInviteToJoinBand: Selectors.canInviteToJoinBand(state, tokenId),
     name: metadata?.name,
     description: metadata?.description
   }

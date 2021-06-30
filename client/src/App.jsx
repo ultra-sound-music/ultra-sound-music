@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 import {
   HashRouter as Router,
   Switch,
@@ -16,24 +18,15 @@ import Alert from './components/Alert';
 import Token from './components/Tokens/Token';
 import Searchable from './components/Searchable';
 import NetworkButton from './components/Buttons/NetworkButton'
+import Onboarding from './components/Onboarding';
+
+import * as Selectors from './redux/selectors';
 
 import './App.scss';
 
 export class App extends React.Component {
-  state = {
-    entities: [],
-    isConnectedToNetwork: false,
-    isConnectedToAccount: false,
-    chainId: '',
-    accountId: '',
-    transactionHash: 'x' // Hack for redrawing upon successful transaction
-  }
-
-  updateTransactionHash = (tx) => {
-    const hash = tx && tx.hash
-    this.setState({
-      transactionHash: hash
-    });
+  static propTypes = {
+    accountAddress: PropTypes.string
   }
 
   render() {
@@ -71,7 +64,7 @@ export class App extends React.Component {
 
                 <Route path="/">
                   <Row>
-                    <Col><User /></Col>
+                    <Col>{this.props.accountAddress ? <User /> : <Onboarding />}</Col>
                   </Row>
                   <Row>
                     <Col><Searchable /></Col>
@@ -87,4 +80,10 @@ export class App extends React.Component {
   }
 }
 
-export default App;
+export function mapStateToProps(state) {
+  return {
+    accountAddress: Selectors.web3.getAccountAddress(state)
+  }
+}
+
+export default connect(mapStateToProps)(App);

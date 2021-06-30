@@ -5,13 +5,15 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import * as Actions from '../redux/actions';
 import * as Selectors from '../redux/selectors';
-import CreateArtistButton from '../components/Buttons/CreateArtistButton';
-import PlaybackButton from '../components/Buttons/PlaybackButton';
+import CreateArtistButton from './Buttons/CreateArtistButton';
+import StartBandButton from './Buttons/StartBandButton';
+import PlaybackButton from './Buttons/PlaybackButton';
 
 export class Controls extends React.Component {
   static propTypes = {
     showModal: PropTypes.func,
     accountId: PropTypes.string,
+    hasMintedAnArtist: PropTypes.bool
   }
 
   state = {
@@ -19,7 +21,7 @@ export class Controls extends React.Component {
     description: ''
   }
 
-  getArtistFormData = () => {
+  getInputData = () => {
     const {
       name,
       description
@@ -40,6 +42,16 @@ export class Controls extends React.Component {
   }  
 
   render() {
+    const {
+      name,
+      description
+    } = this.state;
+
+    const buttonProps = {
+      name,
+      description
+    }
+
     return (
       <div className="Controls">
         <InputGroup className="mb-3">
@@ -57,9 +69,9 @@ export class Controls extends React.Component {
             aria-label="Artist, Band, Track"
             aria-describedby="basic-addon2"            
           />          
-        </InputGroup>        
-        <CreateArtistButton getArtistData={this.getArtistFormData} />
-        <PlaybackButton address={this.props.accountId} />
+        </InputGroup>
+        {this.props.hasMintedAnArtist ? <StartBandButton {...buttonProps} /> : <CreateArtistButton {...buttonProps} />}
+        {!this.props.hasMintedAnArtist && <PlaybackButton address={this.props.accountId} />}
       </div>
     );
   }
@@ -67,7 +79,8 @@ export class Controls extends React.Component {
 
 export function mapStateToProps(state) {
   return {
-    accountId: Selectors.web3.getAccountAddress(state)
+    accountId: Selectors.web3.getAccountAddress(state),
+    hasMintedAnArtist: Selectors.hasMintedAnArtist(state)
   }
 }
 

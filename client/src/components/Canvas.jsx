@@ -23,7 +23,15 @@ export class Canvas extends React.Component {
         this.canvasRef = React.createRef()
     }
 
+    componentDidMount() {
+        this.renderImage();
+    }
+
     componentDidUpdate() {
+        this.renderImage();
+    }
+
+    renderImage() {
         console.log('Canvas', 'componentDidUpdate', this.props.addresses);
         if (!this.props.addresses[0]) return
         if (this.props.addresses.length === 1) {

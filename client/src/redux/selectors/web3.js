@@ -12,6 +12,10 @@ export function getIsInitialized(state) {
   return state.web3.isInitialized;
 }
 
+export function isConnected(state) {
+  return !!getAccountAddress(state);
+}
+
 export function selectOpenTransactions(state) {
   return state.web3.transactions.filter((transaction) => {
     return ![Constants.web3.transactionStatus.MINED, Constants.web3.transactionStatus.FAILED].includes(transaction.status);

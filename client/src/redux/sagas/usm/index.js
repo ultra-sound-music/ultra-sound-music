@@ -9,5 +9,6 @@ export default function* web3Saga() {
   yield takeLatest(ActionTypes.FETCH_TOKENS_REQUEST, Workers.fetchAllTokens);
   yield takeLatest(ActionTypes.CREATE_ARTIST_REQUEST, Workers.createArtist);
   yield takeLatest(ActionTypes.START_BAND_REQUEST, Workers.startBand);
+  yield takeLatest(ActionTypes.JOIN_BAND_REQUEST, Workers.joinBand);
   yield takeLatest(ActionTypes.CREATE_TRACK_REQUEST, Workers.createTrack);
 }
