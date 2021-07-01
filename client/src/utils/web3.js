@@ -71,7 +71,7 @@ export async function connectWallet() {
     return '';
   }
 
-  const accounts = await provider.send('eth_requestAccounts');
+  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
   return accounts[0] ?? '';
 }
 
@@ -85,4 +85,20 @@ export async function getChainId() {
 
 export function getEthereumProvider() {
   return ethereum;
+}
+
+export function genCreateArtistTransactionKey(accountAddress) {
+  return `${accountAddress}-creates-arstist`;
+}
+
+export function genStartBandTransactionKey(artistId) {
+  return `${artistId}-starts-band`;
+}
+
+export function genJoinBandTransactionKey(bandId, artistId) {
+  return `${artistId}-joins-${bandId}`;
+}
+
+export function genCreateTrackTransactionKey(bandId, artistId) {
+  return `${bandId}-${artistId}-creates-track`;
 }

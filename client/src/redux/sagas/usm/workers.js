@@ -24,32 +24,19 @@ export function* init() {
   });
 
   yield put(Actions.usm.fetchAllTokens());
+  yield call(Helpers.updateActiveArtist);
+}
 
-  // @TODO - for now, just set their first artist by default - do something smarter eventually
-  // const activeArtist = yield select(Selectors.usm.getActiveArtist);
-  // if (!activeArtist) {
-  //   const artist = yield select(Selectors.getActiveArtist);
-  //   if (artist) {
-  //     yield put(Actions.usm.setActiveArtist({ artistTokenId: artist.tokenId}))
-  //   }
-  // }
+export function* refresh() {
+  yield put(Actions.usm.fetchAllTokens());
+  yield call(Helpers.updateActiveArtist);
 }
 
 export function* updateNetworkStatus({ data }) {
   const newAccountAddress = data?.address;
   if (newAccountAddress !== usmClient.accountAddress) {
     yield call([usmClient, 'updateAccount'], { accountAddress: newAccountAddress });
-
-    // @TODO This sets the active artist - it introduces a race condition where it would fail if called before tokens are loaded
-    // We should have some way of knowing if tokens have been loaded / waiting for them to load
-    const artistEntities = yield select(Selectors.usm.selectAllArtistEntities);
-    const activeArtistEntity = artistEntities.find((entity) => {
-      return entity.owner === newAccountAddress;
-    })
-  
-    if (activeArtistEntity) {
-      yield put(Actions.usm.setActiveArtist({ artistTokenId: activeArtistEntity.tokenId }));
-    }
+    yield put(Actions.usm.refresh());
   }
 }
 
@@ -65,15 +52,16 @@ export function* createArtist({ data }) {
   } = data;
 
   const artistDNA = yield select(Selectors.web3.getAccountAddress);
+  const key = yield call(Utils.web3.genCreateArtistTransactionKey, artistDNA);
   yield put(Actions.web3.addTransaction({
     method: 'createArtist',
-    key: artistDNA
+    key
   }));
 
   try {
     const transaction = yield call([usmClient, 'createArtist'], { artistDNA, name, description }, Helpers.onCreateArtistComplete);
     yield put(Actions.web3.updateTransaction({
-      key: artistDNA,
+      key,
       transactionId: transaction.hash,
       status: Constants.web3.transactionStatus.AUTHORIZED
     }));
@@ -84,7 +72,7 @@ export function* createArtist({ data }) {
       bodyText: error.message
     }));
     yield put(Actions.web3.updateTransaction({
-      key: artistDNA,
+      key,
       status: Constants.web3.transactionStatus.FAILED,
       errorCode: error.code,
       errorMessage: error.message
@@ -103,11 +91,16 @@ export function* startBand({ data }) {
   } = data;
 
   const bandLeaderArtistId = yield select(Selectors.usm.getActiveArtistId);
+  const key = yield call(Utils.web3.genStartBandTransactionKey, bandLeaderArtistId);
+  yield put(Actions.web3.addTransaction({
+    method: 'startBand',
+    key
+  }));  
 
   try {
     const transaction = yield call([usmClient, 'startBand'], { name, description, bandLeaderArtistId }, Helpers.onCreateBandComplete);
     yield put(Actions.web3.updateTransaction({
-      key: bandLeaderArtistId,
+      key,
       transactionId: transaction.hash,
       status: Constants.web3.transactionStatus.AUTHORIZED
     }));    
@@ -118,7 +111,7 @@ export function* startBand({ data }) {
       bodyText: error.message
     }));
     yield put(Actions.web3.updateTransaction({
-      key: bandLeaderArtistId,
+      key,
       status: Constants.web3.transactionStatus.FAILED,
       errorCode: error.code,
       errorMessage: error.message
@@ -132,35 +125,39 @@ export function* joinBand({ data }) {
   }
 
   const {
-    bandTokenId: bandId
+    bandId
   } = data;
 
-  const artistId = yield select(Selectors.getActiveArtistId);
-  const key = `joinband-${bandId}`;
+  const artistId = yield select(Selectors.usm.getActiveArtistId);
+  const key = yield call(Utils.web3.genJoinBandTransactionKey, bandId, artistId);
+
+  yield put(Actions.web3.addTransaction({
+    method: 'joinBand',
+    key
+  }));  
 
   try {
-    const transaction = yield call([usmClient, 'joinBand'], { artistId, bandId }, Helpers.onJoinBandComplete);
+    const transaction = yield call([usmClient, 'joinBand'], { bandId, artistId }, Helpers.onJoinBandComplete);
     yield put(Actions.web3.updateTransaction({
       key,
       transactionId: transaction.hash,
       status: Constants.web3.transactionStatus.AUTHORIZED
     }));    
   } catch (error) {
-    console.error(error);
     yield put(Actions.ui.showModal({
       title: 'Error',
-      bodyText: error.message
+      bodyText: error?.data?.message || error.message
     }));
     yield put(Actions.web3.updateTransaction({
       key,
       status: Constants.web3.transactionStatus.FAILED,
       errorCode: error.code,
-      errorMessage: error.message
+      errorMessage: error?.data?.message || error.message
     }));
   }  
 }
 
-export function* createTrack(bandTokenId, name, description) {
+export function* createTrack(bandId, name, description) {
   if (!usmClient) {
     throw new Error('USM not initialized');
   }

@@ -67,7 +67,10 @@ export const canJoinBand = createSelector(
   }
 )
 
-export const canInviteToJoinBand = createSelector(
+// @TODO - Still need to sort out how to manage permissions to join a band
+export const canRequestToJoinBand = canJoinBand;
+
+export const canInviteBandMembers = createSelector(
   isMemberOfBand,
   usm.getNumBandMembers,
   (isMemberOfBand, numBandMembers) => isMemberOfBand && (numBandMembers < Constants.usm.MAX_BAND_MEMBERS)  

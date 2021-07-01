@@ -23,6 +23,7 @@ export const UPDATE_NETWORK_CHAIN = 'UPDATE_NETWORK_CHAIN';
 
 // USM
 export const INIT_USM = 'INIT_USM';
+export const REFRESH = 'REFRESH';
 export const SET_TOKENS = 'SET_TOKENS';
 export const SET_ACTIVE_ARTIST = 'SET_ACTIVE_ARTIST';
 export const FETCH_TOKENS_REQUEST = 'FETCH_TOKENS_REQUEST'

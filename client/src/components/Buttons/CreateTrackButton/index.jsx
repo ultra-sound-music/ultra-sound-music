@@ -38,7 +38,7 @@ export function mapStateToProps(state, { tokenId }) {
   const isOwned = ownedTokens.some((ownedTokenId) => ownedTokenId === tokenId)
 
   const bandsWithPublishedTracks = Selectors.getBandsWithPublishedTracks(state);
-  const hasPublishedTrack = bandsWithPublishedTracks.some((bandTokenId) => bandTokenId === tokenId);
+  const hasPublishedTrack = bandsWithPublishedTracks.some((bandId) => bandId === tokenId);
   const numBandMembers = Selectors.usm.getNumBandMembers(state);
 
   return {

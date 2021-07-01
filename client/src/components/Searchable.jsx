@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import * as Selectors from '../redux/selectors';
 import Search from './Search';
-import Tokens from './Tokens/Tokens';
+import TokenCards from './Tokens/TokenCards';
 
 export class Searchable extends React.Component {
   static propTypes = {
@@ -15,7 +15,7 @@ export class Searchable extends React.Component {
     return (
       <div className="Searchable">
         <Search onChange={this.onChange} onClear={this.onClear} />
-        <Tokens tokenIds={this.props.tokenIds} />
+        <TokenCards tokenIds={this.props.tokenIds} />
       </div>      
     );
   }

@@ -7,7 +7,7 @@ export class InviteToBandButton extends React.Component {
   }
 
   render() {
-    return <Button className='InviteToBandButton' disabled={true}>Invite Band Members</Button>
+    return <Button className='InviteToBandButton' disabled={true}>Needs X more members</Button>
   }
 }
 

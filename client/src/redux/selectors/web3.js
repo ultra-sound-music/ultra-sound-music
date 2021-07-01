@@ -21,3 +21,12 @@ export function selectOpenTransactions(state) {
     return ![Constants.web3.transactionStatus.MINED, Constants.web3.transactionStatus.FAILED].includes(transaction.status);
   })
 }
+
+export function selectOpenTransaction(state, key) {
+  const openTransactions = selectOpenTransactions(state);
+  return openTransactions.some((transaction) => transaction.key === key);
+}
+
+export function hasOpenTransaction(state, key) {
+  return !!(selectOpenTransaction(state, key));
+}
