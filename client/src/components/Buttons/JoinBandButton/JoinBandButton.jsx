@@ -16,7 +16,7 @@ export class JoinBandButton extends React.Component {
   };
 
   onClick = () => {
-    this.props.joinBand({ bandTokenId: this.props.tokenId})
+    this.props.joinBand({ bandId: this.props.tokenId })
   }
 
   renderSpinner() {

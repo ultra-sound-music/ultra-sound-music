@@ -54,7 +54,7 @@ export default class USMClient {
 
   // @TODO pass in an onError callback
   async createArtist({ name, description }, onComplete) {
-    if (!name || !description) {
+    if (!name) {
       throw new Error('Missing required information');
     }
 
@@ -65,14 +65,14 @@ export default class USMClient {
     }
     const { data } = await this.createMetadataUri(metadata);
     const transaction = await this.writeContract.createArtist(data.metadataUri);
-    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, metadata }))
+    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, data: metadata }))
     
     return transaction;
   }
 
   // @TODO pass in an onError callback
   async startBand({ name, description, bandLeaderArtistId }, onComplete) {
-    if (!name || !description) {
+    if (!name) {
       throw new Error('Missing required information');
     }
 
@@ -87,14 +87,19 @@ export default class USMClient {
 
     const { data } = await this.createMetadataUri(metadata);
     const transaction = await this.writeContract.startBand(bandLeaderArtistId, data.metadataUri);    
-    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, metadata }))
+    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, data: metadata }))
 
     return transaction;
   }
 
   async joinBand({ artistId, bandId }, onComplete) {
+    const contextData = {
+      artistId,
+      bandId
+    };
+
     const transaction = await this.writeContract.joinBand(artistId, bandId);
-    this.writeContract.once(transaction, (transaction) => onComplete({ transaction }));
+    this.writeContract.once(transaction, (transaction) => onComplete({ transaction, data: contextData }));
     return transaction;
   }
 
@@ -105,7 +110,13 @@ export default class USMClient {
       };
       const { data } = await this.createMetaDataUri(metadata);
       const transaction = await this.writeContract.createTrack(artistId, tokenId, data.metadataUri);
-      this.writeContract.once(transaction, (transaction) => onComplete({ transaction }));
+      const contextData = {
+        name,
+        description,
+        artistId,
+        tokenId
+      };
+      this.writeContract.once(transaction, (transaction) => onComplete({ transaction, data: contextData }));
       return transaction;
   }
 

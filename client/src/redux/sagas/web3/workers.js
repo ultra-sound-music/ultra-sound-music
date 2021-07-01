@@ -34,10 +34,17 @@ export function* connectWallet() {
     yield call(Utils.web3.connectWallet);
   } catch (error) {
     yield put(Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.NOT_CONNECTED));
+    
+    let bodyText;
+    if (error.code === -32002) {
+      bodyText = 'There was an error connecting to MetaMask. Please try connecting manually to MetaMask by clicking on the MetaMask wallet.';
+    } else {
+      bodyText = error;
+    }
+
     const modalProps = {
       title: 'Failed to connect',
-      body: error,
-      ctaText: 'close'
+      bodyText
     };
     yield put(Actions.ui.showModal(modalProps));
   }

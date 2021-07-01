@@ -3,8 +3,9 @@ import { takeLatest } from 'redux-saga/effects';
 import * as ActionTypes from '../../actionTypes';
 import * as Workers from './workers';
 
-export default function* web3Saga() {
+export default function* usmSaga() {
   yield takeLatest(ActionTypes.INIT_USM, Workers.init);
+  yield takeLatest(ActionTypes.REFRESH, Workers.refresh)
   yield takeLatest(ActionTypes.UPDATE_NETWORK_STATUS, Workers.updateNetworkStatus)
   yield takeLatest(ActionTypes.FETCH_TOKENS_REQUEST, Workers.fetchAllTokens);
   yield takeLatest(ActionTypes.CREATE_ARTIST_REQUEST, Workers.createArtist);

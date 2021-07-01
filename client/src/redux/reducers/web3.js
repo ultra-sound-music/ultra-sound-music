@@ -58,7 +58,7 @@ function updateTransaction(state, { data }) {
   } = data;
 
   const updatedTransactions = state.transactions.map((tx) => {
-    if( tx.key === key ) {
+    if( tx.transactionId === transactionId || tx.key === key ) {
       tx = Object.assign(tx, {
         transactionId,
         block,

@@ -1,14 +1,14 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
-import TokenCard from '../TokenCard';
+import TokenCardHOC from '../TokenCardHOC';
 
-import './Tokens.scss';
+import './TokenCards.scss';
 
 export function Tokens (props) {
   return (
     <div className="Tokens">
       {props.tokenIds.map((id) => {
-        return <TokenCard key={id} tokenId={id} />
+        return <TokenCardHOC key={id} tokenId={id} />
       })}
     </div>
   )
