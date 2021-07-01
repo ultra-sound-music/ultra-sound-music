@@ -1,5 +1,5 @@
 import { put, call, select } from 'redux-saga/effects';
-import USMClient from '../../../utils/lib/USMClient';
+import USMClient from '../../../lib/USMClient';
 import * as Constants from '../../../constants';
 import * as Utils from '../../../utils';
 import * as Actions from '../../../redux/actions';
