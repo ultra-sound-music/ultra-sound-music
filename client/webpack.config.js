@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+var DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 
 module.exports = {
   mode: 'development',
@@ -39,7 +40,15 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.tsx', '.ts']
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
+    plugins: [
+      new DirectoryNamedWebpackPlugin({
+        honorIndex: true
+      })      
+    ],
+    fallback: {
+      util: require.resolve("util/")
+    }    
   },
   output: {
     filename: '[name].bundle.js',
