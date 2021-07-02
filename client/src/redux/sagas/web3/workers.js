@@ -15,13 +15,14 @@ export function* init() {
     return; // @TODO clear out old event bindings and allow saga to re-init
   }
 
-  const connectedAccount = yield call(ethClient.initialize);
-  if (yield call(ethClient.getIsWeb3sAvailable)) {
+  const connectedAccount = yield call([ethClient, 'init']);
+  yield put(Actions.usm.init({ provider: ethClient.provider }));
+  if (ethClient.getIsWeb3Available) {
     yield fork(Helpers.startWatchingForEthereumEvents, ethClient.ethereum);
   }
 
   if (connectedAccount) {
-    const chainId = yield call(ethClient.getChainId);
+    const chainId = yield call([ethClient, 'getChainId']);
     yield put(Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.CONNECTED, connectedAccount, chainId));
   }
 
@@ -35,7 +36,7 @@ export function* installWallet() {
 export function* connectWallet() {
   try {
     yield put(Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.CONNECTING));
-    yield call(ethClient.connectWallet);
+    yield call([ethClient, 'connectWallet']);
   } catch (error) {
     yield put(Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.NOT_CONNECTED));
     

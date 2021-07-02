@@ -8,9 +8,9 @@ import * as Helpers from './helpers';
 
 let usmClient;
 
-export function* init() {
+export function* init({ data }) {
   // @todo optimize this loading to be async and not block the app
-  const {default: abi} = yield call(() => import('../../../lib/usmAbi.js'));
+  const {default: abi} = yield call(() => import('../../../deps/usmAbi'));
   
   const webserverDomain = `//${document.location.host}`;
   const apiHost = webserverDomain.replace('9000', '9001');
@@ -19,7 +19,7 @@ export function* init() {
     abi,
     apiHost,
     accountAddress: yield select(Selectors.web3.getAccountAddress),
-    provider: Utils.web3.getProvider(),
+    provider: data.provider,
     logger: Utils.logger
   });
 

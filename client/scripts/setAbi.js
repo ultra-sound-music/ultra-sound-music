@@ -3,7 +3,7 @@ const mkdirp = require('mkdirp');
 
 const ABI = process.argv[2];
 
-const path = './src/lib';
+const path = './src/deps';
 const made = mkdirp.sync(path);
 
 if (made) {

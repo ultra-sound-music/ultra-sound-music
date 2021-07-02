@@ -1,8 +1,11 @@
 import * as ActionTypes from '../actionTypes';
 
-export function init() {
+export function init({ provider }) {
   return {
-    type: ActionTypes.INIT_USM
+    type: ActionTypes.INIT_USM,
+    data: {
+      provider      
+    }
   }
 }
 
