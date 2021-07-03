@@ -36,8 +36,8 @@ let contract = new ethers.Contract(
 // connect to DB 
 
 // Uncomment the following line to have the db cleared out upon connecting
-// mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true}, () => mongoose.connection.db.dropDatabase());
-mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true}, () => mongoose.connection.db.dropDatabase());
+//mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true});
 
 //Get the default connection
 var db = mongoose.connection;
@@ -62,23 +62,24 @@ const handleArtistToken = async(from,to,id) =>{
     const artist = new Artist({
       tokenId: id,
       creator: to,
+      artistDNA: metadata.artistDNA,
       owner: to,
       metadataUri,
+      tokenType:"artist",
       metadata,
-      tokenType:"artist"
     })
     return artist.save()
   }
 }
 
 const handleBandToken = async(id, artistId, owner) =>{
-    console.log("handling new band token")
+    console.log("handling new band token id", id.toNumber())
     //const metadataUri = await contract.uri(id)
     const metadataUri = await contract.uri(id) 
     const metadata = await fetch(metadataUri).then(result => result.json())
     const band = new Band({
-      tokenId: id,
-      creator: artistId,
+      tokenId: id.toNumber(),
+      creator: Number(artistId),
       owner,
       metadataUri,
       metadata,
@@ -90,9 +91,8 @@ const handleBandToken = async(id, artistId, owner) =>{
 }
 
 const handleJoinBand = async(id, artistId, owner) =>{
-  console.log("handling new band token")
-
-  const band = await Band.findOne({tokenId: id })
+  console.log("handling join band id =", id.toNumber())
+  const band = await Band.findOne({tokenId: id.toNumber() })
   const currMembers = band.members;
   currMembers.push({artistId: Number(artistId), owner})
   band.active = currMembers.length === 4 ? true:false;
@@ -168,6 +168,8 @@ app.listen(port, async () => {
       UltraSoundMusicABI,
       customHttpProvider,
     )
+
+    
   
     contract.on("TransferSingle", async (operator, from, to, id, value, event) => {
 

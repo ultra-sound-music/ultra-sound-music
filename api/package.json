@@ -22,6 +22,7 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "csv-parser": "^3.0.0",
     "mongodb": "^3.6.9"
   }
 }

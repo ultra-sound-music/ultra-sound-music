@@ -4,7 +4,8 @@
   "scripts": {
     "start": "npm run compile-contracts && hardhat node",
     "compile-contracts": "hardhat compile",
-    "deploy-contracts": "hardhat run --network localhost scripts/deploy.js"
+    "deploy-contracts": "hardhat run --network localhost scripts/deploy.js",
+    "seed-chain-data": "hardhat run --network localhost scripts/initState.js"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
@@ -12,7 +13,7 @@
     "@openzeppelin/contracts": "^4.1.0",
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.3.0",
-    "ethers": "^5.2.0",
+    "ethers": "^5.3.1",
     "hardhat": "^2.3.0"
   }
 }

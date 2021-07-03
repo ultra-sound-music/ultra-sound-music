@@ -133,6 +133,7 @@ contract UltraSoundMusic is ERC1155 {
         bandLeaders[bandId] = msg.sender;
         MetadataUris[bandId] = _uri;
         bandAttestations[bandId] = 1;
+        bandMembers[bandId][artistId] = true;
         emit bandCreate(bandId, artistId, msg.sender);
         return bandId;
     }
