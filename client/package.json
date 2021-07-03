@@ -21,10 +21,7 @@
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
-<<<<<<< Updated upstream
-=======
     "react-dom": "^17.0.2",
->>>>>>> Stashed changes
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "redux-saga": "^1.1.3",
