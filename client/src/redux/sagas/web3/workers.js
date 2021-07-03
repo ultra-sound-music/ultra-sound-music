@@ -17,7 +17,7 @@ export function* init() {
 
   const connectedAccount = yield call([ethClient, 'init']);
   yield put(Actions.usm.init({ provider: ethClient.provider }));
-  if (ethClient.getIsWeb3Available) {
+  if (ethClient.isWeb3Available) {
     yield fork(Helpers.startWatchingForEthereumEvents, ethClient.ethereum);
   }
 
