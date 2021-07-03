@@ -7,10 +7,10 @@ npm run start-blockchain
 
 // Then, open another terminal
 npm run start-api
-npm run deploy-contracts
-npm run seed-chain-data
 
 // Then, open a third terminal
+npm run deploy-contracts
+npm run seed-chain-data
 npm run start-client
 ```
 
