@@ -4,14 +4,49 @@ const {NFT_DEPLOYED_ADDRESS} = require("./constants");
 
 const testURI= "https://storageapi.fleek.co/dongambas-team-bucket/1622333162829"
 
+const artistMetadata = [
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399326",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399361",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399363",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399364",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399365",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399366",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399367",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399370",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399371",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399372",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399373",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399374",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399375",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399376",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349117223",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399377",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399378",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399379",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399380",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625348399381"
+]
+
+const bandMetadata = [
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349161380",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349161405",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349161406",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349161408",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349161409"
+]
+
+const trackMetadata = [
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349236642",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349236665",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349236667",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349236668",
+  "https://storageapi.fleek.co/dongambas-team-bucket/1625349236669"
+]
+
+
+
 async function main() {
 
-<<<<<<< Updated upstream
-
-
-
-=======
->>>>>>> Stashed changes
   try {
     const addresses = await ethers.getSigners();
     const [
@@ -31,54 +66,31 @@ async function main() {
       user14,
       user15,
       user16,
-      user17,
-      user18,
-      user19,
-      user20,
     ] = addresses; 
     const UltraSoundMusic = await hre.ethers.getContractFactory("UltraSoundMusic");
     const contract = await UltraSoundMusic.attach(NFT_DEPLOYED_ADDRESS);
-     
-    await Promise.all(addresses.map(async address => {      
+
+    await Promise.all(addresses.map(async (address, i) => {     
       const c = await contract.connect(address);
-      return c.createArtist(testURI)
+      return c.createArtist(artistMetadata[i])
     }))
-<<<<<<< Updated upstream
-=======
 
     console.log("artists created")
 
-    //console.log(await contract.artistCount())
->>>>>>> Stashed changes
-
-    /*
-    const band1 = contract.createBand();
-    const band2 = contract.createBand();
-    const band3 = contract.createBand();
-    const band4 = contract.createBand();*/
-    
-    
-
-<<<<<<< Updated upstream
-=======
-    //artistId 
-    //uri 
-
     const cU1 = await contract.connect(user1)
-    await cU1.startBand(1, testURI)
+    await cU1.startBand(1, bandMetadata[0])
     const cU2 = await contract.connect(user2)
-    await cU2.startBand(2, testURI)
+    await cU2.startBand(2, bandMetadata[1])
     const cU3 = await contract.connect(user3)
-    await cU3.startBand(3, testURI)
+    await cU3.startBand(3, bandMetadata[2])
     const cU4 = await contract.connect(user4)
-    await cU4.startBand(4, testURI)
+    await cU4.startBand(4, bandMetadata[3])
     const cU5 = await contract.connect(user5)
-    await cU5.startBand(5, testURI)
+    await cU5.startBand(5, bandMetadata[4])
 
     console.log("bands started")
 
     await new Promise(resolve => setTimeout(resolve, 5000));
-
 
     // band < 4 members
 
@@ -109,7 +121,7 @@ async function main() {
     await cU12.joinBand(12, 103)
     const cU13 = await contract.connect(user13)
     await cU13.joinBand(13, 103)
-    await cU13.createTrack(13, 103, testURI)
+    await cU13.createTrack(13, 103, trackMetadata[0])
 
     console.log("bands 103 joined and active and one track created")
 
@@ -123,13 +135,12 @@ async function main() {
     const cU16 = await contract.connect(user16)
     await cU16.joinBand(16, 104)
 
-    await cU4.createTrack(4, 104, testURI)
-    await cU14.createTrack(14, 104, testURI)
-    await cU15.createTrack(15, 104, testURI)
-    await cU16.createTrack(16, 104, testURI)
+    await cU4.createTrack(4, 104, trackMetadata[1])
+    await cU14.createTrack(14, 104, trackMetadata[2])
+    await cU15.createTrack(15, 104, trackMetadata[3])
+    await cU16.createTrack(16, 104, trackMetadata[4])
 
     console.log("bands 104 joined and active and four tracks created")
->>>>>>> Stashed changes
 
   } catch (error) {
     console.log(error)

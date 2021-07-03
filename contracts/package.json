@@ -4,7 +4,8 @@
   "scripts": {
     "start": "npm run compile-contracts && hardhat node",
     "compile-contracts": "hardhat compile",
-    "deploy-contracts": "hardhat run --network localhost scripts/deploy.js"
+    "deploy-contracts": "hardhat run --network localhost scripts/deploy.js",
+    "seed-chain-data": "hardhat run --network localhost scripts/initState.js"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",

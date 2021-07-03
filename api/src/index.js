@@ -36,13 +36,8 @@ let contract = new ethers.Contract(
 // connect to DB 
 
 // Uncomment the following line to have the db cleared out upon connecting
-<<<<<<< Updated upstream
-//mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true}, () => mongoose.connection.db.dropDatabase());
-mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true});
-=======
 mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true}, () => mongoose.connection.db.dropDatabase());
 //mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true});
->>>>>>> Stashed changes
 
 //Get the default connection
 var db = mongoose.connection;
