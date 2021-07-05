@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -38,8 +39,9 @@ export class App extends React.Component {
               <Navbar bg="light">
                 <Navbar.Brand href="/">🦇 🔉 🎼 Ultra Sound Music Project</Navbar.Brand>
                 <Nav>
-                  <Nav.Link href="/about">About</Nav.Link>
-                  <Nav.Link href="/myCollection">My Collection</Nav.Link>
+                  <Nav.Link>
+                  <Link className="nav-link" to="/about">About</Link>
+                  </Nav.Link>
                 </Nav>
                 <Nav className="ms-auto">
                   <NetworkButton />
@@ -48,14 +50,7 @@ export class App extends React.Component {
               </Navbar>
 
               <Switch>
-                <Route path="/about">
-                  <Row>
-                    <Col>
-                      <About />
-                    </Col>
-                  </Row>
-                </Route>
-
+                <Route path="/about" component={About} />
                 <Route path="/token/:tokenId">
                   <Row>
                     <Col><Token /></Col>
