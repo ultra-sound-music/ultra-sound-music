@@ -37,14 +37,14 @@ export class TrackCard extends React.Component {
 }
 
 function mapStateToProps(state, { tokenId }) {
-  const { metadata } = Selectors.usm.selectTokenById(state, tokenId); 
-  if (!metadata) {
+  const { name, description } = Selectors.usm.selectTokenById(state, tokenId); 
+  if (!name) {
     return {};
   }
 
   return {
-    name: metadata.name,
-    description: metadata.description
+    name,
+    description
   }
 }
 

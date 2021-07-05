@@ -60,14 +60,14 @@ export class BandCard extends React.Component {
 }
 
 function mapStateToProps(state, { tokenId }) {
-  const { metadata } = Selectors.usm.selectTokenById(state, tokenId); 
+  const { name, description } = Selectors.usm.selectTokenById(state, tokenId); 
   const canCreateTrack = Selectors.isOwnedToken(state, tokenId);
   const canRequestToJoinBand = Selectors.canRequestToJoinBand(state, tokenId);
   const canJoinBand = Selectors.canJoinBand(state, tokenId);
 
   return {
-    name: metadata.name,
-    description: metadata.description,
+    name,
+    description,
     canCreateTrack,
     canRequestToJoinBand,
     canJoinBand
