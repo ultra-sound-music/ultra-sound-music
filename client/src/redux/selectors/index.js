@@ -40,22 +40,9 @@ export const getPlayingTokenId = createSelector(
   }
 )
 
-export const getActiveArtist = createSelector(
-  usm.getActiveArtist,
-  getOwnedArtists,
-  (activeArtist, ownedArtists) => {
-    return activeArtist || ownedArtists[0];
-  }
-)
-
-export const getActiveArtistId = createSelector(
-  getActiveArtist,
-  (artist) => artist?.tokenId ?? null
-)
-
 export const isMemberOfBand = createSelector(
   usm.selectTokenById,
-  getActiveArtistId,
+  usm.getActiveArtistId,
   (token, activeArtistId) => token.tokenType === 'band' && token?.members.some((member) => member.artistId === activeArtistId)
 );
 

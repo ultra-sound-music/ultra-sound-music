@@ -32,7 +32,7 @@ export class BandCard extends React.Component {
     }
 
     if (canJoinBand) {
-      return <JoinBandButton tokenId={tokenId} />
+      return <JoinBandButton bandId={tokenId} />
     }
 
     if (canRequestToJoinBand) {

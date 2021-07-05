@@ -1,10 +1,10 @@
 import * as ActionTypes from '../actionTypes';
 
-export function init({ provider }) {
+export function init({ web3Client }) {
   return {
     type: ActionTypes.INIT_USM,
     data: {
-      provider      
+      web3Client
     }
   }
 }
@@ -22,6 +22,15 @@ export function setActiveArtist({ artistTokenId }) {
       artistTokenId
     }
   };
+}
+
+export function setActiveBand({ bandTokenId }) {
+  return {
+    type: ActionTypes.SET_ACTIVE_BAND,
+    data: {
+      bandTokenId
+    }
+  };  
 }
 
 export function fetchAllTokens() {
@@ -76,5 +85,35 @@ export function createTrack({bandId, name, description}) {
       name,
       description
     }    
+  };
+}
+
+export function addTransaction({ method, key, transactionId, block, status, errorCode, errorMessage }) {
+  return {
+    type: ActionTypes.ADD_TRANSACTION,
+    data: {
+      method,
+      key,
+      transactionId,
+      block,
+      status,
+      errorCode,
+      errorMessage
+    }
+  };
+}
+
+export function updateTransaction({ method, key, transactionId, block, status, errorCode, errorMessage }) {
+  return {
+    type: ActionTypes.UPDATE_TRANSACTION,
+    data: {
+      method,
+      key,
+      transactionId,
+      block,
+      status,
+      errorCode,
+      errorMessage      
+    }
   };
 }

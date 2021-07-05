@@ -39,9 +39,7 @@ export class App extends React.Component {
               <Navbar bg="light">
                 <Navbar.Brand href="/">🦇 🔉 🎼 Ultra Sound Music Project</Navbar.Brand>
                 <Nav>
-                  <Nav.Link>
-                  <Link className="nav-link" to="/about">About</Link>
-                  </Nav.Link>
+                  <Nav.Link href="/about">About</Nav.Link>
                 </Nav>
                 <Nav className="ms-auto">
                   <NetworkButton />

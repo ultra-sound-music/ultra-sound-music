@@ -6,9 +6,12 @@ export function init() {
   }
 }
 
-export function initWeb3Success() {
+export function initWeb3Success({ web3Client }) {
   return {
-    type: ActionTypes.INIT_WEB3_SUCCESS
+    type: ActionTypes.INIT_WEB3_SUCCESS,
+    data: {
+      web3Client      
+    }
   }
 }
 
@@ -24,52 +27,32 @@ export function connectWallet() {
   };
 }
 
-export function updateNetworkStatus(status, address, chainId) {
+export function processAccountUpdate({ status, account }) {
+  return {
+    type: ActionTypes.PROCESS_ACCOUNT_UPDATE,
+    data: {
+      status,
+      account
+    }
+  }
+}
+
+export function processNetworkUpdate({ networkId }) {
+  return {
+    type: ActionTypes.PROCESS_NETWORK_UPDATE,
+    data: {
+      networkId
+    }
+  }
+}
+
+export function updateNetworkStatus({ status, account, networkId }) {
   return {
     type: ActionTypes.UPDATE_NETWORK_STATUS,
     data: {
       status,
-      address,
-      chainId
+      account,
+      networkId
     }
   }
-}
-
-export function updateNetworkChain(chainId) {
-  return {
-    type: ActionTypes.UPDATE_NETWORK_CHAIN,
-    data: {
-      chainId
-    }
-  }
-}
-
-export function addTransaction({ method, key, transactionId, block, status, errorCode, errorMessage }) {
-  return {
-    type: ActionTypes.ADD_TRANSACTION,
-    data: {
-      method,
-      key,
-      transactionId,
-      block,
-      status,
-      errorCode,
-      errorMessage
-    }
-  };
-}
-
-export function updateTransaction({ method, key, transactionId, block, status, errorCode, errorMessage }) {
-  return {
-    type: ActionTypes.UPDATE_TRANSACTION,
-    data: {
-      method,
-      key,
-      transactionId,
-      block,
-      status,
-      errorCode,
-      errorMessage      
-    }
-  };
 }

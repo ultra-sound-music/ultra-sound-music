@@ -1,32 +1,28 @@
-import { select, call, fork, put } from 'redux-saga/effects'
-import EthClient from '../../../lib/EthClient';
-import * as Constants from '../../../constants';
-import * as Actions from '../../actions';
-import * as Selectors from '../../selectors';
+import { call, fork, put } from 'redux-saga/effects'
+import EthClient from '../../../../lib/EthClient';
+import * as Constants from '../../../../constants';
+import * as Actions from '../../../actions';
 import * as Helpers from './helpers';
 
 let ethClient;
 
 export function* init() {
   ethClient = new EthClient({ethereum: window.ethereum});
-
-  const isInitialized = yield select(Selectors.web3.getIsInitialized);
-  if (isInitialized) {
-    return; // @TODO clear out old event bindings and allow saga to re-init
-  }
-
   const connectedAccount = yield call([ethClient, 'init']);
-  yield put(Actions.usm.init({ provider: ethClient.provider }));
   if (ethClient.isWeb3Available) {
     yield fork(Helpers.startWatchingForEthereumEvents, ethClient.ethereum);
   }
 
   if (connectedAccount) {
     const chainId = yield call([ethClient, 'getChainId']);
-    yield put(Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.CONNECTED, connectedAccount, chainId));
+    yield put(Actions.web3.updateNetworkStatus({
+      status: Constants.web3.networkStatus.CONNECTED,
+      account: connectedAccount,
+      networkId: chainId
+    }));
   }
 
-  yield put(Actions.web3.initWeb3Success());
+  yield put(Actions.web3.initWeb3Success({ web3Client: ethClient }));
 }
 
 export function* installWallet() {
@@ -35,10 +31,10 @@ export function* installWallet() {
 
 export function* connectWallet() {
   try {
-    yield put(Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.CONNECTING));
+    yield put(Actions.web3.updateNetworkStatus({ status: Constants.web3.networkStatus.CONNECTING }));
     yield call([ethClient, 'connectWallet']);
   } catch (error) {
-    yield put(Actions.web3.updateNetworkStatus(Constants.web3.networkStatus.NOT_CONNECTED));
+    yield put(Actions.web3.updateNetworkStatus({ status: Constants.web3.networkStatus.NOT_CONNECTED }));
     
     let bodyText;
     if (error.code === -32002) {

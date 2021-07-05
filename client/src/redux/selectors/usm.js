@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import * as Constants from '../../constants';
+import * as Utils from '../../utils';
 import tokensAdapter from '../utils/tokensAdapter';
 
 const tokenSelectors = tokensAdapter.getSelectors((state) => state.usm)
@@ -12,13 +13,17 @@ export const {
   selectById: selectTokenById
 } = tokenSelectors;
 
-export function getActiveArtist(state) {
-  return state.usm.activeArtist;
+export function getActiveArtistId(state) {
+  return state.usm.activeArtistId;
+}
+
+export function getActiveBandId(state) {
+  return state.usm.activeBandId;
 }
 
 export const selectPlayableSourceByTokenId = createSelector(
   selectTokenById,
-  (token) => token.metadata.artistDNA // @TODO suport tracks
+  (token) => token.artistDNA // @TODO suport tracks
 )
 
 export const selectAllBandEntities = createSelector(
@@ -53,7 +58,7 @@ export const getNumBandMembers = createSelector(
 
 export const getActiveArtistName = createSelector(
   selectAllArtistEntities,
-  getActiveArtist,
+  getActiveArtistId,
   (artistEntities, artistTokenId) => {
     if (!artistTokenId) {
       return '';
@@ -61,23 +66,70 @@ export const getActiveArtistName = createSelector(
 
     const artist = artistEntities.find((entity) => entity.tokenId === artistTokenId);
     if (artist) {
-      return artist?.metadata?.name || '';
+      return artist?.name || '';
     }
   }
 )
 
-export const getActiveArtistId = createSelector(
-  selectAllArtistEntities,
-  getActiveArtist,
-  (artistEntities, artistTokenId) => {
-    if (!artistTokenId) {
-      return null;
-    }
-
-    const artist = artistEntities.find((entity) => entity.tokenId === artistTokenId);
-    if (artist) {
-      // @TODO - temporarily typecasting to number since the blockchain is currently inconsistent with this
-      return artist?.tokenId || null;
-    }
+export const getActiveArtistBands = createSelector(
+  selectAllBandEntities,
+  getActiveArtistId,
+  (bands, activeArtistId) => {
+    return bands.filter((band) => {
+      return band.members.includes(activeArtistId);
+    })
   }
 )
+
+export function selectOpenTransactions(state) {
+  return state.usm.transactions.filter((transaction) => {
+    return ![Constants.usm.transactionStatus.MINED, Constants.usm.transactionStatus.FAILED].includes(transaction.status);
+  })
+}
+
+export function selectOpenTransaction(state, key) {
+  const openTransactions = selectOpenTransactions(state);
+  return openTransactions.some((transaction) => transaction.key === key);
+}
+
+export const isProcessingCreateArtist = createSelector(
+  selectOpenTransactions,
+  (state, accountAddress) => accountAddress,
+  (openTransactions, accountAddress) => {
+    const transactionKey = Utils.usm.genCreateArtistTransactionKey(accountAddress);
+    return openTransactions.some((transaction) => transaction.key === transactionKey);
+  }
+)
+
+export const isProcessingStartBand = createSelector(
+  selectOpenTransactions,
+  (state, artistId) => artistId,
+  (openTransactions, artistId) => {
+    const transactionKey = Utils.usm.genStartBandTransactionKey(artistId);
+    return openTransactions.some((transaction) => transaction.key === transactionKey);
+  }
+)
+
+export const isProcessingJoinBand = createSelector(
+  selectOpenTransactions,
+  (state, bandId) => bandId,  
+  (state, bandId, artistId) => artistId,  
+  (openTransactions, bandId, artistId) => {
+    const transactionKey = Utils.usm.genJoinBandTransactionKey(bandId, artistId);
+    return openTransactions.some((transaction) => transaction.key === transactionKey);
+  }
+)
+
+export const isProcessingCreateTrack = createSelector(
+  selectOpenTransactions,
+  (state, bandId) => bandId,  
+  (state, bandId, artistId) => artistId,    
+  (openTransactions, bandId, artistId) => {
+    const transactionKey = Utils.usm.genCreateTrackTransactionKey(bandId, artistId);
+    return openTransactions.some((transaction) => transaction.key === transactionKey);
+  }
+)
+
+export function hasOpenTransaction(state, key) {
+  return !!(selectOpenTransaction(state, key));
+}

@@ -5,13 +5,11 @@ import Spinner from 'react-bootstrap/Spinner';
 import Button from '../Button';
 import * as Selectors from '../../../redux/selectors';
 import * as Actions from '../../../redux/actions';
-import * as Utils from '../../../utils';
 
 export class StartBandButton extends React.Component {
   static propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
-    bandLeaderArtistId: PropTypes.number,
     isProcessing: PropTypes.bool,
     startBand: PropTypes.func
   }
@@ -63,13 +61,10 @@ export class StartBandButton extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const accountAddress = Selectors.web3.getAccountAddress(state);
   const artistId = Selectors.usm.getActiveArtistId(state);
-  const key = Utils.web3.genStartBandTransactionKey(artistId);
-  const isProcessing = Selectors.web3.hasOpenTransaction(state, key);
+  const isProcessing = Selectors.usm.isProcessingStartBand(state, artistId);
 
   return {
-    accountAddress,
     isProcessing
   };
 }

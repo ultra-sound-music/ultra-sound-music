@@ -4,82 +4,23 @@ import * as Constants from '../../constants';
 import * as ActionTypes from '../actionTypes';
 
 const initialState = {
-  isInitialized: false,
   networkStatus: Constants.web3.networkStatus.NOT_AVAILABLE,
-  address: null,
-  chainId: null,
-  transactions: []
+  account: null,
+  networkId: null
 };
 
-function initWeb3Success(state) {
-  state.isInitialized = true;
+function initWeb3() {
+  return initialState;
 }
 
 function updateNetworkStatus(state, { data }) {
   state.networkStatus = data?.status ?? initialState.networkStatus;
-  state.address = data?.address ?? initialState.address;
-  state.chainId = data?.chainId ?? initialState.chainId;
-}
-
-function updateNetworkChain(state, { data }) {
-  state.chainId = data?.chainId ?? initialState.chainId;
-}
-
-function addTransaction(state, { data }) {
-  const {
-    method,
-    key,
-    transactionId,
-    block,
-    status = Constants.web3.transactionStatus.SUBMITTED,
-    errorCode,
-    errorMessage
-  } = data;
-
-  state.transactions.push({
-    method,
-    key,
-    transactionId,
-    block,
-    status,
-    errorCode,
-    errorMessage    
-  });
-}
-
-function updateTransaction(state, { data }) {
-  const {
-    key,
-    transactionId,
-    block,
-    status = Constants.web3.transactionStatus.SUBMITTED,
-    errorCode,
-    errorMessage
-  } = data;
-
-  const updatedTransactions = state.transactions.map((tx) => {
-    if( tx.transactionId === transactionId || tx.key === key ) {
-      tx = Object.assign(tx, {
-        transactionId,
-        block,
-        status,
-        errorCode,
-        errorMessage
-      });
-      return tx;
-    }
-
-    return tx;
-  });
-
-  state.transactions = updatedTransactions;  
+  state.account = data?.account ?? initialState.account;
+  state.networkId = data?.networkId ?? initialState.networkId;
 }
 
 export default createReducer(initialState, (builder) => {
   builder
-    .addCase(ActionTypes.INIT_WEB3_SUCCESS, initWeb3Success)
+    .addCase(ActionTypes.INIT_WEB3, initWeb3)
     .addCase(ActionTypes.UPDATE_NETWORK_STATUS, updateNetworkStatus)
-    .addCase(ActionTypes.UPDATE_NETWORK_CHAIN, updateNetworkChain)
-    .addCase(ActionTypes.ADD_TRANSACTION, addTransaction)
-    .addCase(ActionTypes.UPDATE_TRANSACTION, updateTransaction)
 });

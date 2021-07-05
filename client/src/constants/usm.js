@@ -5,3 +5,14 @@ export const tokenType = Object.freeze({
   BAND: 'band',
   TRACK: 'track'
 });
+
+export const transactionStatus = Object.freeze({
+  SUBMITTED: 'SUBMITTED',
+  AUTHORIZED: 'AUTHORIZED',
+  MINED: 'MINED',
+  FAILED: 'FAILED'
+});
+
+export const transactionErrorCodes = Object.freeze({
+  
+});

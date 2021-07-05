@@ -10,7 +10,6 @@ import './CreateArtistButton.scss';
 
 export class CreateArtistButton extends React.Component {
   static propTypes = {
-    accountAddress: PropTypes.string,
     isProcessing: PropTypes.bool,
     name: PropTypes.string,
     description: PropTypes.string,
@@ -61,11 +60,9 @@ export class CreateArtistButton extends React.Component {
 
 export function mapStateToProps(state) {
   const accountAddress = Selectors.web3.getAccountAddress(state);
-  const openTransactions = Selectors.web3.selectOpenTransactions(state);
-  const isProcessing = openTransactions.some((transaction) => transaction.key === accountAddress);
+  const isProcessing = Selectors.usm.isProcessingCreateArtist(state, accountAddress);
 
   return {
-    accountAddress,
     isProcessing
   };
 }

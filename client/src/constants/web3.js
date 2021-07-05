@@ -8,19 +8,3 @@ export const networkStatus = Object.freeze({
   CONNECTED: 'CONNECTED',
   PROCESSING_TRANSACTION: 'PROCESSING_TRANSACTION'
 });
-
-export const transactionStatus = Object.freeze({
-  SUBMITTED: 'SUBMITTED',
-  AUTHORIZED: 'AUTHORIZED',
-  MINED: 'MINED',
-  FAILED: 'FAILED'
-});
-
-export const transactionErrorCodes = Object.freeze({
-  
-});
-
-export const providerEventNames = Object.freeze({
-  ACCOUNTS_CHANGED: 'accountsChanged',
-  CHAIN_CHANGED: 'chainChanged'
-}); 

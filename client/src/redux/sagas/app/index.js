@@ -1,12 +1,8 @@
-import { put, takeLatest } from 'redux-saga/effects'
+import { takeLatest } from 'redux-saga/effects'
 import * as ActionTypes from '../../actionTypes';
-import * as Actions from '../../actions';
-
-function* initApp() {
-  yield put(Actions.web3.init());
-  yield put(Actions.playback.init());
-}
+import * as Workers from './workers';
 
 export default function* appSaga() {
-  yield takeLatest(ActionTypes.INIT_APP, initApp);
+  yield takeLatest(ActionTypes.INIT_APP, Workers.initApp);
+  yield takeLatest(ActionTypes.INIT_WEB3_SUCCESS, Workers.onInitWeb3Success);
 }
