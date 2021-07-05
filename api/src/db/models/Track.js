@@ -2,12 +2,13 @@ const mongoose = require("mongoose")
 
 const schema = mongoose.Schema({
   tokenId: Number,
-	creator: String,
+	creator: Number,
 	owner: String,
   tokenType: String,
   band: Number,
   metadataUri: String,
-  metadata: mongoose.Schema.Types.Mixed
+  name: String,
+  description: String
 })
 
 module.exports = mongoose.model("Track", schema)

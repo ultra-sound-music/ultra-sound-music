@@ -61,12 +61,13 @@ const handleArtistToken = async(from,to,id) =>{
     const metadata = await fetch(metadataUri).then(result => result.json())
     const artist = new Artist({
       tokenId: id,
-      creator: to,
       artistDNA: metadata.artistDNA,
       owner: to,
       metadataUri,
       tokenType:"artist",
-      metadata,
+      artistDNA: metadata.artistDNA,
+      name:metadata.name,
+      description: metadata.description
     })
     return artist.save()
   }
@@ -82,10 +83,11 @@ const handleBandToken = async(id, artistId, owner) =>{
       creator: Number(artistId),
       owner,
       metadataUri,
-      metadata,
-      members: [{artistId: Number(artistId), owner}],
+      members: [Number(artistId)],
       active: false,
-      tokenType:"band"
+      tokenType:"band",
+      name:metadata.name,
+      description: metadata.description
     })
     return band.save()
 }
@@ -94,7 +96,7 @@ const handleJoinBand = async(id, artistId, owner) =>{
   console.log("handling join band id =", id.toNumber())
   const band = await Band.findOne({tokenId: id.toNumber() })
   const currMembers = band.members;
-  currMembers.push({artistId: Number(artistId), owner})
+  currMembers.push(Number(artistId))
   band.active = currMembers.length === 4 ? true:false;
   return band.save()
 }
@@ -106,12 +108,13 @@ const handleTrackToken = async(trackId, bandId, artistId, owner) =>{
     const metadata = await fetch(metadataUri).then(result => result.json())
     const track = new Track({
       tokenId: trackId,
-      creator: artistId,
+      creator: Number(artistId),
       owner,
       metadataUri,
       band: bandId,
       tokenType:"track",
-      metadata
+      name:metadata.name,
+      description: metadata.description
     })
     return track.save()
 }
