@@ -134,7 +134,7 @@ export function* joinBand({ data }) {
       key,
       transactionId: transaction.hash,
       status: Constants.usm.transactionStatus.AUTHORIZED
-    }));    
+    }));
   } catch (error) {
     yield put(Actions.ui.showModal({
       title: 'Error',

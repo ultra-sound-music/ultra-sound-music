@@ -28,15 +28,15 @@ export class BandCard extends React.Component {
     } = this.props;
 
     if (canCreateTrack) {
-      return <CreateTrackButton />
+      return <CreateTrackButton />;
     }
 
     if (canJoinBand) {
-      return <JoinBandButton bandId={tokenId} />
+      return <JoinBandButton bandId={tokenId} />;
     }
 
     if (canRequestToJoinBand) {
-      return <RequestToJoinBandButton />
+      return <RequestToJoinBandButton />;
     }
   }
 

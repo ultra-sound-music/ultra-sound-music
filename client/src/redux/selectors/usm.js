@@ -87,6 +87,11 @@ export function selectOpenTransactions(state) {
   })
 }
 
+export const hasOpenTransactions = createSelector(
+  selectOpenTransactions,
+  (openTransactions) => !!(openTransactions?.length)
+);
+
 export function selectOpenTransaction(state, key) {
   const openTransactions = selectOpenTransactions(state);
   return openTransactions.some((transaction) => transaction.key === key);
@@ -129,7 +134,3 @@ export const isProcessingCreateTrack = createSelector(
     return openTransactions.some((transaction) => transaction.key === transactionKey);
   }
 )
-
-export function hasOpenTransaction(state, key) {
-  return !!(selectOpenTransaction(state, key));
-}

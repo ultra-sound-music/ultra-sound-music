@@ -36,14 +36,14 @@ export class JoinBandButton extends React.Component {
 
   render() {
     return (
-      <Button className='JoinBandButton' onClick={this.onClick} disabled={!this.props.canJoinBand || this.props.isProcessing}>Join Band</Button>
+      <Button className='JoinBandButton' onClick={this.onClick} disabled={!this.props.canJoinBand || this.props.isProcessing}>{this.renderSpinner()}Join Band</Button>
     );
   }
 }
 
 export function mapStateToProps(state, { bandId }) {
   const activeArtistId = Selectors.usm.getActiveArtistId(state);
-  const isProcessing = Selectors.usm.isProcessingJoinBand(state, activeArtistId);
+  const isProcessing = Selectors.usm.isProcessingJoinBand(state, bandId, activeArtistId);
 
   return {
     canJoinBand: Selectors.canJoinBand(state, bandId),

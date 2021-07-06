@@ -20,6 +20,7 @@ import Token from './components/Tokens/Token';
 import Searchable from './components/Searchable';
 import NetworkButton from './components/Buttons/NetworkButton'
 import Onboarding from './components/Onboarding';
+import ProcessingIndicator from './components/ProcessingIndicator';
 
 import * as Selectors from './redux/selectors';
 
@@ -27,7 +28,18 @@ import './App.scss';
 
 export class App extends React.Component {
   static propTypes = {
-    accountAddress: PropTypes.string
+    accountAddress: PropTypes.string,
+    hasOpenTransactions: PropTypes.bool
+  }
+
+  renderProcessingIndicator() {
+    if (this.props.hasOpenTransactions) {
+      return (
+        <div className='App__banner'>
+          <ProcessingIndicator />          
+        </div>
+      );
+    }
   }
 
   render() {
@@ -46,6 +58,8 @@ export class App extends React.Component {
                   <Nav.Link>Profile</Nav.Link>
                 </Nav>
               </Navbar>
+
+              {this.renderProcessingIndicator()}
 
               <Switch>
                 <Route path="/about" component={About} />
@@ -75,6 +89,7 @@ export class App extends React.Component {
 
 export function mapStateToProps(state) {
   return {
+    hasOpenTransactions: Selectors.usm.hasOpenTransactions(state),
     accountAddress: Selectors.web3.getAccountAddress(state)
   }
 }
