@@ -9,7 +9,7 @@ module.exports = (env) => {
     entry: {
       index: './src/index'    
     },
-    devtool: 'inline-source-map',  
+    devtool: 'eval-cheap-module-source-map',
     plugins: [
       new HtmlWebpackPlugin({
         template: 'public/index.html'
