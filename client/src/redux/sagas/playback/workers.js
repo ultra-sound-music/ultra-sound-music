@@ -7,6 +7,17 @@ export function* init() {
   // yield call(togglePlayback);
 }
 
+// @TODO this is a temporary solution for mapping to the current way of generating trackDNA
+export function tempTrackSourceMapper(dna) {
+  if (typeof dna === 'string') {
+    return dna
+  }
+
+  const trackCreator = dna.pop();
+  const mappedDNA = dna.slice(0, 4);
+  return mappedDNA.sort((x,y) => { return x == trackCreator ? -1 : y == trackCreator ? 1 : 0; });
+}
+
 export function* toggle({ data }) {
   let source = data?.source;
 
@@ -15,16 +26,17 @@ export function* toggle({ data }) {
     source = yield select(Selectors.playback.selectActiveSource);
   }
 
-  const playableSource = typeof source === 'string' ? source : yield select(Selectors.usm.selectPlayableSourceByTokenId, source);
-  const playbacktoggler = Array.isArray(playableSource) ? toggleTrackAudioPlayback : togglePlayback;
+  const playableSource = tempTrackSourceMapper(typeof source === 'string' ? source : yield select(Selectors.usm.selectPlayableSourceByTokenId, source));
   try {
-    const isPlaying = yield call(playbacktoggler, playableSource);
+    const isPlaying = Array.isArray(playableSource)
+      ? yield call(toggleTrackAudioPlayback, ...playableSource)
+      : yield call(togglePlayback, playableSource);
+
     if (isPlaying) {
       yield put(Actions.playback.playSuccess({ source }));
     } else {
       yield put(Actions.playback.stopSuccess());
     }
-    
   } catch (error) {
     // @TODO
     // yield put(Actions.playback.stopFail);

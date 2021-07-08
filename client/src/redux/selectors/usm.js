@@ -21,11 +21,6 @@ export function getActiveBandId(state) {
   return state.usm.activeBandId;
 }
 
-export const selectPlayableSourceByTokenId = createSelector(
-  selectTokenById,
-  (token) => token.artistDNA // @TODO suport tracks
-)
-
 export const selectAllBandEntities = createSelector(
   selectAllTokenEntities,
   (tokens) => tokens.filter((token) => token.tokenType === Constants.usm.tokenType.BAND)
@@ -132,5 +127,77 @@ export const isProcessingCreateTrack = createSelector(
   (openTransactions, bandId, artistId) => {
     const transactionKey = Utils.usm.genCreateTrackTransactionKey(bandId, artistId);
     return openTransactions.some((transaction) => transaction.key === transactionKey);
+  }
+)
+
+export function hasOpenTransaction(state, key) {
+  return !!(selectOpenTransaction(state, key));
+}
+
+export const getBandByTrackId = createSelector(
+  selectTokenById,
+  selectAllBandEntities,
+  (track, bands) => {
+    const bandId = (track?.tokenType === Constants.usm.tokenType.TRACK) && track.band;
+    return bands.find((band) => {
+      return band.tokenId === bandId
+    });
+  }
+);
+
+export const getBandLeaderIdByTrackId = createSelector(
+  getBandByTrackId,
+  (band) => band?.creator
+)
+
+export const getTrackCreatorIdByTrackId = createSelector(
+  selectTokenById,
+  (track) => (track?.tokenType === Constants.usm.tokenType.TRACK) ? track?.creator : void 0
+)
+
+export const getBandMembersByTrackId = createSelector(
+  getBandByTrackId,
+  (band) => band?.members
+)
+
+export const getTrackDNA = createSelector(
+  getBandMembersByTrackId,
+  getBandLeaderIdByTrackId,
+  getTrackCreatorIdByTrackId,
+  selectAllArtistEntities,
+  (artistIds, bandLeaderId, trackCreatorId, artists) => {
+    if (!Array.isArray(artistIds)) {
+      return;
+    }
+
+    let bandLeaderDNA;
+    let trackCreatorDNA;
+
+    const rawDNAs = artistIds.map((artistId) => {
+      const bandMember = artists.find(({ tokenId, artistDNA }) => {
+        if (tokenId === bandLeaderId) bandLeaderDNA = artistDNA
+        if (tokenId === trackCreatorId) trackCreatorDNA = artistDNA
+        return tokenId === artistId ?? artistDNA
+      });
+
+      return bandMember?.artistDNA;
+    });
+    
+    return [...rawDNAs, bandLeaderDNA, trackCreatorDNA, trackCreatorDNA];
+  }
+);
+
+export const selectPlayableSourceByTokenId = createSelector(
+  selectTokenById,
+  getTrackDNA,
+  ({ artistDNA, tokenType }, trackDNA) => {
+    switch(tokenType) {
+      case Constants.usm.tokenType.ARTIST: {
+        return artistDNA
+      }
+      case Constants.usm.tokenType.TRACK: {
+        return trackDNA
+      }            
+    }
   }
 )
