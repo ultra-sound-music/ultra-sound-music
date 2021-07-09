@@ -35,6 +35,16 @@ export function onJoinBandComplete({ transaction, data }) {
   store.dispatch(Actions.usm.refresh());
 }
 
+export function onCreateTrackComplete({ transaction, data }) {
+  const store = ReduxUtils.getStore();
+  store.dispatch(Actions.usm.updateTransaction({
+    key: Utils.usm.genCreateTrackTransactionKey(data.bandId, data.artistId),
+    transaction,
+    status: Constants.usm.transactionStatus.MINED
+  }));
+  store.dispatch(Actions.usm.refresh());
+}
+
 export function* initializeActiveArtist() {
   const activeArtistId = yield select(Selectors.usm.getActiveArtistId);
   if (activeArtistId) {

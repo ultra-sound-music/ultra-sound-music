@@ -77,11 +77,10 @@ export function joinBand({ bandId }) {
   }
 }
 
-export function createTrack({bandId, name, description}) {
+export function createTrack({ name, description }) {
   return {
     type: ActionTypes.CREATE_TRACK_REQUEST,
     data: {
-      bandId,
       name,
       description
     }    

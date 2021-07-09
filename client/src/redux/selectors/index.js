@@ -43,8 +43,16 @@ export const getPlayingTokenId = createSelector(
 export const isMemberOfBand = createSelector(
   usm.selectTokenById,
   usm.getActiveArtistId,
-  (token, activeArtistId) => token.tokenType === 'band' && token?.members.some((member) => member.artistId === activeArtistId)
+  (token, activeArtistId) => token.tokenType === 'band' && token?.members.some((artistId) => artistId === activeArtistId)
 );
+
+export const canCreateTrack = createSelector(
+  isMemberOfBand,
+  usm.getNumBandMembers,
+  (isMemberOfBand, numBandMembers) => {
+    return isMemberOfBand && (numBandMembers === Constants.usm.MAX_BAND_MEMBERS)
+  }  
+)
 
 export const canJoinBand = createSelector(
   isMemberOfBand,

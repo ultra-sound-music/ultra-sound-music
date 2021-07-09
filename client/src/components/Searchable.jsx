@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as Selectors from '../redux/selectors';
-import Search from './Search';
 import TokenCards from './Tokens/TokenCards';
 
 export class Searchable extends React.Component {
@@ -14,7 +13,6 @@ export class Searchable extends React.Component {
   render() {
     return (
       <div className="Searchable">
-        <Search onChange={this.onChange} onClear={this.onClear} />
         <TokenCards tokenIds={this.props.tokenIds} />
       </div>      
     );

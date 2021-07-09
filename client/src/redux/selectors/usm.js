@@ -51,6 +51,11 @@ export const getNumBandMembers = createSelector(
   (token) => token?.members?.length
 )
 
+export const getTokenName = createSelector(
+  selectTokenById,
+  (token) => token?.name
+)
+
 export const getActiveArtistName = createSelector(
   selectAllArtistEntities,
   getActiveArtistId,
@@ -73,6 +78,15 @@ export const getActiveArtistBands = createSelector(
     return bands.filter((band) => {
       return band.members.includes(activeArtistId);
     })
+  }
+)
+
+export const getActiveBandName = createSelector(
+  selectAllBandEntities,
+  getActiveBandId,
+  (bands, bandId) => {
+    const band = bands.find((band) => band.tokenId === bandId)
+    return band?.name;
   }
 )
 
@@ -144,6 +158,32 @@ export const getBandByTrackId = createSelector(
     });
   }
 );
+
+export const getTrackCreatorByTrackId = createSelector(
+  selectTokenById,
+  (track) => {
+    if (track?.tokenType === Constants.usm.tokenType.TRACK) {
+      return track.creator;
+    }
+  }
+)
+
+export const getAllTracksByBandId = createSelector(
+  (state, bandId) => bandId, 
+  selectAllTrackEntities,
+  (bandId, tracks) => tracks?.filter((track) => track.band === bandId)
+)
+
+export const hasActiveArtistMintedATrackForBand = createSelector(
+  getActiveArtistId,
+  getAllTracksByBandId,
+  (artistId, tracks) => tracks.some((track) => track.artist === artistId)
+)
+
+export const canActiveArtistCreateTrackForBand = createSelector(
+  hasActiveArtistMintedATrackForBand,
+  (hasCreated) => !hasCreated
+)
 
 export const getBandLeaderIdByTrackId = createSelector(
   getBandByTrackId,

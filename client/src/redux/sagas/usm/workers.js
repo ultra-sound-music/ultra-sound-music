@@ -149,18 +149,42 @@ export function* joinBand({ data }) {
   }  
 }
 
-export function* createTrack(bandId, name, description) {
+export function* createTrack({ data }) {
   if (!usmClient) {
     throw new Error('USM not initialized');
   }
 
-  function onComplete() {
+  const {
+    name,
+    description    
+  } = data;
 
-  }
+  const artistId = yield select(Selectors.usm.getActiveArtistId);
+  const bandId = yield select(Selectors.usm.getActiveBandId);
+  const key = yield call(Utils.usm.genCreateTrackTransactionKey, bandId, artistId);
+
+  yield put(Actions.usm.addTransaction({
+    method: 'joinBand',
+    key
+  }));
 
   try {
-    yield call(usmClient.createTrack, name, description, onComplete);
+    const transaction = yield call([usmClient, 'createTrack'], { artistId, bandId, name, description }, Helpers.onCreateTrackComplete);
+    yield put(Actions.usm.updateTransaction({
+      key,
+      transactionId: transaction.hash,
+      status: Constants.usm.transactionStatus.AUTHORIZED
+    }));    
   } catch (error) {
-    console.log(error);
+    yield put(Actions.ui.showModal({
+      title: 'Error',
+      bodyText: error?.data?.message || error.message
+    }));
+    yield put(Actions.usm.updateTransaction({
+      key,
+      status: Constants.usm.transactionStatus.FAILED,
+      errorCode: error.code,
+      errorMessage: error?.data?.message || error.message
+    }));
   }
 }

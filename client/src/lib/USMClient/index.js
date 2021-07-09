@@ -103,18 +103,19 @@ export default class USMClient {
     return transaction;
   }
 
-  async createTrack({ name, description, artistId, tokenId }, onComplete) {
+  async createTrack({ name, description, artistId, bandId }, onComplete) {
       const metadata = {
         name,
         description
       };
-      const { data } = await this.createMetaDataUri(metadata);
-      const transaction = await this.writeContract.createTrack(artistId, tokenId, data.metadataUri);
+
+      const { data } = await this.createMetadataUri(metadata);
+      const transaction = await this.writeContract.createTrack(artistId, bandId, data.metadataUri);
       const contextData = {
         name,
         description,
         artistId,
-        tokenId
+        bandId
       };
       this.writeContract.once(transaction, (transaction) => onComplete({ transaction, data: contextData }));
       return transaction;

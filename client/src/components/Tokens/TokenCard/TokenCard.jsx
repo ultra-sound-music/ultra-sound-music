@@ -13,7 +13,8 @@ export class TokenCard extends React.Component {
     tokenType: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
-    ctaButton: PropTypes.node
+    ctaButton: PropTypes.node,
+    actionIcons: PropTypes.array
   };
 
   render() {
@@ -33,9 +34,12 @@ export class TokenCard extends React.Component {
 
     return (
       <Card className={className}>
-        <Card.Header>
-          <Nav className="mr-auto">
+        <Card.Header className="TokenCard__header">
+          <Nav className="TokenCard__title">
             {tokenType}
+          </Nav>
+          <Nav className="TokenCard__actionIcons">
+            {this.props.actionIcons && this.props.actionIcons.map((icon, i) => <div key={i} className='TokenCard__actionIcon'>{icon}</div>)}
           </Nav>
         </Card.Header>
         <Card.Body>
