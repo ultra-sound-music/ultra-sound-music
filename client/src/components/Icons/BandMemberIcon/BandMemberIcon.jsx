@@ -35,7 +35,7 @@ export class BandMemberIcon extends React.Component {
   }
 
   renderPerson() {
-    <FilePerson />
+    return <FilePerson />;
   }
 
   render() {
