@@ -2,6 +2,9 @@
 
 ## Quick Start
 
+1. Create .env file inside of the `/api` folder and populate it with environment variables (see `.env.example`).
+
+2. Run setup scripts
 ```
 npm run start-blockchain
 
