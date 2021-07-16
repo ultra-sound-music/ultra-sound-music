@@ -1,10 +1,9 @@
 import { select, call, put } from 'redux-saga/effects'
-import { togglePlayback, toggleTrackAudioPlayback } from '../../../audio'
+import { toggleSingleArtistPlayback, toggleTrackAudioPlayback } from '../../../audio'
 import * as Actions from '../../actions';
 import * as Selectors from '../../selectors';
 
 export function* init() {
-  // yield call(togglePlayback);
 }
 
 // @TODO this is a temporary solution for mapping to the current way of generating trackDNA
@@ -30,7 +29,7 @@ export function* toggle({ data }) {
   try {
     const isPlaying = Array.isArray(playableSource)
       ? yield call(toggleTrackAudioPlayback, ...playableSource)
-      : yield call(togglePlayback, playableSource);
+      : yield call(toggleSingleArtistPlayback, playableSource);
 
     if (isPlaying) {
       yield put(Actions.playback.playSuccess({ source }));
