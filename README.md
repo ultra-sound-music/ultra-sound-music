@@ -2,9 +2,16 @@
 
 ## Quick Start
 
-1. Create .env file inside of the `/api` folder and populate it with environment variables (see `.env.example`).
+1. Install MongoDB
 
-2. Run setup scripts
+```
+brew tap mongodb/brew
+brew install mongodb-community@4.4
+```
+
+2. Create .env file inside of the `/api` folder and populate it with environment variables (see `.env.example`).
+
+3. Run setup scripts
 ```
 npm run start-blockchain
 

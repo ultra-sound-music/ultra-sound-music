@@ -5,11 +5,9 @@ const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 
 module.exports = (env) => {
   return {
-    mode: 'development',
     entry: {
       index: './src/index'    
     },
-    devtool: 'eval-cheap-module-source-map',
     plugins: [
       new HtmlWebpackPlugin({
         template: 'public/index.html'
