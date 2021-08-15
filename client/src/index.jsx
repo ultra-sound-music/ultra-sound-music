@@ -3,17 +3,31 @@ import 'regenerator-runtime/runtime.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 
 import initStore from './redux/store';
 import App from './App';
+import Borked from './components/Borked';
 import reportWebVitals from './reportWebVitals';
 
 import './index.scss';
 
+const sentryDsn = __SENTRY_ENABLED__ ? __SENTRY_DSN__ : '';
+
+Sentry.init({
+  environment: __ENVIRONMENT__,  
+  dsn: sentryDsn,
+  integrations: [new Integrations.BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={initStore()}>
-      <App />
+      <Sentry.ErrorBoundary fallback={<Borked />}>
+        <App />
+      </Sentry.ErrorBoundary>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

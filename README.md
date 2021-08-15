@@ -9,7 +9,9 @@ brew tap mongodb/brew
 brew install mongodb-community@4.4
 ```
 
-2. Create .env file inside of the `/api` folder and populate it with environment variables (see `.env.example`).
+2. Setup local environment
+  * Create .env file inside of the `/api` folder and populate it with api environment variables (see `.env.example`).
+  * Create .env file inside of the `/client` folder and populate it with client environment variables
 
 3. Run setup scripts
 ```
@@ -24,64 +26,22 @@ npm run seed-chain-data
 npm run start-client
 ```
 
-## Client
+## Debugging the ExpressJS Server
 
-```
-cd client
-
-npm i
-
-npm run start
-
-```
-
-## Contracts
-
-code located in `/contracts`
-
-```
-cd contracts
-
-npm i
-
-// compiles test ERC20 contract
-
-npx hardhat compile
-
-// deploys ERC20 contract to local running network
-
-npx hardhat run scripts/sample-deploy.js
-
-// runs local network and exposes JSON-RPC server at http://127.0.0.1:8545/
-
-npx hardhat node
-
-```
-
-## Server
-
-create a `.env` file following the example in `.env.example`
-
-to run locally you must mongodb installed and run `mongod` to get a local instance running
-
+1. Upon setup, instead of running `npm run start-api`, you do:
 ```
 cd api
-
-npm i
-
-npm run start
+npm run start-debug
 ```
 
-endpoint
+2. Continue with the rest of the setup scripts as usual.
 
-```
-/api/artists
-/api/bands
-/api/tracks
-/api/tokens/all
-/api/create_metadata_uri
-```
+3. In Chrome, navigate to `chrome://inspect`
 
-```
+4. Click the `inspect` link under the `Remote Target` heading.
 
-```
+5. You can now open expressjs files from within Chrome and set breakpoints.
+
+## Enabled 3rd Party integrations
+
+Set the `<SERVICE>_ENABLED` environment variable for the given service to `'true'`

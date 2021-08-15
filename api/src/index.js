@@ -1,6 +1,8 @@
 require('dotenv').config()
 const { ethers } = require('ethers');
 const express = require('express');
+const Sentry = require('@sentry/node');
+const Tracing = require('@sentry/tracing');
 const util = require('util');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -14,13 +16,28 @@ const fetch = require('node-fetch');
 const Network = require( './contracts/network.json');
 const UltraSoundMusicABI = require( './contracts/UltraSoundMusicABI.json');
 
-
+const sentryDsn = process.env.SENTRY_ENABLED === 'true' ? process.env.SENTRY_DSN : '';
 const nullAddress = "0x0000000000000000000000000000000000000000";
 
 
 // start express app
 const app = express();
 const port = 9001;
+
+Sentry.init({
+  dsn: sentryDsn,
+  integrations: [
+    new Sentry.Integrations.Http({ tracing: true }),
+    new Tracing.Integrations.Express({ app }),
+  ],
+  tracesSampleRate: 1.0,
+});
+
+// RequestHandler creates a separate execution context using domains, so that every
+// transaction/span/breadcrumb is attached to its own Hub instance
+app.use(Sentry.Handlers.requestHandler());
+// TracingHandler creates a trace for every incoming request
+app.use(Sentry.Handlers.tracingHandler());
 
 
 const customHttpProvider = new ethers.providers.JsonRpcProvider(process.env.ETH_PROVIDER);
@@ -207,4 +224,6 @@ app.listen(port, async () => {
     console.log(`Example app listening on port ${port}!`);
 });
 
+// The error handler must be before any other error middleware and after all controllers
+app.use(Sentry.Handlers.errorHandler());
 
