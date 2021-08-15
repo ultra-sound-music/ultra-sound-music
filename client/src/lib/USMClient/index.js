@@ -45,11 +45,9 @@ export default class USMClient {
   
   
   async fetchAll() {
-    const response = await axios.get(`${this.apiHost}/cache/tokens/all`, {
+    return await axios.get(`${this.apiHost}/api/tokens`, {
       headers: {"Access-Control-Allow-Origin": "*"}
     });
-
-    return response?.data;
   }
 
   // @TODO pass in an onError callback

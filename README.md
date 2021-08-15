@@ -75,11 +75,11 @@ npm run start
 endpoint
 
 ```
-/cache/artists
-/cache/bands
-/cache/tracks
-/cache/tokens/all
-/create_metadata_uri
+/api/artists
+/api/bands
+/api/tracks
+/api/tokens/all
+/api/create_metadata_uri
 ```
 
 ```

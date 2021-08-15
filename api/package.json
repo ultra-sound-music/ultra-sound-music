@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run start-db && node src/index.js",
+    "start-debug": "npm run start-db && node --inspect src/index.js",
     "start-db": "brew services start mongodb-community@4.4",
     "stop-db": "brew services stop mongodb-community@4.4"
   },

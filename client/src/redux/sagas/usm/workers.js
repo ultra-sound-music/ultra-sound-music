@@ -12,13 +12,11 @@ export function* init({ data }) {
   const ethClient = data?.web3Client;
   // @todo optimize this loading to be async and not block the app
   const {default: abi} = yield call(() => import('../../../deps/usmAbi'));
-  
-  const webserverDomain = `//${document.location.host}`;
-  const apiHost = webserverDomain.replace('9000', '9001');
+
   usmClient = new USMClient({
     contractAddress: Constants.web3.CONTRACT_ADDRESS,
     abi,
-    apiHost,
+    apiHost: `//${document.location.host}`,
     accountAddress: yield select(Selectors.web3.getAccountAddress),
     provider: ethClient.provider,
     logger: Utils.logger
@@ -32,8 +30,9 @@ export function* refresh() {
 }
 
 export function* fetchAllTokens() {
-  const tokens = yield call([usmClient, 'fetchAll']);
-  yield put(Actions.usm.setTokens({ tokens }));
+  const response = yield call([usmClient, 'fetchAll']);
+
+  yield put(Actions.usm.setTokens({ tokens: response?.data }));
   yield call(Helpers.initializeActiveArtist);
   yield call(Helpers.initializeActiveBand);  
 }

@@ -1,7 +1,6 @@
 require('dotenv').config()
 const { ethers } = require('ethers');
 const express = require('express');
-const cors = require('cors');
 const util = require('util');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -51,7 +50,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // support /post
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.use(cors());
 
 const handleArtistToken = async(from,to,id) =>{
   console.log("handle artist being called")
@@ -119,22 +117,22 @@ const handleTrackToken = async(trackId, bandId, artistId, owner) =>{
     return track.save()
 }
 
-app.get('/cache/artists', async (req, res) => {
+app.get('/api/artists', async (req, res) => {
   const artists = await Artist.find()
 	res.send(artists)
 });
 
-app.get('/cache/bands', async (req, res) => {
+app.get('/api/bands', async (req, res) => {
   const bands = await Band.find()
 	res.send(bands)
 });
 
-app.get('/cache/tracks', async (req, res) => {
+app.get('/api/tracks', async (req, res) => {
   const tracks = await Track.find()
 	res.send(tracks)
 });
 
-app.get('/cache/tokens/all', async(req,res)=> {
+app.get('/api/tokens', async(req,res)=> {
   const tracks = await Track.find()
   const bands = await Band.find()
   const artists = await Artist.find()
@@ -143,7 +141,7 @@ app.get('/cache/tokens/all', async(req,res)=> {
   res.send(merged)
 })
 
-app.post("/create_metadata_uri", async(req,res)=> {
+app.post("/api/create_metadata_uri", async(req,res)=> {
 
   const obj = req.body
 
