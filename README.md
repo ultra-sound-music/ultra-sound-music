@@ -18,10 +18,10 @@ brew install mongodb-community@4.4
 npm run start-blockchain
 
 // Then, open another terminal
+npm run deploy-contracts
 npm run start-api
 
 // Then, open a third terminal
-npm run deploy-contracts
 npm run seed-chain-data
 npm run start-client
 ```

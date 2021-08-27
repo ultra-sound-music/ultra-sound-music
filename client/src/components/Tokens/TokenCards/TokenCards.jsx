@@ -7,15 +7,15 @@ import './TokenCards.scss';
 export function Tokens (props) {
   return (
     <div className="Tokens">
-      {props.tokenIds.map((id) => {
-        return <TokenCardHOC key={id} tokenId={id} />
+      {props.entityIds.map((id) => {
+        return <TokenCardHOC key={id} entityId={id} />
       })}
     </div>
   )
 }
 
 Tokens.propTypes = {
-  tokenIds: PropTypes.arrayOf(PropTypes.number)
+  entityIds: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default Tokens;

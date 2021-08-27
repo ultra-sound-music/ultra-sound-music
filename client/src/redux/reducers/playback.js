@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit'
 import * as ActionTypes from '../actionTypes';
 
 const initialState = {
-  source: null,  // If source is a string then it's an address, if it's a number it's a tokenId
+  source: '',
   status: 'stopped',
 }
 

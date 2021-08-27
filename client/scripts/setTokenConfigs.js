@@ -1,7 +1,7 @@
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 
-const ABI = process.argv[2];
+const tokenConfigs = process.argv[2];
 
 const path = './src/deps';
 const made = mkdirp.sync(path);
@@ -10,7 +10,8 @@ if (made) {
   console.log(`made directories, starting with ${made}`)
 }
 
-fs.writeFile(`${path}/usmAbi.js`, ABI, {flag: 'w+'}, err => {
+const jsString = `export default ${tokenConfigs}`;
+fs.writeFile(`${path}/tokenConfigs.js`, jsString, {flag: 'w+'}, err => {
   if (err) {
     console.error(err)
     return

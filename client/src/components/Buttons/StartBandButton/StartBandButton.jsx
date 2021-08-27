@@ -61,8 +61,8 @@ export class StartBandButton extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const artistId = Selectors.usm.getActiveArtistId(state);
-  const isProcessing = Selectors.usm.isProcessingStartBand(state, artistId);
+  const activeArtistTid = Selectors.usm.getActiveArtistTid(state);
+  const isProcessing = Selectors.usm.isProcessingStartBand(state, activeArtistTid);
 
   return {
     isProcessing

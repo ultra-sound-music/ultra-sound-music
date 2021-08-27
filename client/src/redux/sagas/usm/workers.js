@@ -11,13 +11,19 @@ let usmClient;
 export function* init({ data }) {
   const ethClient = data?.web3Client;
   // @todo optimize this loading to be async and not block the app
-  const {default: abi} = yield call(() => import('../../../deps/usmAbi'));
+  const {default: {
+    artist: artistConfig,
+    band: bandConfig,
+    track: trackConfig
+  }} = yield call(() => import('../../../deps/tokenConfigs'));
+
 
   usmClient = new USMClient({
-    contractAddress: Constants.web3.CONTRACT_ADDRESS,
-    abi,
-    apiHost: `//${document.location.host}`,
+    artistConfig,
+    bandConfig,
+    trackConfig,
     accountAddress: yield select(Selectors.web3.getAccountAddress),
+    apiHost: `//${document.location.host}/api`,
     provider: ethClient.provider,
     logger: Utils.logger
   });
@@ -82,15 +88,15 @@ export function* startBand({ data }) {
     description,
   } = data;
 
-  const bandLeaderArtistId = yield select(Selectors.usm.getActiveArtistId);
-  const key = yield call(Utils.usm.genStartBandTransactionKey, bandLeaderArtistId);
+  const artistTid = yield select(Selectors.usm.getActiveArtistTid);
+  const key = yield call(Utils.usm.genStartBandTransactionKey, artistTid);
   yield put(Actions.usm.addTransaction({
     method: 'startBand',
     key
   }));  
 
   try {
-    const transaction = yield call([usmClient, 'startBand'], { name, description, bandLeaderArtistId }, Helpers.onCreateBandComplete);
+    const transaction = yield call([usmClient, 'startBand'], { name, description, artistTid }, Helpers.onCreateBandComplete);
     yield put(Actions.usm.updateTransaction({
       key,
       transactionId: transaction.hash,
@@ -120,15 +126,16 @@ export function* joinBand({ data }) {
     bandId
   } = data;
 
-  const artistId = yield select(Selectors.usm.getActiveArtistId);
-  const key = yield call(Utils.usm.genJoinBandTransactionKey, bandId, artistId);
+  const bandTid = yield select(Selectors.usm.getTokenId, bandId);
+  const artistTid = yield select(Selectors.usm.getActiveArtistTid);
+  const key = yield call(Utils.usm.genJoinBandTransactionKey, (bandTid), artistTid);
   yield put(Actions.usm.addTransaction({
     method: 'joinBand',
     key
   }));  
 
   try {
-    const transaction = yield call([usmClient, 'joinBand'], { bandId, artistId }, Helpers.onJoinBandComplete);
+    const transaction = yield call([usmClient, 'joinBand'], { bandTid, artistTid }, Helpers.onJoinBandComplete);
     yield put(Actions.usm.updateTransaction({
       key,
       transactionId: transaction.hash,
@@ -155,12 +162,13 @@ export function* createTrack({ data }) {
 
   const {
     name,
-    description    
+    description,
+    bandId
   } = data;
 
-  const artistId = yield select(Selectors.usm.getActiveArtistId);
-  const bandId = yield select(Selectors.usm.getActiveBandId);
-  const key = yield call(Utils.usm.genCreateTrackTransactionKey, bandId, artistId);
+  const artistTid = yield select(Selectors.usm.getActiveArtistTid);
+  const bandTid = yield select(Selectors.usm.getTokenId, bandId);
+  const key = yield call(Utils.usm.genCreateTrackTransactionKey, bandTid, artistTid);
 
   yield put(Actions.usm.addTransaction({
     method: 'joinBand',
@@ -168,7 +176,7 @@ export function* createTrack({ data }) {
   }));
 
   try {
-    const transaction = yield call([usmClient, 'createTrack'], { artistId, bandId, name, description }, Helpers.onCreateTrackComplete);
+    const transaction = yield call([usmClient, 'createTrack'], { artistTid, bandTid, name, description }, Helpers.onCreateTrackComplete);
     yield put(Actions.usm.updateTransaction({
       key,
       transactionId: transaction.hash,

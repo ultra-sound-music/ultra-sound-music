@@ -4,14 +4,13 @@
   "description": "## Client",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start-blockchain": "cd contracts && npm start",
-    "start-api": "cd api && npm start",
+    "start-api": "npm run set-token-configs -- api && cd api && npm start",
     "stop-db": "cd api && npm run stop-db",
-    "start-client": "cd client && npm start",
-    "deploy-contracts": "cd contracts && npm run deploy-contracts && cd .. && npm run set-abi",
+    "start-client": " npm run set-token-configs -- client && cd client && npm start",
+    "deploy-contracts": "cd contracts && npm run deploy-contracts",
     "seed-chain-data": "cd contracts && npm run seed-chain-data",
-    "set-abi": "node scripts/setAbiToClient.js"
+    "set-token-configs": "node scripts/setTokenConfigs.js"
   },
   "repository": {
     "type": "git",

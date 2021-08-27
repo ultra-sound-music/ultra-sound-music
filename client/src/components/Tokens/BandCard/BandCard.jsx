@@ -12,38 +12,38 @@ import * as Selectors from '../../../redux/selectors';
 
 export class BandCard extends React.Component {
   static propTypes = {
-    tokenId: PropTypes.number,
+    entityId: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
     canCreateTrack: PropTypes.bool,
     canRequestToJoinBand: PropTypes.bool,
     canJoinBand: PropTypes.bool,
-    bandMembers: PropTypes.arrayOf(PropTypes.number)
+    bandMemberIds: PropTypes.arrayOf(PropTypes.string)
   };
 
   renderBandMemberIcons() {
-    const { bandMembers } = this.props;
+    const { bandMemberIds } = this.props;
     const emptyArray = Array.from(new Array(Constants.usm.MAX_BAND_MEMBERS));
     return emptyArray.map((n, i) => {
-      const id = bandMembers[i];
-      return <BandMemberIcon key={id} artistId={id} />
+      const artistId = bandMemberIds[i];
+      return <BandMemberIcon key={artistId} artistId={artistId} />
     })
   }  
 
   renderCtaButton() {
     const {
-      tokenId,
+      entityId,
       canCreateTrack,
       canRequestToJoinBand,
       canJoinBand
     } = this.props;
 
     if (canCreateTrack) {
-      return <CreateTrackButton />;
+      return <CreateTrackButton bandId={entityId} />;
     }
 
     if (canJoinBand) {
-      return <JoinBandButton bandId={tokenId} />;
+      return <JoinBandButton entityId={entityId} />;
     }
 
     if (canRequestToJoinBand) {
@@ -53,14 +53,14 @@ export class BandCard extends React.Component {
 
   render() {
     const {
-      tokenId,
+      entityId,
       name,
       description,
     } = this.props;
 
     return (
       <TokenCard
-        tokenId={tokenId}
+        entityId={entityId}
         tokenType='Band'
         name={name}
         description={description}
@@ -71,12 +71,12 @@ export class BandCard extends React.Component {
   }
 }
 
-function mapStateToProps(state, { tokenId }) {
-  const { name, description } = Selectors.usm.selectTokenById(state, tokenId); 
-  const canCreateTrack = Selectors.canCreateTrack(state, tokenId);
-  const canRequestToJoinBand = Selectors.canRequestToJoinBand(state, tokenId);
-  const canJoinBand = Selectors.canJoinBand(state, tokenId);
-  const bandMembers = Selectors.usm.getBandMembers(state, tokenId);
+function mapStateToProps(state, { entityId }) {
+  const { name, description } = Selectors.usm.selectTokenById(state, entityId); 
+  const canCreateTrack = Selectors.usm.canCreateTrackForBand(state, entityId);
+  const canRequestToJoinBand = Selectors.usm.canRequestToJoinBand(state, entityId);
+  const canJoinBand = Selectors.usm.canJoinBand(state, entityId);
+  const bandMemberIds = Selectors.usm.getBandMemberIds(state, entityId);
 
   return {
     name,
@@ -84,7 +84,7 @@ function mapStateToProps(state, { tokenId }) {
     canCreateTrack,
     canRequestToJoinBand,
     canJoinBand,
-    bandMembers
+    bandMemberIds
   }
 }
 

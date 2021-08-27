@@ -9,32 +9,32 @@ import * as Selectors from '../../../redux/selectors';
 
 export class ArtistCard extends React.Component {
   static propTypes = {
-    tokenId: PropTypes.number,
+    entityId: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
   };
 
   render() {
     const {
-      tokenId,
+      entityId,
       name,
       description
     } = this.props;
 
     return (
       <TokenCard
-        tokenId={tokenId}      
+        entityId={entityId}      
         tokenType='Artist'
         name={name}
         description={description}
-        ctaButton={<PlaybackButton tokenId={tokenId} />}
+        ctaButton={<PlaybackButton entityId={entityId} />}
       />
     );
   }
 }
 
-function mapStateToProps(state, { tokenId }) {
-  const { name, description } = Selectors.usm.selectTokenById(state, tokenId); 
+function mapStateToProps(state, { entityId }) {
+  const { name, description } = Selectors.usm.selectTokenById(state, entityId); 
 
   return {
     name,

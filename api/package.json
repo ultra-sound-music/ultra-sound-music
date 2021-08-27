@@ -7,7 +7,8 @@
     "start": "npm run start-db && node src/index.js",
     "start-debug": "npm run start-db && node --inspect src/index.js",
     "start-db": "brew services start mongodb-community@4.4",
-    "stop-db": "brew services stop mongodb-community@4.4"
+    "stop-db": "brew services stop mongodb-community@4.4",
+    "set-token-configs": "node ./scripts/setTokenConfigs.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "dotenv": "^10.0.0",
     "ethers": "^5.2.0",
     "express": "^4.17.1",
+    "mkdirp": "^1.0.4",
     "mongoose": "^5.12.12",
     "node-fetch": "^2.6.1"
   },

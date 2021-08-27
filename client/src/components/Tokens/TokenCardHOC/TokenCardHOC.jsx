@@ -13,31 +13,35 @@ import './TokenCardHOC.scss';
 
 export class TokenCardHOC extends React.Component {
   static propTypes = {
-    tokenId: PropTypes.number,
+    entityId: PropTypes.string,
     tokenType: PropTypes.string,
   };
 
   render() {
     const {
       tokenType,
-      tokenId
+      entityId
     } = this.props;
+
+    const props = {
+      entityId
+    };
 
     switch (tokenType) {
       case Constants.usm.tokenType.ARTIST:
-        return <ArtistCard tokenId={tokenId} />
+        return <ArtistCard {...props} />
       case Constants.usm.tokenType.BAND:
-        return <BandCard tokenId={tokenId} />
+        return <BandCard {...props} />
       case Constants.usm.tokenType.TRACK:                  
-        return <TrackCard tokenId={tokenId} />
+        return <TrackCard {...props} />
       default:
         return null;      
     }
   }
 }
 
-export function mapStateToProps(state, { tokenId }) {
-  const { tokenType } = Selectors.usm.selectTokenById(state, tokenId); 
+export function mapStateToProps(state, { entityId }) {
+  const { tokenType } = Selectors.usm.selectTokenById(state, entityId); 
 
   return {
     tokenType

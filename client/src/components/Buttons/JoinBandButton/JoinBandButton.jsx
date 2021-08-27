@@ -9,14 +9,14 @@ import * as Selectors from '../../../redux/selectors';
 
 export class JoinBandButton extends React.Component {
   static propTypes = {
-    bandId: PropTypes.number,
+    entityId: PropTypes.string,
     canJoinBand: PropTypes.bool,
     isProcessing: PropTypes.bool,    
     joinBand: PropTypes.func
   };
 
   onClick = () => {
-    this.props.joinBand({ bandId: this.props.bandId })
+    this.props.joinBand({ bandId: this.props.entityId })
   }
 
   renderSpinner() {
@@ -41,12 +41,13 @@ export class JoinBandButton extends React.Component {
   }
 }
 
-export function mapStateToProps(state, { bandId }) {
-  const activeArtistId = Selectors.usm.getActiveArtistId(state);
-  const isProcessing = Selectors.usm.isProcessingJoinBand(state, bandId, activeArtistId);
+export function mapStateToProps(state, { entityId }) {
+  const activeArtistTid = Selectors.usm.getActiveArtistTid(state);
+  const bandTid = Selectors.usm.getTokenId(state, entityId);
+  const isProcessing = Selectors.usm.isProcessingJoinBand(state, bandTid, activeArtistTid);
 
   return {
-    canJoinBand: Selectors.canJoinBand(state, bandId),
+    canJoinBand: Selectors.usm.canJoinBand(state, entityId),
     isProcessing
   }
 }

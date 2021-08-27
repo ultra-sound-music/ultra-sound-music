@@ -10,11 +10,10 @@ import * as Selectors from '../../../redux/selectors';
 
 export class ActiveArtist extends React.Component {
   static propTypes = {
-    tokenId: PropTypes.number,
     canActiveArtistCreateTrackForBand: PropTypes.bool,
     createTrack: PropTypes.func,
     activeArtistName: PropTypes.string,
-    activeArtistId: PropTypes.number,
+    activeArtistId: PropTypes.string,
     hasMintedABand: PropTypes.bool,
     accountAddress: PropTypes.string  
   }
@@ -47,7 +46,7 @@ export class ActiveArtist extends React.Component {
     return (
       <div className='ActiveArtist'>
         <Canvas addresses={[accountAddress]} />
-        {this.props.activeArtistName && <div className='User__activeArtist'>Active Artist: {this.props.activeArtistName} <PlaybackButton tokenId={this.props.activeArtistId} /> </div>}
+        {this.props.activeArtistName && <div className='User__activeArtist'>Active Artist: {this.props.activeArtistName} <PlaybackButton entityId={this.props.activeArtistId} /> </div>}
         {content}
       </div>      
     )

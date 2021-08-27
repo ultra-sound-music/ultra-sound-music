@@ -5,40 +5,41 @@ import * as Constants from '../../../constants';
 import * as Utils from '../../../utils';
 import * as Selectors from '../../../redux/selectors';
 
-export function onCreateArtistComplete({ transaction, data }) {
+export function onCreateArtistComplete({ transaction, data: { artistDNA }}) {
   const store = ReduxUtils.getStore();
+  debugger;
   store.dispatch(Actions.usm.updateTransaction({
-    key: Utils.usm.genCreateArtistTransactionKey(data.artistDNA),
+    key: Utils.usm.genCreateArtistTransactionKey(artistDNA),
     transaction,
     status: Constants.usm.transactionStatus.MINED
   }));
   store.dispatch(Actions.usm.refresh());
 }
 
-export function onCreateBandComplete({ transaction, data }) {
+export function onCreateBandComplete({ transaction, data: { artistTid }}) {
   const store = ReduxUtils.getStore();
   store.dispatch(Actions.usm.updateTransaction({
-    key: Utils.usm.genStartBandTransactionKey(data.bandLeaderArtistId),
+    key: Utils.usm.genStartBandTransactionKey(artistTid),
     transaction,
     status: Constants.usm.transactionStatus.MINED
   }));
   store.dispatch(Actions.usm.refresh());
 }
 
-export function onJoinBandComplete({ transaction, data }) {
+export function onJoinBandComplete({ transaction, data: { bandTid, artistTid }}) {
   const store = ReduxUtils.getStore();
   store.dispatch(Actions.usm.updateTransaction({
-    key: Utils.usm.genJoinBandTransactionKey(data.bandId, data.artistId),
+    key: Utils.usm.genJoinBandTransactionKey(bandTid, artistTid),
     transaction,
     status: Constants.usm.transactionStatus.MINED
   }));
   store.dispatch(Actions.usm.refresh());
 }
 
-export function onCreateTrackComplete({ transaction, data }) {
+export function onCreateTrackComplete({ transaction, data: { bandTid, artistTid }}) {
   const store = ReduxUtils.getStore();
   store.dispatch(Actions.usm.updateTransaction({
-    key: Utils.usm.genCreateTrackTransactionKey(data.bandId, data.artistId),
+    key: Utils.usm.genCreateTrackTransactionKey(bandTid, artistTid),
     transaction,
     status: Constants.usm.transactionStatus.MINED
   }));
@@ -59,7 +60,7 @@ export function* initializeActiveArtist() {
   })
 
   if (activeArtistEntity) {
-    yield put(Actions.usm.setActiveArtist({ artistTokenId: activeArtistEntity.tokenId }));
+    yield put(Actions.usm.setActiveArtist({ artistId: activeArtistEntity._id }));
   }
 }
 
@@ -72,6 +73,6 @@ export function* initializeActiveBand() {
   const activeArtistBands = yield select(Selectors.usm.getActiveArtistBands);
   const activeBand = activeArtistBands[0];
   if (activeBand) {
-    yield put(Actions.usm.setActiveBand({ bandTokenId: activeBand.tokenId }));
+    yield put(Actions.usm.setActiveBand({ bandId: activeBand._id }));
   }
 }

@@ -1,6 +1,6 @@
 
 const hre = require("hardhat");
-const {NFT_DEPLOYED_ADDRESS} = require("./constants");
+const {ARTIST_DEPLOYED_ADDRESS, BAND_DEPLOYED_ADDRESS, TRACK_DEPLOYED_ADDRESS} = require("./constants");
 
 const testURI= "https://storageapi.fleek.co/dongambas-team-bucket/1622333162829"
 
@@ -67,26 +67,32 @@ async function main() {
       user15,
       user16,
     ] = addresses; 
-    const UltraSoundMusic = await hre.ethers.getContractFactory("UltraSoundMusic");
-    const contract = await UltraSoundMusic.attach(NFT_DEPLOYED_ADDRESS);
+    const USMArtistToken = await hre.ethers.getContractFactory("USMArtistToken");
+    const USMBandToken = await hre.ethers.getContractFactory("USMBandToken");
+    const USMTrackToken = await hre.ethers.getContractFactory("USMTrackToken");
+
+
+    const artistContract = await USMArtistToken.attach(ARTIST_DEPLOYED_ADDRESS);
+    const bandContract = await USMBandToken.attach(BAND_DEPLOYED_ADDRESS);
+    const trackContract = await USMTrackToken.attach(TRACK_DEPLOYED_ADDRESS);
 
     await Promise.all(addresses.map(async (address, i) => {     
-      const c = await contract.connect(address);
-      return c.createArtist(artistMetadata[i])
+      const aC = await artistContract.connect(address);
+      return aC.createArtist(artistMetadata[i], {value: ethers.utils.parseEther(".15")})
     }))
 
     console.log("artists created")
 
-    const cU1 = await contract.connect(user1)
-    await cU1.startBand(1, bandMetadata[0])
-    const cU2 = await contract.connect(user2)
-    await cU2.startBand(2, bandMetadata[1])
-    const cU3 = await contract.connect(user3)
-    await cU3.startBand(3, bandMetadata[2])
-    const cU4 = await contract.connect(user4)
-    await cU4.startBand(4, bandMetadata[3])
-    const cU5 = await contract.connect(user5)
-    await cU5.startBand(5, bandMetadata[4])
+    const bU1 = await bandContract.connect(user1)
+    await bU1.startBand(1 , bandMetadata[0])
+    const bU2 = await bandContract.connect(user2)
+    await bU2.startBand(2 , bandMetadata[1])
+    const bU3 = await bandContract.connect(user3)
+    await bU3.startBand(3 , bandMetadata[2])
+    const bU4 = await bandContract.connect(user4)
+    await bU4.startBand(4 , bandMetadata[3])
+    const bU5 = await bandContract.connect(user5)
+    await bU5.startBand(5 , bandMetadata[4])
 
     console.log("bands started")
 
@@ -94,53 +100,63 @@ async function main() {
 
     // band < 4 members
 
-    const cU6 = await contract.connect(user6)
-    await cU6.joinBand(6, 101)
-    const cU7 = await contract.connect(user7)
-    await cU7.joinBand(7, 101)
+    const bU6 = await bandContract.connect(user6)
+    await bU6.joinBand(6, 1)
+    const bU7 = await bandContract.connect(user7)
+    await bU7.joinBand(7, 1)
 
-    console.log("bands 101 joined")
+    console.log("band 1 joined")
+
+    
 
 
     // band with 4 members no tracks
 
-    const cU8 = await contract.connect(user8)
-    await cU8.joinBand(8, 102)
-    const cU9 = await contract.connect(user9)
-    await cU9.joinBand(9, 102)
-    const cU10 = await contract.connect(user10)
-    await cU10.joinBand(10, 102)
+    const bU8 = await bandContract.connect(user8)
+    await bU8.joinBand(8, 2)
+    const bU9 = await bandContract.connect(user9)
+    await bU9.joinBand(9, 2)
+    const bU10 = await bandContract.connect(user10)
+    await bU10.joinBand(10, 2)
 
-    console.log("bands 102 joined and active")
+    console.log("band 2 joined and active")
 
     // band with 4 members 1 track
 
-    const cU11 = await contract.connect(user11)
-    await cU11.joinBand(11, 103)
-    const cU12 = await contract.connect(user12)
-    await cU12.joinBand(12, 103)
-    const cU13 = await contract.connect(user13)
-    await cU13.joinBand(13, 103)
-    await cU13.createTrack(13, 103, trackMetadata[0])
+    const bU11 = await bandContract.connect(user11)
+    await bU11.joinBand(11, 3)
+    const bU12 = await bandContract.connect(user12)
+    await bU12.joinBand(12, 3)
+    const bU13 = await bandContract.connect(user13)
+    const tU13 = await trackContract.connect(user13)
+    await bU13.joinBand(13, 3)
+    await tU13.createTrack(13, 3, trackMetadata[0])
 
-    console.log("bands 103 joined and active and one track created")
+    console.log("band 3 joined and active and one track created")
 
     //band with 4 members and 4 tracks 
 
 
-    const cU14 = await contract.connect(user14)
-    await cU14.joinBand(14, 104)
-    const cU15 = await contract.connect(user15)
-    await cU15.joinBand(15, 104)
-    const cU16 = await contract.connect(user16)
-    await cU16.joinBand(16, 104)
+    const bU14 = await bandContract.connect(user14)
+    await bU14.joinBand(14, 4)
+    const bU15 = await bandContract.connect(user15)
+    await bU15.joinBand(15, 4)
+    const bU16 = await bandContract.connect(user16)
+    await bU16.joinBand(16, 4)
 
-    await cU4.createTrack(4, 104, trackMetadata[1])
-    await cU14.createTrack(14, 104, trackMetadata[2])
-    await cU15.createTrack(15, 104, trackMetadata[3])
-    await cU16.createTrack(16, 104, trackMetadata[4])
 
-    console.log("bands 104 joined and active and four tracks created")
+    const tU4 = await trackContract.connect(user4)
+    const tU14 = await trackContract.connect(user14)
+    const tU15 = await trackContract.connect(user15)
+    const tU16 = await trackContract.connect(user16)
+
+    await tU4.createTrack(4, 4, trackMetadata[1])
+    await tU14.createTrack(14, 4, trackMetadata[2])
+    await tU15.createTrack(15, 4, trackMetadata[3])
+    await tU16.createTrack(16, 4, trackMetadata[4])
+
+    console.log("band 4 joined and active and four tracks created")
+  
 
   } catch (error) {
     console.log(error)

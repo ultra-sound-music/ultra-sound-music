@@ -18,11 +18,11 @@ export function setTokens(state, { data }) {
 }
 
 export function setActiveArtist(state, { data }) {
-  state.activeArtistId = data?.artistTokenId;
+  state.activeArtistId = data?.artistId;
 }
 
 export function setActiveBand(state, { data }) {
-  state.activeBandId = data?.bandTokenId;
+  state.activeBandId = data?.bandId;
 }
 
 function addTransaction(state, { data }) {

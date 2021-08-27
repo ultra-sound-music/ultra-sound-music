@@ -11,6 +11,7 @@ import * as Constants from '../../../constants';
 
 export class Token extends React.Component {  
   static propTypes = {
+    entityId: PropTypes.string,
     tokenId: PropTypes.number,
     tokenType: PropTypes.string,
     match: PropTypes.object.isRequired
@@ -64,6 +65,7 @@ export class Token extends React.Component {
   
   render() {
     const {
+      entityId,
       tokenId,
       tokenType,
     } = this.props;
@@ -76,14 +78,13 @@ export class Token extends React.Component {
     let buttons = [];
     if (tokenType === Constants.usm.tokenType.ARTIST) {
       const startBandProps = {
-        bandLeaderTokenId: tokenId,
         name,
         description
       };
 
       buttons = [
         <StartBandButton key='startBand' {...startBandProps} />,
-        <PlaybackButton key='playback' tokenId={tokenId} />
+        <PlaybackButton key='playback' entityId={entityId} />
       ]
     } else if (tokenType === Constants.usm.tokenType.BAND) {
       buttons = []
@@ -93,7 +94,9 @@ export class Token extends React.Component {
 
     return (
       <div className='Token'>
-        <h1>This is the {tokenType} page for tokenId: {this.props.match.params.tokenId}</h1>
+        <h1>This is the {tokenType} page</h1>
+        <h3>tokenId: {tokenId}</h3>
+        <h3>entityId: {this.props.entityId}</h3>
         {this.renderInputs()}
 
         {buttons}
@@ -129,10 +132,12 @@ export class Token extends React.Component {
 }
 
 export function mapStateToProps(state, { match }) {
-  const tokenId = +match?.params?.tokenId;
-  const tokenType = Selectors.usm.selectTokenType(state, tokenId);
+  const entityId = match?.params?.entityId;
+  const tokenId = Selectors.usm.getTokenId(state, entityId)
+  const tokenType = Selectors.usm.getTokenType(state, entityId);
 
   return {
+    entityId,
     tokenId,
     tokenType
   };

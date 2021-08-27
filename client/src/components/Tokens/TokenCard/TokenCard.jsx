@@ -9,7 +9,7 @@ import './TokenCard.scss';
 
 export class TokenCard extends React.Component {
   static propTypes = {
-    tokenId: PropTypes.number.isRequired,
+    entityId: PropTypes.string.isRequired,
     tokenType: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
@@ -19,14 +19,14 @@ export class TokenCard extends React.Component {
 
   render() {
     const {
-      tokenId,
+      entityId,
       tokenType,
       name,
       description,
       ctaButton
     } = this.props;
 
-    const tokenUrl = `/token/${tokenId}`;
+    const tokenUrl = `/token/${entityId}`;
 
     const className = classNames('TokenCard', {
       [`TokenCard-${tokenType}`]: true

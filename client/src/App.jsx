@@ -62,7 +62,7 @@ export class App extends React.Component {
 
               <Switch>
                 <Route path="/about" component={About} />
-                <Route path="/token/:tokenId">
+                <Route path="/token/:entityId">
                   <Row>
                     <Col><Token /></Col>
                   </Row>

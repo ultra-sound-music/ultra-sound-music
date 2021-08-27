@@ -15,20 +15,20 @@ export function refresh() {
   }
 }
 
-export function setActiveArtist({ artistTokenId }) {
+export function setActiveArtist({ artistId }) {
   return {
     type: ActionTypes.SET_ACTIVE_ARTIST,
     data: {
-      artistTokenId
+      artistId
     }
   };
 }
 
-export function setActiveBand({ bandTokenId }) {
+export function setActiveBand({ bandId }) {
   return {
     type: ActionTypes.SET_ACTIVE_BAND,
     data: {
-      bandTokenId
+      bandId
     }
   };  
 }
@@ -77,10 +77,11 @@ export function joinBand({ bandId }) {
   }
 }
 
-export function createTrack({ name, description }) {
+export function createTrack({ bandId, name, description }) {
   return {
     type: ActionTypes.CREATE_TRACK_REQUEST,
     data: {
+      bandId,
       name,
       description
     }    

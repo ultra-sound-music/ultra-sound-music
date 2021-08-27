@@ -7,7 +7,7 @@ import * as Selectors from '../../../redux/selectors';
 
 export class CreateTrackButton extends React.Component {
   static propTypes = {
-    tokenId: PropTypes.number,
+    bandId: PropTypes.string,
     canActiveArtistCreateTrackForBand: PropTypes.bool,
     createTrack: PropTypes.func,
     name: PropTypes.string,
@@ -17,11 +17,12 @@ export class CreateTrackButton extends React.Component {
   onClick = () => {
     const {
       name,
-      description
+      description,
+      bandId
     } = this.props;
 
     if (this.props.canActiveArtistCreateTrackForBand) {
-      this.props.createTrack({name: `${Math.random().toString(36).substring(7)} ${Math.random().toString(36).substring(4)}`, description: 'Some description'});
+      this.props.createTrack({bandId, name: `${Math.random().toString(36).substring(7)} ${Math.random().toString(36).substring(4)}`, description: 'Some description'});
     } else {
       // Show information modal
     }
@@ -36,11 +37,12 @@ export class CreateTrackButton extends React.Component {
   }
 }
 
-export function mapStateToProps(state, { tokenId }) {
-  const canActiveArtistCreateTrackForBand = Selectors.usm.canActiveArtistCreateTrackForBand(state, tokenId);
+export function mapStateToProps(state, { bandId }) {
+  const canActiveArtistCreateTrackForBand = Selectors.usm.canActiveArtistCreateTrackForBand(state, bandId);
 
   return {
-    canActiveArtistCreateTrackForBand,
+    bandId,
+    canActiveArtistCreateTrackForBand
   };
 }
 

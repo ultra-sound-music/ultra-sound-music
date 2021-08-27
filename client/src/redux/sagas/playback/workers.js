@@ -25,7 +25,7 @@ export function* toggle({ data }) {
     source = yield select(Selectors.playback.selectActiveSource);
   }
 
-  const playableSource = tempTrackSourceMapper(typeof source === 'string' ? source : yield select(Selectors.usm.selectPlayableSourceByTokenId, source));
+  const playableSource = tempTrackSourceMapper(source.startsWith('0x') ? source : yield select(Selectors.usm.selectPlayableSourceById, source));
   try {
     const isPlaying = Array.isArray(playableSource)
       ? yield call(toggleTrackAudioPlayback, ...playableSource)

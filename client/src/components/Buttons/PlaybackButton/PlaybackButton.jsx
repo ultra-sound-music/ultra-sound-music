@@ -10,11 +10,8 @@ export class PlaybackButton extends React.Component {
   static propTypes = {
     isTokenPlaying: PropTypes.bool,
     address: PropTypes.string,
-    tokenId: PropTypes.number,
-    source: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
+    entityId: PropTypes.string,
+    source: PropTypes.string,
     play: PropTypes.func,
     stop: PropTypes.func
   }
@@ -36,8 +33,9 @@ export class PlaybackButton extends React.Component {
   }
 }
 
-export function mapStateToProps(state, { tokenId, address }) {
-  const source = tokenId || address;
+export function mapStateToProps(state, { entityId, address }) {
+  const source = entityId || address;
+
   return {
     source,
     isTokenPlaying: source && Selectors.playback.selectActiveSource(state) === source,

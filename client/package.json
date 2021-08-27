@@ -8,7 +8,7 @@
     "start": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "set-abi": "node ./scripts/setAbi.js"
+    "set-token-configs": "node ./scripts/setTokenConfigs.js"
   },
   "author": "",
   "license": "ISC",

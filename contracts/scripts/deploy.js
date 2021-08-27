@@ -3,7 +3,8 @@
 //
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+const { ethers } = require("hardhat");
+const fs = require('fs');
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -12,22 +13,39 @@ async function main() {
   // If this script is run directly using `node` you may want to call compile 
   // manually to make sure everything is compiled
   // await hre.run('compile');
-
   // We get the contract to deploy
-  const USMToken = await hre.ethers.getContractFactory("USMToken");
-  const usmToken = await USMToken.deploy(100000000000);
+  const USMArtistToken = await ethers.getContractFactory("USMArtistToken");
+  const usmArtistToken = await USMArtistToken.deploy("USM Artist Token", "USM-A");
 
-  await usmToken.deployed();
+  await usmArtistToken.deployed();
 
-  console.log("USM Token deployed to:", usmToken.address);
+  console.log("USM Artist Token deployed to:", usmArtistToken.address);
 
-  const UltraSoundMusic = await hre.ethers.getContractFactory("UltraSoundMusic");
-  const ultraSoundMusic = await UltraSoundMusic.deploy();
+  const USMBandToken = await ethers.getContractFactory("USMBandToken");
+  const usmBandToken = await USMBandToken.deploy("USM Band Token", "USM-B", usmArtistToken.address);
 
-  await ultraSoundMusic.deployed();
+  await usmBandToken.deployed();
 
-  console.log("Ultra Sound Music Token deployed to:", ultraSoundMusic.address)
+  console.log("USM Band Token deployed to:", usmBandToken.address);
 
+
+  const USMTrackToken = await ethers.getContractFactory("USMTrackToken");
+  const usmTrackToken = await USMTrackToken.deploy("USM Track Token", "USM-T", usmArtistToken.address, usmBandToken.address);
+
+  await usmTrackToken.deployed();
+
+  console.log("USM Track Token deployed to:", usmTrackToken.address);
+
+  const addresses = JSON.stringify({
+    artist: usmArtistToken.address,
+    band: usmBandToken.address,
+    track: usmTrackToken.address
+  });
+
+  const addressfile = './addresses.json'
+  await fs.writeFileSync(addressfile, addresses, {flag: 'w+'});    
+
+  console.log("Addresses written to the artifacts folder:", addressfile);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

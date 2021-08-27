@@ -6,7 +6,7 @@ import tokensAdapter from '../utils/tokensAdapter';
 const tokenSelectors = tokensAdapter.getSelectors((state) => state.usm)
 
 export const {
-  selectIds: selectTokenIds, 
+  selectIds: selectEntityIds,
   selectEntities: selectTokenEntities,
   selectAll: selectAllTokenEntities,
   selectTotal: selectTokenTotal,
@@ -21,29 +21,91 @@ export function getActiveBandId(state) {
   return state.usm.activeBandId;
 }
 
-export const selectAllBandEntities = createSelector(
-  selectAllTokenEntities,
-  (tokens) => tokens.filter((token) => token.tokenType === Constants.usm.tokenType.BAND)
-);
-
 export const selectAllArtistEntities = createSelector(
   selectAllTokenEntities,
   (tokens) => tokens.filter((token) => token.tokenType === Constants.usm.tokenType.ARTIST)
 );
 
-export const selectAllTrackEntities = createSelector(
-  selectAllTokenEntities,
-  (tokens) => tokens.filter((token) => token.tokenType === Constants.usm.tokenType.TRACKS)
+export const getActiveArtist = createSelector(
+  getActiveArtistId,
+  selectAllArtistEntities,
+  (artistId, artists) => artists.find((artist) => artist._id === artistId)
 );
 
-export const selectTokenType = createSelector(
+export const selectAllBandEntities = createSelector(
+  selectAllTokenEntities,
+  (tokens) => tokens.filter((token) => token.tokenType === Constants.usm.tokenType.BAND)
+);
+
+export const getActiveBand = createSelector(
+  getActiveArtistId,
+  selectAllBandEntities,
+  (bandId, bands) => bands.find((band) => band._id === bandId)
+);
+
+export const getActiveArtistTid = createSelector(
+  getActiveArtist,
+  (artist) => artist?.tokenId ?? ''
+)
+
+export const getActiveArtistName = createSelector(
+  getActiveArtist,
+  (artist) => artist?.name ?? ''
+)
+
+export const getActiveArtistBands = createSelector(
+  getActiveArtistTid,
+  selectAllBandEntities,
+  (activeArtistTid, bands) => {
+    return bands.filter((band) => {
+      return band.members.includes(activeArtistTid);
+    })
+  }
+)
+
+export const getActiveBandTid = createSelector(
+  getActiveBand,
+  (band) => band?.tokenId ?? ''
+)
+
+export const getActiveBandName = createSelector(
+  getActiveBand,
+  (band) => band?.name ?? ''
+)
+
+export const getTokenId = createSelector(
+  selectTokenById,
+  (token) => token?.tokenId ?? null
+);
+
+export const selectAllTrackEntities = createSelector(
+  selectAllTokenEntities,
+  (tokens) => tokens.filter((token) => token.tokenType === Constants.usm.tokenType.TRACK)
+);
+
+export const getTokenType = createSelector(
   selectTokenById,
   (token) => token?.tokenType || null
 );
 
-export const getBandMembers = createSelector(
+export const getBandMemberTids = createSelector(
   selectTokenById,
-  (token) => token?.members
+  (band) => band?.members
+)
+
+export const getBandMembers = createSelector(
+  getBandMemberTids,
+  selectAllArtistEntities,
+  (artistTids, artists) => {
+    return artists.filter((artist) => {
+      return artistTids.includes(artist?.tokenId);
+    })
+  } 
+)
+
+export const getBandMemberIds = createSelector(
+  getBandMembers,
+  (artists) => artists.map(artist => artist._id)
 )
 
 export const getNumBandMembers = createSelector(
@@ -54,40 +116,6 @@ export const getNumBandMembers = createSelector(
 export const getTokenName = createSelector(
   selectTokenById,
   (token) => token?.name
-)
-
-export const getActiveArtistName = createSelector(
-  selectAllArtistEntities,
-  getActiveArtistId,
-  (artistEntities, artistTokenId) => {
-    if (!artistTokenId) {
-      return '';
-    }
-
-    const artist = artistEntities.find((entity) => entity.tokenId === artistTokenId);
-    if (artist) {
-      return artist?.name || '';
-    }
-  }
-)
-
-export const getActiveArtistBands = createSelector(
-  selectAllBandEntities,
-  getActiveArtistId,
-  (bands, activeArtistId) => {
-    return bands.filter((band) => {
-      return band.members.includes(activeArtistId);
-    })
-  }
-)
-
-export const getActiveBandName = createSelector(
-  selectAllBandEntities,
-  getActiveBandId,
-  (bands, bandId) => {
-    const band = bands.find((band) => band.tokenId === bandId)
-    return band?.name;
-  }
 )
 
 export function selectOpenTransactions(state) {
@@ -148,13 +176,21 @@ export function hasOpenTransaction(state, key) {
   return !!(selectOpenTransaction(state, key));
 }
 
-export const getBandByTrackId = createSelector(
+export const getBandTidByTrackId = createSelector(
   selectTokenById,
+  (track) => {
+    if (track?.tokenType === Constants.usm.tokenType.TRACK) {
+      return track.band;
+    }
+  }
+);
+
+export const getBandByTrackId = createSelector(
+  getBandTidByTrackId,
   selectAllBandEntities,
-  (track, bands) => {
-    const bandId = (track?.tokenType === Constants.usm.tokenType.TRACK) && track.band;
+  (bandTid, bands) => {
     return bands.find((band) => {
-      return band.tokenId === bandId
+      return band.tokenId === bandTid
     });
   }
 );
@@ -169,55 +205,59 @@ export const getTrackCreatorByTrackId = createSelector(
 )
 
 export const getAllTracksByBandId = createSelector(
-  (state, bandId) => bandId, 
+  getTokenId, 
   selectAllTrackEntities,
-  (bandId, tracks) => tracks?.filter((track) => track.band === bandId)
+  (bandTid, tracks) => {
+    return tracks?.filter((track) => track.band === bandTid);    
+  }
 )
 
 export const hasActiveArtistMintedATrackForBand = createSelector(
-  getActiveArtistId,
+  getActiveArtistTid,
   getAllTracksByBandId,
-  (artistId, tracks) => tracks.some((track) => track.artist === artistId)
+  (artistTid, tracks) => {
+    return tracks.some((track) => track.creator === artistTid);
+  }
 )
 
 export const canActiveArtistCreateTrackForBand = createSelector(
   hasActiveArtistMintedATrackForBand,
-  (hasCreated) => !hasCreated
+  (hasMintedATrackForBand) => !hasMintedATrackForBand
 )
 
-export const getBandLeaderIdByTrackId = createSelector(
+export const getBandLeaderTokenIdByTrackId = createSelector(
   getBandByTrackId,
   (band) => band?.creator
 )
 
-export const getTrackCreatorIdByTrackId = createSelector(
+export const getTrackCreatorTokenIdByTrackId = createSelector(
   selectTokenById,
   (track) => (track?.tokenType === Constants.usm.tokenType.TRACK) ? track?.creator : void 0
 )
 
-export const getBandMembersByTrackId = createSelector(
+export const getBandMemberTokenIdsByTrackId = createSelector(
   getBandByTrackId,
   (band) => band?.members
 )
 
 export const getTrackDNA = createSelector(
-  getBandMembersByTrackId,
-  getBandLeaderIdByTrackId,
-  getTrackCreatorIdByTrackId,
+  getBandMemberTokenIdsByTrackId,
+  getBandLeaderTokenIdByTrackId,
+  getTrackCreatorTokenIdByTrackId,
   selectAllArtistEntities,
-  (artistIds, bandLeaderId, trackCreatorId, artists) => {
-    if (!Array.isArray(artistIds)) {
+  (artistTids, bandLeaderTid, trackCreatorTid, artists) => {
+    if (!Array.isArray(artistTids)) {
       return;
     }
 
     let bandLeaderDNA;
     let trackCreatorDNA;
 
-    const rawDNAs = artistIds.map((artistId) => {
+    const rawDNAs = artistTids.map((artistTid) => {
       const bandMember = artists.find(({ tokenId, artistDNA }) => {
-        if (tokenId === bandLeaderId) bandLeaderDNA = artistDNA
-        if (tokenId === trackCreatorId) trackCreatorDNA = artistDNA
-        return tokenId === artistId ?? artistDNA
+        if (tokenId === bandLeaderTid) bandLeaderDNA = artistDNA
+        if (tokenId === trackCreatorTid) trackCreatorDNA = artistDNA
+        return tokenId === artistTid ?? artistDNA
       });
 
       return bandMember?.artistDNA;
@@ -227,7 +267,7 @@ export const getTrackDNA = createSelector(
   }
 );
 
-export const selectPlayableSourceByTokenId = createSelector(
+export const selectPlayableSourceById = createSelector(
   selectTokenById,
   getTrackDNA,
   ({ artistDNA, tokenType }, trackDNA) => {
@@ -240,4 +280,36 @@ export const selectPlayableSourceByTokenId = createSelector(
       }            
     }
   }
+)
+
+export const isMemberOfBand = createSelector(
+  selectTokenById,
+  getActiveArtistTid,
+  (token, activeArtistTid) => token.tokenType === 'band' && token?.members.some((artistTid) => artistTid === activeArtistTid)
+);
+
+export const canCreateTrackForBand = createSelector(
+  isMemberOfBand,
+  getNumBandMembers,
+  hasActiveArtistMintedATrackForBand,  
+  (isMemberOfBand, numBandMembers, hasMintedATrackForBand) => {
+    return isMemberOfBand && (numBandMembers > Constants.usm.MIN_BAND_MEMBERS) && !hasMintedATrackForBand
+  }  
+)
+
+export const canJoinBand = createSelector(
+  isMemberOfBand,
+  getNumBandMembers,
+  (isMemberOfBand, numBandMembers) => {
+    return !isMemberOfBand && (numBandMembers < Constants.usm.MAX_BAND_MEMBERS)
+  }
+)
+
+// @TODO - Still need to sort out how to manage permissions to join a band
+export const canRequestToJoinBand = canJoinBand;
+
+export const canInviteBandMembers = createSelector(
+  isMemberOfBand,
+  getNumBandMembers,
+  (isMemberOfBand, numBandMembers) => isMemberOfBand && (numBandMembers < Constants.usm.MAX_BAND_MEMBERS)  
 )

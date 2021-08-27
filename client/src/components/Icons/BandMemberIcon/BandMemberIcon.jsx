@@ -8,7 +8,7 @@ import * as Selectors from '../../../redux/selectors';
 
 export class BandMemberIcon extends React.Component {
   static propTypes = {
-    artistId: PropTypes.number,
+    artistId: PropTypes.string,
     name: PropTypes.string
   };
 

@@ -33,44 +33,6 @@ export const getBandsWithPublishedTracks = createSelector(
   () => []
 )
 
-export const getPlayingTokenId = createSelector(
-  playback.selectActiveSource,
-  () => {
-    return 123
-  }
-)
-
-export const isMemberOfBand = createSelector(
-  usm.selectTokenById,
-  usm.getActiveArtistId,
-  (token, activeArtistId) => token.tokenType === 'band' && token?.members.some((artistId) => artistId === activeArtistId)
-);
-
-export const canCreateTrack = createSelector(
-  isMemberOfBand,
-  usm.getNumBandMembers,
-  (isMemberOfBand, numBandMembers) => {
-    return isMemberOfBand && (numBandMembers === Constants.usm.MAX_BAND_MEMBERS)
-  }  
-)
-
-export const canJoinBand = createSelector(
-  isMemberOfBand,
-  usm.getNumBandMembers,
-  (isMemberOfBand, numBandMembers) => {
-    return !isMemberOfBand && (numBandMembers < Constants.usm.MAX_BAND_MEMBERS)
-  }
-)
-
-// @TODO - Still need to sort out how to manage permissions to join a band
-export const canRequestToJoinBand = canJoinBand;
-
-export const canInviteBandMembers = createSelector(
-  isMemberOfBand,
-  usm.getNumBandMembers,
-  (isMemberOfBand, numBandMembers) => isMemberOfBand && (numBandMembers < Constants.usm.MAX_BAND_MEMBERS)  
-)
-
 /// OLD
 
 export const hasMintedAnArtist = createSelector(

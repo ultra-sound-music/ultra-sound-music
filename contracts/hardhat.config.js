@@ -21,7 +21,7 @@ module.exports = {
 
   networks:{
     hardhat:{
-
+      chainId: 1337
     },
     rinkeby: {
       url: "https://eth-mainnet.alchemyapi.io/v2/123abc123abc123abc123abc123abcde",

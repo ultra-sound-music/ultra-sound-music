@@ -12,9 +12,12 @@ const Band = require ("./db/models/Band")
 const fleekStorage = require('@fleekhq/fleek-storage-js')
 const fetch = require('node-fetch');
 
+const {
+  artist: artistConfigs,
+  band: bandConfigs,
+  track: trackConfigs
+} = require('../conf/tokenConfigs.js');
 
-const Network = require( './contracts/network.json');
-const UltraSoundMusicABI = require( './contracts/UltraSoundMusicABI.json');
 
 const sentryDsn = process.env.SENTRY_ENABLED === 'true' ? process.env.SENTRY_DSN : '';
 const nullAddress = "0x0000000000000000000000000000000000000000";
@@ -39,21 +42,31 @@ app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
 
-
 const customHttpProvider = new ethers.providers.JsonRpcProvider(process.env.ETH_PROVIDER);
 
-let contract = new ethers.Contract(
+let artistContract = new ethers.Contract(
   // TODO: improve next line
-  Network.development.UltraSoundMusic,
-  UltraSoundMusicABI,
+  artistConfigs.address,
+  artistConfigs.abi,
+  customHttpProvider,
+)
+
+let bandContract = new ethers.Contract(
+  // TODO: improve next line
+  bandConfigs.address,
+  bandConfigs.abi,
+  customHttpProvider,
+)
+
+let trackContract = new ethers.Contract(
+  // TODO: improve next line
+  trackConfigs.address,
+  trackConfigs.abi,
   customHttpProvider,
 )
 
 // connect to DB 
-
-// Uncomment the following line to have the db cleared out upon connecting
 mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true}, () => mongoose.connection.db.dropDatabase());
-//mongoose.connect(process.env.MONGO_DB, {useNewUrlParser: true, useUnifiedTopology: true});
 
 //Get the default connection
 var db = mongoose.connection;
@@ -72,7 +85,7 @@ const handleArtistToken = async(from,to,id) =>{
   console.log("handle artist being called")
   if(from === nullAddress){
     console.log("handling new artist token")
-    const metadataUri = await contract.uri(id) 
+    const metadataUri = await artistContract.tokenURI(id) 
     const metadata = await fetch(metadataUri).then(result => result.json())
     const artist = new Artist({
       tokenId: id,
@@ -91,7 +104,7 @@ const handleArtistToken = async(from,to,id) =>{
 const handleBandToken = async(id, artistId, owner) =>{
     console.log("handling new band token id", id.toNumber())
     //const metadataUri = await contract.uri(id)
-    const metadataUri = await contract.uri(id) 
+    const metadataUri = await bandContract.tokenURI(id) 
     const metadata = await fetch(metadataUri).then(result => result.json())
     const band = new Band({
       tokenId: id.toNumber(),
@@ -110,16 +123,18 @@ const handleBandToken = async(id, artistId, owner) =>{
 const handleJoinBand = async(id, artistId, owner) =>{
   console.log("handling join band id =", id.toNumber())
   const band = await Band.findOne({tokenId: id.toNumber() })
+  console.log('band: ', band)
   const currMembers = band.members;
   currMembers.push(Number(artistId))
-  band.active = currMembers.length === 4 ? true:false;
+  band.members = currMembers;
+  band.active = currMembers.length >= 2 ? true:false;
   return band.save()
 }
 
 
 const handleTrackToken = async(trackId, bandId, artistId, owner) =>{
   console.log("handling new Track")
-    const metadataUri = await contract.uri(trackId)
+    const metadataUri = await trackContract.tokenURI(trackId)
     const metadata = await fetch(metadataUri).then(result => result.json())
     const track = new Track({
       tokenId: trackId,
@@ -175,51 +190,27 @@ app.post("/api/create_metadata_uri", async(req,res)=> {
 })
 
 app.listen(port, async () => {
-    // Connect to the network
+ 
+    artistContract.on("Transfer", async (from, to, tokenId) =>{ 
+      await handleArtistToken(from,to,tokenId)
+      console.log(`artist token id = ${tokenId} transfered`)
+    })
 
-    const providerUrl = 'http://localhost:8545';
-    const customHttpProvider = new ethers.providers.JsonRpcProvider(providerUrl);
-
-    let contract = new ethers.Contract(
-  // TODO: improve next line
-      Network.development.UltraSoundMusic,
-      UltraSoundMusicABI,
-      customHttpProvider,
-    )
-
-    
-  
-    contract.on("TransferSingle", async (operator, from, to, id, value, event) => {
-
-      console.log(`new token ${id}`)
-
-      if(id <= 80){
-        //handle artist token write id, to as owner and metadataURI
-        await handleArtistToken(from,to,id)
-        console.log(`artist token id = ${id} transfered`)
-      } else if (id > 100 && id < 100000) {
-        //handle band token write iid, to as owner and metaddataURI
-        console.log(`band token id = ${id} transfered`)
-      } else if (id > 100000) {
-        //handle track token write id, to as owner and metadataURI
-        console.log(`track token id = ${id} transfered`)
-      }
-    });
-
-    contract.on("bandCreate", async (id, artistId, owner, event) => {
+    bandContract.on("bandCreate", async (id, artistId, owner) =>{ 
       await handleBandToken(id, artistId, owner)
-    });
+      console.log(`band token id = ${id} created`)
+    })
 
-    contract.on("bandJoined", async (id, artistId, owner, event) => {
-      console.log(`band was joined by ${owner} id = ${id}`)
+    bandContract.on("bandJoined", async (id, artistId, owner) =>{ 
       await handleJoinBand(id, artistId, owner)
-    });
+      console.log(`band was joined by ${owner} id = ${id}`)
 
-    contract.on("trackCreated", async (trackId,bandId, artistId, owner) => {
+    })
+
+    trackContract.on("trackCreated", async (trackId,bandId, artistId, owner) =>{ 
       await handleTrackToken(trackId, bandId, artistId, owner)
       console.log(`track was created by ${owner} id = ${artistId}`)
-
-    });
+    })
 
     console.log(`Example app listening on port ${port}!`);
 });

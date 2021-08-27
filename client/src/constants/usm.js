@@ -1,4 +1,5 @@
-export const MAX_BAND_MEMBERS = 4;
+export const MIN_BAND_MEMBERS = 2;
+export const MAX_BAND_MEMBERS = 6;
 
 export const tokenType = Object.freeze({
   ARTIST: 'artist',

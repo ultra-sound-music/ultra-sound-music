@@ -7,13 +7,13 @@ import TokenCards from './Tokens/TokenCards';
 
 export class Searchable extends React.Component {
   static propTypes = {
-    tokenIds: PropTypes.arrayOf(PropTypes.number)
+    entityIds: PropTypes.arrayOf(PropTypes.string)
   };
 
   render() {
     return (
       <div className="Searchable">
-        <TokenCards tokenIds={this.props.tokenIds} />
+        <TokenCards entityIds={this.props.entityIds} />
       </div>      
     );
   }
@@ -21,7 +21,7 @@ export class Searchable extends React.Component {
 
 export function mapStateToProps(state) {
   return {
-    tokenIds: Selectors.usm.selectTokenIds(state)
+    entityIds: Selectors.usm.selectEntityIds(state)
   }
 }
 

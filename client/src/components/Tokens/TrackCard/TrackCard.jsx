@@ -9,25 +9,25 @@ import * as Selectors from '../../../redux/selectors';
 
 export class TrackCard extends React.Component {
   static propTypes = {
-    tokenId: PropTypes.number,
+    entityId: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
   };
 
   renderCtaButton() {
-    return <PlaybackButton tokenId={this.props.tokenId} />;
+    return <PlaybackButton entityId={this.props.entityId} />;
   }
 
   render() {
     const {
-      tokenId,
+      entityId,
       name,
       description
     } = this.props;
 
     return (
       <TokenCard
-        tokenId={tokenId}      
+        entityId={entityId}      
         tokenType='Track'
         name={name}
         description={description}
@@ -37,8 +37,8 @@ export class TrackCard extends React.Component {
   }
 }
 
-function mapStateToProps(state, { tokenId }) {
-  const { name, description } = Selectors.usm.selectTokenById(state, tokenId); 
+function mapStateToProps(state, { entityId }) {
+  const { name, description } = Selectors.usm.selectTokenById(state, entityId); 
   if (!name) {
     return {};
   }
