@@ -9,12 +9,6 @@ export function init({ web3Client }) {
   }
 }
 
-export function refresh() {
-  return {
-    type: ActionTypes.REFRESH
-  }
-}
-
 export function setActiveArtist({ artistId }) {
   return {
     type: ActionTypes.SET_ACTIVE_ARTIST,
@@ -33,15 +27,19 @@ export function setActiveBand({ bandId }) {
   };  
 }
 
-export function fetchAllTokens() {
+export function fetchAllTokens({ pendingTransactionType, pendingMetadataUri } = {}) {
   return {
-    type: ActionTypes.FETCH_TOKENS_REQUEST
+    type: ActionTypes.FETCH_TOKENS_REQUEST,
+    data: {
+      pendingTransactionType,
+      pendingMetadataUri
+    }
   };
 }
 
-export function setTokens({tokens}) {
+export function fetchTokensComplete({ tokens }) {
   return {
-    type: ActionTypes.SET_TOKENS,
+    type: ActionTypes.FETCH_TOKENS_COMPLETE,
     data: {
       tokens
     }

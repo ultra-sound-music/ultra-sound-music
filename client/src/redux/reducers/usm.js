@@ -6,14 +6,22 @@ import tokensAdapter from '../utils/tokensAdapter';
 const initialState = tokensAdapter.getInitialState({
   activeArtistId: null,
   activeBandId: null,
-  transactions: []  
+  transactions: [],
+  isFetchingTokens: false,
+  isProcessingTransaction: false
 });
 
 export function initUsm() {
   return initialState;
 }
 
-export function setTokens(state, { data }) {
+export function onFetchTokensRequest(state) {
+  state.isFetchingTokens = true;
+}
+
+export function onFetchTokensComplete(state, { data }) {
+  state.isFetchingTokens = false;
+  state.isProcessingTransaction = false;    
   tokensAdapter.setAll(state, data?.tokens);
 }
 
@@ -35,6 +43,10 @@ function addTransaction(state, { data }) {
     errorCode,
     errorMessage
   } = data;
+
+  if (status === Constants.usm.transactionStatus.SUBMITTED) {
+    state.isProcessingTransaction = true;    
+  }
 
   state.transactions.push({
     method,
@@ -72,13 +84,18 @@ function updateTransaction(state, { data }) {
     return tx;
   });
 
+  if (status === Constants.usm.transactionStatus.FAILED) {
+    state.isProcessingTransaction = false;
+  }  
+
   state.transactions = updatedTransactions;  
 }
 
 export default createReducer(initialState, (builder) => {
   builder
     .addCase(ActionTypes.INIT_USM, initUsm)
-    .addCase(ActionTypes.SET_TOKENS, setTokens)
+    .addCase(ActionTypes.FETCH_TOKENS_REQUEST, onFetchTokensRequest)
+    .addCase(ActionTypes.FETCH_TOKENS_COMPLETE, onFetchTokensComplete)
     .addCase(ActionTypes.SET_ACTIVE_ARTIST, setActiveArtist)
     .addCase(ActionTypes.SET_ACTIVE_BAND, setActiveBand)
     .addCase(ActionTypes.ADD_TRANSACTION, addTransaction)

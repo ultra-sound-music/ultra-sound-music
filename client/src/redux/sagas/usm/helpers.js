@@ -5,45 +5,44 @@ import * as Constants from '../../../constants';
 import * as Utils from '../../../utils';
 import * as Selectors from '../../../redux/selectors';
 
-export function onCreateArtistComplete({ transaction, data: { artistDNA }}) {
+export function onCreateArtistComplete({ transaction, data: { metadataUri, artistDNA }}) {
   const store = ReduxUtils.getStore();
-  debugger;
   store.dispatch(Actions.usm.updateTransaction({
     key: Utils.usm.genCreateArtistTransactionKey(artistDNA),
     transaction,
     status: Constants.usm.transactionStatus.MINED
   }));
-  store.dispatch(Actions.usm.refresh());
+  store.dispatch(Actions.usm.fetchAllTokens({ pendingTransactionType: 'create-artist', pendingMetadataUri: metadataUri }));
 }
 
-export function onCreateBandComplete({ transaction, data: { artistTid }}) {
+export function onCreateBandComplete({ transaction, data: { metadataUri, artistTid }}) {
   const store = ReduxUtils.getStore();
   store.dispatch(Actions.usm.updateTransaction({
     key: Utils.usm.genStartBandTransactionKey(artistTid),
     transaction,
     status: Constants.usm.transactionStatus.MINED
   }));
-  store.dispatch(Actions.usm.refresh());
+  store.dispatch(Actions.usm.fetchAllTokens({  pendingTransactionType: 'start-band', pendingMetadataUri: metadataUri  }));
 }
 
-export function onJoinBandComplete({ transaction, data: { bandTid, artistTid }}) {
+export function onJoinBandComplete({ transaction, data: { metadataUri, bandTid, artistTid }}) {
   const store = ReduxUtils.getStore();
   store.dispatch(Actions.usm.updateTransaction({
     key: Utils.usm.genJoinBandTransactionKey(bandTid, artistTid),
     transaction,
     status: Constants.usm.transactionStatus.MINED
   }));
-  store.dispatch(Actions.usm.refresh());
+  store.dispatch(Actions.usm.fetchAllTokens({ pendingTransactionType: 'join-band', pendingMetadataUri: metadataUri }));
 }
 
-export function onCreateTrackComplete({ transaction, data: { bandTid, artistTid }}) {
+export function onCreateTrackComplete({ transaction, data: { metadataUri, bandTid, artistTid }}) {
   const store = ReduxUtils.getStore();
   store.dispatch(Actions.usm.updateTransaction({
     key: Utils.usm.genCreateTrackTransactionKey(bandTid, artistTid),
     transaction,
     status: Constants.usm.transactionStatus.MINED
   }));
-  store.dispatch(Actions.usm.refresh());
+  store.dispatch(Actions.usm.fetchAllTokens({ pendingTransactionType: 'create-track', pendingMetadataUri: metadataUri }));
 }
 
 export function* initializeActiveArtist() {

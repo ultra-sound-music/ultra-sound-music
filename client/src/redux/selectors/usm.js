@@ -21,6 +21,10 @@ export function getActiveBandId(state) {
   return state.usm.activeBandId;
 }
 
+export function getIsProcessingTransaction(state) {
+  return state.usm.isProcessingTransaction;
+}
+
 export const selectAllArtistEntities = createSelector(
   selectAllTokenEntities,
   (tokens) => tokens.filter((token) => token.tokenType === Constants.usm.tokenType.ARTIST)
@@ -124,14 +128,18 @@ export function selectOpenTransactions(state) {
   })
 }
 
+export function selectOpenTransaction(state, key) {
+  const openTransactions = selectOpenTransactions(state);
+  return openTransactions.some((transaction) => transaction.key === key);
+}
+
 export const hasOpenTransactions = createSelector(
   selectOpenTransactions,
   (openTransactions) => !!(openTransactions?.length)
 );
 
-export function selectOpenTransaction(state, key) {
-  const openTransactions = selectOpenTransactions(state);
-  return openTransactions.some((transaction) => transaction.key === key);
+export function hasOpenTransaction(state, key) {
+  return !!(selectOpenTransaction(state, key));
 }
 
 export const isProcessingCreateArtist = createSelector(
@@ -172,8 +180,8 @@ export const isProcessingCreateTrack = createSelector(
   }
 )
 
-export function hasOpenTransaction(state, key) {
-  return !!(selectOpenTransaction(state, key));
+export function isProcessingTransaction(state) {
+  return state.usm.isProcessingTransaction;
 }
 
 export const getBandTidByTrackId = createSelector(

@@ -28,11 +28,11 @@ import './App.scss';
 export class App extends React.Component {
   static propTypes = {
     accountAddress: PropTypes.string,
-    hasOpenTransactions: PropTypes.bool
+    isProcessingTransaction: PropTypes.bool,
   }
 
   renderProcessingIndicator() {
-    if (this.props.hasOpenTransactions) {
+    if (this.props.isProcessingTransaction) {
       return (
         <div className='App__banner'>
           <ProcessingIndicator />          
@@ -88,7 +88,7 @@ export class App extends React.Component {
 
 export function mapStateToProps(state) {
   return {
-    hasOpenTransactions: Selectors.usm.hasOpenTransactions(state),
+    isProcessingTransaction: Selectors.usm.isProcessingTransaction(state),
     accountAddress: Selectors.web3.getAccountAddress(state)
   }
 }

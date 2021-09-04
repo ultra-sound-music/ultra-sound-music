@@ -17,7 +17,6 @@ export class ProcessingIndicator extends React.Component {
   }
 
   render() {
-
     return (
       <div className='ProcessingIndicator'>{this.renderSpinner()} Processing...</div>
     );    

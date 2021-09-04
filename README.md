@@ -30,8 +30,7 @@ npm run start-client
 
 1. Upon setup, instead of running `npm run start-api`, you do:
 ```
-cd api
-npm run start-debug
+npm run start-api:debug
 ```
 
 2. Continue with the rest of the setup scripts as usual.

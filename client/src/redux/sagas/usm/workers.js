@@ -23,7 +23,7 @@ export function* init({ data }) {
     bandConfig,
     trackConfig,
     accountAddress: yield select(Selectors.web3.getAccountAddress),
-    apiHost: `//${document.location.host}/api`,
+    apiHost: `//${document.location.host}`,
     provider: ethClient.provider,
     logger: Utils.logger
   });
@@ -31,14 +31,21 @@ export function* init({ data }) {
   yield put(Actions.usm.fetchAllTokens());
 }
 
-export function* refresh() {
-  yield put(Actions.usm.fetchAllTokens());
-}
+export function* fetchAllTokens({ data }) {
+  const type = data?.pendingTransactionType;
+  const metadataUri = data?.pendingMetadataUri;
 
-export function* fetchAllTokens() {
-  const response = yield call([usmClient, 'fetchAll']);
+  let pendingTransaction;
+  if (type && metadataUri) {
+    pendingTransaction = {
+      type: data?.pendingTransactionType,
+      metadataUri: data?.pendingMetadataUri
+    }
+  }
+  
+  const response = yield call([usmClient, 'fetchAll'], { pendingTransaction });
 
-  yield put(Actions.usm.setTokens({ tokens: response?.data }));
+  yield put(Actions.usm.fetchTokensComplete({ tokens: response?.data }));
   yield call(Helpers.initializeActiveArtist);
   yield call(Helpers.initializeActiveBand);  
 }
