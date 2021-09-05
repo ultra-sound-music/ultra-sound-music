@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
@@ -10,43 +10,43 @@ export class Search extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
     onClear: PropTypes.func
-  }
+  };
 
   state = {
     searchStr: ''
-  }
+  };
 
-  onChange = ({target}) => {
+  onChange = ({ target }) => {
     this.setState({
       searchStr: target.value
     });
 
     this.props.onChange(target.value);
-  }
+  };
 
   onClear = () => {
     this.setState({
-      searchStr:''
+      searchStr: ''
     });
 
     this.props.onClear();
-  }
+  };
 
   render() {
     return (
-      <InputGroup className="mb-3">
+      <InputGroup className='mb-3'>
         <FormControl
           value={this.state.searchStr}
           onChange={this.onChange}
-          placeholder="Artist, Band, Track"
-          aria-label="Artist, Band, Track"
-          aria-describedby="basic-addon2"
+          placeholder='Artist, Band, Track'
+          aria-label='Artist, Band, Track'
+          aria-describedby='basic-addon2'
         />
         <InputGroup.Append>
           <InputGroup.Text onClick={this.onClear}>Clear</InputGroup.Text>
         </InputGroup.Append>
-      </InputGroup>  
-    )
+      </InputGroup>
+    );
   }
 }
 

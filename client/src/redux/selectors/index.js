@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+
 import * as Utils from '../../utils';
 import * as playback from './playback';
 import * as usm from './usm';
@@ -10,27 +11,26 @@ export const getOwnedTokens = createSelector(
   usm.selectAllTokenEntities,
   (accountAddress, tokenEntities) => {
     return tokenEntities.filter((token) => {
-      return token.owner === accountAddress;      
+      return token.owner === accountAddress;
     });
   }
-)
+);
 
-export const getOwnedArtists = createSelector(
-  getOwnedTokens,
-  (tokens) => tokens.filter((token) => token.tokenType === 'artist')
+export const getOwnedArtists = createSelector(getOwnedTokens, (tokens) =>
+  tokens.filter((token) => token.tokenType === 'artist')
 );
 
 export const isOwnedToken = createSelector(
   web3.getAccountAddress,
   usm.selectTokenById,
   (accountAddress, { owner }) => accountAddress === owner
-)
+);
 
 export const getBandsWithPublishedTracks = createSelector(
   web3.getAccountAddress,
   usm.selectAllBandEntities,
   () => []
-)
+);
 
 /// OLD
 
@@ -54,31 +54,28 @@ export const hasMintedABand = createSelector(
   }
 );
 
-export const hasMintedATrack = createSelector(
-  web3.getAccountAddress,
-  () => {
-    return ''; // @TODO
-  }
-)
+export const hasMintedATrack = createSelector(web3.getAccountAddress, () => {
+  return ''; // @TODO
+});
 
 export const tokenIsOwned = createSelector(
   web3.getAccountAddress,
   usm.selectAllTokenEntities,
   (accountAddress, tokenEntities) => {
-    return tokenEntities.some((token) => Utils.account.areSameAccount(token.owner, accountAddress));
+    return tokenEntities.some((token) =>
+      Utils.account.areSameAccount(token.owner, accountAddress)
+    );
   }
-)
+);
 
 // @TODO Update these...
 
 export function hasAlreadyPublishedTrack(token, currentAccountId) {
-  // @todo 
-  return token.tokenType === 'band' && Utils.account.areSameAccount(token.metadata.artistDNA, currentAccountId);
+  // @todo
+  return (
+    token.tokenType === 'band' &&
+    Utils.account.areSameAccount(token.metadata.artistDNA, currentAccountId)
+  );
 }
 
-export {
-  playback,
-  usm,
-  modal,
-  web3
-};
+export { playback, usm, modal, web3 };

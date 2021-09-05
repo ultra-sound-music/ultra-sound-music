@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit'
+import { createReducer } from '@reduxjs/toolkit';
 
 import * as Constants from '../../constants';
 import * as ActionTypes from '../actionTypes';
@@ -22,5 +22,5 @@ function updateNetworkStatus(state, { data }) {
 export default createReducer(initialState, (builder) => {
   builder
     .addCase(ActionTypes.INIT_WEB3, initWeb3)
-    .addCase(ActionTypes.UPDATE_NETWORK_STATUS, updateNetworkStatus)
+    .addCase(ActionTypes.UPDATE_NETWORK_STATUS, updateNetworkStatus);
 });

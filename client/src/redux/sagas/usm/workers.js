@@ -11,12 +11,9 @@ let usmClient;
 export function* init({ data }) {
   const ethClient = data?.web3Client;
   // @todo optimize this loading to be async and not block the app
-  const {default: {
-    artist: artistConfig,
-    band: bandConfig,
-    track: trackConfig
-  }} = yield call(() => import('../../../deps/tokenConfigs'));
-
+  const {
+    default: { artist: artistConfig, band: bandConfig, track: trackConfig }
+  } = yield call(() => import('../../../deps/tokenConfigs'));
 
   usmClient = new USMClient({
     artistConfig,
@@ -40,48 +37,57 @@ export function* fetchAllTokens({ data }) {
     pendingTransaction = {
       type: data?.pendingTransactionType,
       metadataUri: data?.pendingMetadataUri
-    }
+    };
   }
-  
+
   const response = yield call([usmClient, 'fetchAll'], { pendingTransaction });
 
   yield put(Actions.usm.fetchTokensComplete({ tokens: response?.data }));
   yield call(Helpers.initializeActiveArtist);
-  yield call(Helpers.initializeActiveBand);  
+  yield call(Helpers.initializeActiveBand);
 }
 
 export function* createArtist({ data }) {
-  const {
-    name,
-    description
-  } = data;
+  const { name, description } = data;
 
   const artistDNA = yield select(Selectors.web3.getAccountAddress);
   const key = yield call(Utils.usm.genCreateArtistTransactionKey, artistDNA);
-  yield put(Actions.usm.addTransaction({
-    method: 'createArtist',
-    key
-  }));
+  yield put(
+    Actions.usm.addTransaction({
+      method: 'createArtist',
+      key
+    })
+  );
 
   try {
-    const transaction = yield call([usmClient, 'createArtist'], { artistDNA, name, description }, Helpers.onCreateArtistComplete);
-    yield put(Actions.usm.updateTransaction({
-      key,
-      transactionId: transaction.hash,
-      status: Constants.usm.transactionStatus.AUTHORIZED
-    }));
+    const transaction = yield call(
+      [usmClient, 'createArtist'],
+      { artistDNA, name, description },
+      Helpers.onCreateArtistComplete
+    );
+    yield put(
+      Actions.usm.updateTransaction({
+        key,
+        transactionId: transaction.hash,
+        status: Constants.usm.transactionStatus.AUTHORIZED
+      })
+    );
   } catch (error) {
     console.error(error);
-    yield put(Actions.ui.showModal({
-      title: 'Error',
-      bodyText: error.message
-    }));
-    yield put(Actions.usm.updateTransaction({
-      key,
-      status: Constants.usm.transactionStatus.FAILED,
-      errorCode: error.code,
-      errorMessage: error.message
-    }));
+    yield put(
+      Actions.ui.showModal({
+        title: 'Error',
+        bodyText: error.message
+      })
+    );
+    yield put(
+      Actions.usm.updateTransaction({
+        key,
+        status: Constants.usm.transactionStatus.FAILED,
+        errorCode: error.code,
+        errorMessage: error.message
+      })
+    );
   }
 }
 
@@ -90,37 +96,46 @@ export function* startBand({ data }) {
     throw new Error('USM not initialized');
   }
 
-  const {
-    name,
-    description,
-  } = data;
+  const { name, description } = data;
 
   const artistTid = yield select(Selectors.usm.getActiveArtistTid);
   const key = yield call(Utils.usm.genStartBandTransactionKey, artistTid);
-  yield put(Actions.usm.addTransaction({
-    method: 'startBand',
-    key
-  }));  
+  yield put(
+    Actions.usm.addTransaction({
+      method: 'startBand',
+      key
+    })
+  );
 
   try {
-    const transaction = yield call([usmClient, 'startBand'], { name, description, artistTid }, Helpers.onCreateBandComplete);
-    yield put(Actions.usm.updateTransaction({
-      key,
-      transactionId: transaction.hash,
-      status: Constants.usm.transactionStatus.AUTHORIZED
-    }));    
+    const transaction = yield call(
+      [usmClient, 'startBand'],
+      { name, description, artistTid },
+      Helpers.onCreateBandComplete
+    );
+    yield put(
+      Actions.usm.updateTransaction({
+        key,
+        transactionId: transaction.hash,
+        status: Constants.usm.transactionStatus.AUTHORIZED
+      })
+    );
   } catch (error) {
     console.error(error);
-    yield put(Actions.ui.showModal({
-      title: 'Error',
-      bodyText: error.message
-    }));
-    yield put(Actions.usm.updateTransaction({
-      key,
-      status: Constants.usm.transactionStatus.FAILED,
-      errorCode: error.code,
-      errorMessage: error.message
-    }));
+    yield put(
+      Actions.ui.showModal({
+        title: 'Error',
+        bodyText: error.message
+      })
+    );
+    yield put(
+      Actions.usm.updateTransaction({
+        key,
+        status: Constants.usm.transactionStatus.FAILED,
+        errorCode: error.code,
+        errorMessage: error.message
+      })
+    );
   }
 }
 
@@ -129,37 +144,51 @@ export function* joinBand({ data }) {
     throw new Error('USM not initialized');
   }
 
-  const {
-    bandId
-  } = data;
+  const { bandId } = data;
 
   const bandTid = yield select(Selectors.usm.getTokenId, bandId);
   const artistTid = yield select(Selectors.usm.getActiveArtistTid);
-  const key = yield call(Utils.usm.genJoinBandTransactionKey, (bandTid), artistTid);
-  yield put(Actions.usm.addTransaction({
-    method: 'joinBand',
-    key
-  }));  
+  const key = yield call(
+    Utils.usm.genJoinBandTransactionKey,
+    bandTid,
+    artistTid
+  );
+  yield put(
+    Actions.usm.addTransaction({
+      method: 'joinBand',
+      key
+    })
+  );
 
   try {
-    const transaction = yield call([usmClient, 'joinBand'], { bandTid, artistTid }, Helpers.onJoinBandComplete);
-    yield put(Actions.usm.updateTransaction({
-      key,
-      transactionId: transaction.hash,
-      status: Constants.usm.transactionStatus.AUTHORIZED
-    }));
+    const transaction = yield call(
+      [usmClient, 'joinBand'],
+      { bandTid, artistTid },
+      Helpers.onJoinBandComplete
+    );
+    yield put(
+      Actions.usm.updateTransaction({
+        key,
+        transactionId: transaction.hash,
+        status: Constants.usm.transactionStatus.AUTHORIZED
+      })
+    );
   } catch (error) {
-    yield put(Actions.ui.showModal({
-      title: 'Error',
-      bodyText: error?.data?.message || error.message
-    }));
-    yield put(Actions.usm.updateTransaction({
-      key,
-      status: Constants.usm.transactionStatus.FAILED,
-      errorCode: error.code,
-      errorMessage: error?.data?.message || error.message
-    }));
-  }  
+    yield put(
+      Actions.ui.showModal({
+        title: 'Error',
+        bodyText: error?.data?.message || error.message
+      })
+    );
+    yield put(
+      Actions.usm.updateTransaction({
+        key,
+        status: Constants.usm.transactionStatus.FAILED,
+        errorCode: error.code,
+        errorMessage: error?.data?.message || error.message
+      })
+    );
+  }
 }
 
 export function* createTrack({ data }) {
@@ -167,38 +196,50 @@ export function* createTrack({ data }) {
     throw new Error('USM not initialized');
   }
 
-  const {
-    name,
-    description,
-    bandId
-  } = data;
+  const { name, description, bandId } = data;
 
   const artistTid = yield select(Selectors.usm.getActiveArtistTid);
   const bandTid = yield select(Selectors.usm.getTokenId, bandId);
-  const key = yield call(Utils.usm.genCreateTrackTransactionKey, bandTid, artistTid);
+  const key = yield call(
+    Utils.usm.genCreateTrackTransactionKey,
+    bandTid,
+    artistTid
+  );
 
-  yield put(Actions.usm.addTransaction({
-    method: 'joinBand',
-    key
-  }));
+  yield put(
+    Actions.usm.addTransaction({
+      method: 'joinBand',
+      key
+    })
+  );
 
   try {
-    const transaction = yield call([usmClient, 'createTrack'], { artistTid, bandTid, name, description }, Helpers.onCreateTrackComplete);
-    yield put(Actions.usm.updateTransaction({
-      key,
-      transactionId: transaction.hash,
-      status: Constants.usm.transactionStatus.AUTHORIZED
-    }));    
+    const transaction = yield call(
+      [usmClient, 'createTrack'],
+      { artistTid, bandTid, name, description },
+      Helpers.onCreateTrackComplete
+    );
+    yield put(
+      Actions.usm.updateTransaction({
+        key,
+        transactionId: transaction.hash,
+        status: Constants.usm.transactionStatus.AUTHORIZED
+      })
+    );
   } catch (error) {
-    yield put(Actions.ui.showModal({
-      title: 'Error',
-      bodyText: error?.data?.message || error.message
-    }));
-    yield put(Actions.usm.updateTransaction({
-      key,
-      status: Constants.usm.transactionStatus.FAILED,
-      errorCode: error.code,
-      errorMessage: error?.data?.message || error.message
-    }));
+    yield put(
+      Actions.ui.showModal({
+        title: 'Error',
+        bodyText: error?.data?.message || error.message
+      })
+    );
+    yield put(
+      Actions.usm.updateTransaction({
+        key,
+        status: Constants.usm.transactionStatus.FAILED,
+        errorCode: error.code,
+        errorMessage: error?.data?.message || error.message
+      })
+    );
   }
 }

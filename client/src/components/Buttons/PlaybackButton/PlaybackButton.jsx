@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
@@ -14,7 +14,7 @@ export class PlaybackButton extends React.Component {
     source: PropTypes.string,
     play: PropTypes.func,
     stop: PropTypes.func
-  }
+  };
 
   onClick = () => {
     if (this.props.isTokenPlaying) {
@@ -22,14 +22,18 @@ export class PlaybackButton extends React.Component {
     } else {
       this.props.play({ source: this.props.source });
     }
-  }
+  };
 
   renderButtonText() {
     return this.props.isTokenPlaying ? 'stop' : 'play';
   }
 
   render() {
-    return <Button onClick={debounce(this.onClick, 300)}>{this.renderButtonText()}</Button>
+    return (
+      <Button onClick={debounce(this.onClick, 300)}>
+        {this.renderButtonText()}
+      </Button>
+    );
   }
 }
 
@@ -38,7 +42,8 @@ export function mapStateToProps(state, { entityId, address }) {
 
   return {
     source,
-    isTokenPlaying: source && Selectors.playback.selectActiveSource(state) === source,
+    isTokenPlaying:
+      source && Selectors.playback.selectActiveSource(state) === source
   };
 }
 

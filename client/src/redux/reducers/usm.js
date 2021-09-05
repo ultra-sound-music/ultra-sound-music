@@ -21,7 +21,7 @@ export function onFetchTokensRequest(state) {
 
 export function onFetchTokensComplete(state, { data }) {
   state.isFetchingTokens = false;
-  state.isProcessingTransaction = false;    
+  state.isProcessingTransaction = false;
   tokensAdapter.setAll(state, data?.tokens);
 }
 
@@ -45,7 +45,7 @@ function addTransaction(state, { data }) {
   } = data;
 
   if (status === Constants.usm.transactionStatus.SUBMITTED) {
-    state.isProcessingTransaction = true;    
+    state.isProcessingTransaction = true;
   }
 
   state.transactions.push({
@@ -55,7 +55,7 @@ function addTransaction(state, { data }) {
     block,
     status,
     errorCode,
-    errorMessage    
+    errorMessage
   });
 }
 
@@ -70,7 +70,7 @@ function updateTransaction(state, { data }) {
   } = data;
 
   const updatedTransactions = state.transactions.map((tx) => {
-    if( tx.transactionId === transactionId || tx.key === key ) {
+    if (tx.transactionId === transactionId || tx.key === key) {
       tx = Object.assign(tx, {
         transactionId,
         block,
@@ -86,9 +86,9 @@ function updateTransaction(state, { data }) {
 
   if (status === Constants.usm.transactionStatus.FAILED) {
     state.isProcessingTransaction = false;
-  }  
+  }
 
-  state.transactions = updatedTransactions;  
+  state.transactions = updatedTransactions;
 }
 
 export default createReducer(initialState, (builder) => {
@@ -99,5 +99,5 @@ export default createReducer(initialState, (builder) => {
     .addCase(ActionTypes.SET_ACTIVE_ARTIST, setActiveArtist)
     .addCase(ActionTypes.SET_ACTIVE_BAND, setActiveBand)
     .addCase(ActionTypes.ADD_TRANSACTION, addTransaction)
-    .addCase(ActionTypes.UPDATE_TRANSACTION, updateTransaction)    
+    .addCase(ActionTypes.UPDATE_TRANSACTION, updateTransaction);
 });

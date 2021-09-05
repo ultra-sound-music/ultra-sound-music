@@ -1,14 +1,17 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 let Transaction;
-const TransactionSchema = new mongoose.Schema({
-  tokenKey: String,
-  owner: String,
-  type: String,
-  status: String
-}, {
-  timestamps: true
-});
+const TransactionSchema = new mongoose.Schema(
+  {
+    tokenKey: String,
+    owner: String,
+    type: String,
+    status: String
+  },
+  {
+    timestamps: true
+  }
+);
 
 TransactionSchema.statics.status = {
   SUBMITTED: 'submitted',
@@ -20,23 +23,31 @@ TransactionSchema.statics.types = {
   CREATE_ARTIST: 'create-artist',
   START_BAND: 'start-band',
   JOIN_BAND: 'join-band',
-  CREATE_TRACK: 'create-track',  
+  CREATE_TRACK: 'create-track'
 };
 
-TransactionSchema.statics.expireStaleTransactions = async function(type, owner, uri) {
+TransactionSchema.statics.expireStaleTransactions = async function (
+  type,
+  owner,
+  uri
+) {
   const tokenKey = Transaction.generateTokenKey(uri);
-  const query  = {
+  const query = {
     tokenKey,
     owner,
     type,
     status: Transaction.status.SUBMITTED
   };
-  await Transaction.updateMany(query, { status: Transaction.status.EXPIRED })  
-}
+  await Transaction.updateMany(query, { status: Transaction.status.EXPIRED });
+};
 
-TransactionSchema.statics.recordSubmittedTransaction = async function(type, owner, uri) {
+TransactionSchema.statics.recordSubmittedTransaction = async function (
+  type,
+  owner,
+  uri
+) {
   Transaction.expireStaleTransactions(type, owner, uri);
-  
+
   const tokenKey = Transaction.generateTokenKey(uri);
   const submittedTransaction = new Transaction({
     tokenKey,
@@ -46,11 +57,15 @@ TransactionSchema.statics.recordSubmittedTransaction = async function(type, owne
   });
 
   await submittedTransaction.save();
-}
+};
 
-TransactionSchema.statics.recordCompletedTransaction = async function(type, owner, uri) {
+TransactionSchema.statics.recordCompletedTransaction = async function (
+  type,
+  owner,
+  uri
+) {
   const tokenKey = Transaction.generateTokenKey(uri);
-  const query = { 
+  const query = {
     tokenKey,
     owner,
     type,
@@ -60,9 +75,9 @@ TransactionSchema.statics.recordCompletedTransaction = async function(type, owne
   await Transaction.updateOne(query, {
     status: Transaction.status.COMPLETE
   });
-}
+};
 
-TransactionSchema.statics.generateTokenKey = function (uri) {  
+TransactionSchema.statics.generateTokenKey = function (uri) {
   if (!uri || typeof uri !== 'string') {
     return '';
   }

@@ -6,7 +6,7 @@ export function init({ web3Client }) {
     data: {
       web3Client
     }
-  }
+  };
 }
 
 export function setActiveArtist({ artistId }) {
@@ -24,10 +24,13 @@ export function setActiveBand({ bandId }) {
     data: {
       bandId
     }
-  };  
+  };
 }
 
-export function fetchAllTokens({ pendingTransactionType, pendingMetadataUri } = {}) {
+export function fetchAllTokens({
+  pendingTransactionType,
+  pendingMetadataUri
+} = {}) {
   return {
     type: ActionTypes.FETCH_TOKENS_REQUEST,
     data: {
@@ -46,7 +49,7 @@ export function fetchTokensComplete({ tokens }) {
   };
 }
 
-export function createArtist({name, description}) {
+export function createArtist({ name, description }) {
   return {
     type: ActionTypes.CREATE_ARTIST_REQUEST,
     data: {
@@ -62,7 +65,7 @@ export function startBand({ name, description }) {
     data: {
       name,
       description
-    }    
+    }
   };
 }
 
@@ -71,8 +74,8 @@ export function joinBand({ bandId }) {
     type: ActionTypes.JOIN_BAND_REQUEST,
     data: {
       bandId
-    }    
-  }
+    }
+  };
 }
 
 export function createTrack({ bandId, name, description }) {
@@ -82,11 +85,19 @@ export function createTrack({ bandId, name, description }) {
       bandId,
       name,
       description
-    }    
+    }
   };
 }
 
-export function addTransaction({ method, key, transactionId, block, status, errorCode, errorMessage }) {
+export function addTransaction({
+  method,
+  key,
+  transactionId,
+  block,
+  status,
+  errorCode,
+  errorMessage
+}) {
   return {
     type: ActionTypes.ADD_TRANSACTION,
     data: {
@@ -101,7 +112,15 @@ export function addTransaction({ method, key, transactionId, block, status, erro
   };
 }
 
-export function updateTransaction({ method, key, transactionId, block, status, errorCode, errorMessage }) {
+export function updateTransaction({
+  method,
+  key,
+  transactionId,
+  block,
+  status,
+  errorCode,
+  errorMessage
+}) {
   return {
     type: ActionTypes.UPDATE_TRANSACTION,
     data: {
@@ -111,7 +130,7 @@ export function updateTransaction({ method, key, transactionId, block, status, e
       block,
       status,
       errorCode,
-      errorMessage      
+      errorMessage
     }
   };
 }

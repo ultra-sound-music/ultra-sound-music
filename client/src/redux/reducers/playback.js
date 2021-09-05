@@ -1,10 +1,10 @@
-import { createReducer } from '@reduxjs/toolkit'
+import { createReducer } from '@reduxjs/toolkit';
 import * as ActionTypes from '../actionTypes';
 
 const initialState = {
   source: '',
-  status: 'stopped',
-}
+  status: 'stopped'
+};
 
 export function playbackStarted(state, { data }) {
   state.source = data?.source;
@@ -19,5 +19,5 @@ export function playbackStopped(state) {
 export default createReducer(initialState, (builder) => {
   builder
     .addCase(ActionTypes.PLAY_SUCCESS, playbackStarted)
-    .addCase(ActionTypes.STOP_SUCCESS, playbackStopped)
+    .addCase(ActionTypes.STOP_SUCCESS, playbackStopped);
 });

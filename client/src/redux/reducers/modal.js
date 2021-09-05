@@ -4,20 +4,17 @@ const initialState = Object.freeze({
   shouldShowModal: false,
   modalTitle: '',
   modalBodyText: '',
-  modalCTA: '',
+  modalCTA: ''
 });
 
 export default function modalReducer(state = initialState, action) {
-  const {
-    type,
-    data
-  } = action;
+  const { type, data } = action;
 
   switch (type) {
     case ActionTypes.SHOW_MODAL: {
       let body;
       if (typeof data.bodyText === 'string') {
-        body = data.bodyText
+        body = data.bodyText;
       } else {
         body = JSON.stringify(data.bodyText);
       }
@@ -27,7 +24,7 @@ export default function modalReducer(state = initialState, action) {
         shouldShowModal: true,
         modalTitle: data.title,
         modalBodyText: body,
-        modalCTA: data.ctaText,
+        modalCTA: data.ctaText
       };
 
       return newState;
@@ -39,7 +36,7 @@ export default function modalReducer(state = initialState, action) {
         shouldShowModal: false,
         modalTitle: initialState.modalTitle,
         modalBodyText: initialState.modalBodyText,
-        modalCTA: initialState.modalCTA,
+        modalCTA: initialState.modalCTA
       };
 
       return newState;

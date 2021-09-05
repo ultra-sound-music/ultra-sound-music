@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 
 import './Onboarding.scss';
 
@@ -8,7 +8,7 @@ export class Onboarding extends React.Component {
       <div className='Onboarding'>
         <p>Please connect to MetaMask</p>
       </div>
-    );    
+    );
   }
 }
 

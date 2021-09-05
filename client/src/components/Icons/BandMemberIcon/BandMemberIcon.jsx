@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { FilePersonFill, FilePerson } from 'react-bootstrap-icons';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -14,21 +14,21 @@ export class BandMemberIcon extends React.Component {
 
   renderTooltip = (props) => {
     return (
-      <Tooltip id="button-tooltip" {...props}>
+      <Tooltip id='button-tooltip' {...props}>
         {this.props.name}
       </Tooltip>
-    )
-  }
+    );
+  };
 
   renderPersonFilled() {
     const triggerProps = {
-      placement: "top",
+      placement: 'top',
       delay: { show: 200, hide: 400 },
       overlay: this.renderTooltip
     };
 
     return (
-      <OverlayTrigger {...triggerProps} >
+      <OverlayTrigger {...triggerProps}>
         <FilePersonFill />
       </OverlayTrigger>
     );
@@ -39,10 +39,10 @@ export class BandMemberIcon extends React.Component {
   }
 
   render() {
-    const { artistId } = this.props; 
+    const { artistId } = this.props;
     return (
-      <div className="BandMemberIcon">        
-        {artistId ? this.renderPersonFilled() : this.renderPerson() }
+      <div className='BandMemberIcon'>
+        {artistId ? this.renderPersonFilled() : this.renderPerson()}
       </div>
     );
   }
@@ -51,7 +51,7 @@ export class BandMemberIcon extends React.Component {
 function mapStateToProps(state, { artistId }) {
   return {
     name: Selectors.usm.getTokenName(state, artistId)
-  }
+  };
 }
 
 export default connect(mapStateToProps)(BandMemberIcon);

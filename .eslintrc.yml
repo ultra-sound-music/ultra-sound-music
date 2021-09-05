@@ -23,14 +23,18 @@ overrides:
   - files:
       - '*.ts'
       - '*.tsx'
-    plugins:  
+    plugins:
       - '@typescript-eslint'
     extends:
       - plugin:@typescript-eslint/recommended
     parser: '@typescript-eslint/parser'
 globals:
+  task: readonly
+  describe: readonly
+  before: readonly
+  it: readonly
   __ENVIRONMENT__: readonly
-  __BLOCKCHAIN_NAME__: readonly    
+  __BLOCKCHAIN_NAME__: readonly
   __GOOGLE_ANALYTICS_ENABLED__: readonly
   __GOOGLE_ANALYTICS_ID__: readonly
   __SENTRY_ENABLED__: readonly

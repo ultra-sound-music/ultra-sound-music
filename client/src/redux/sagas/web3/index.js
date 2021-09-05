@@ -5,25 +5,21 @@ import * as ActionTypes from '../../actionTypes';
 import * as Workers from './__BLOCKCHAIN_NAME__/workers';
 
 export function* processAccountUpdate({ data }) {
-  const {
-    status, account
-  } = data;
+  const { status, account } = data;
 
   const activeAccount = yield select(Selectors.web3.getAccountAddress);
   if (account !== activeAccount) {
     yield put(Actions.app.init());
-    return;    
-  } 
-  
-  yield put(Actions.web3.updateNetworkStatus({ status, account }));  
+    return;
+  }
+
+  yield put(Actions.web3.updateNetworkStatus({ status, account }));
 }
 
 export function* processNetworkUpdate({ data }) {
-  const {
-    networkId
-  } = data;
+  const { networkId } = data;
 
-  const activeNetworkId = yield select(Selectors.web3.getNetworkId)
+  const activeNetworkId = yield select(Selectors.web3.getNetworkId);
   if (activeNetworkId !== networkId) {
     yield put(Actions.app.init());
     return;

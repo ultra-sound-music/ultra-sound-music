@@ -1,6 +1,6 @@
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from "react-router";
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
@@ -9,7 +9,7 @@ import PlaybackButton from '../../Buttons/PlaybackButton';
 import * as Selectors from '../../../redux/selectors';
 import * as Constants from '../../../constants';
 
-export class Token extends React.Component {  
+export class Token extends React.Component {
   static propTypes = {
     entityId: PropTypes.string,
     tokenId: PropTypes.number,
@@ -20,60 +20,50 @@ export class Token extends React.Component {
   state = {
     name: '',
     description: ''
-  }
+  };
 
   getFormData = () => {
-    const {
-      name,
-      description
-    } = this.state;
+    const { name, description } = this.state;
 
     return {
       name,
       description
     };
-  }
+  };
 
   onChangeName = ({ target }) => {
-    this.setState({name: target.value});
-  }
+    this.setState({ name: target.value });
+  };
 
   onChangeDescription = ({ target }) => {
-    this.setState({description: target.value});
-  }    
+    this.setState({ description: target.value });
+  };
 
   renderInputs() {
     return (
-      <InputGroup className="mb-3">
+      <InputGroup className='mb-3'>
         <FormControl
           value={this.state.name}
-          placeholder="Name"
+          placeholder='Name'
           onChange={this.onChangeName}
-          aria-label="Artist, Band, Track"
-          aria-describedby="basic-addon2"            
+          aria-label='Artist, Band, Track'
+          aria-describedby='basic-addon2'
         />
         <FormControl
           value={this.state.description}
-          placeholder="Description"
+          placeholder='Description'
           onChange={this.onChangeDescription}
-          aria-label="Artist, Band, Track"
-          aria-describedby="basic-addon2"            
-        />          
+          aria-label='Artist, Band, Track'
+          aria-describedby='basic-addon2'
+        />
       </InputGroup>
-    )    
+    );
   }
-  
-  render() {
-    const {
-      entityId,
-      tokenId,
-      tokenType,
-    } = this.props;
 
-    const {
-      name,
-      description
-    } = this.state;
+  render() {
+    const { entityId, tokenId, tokenType } = this.props;
+
+    const { name, description } = this.state;
 
     let buttons = [];
     if (tokenType === Constants.usm.tokenType.ARTIST) {
@@ -85,11 +75,11 @@ export class Token extends React.Component {
       buttons = [
         <StartBandButton key='startBand' {...startBandProps} />,
         <PlaybackButton key='playback' entityId={entityId} />
-      ]
+      ];
     } else if (tokenType === Constants.usm.tokenType.BAND) {
-      buttons = []
+      buttons = [];
     } else if (tokenType === Constants.usm.tokenType.TRACK) {
-      buttons = []
+      buttons = [];
     }
 
     return (
@@ -126,14 +116,14 @@ export class Token extends React.Component {
         <div>- BAND</div>
         <div>- PUBLISHER (artist who minted the track)</div>
         <div>[PLAYBACK]</div>
-      </div>      
+      </div>
     );
   }
 }
 
 export function mapStateToProps(state, { match }) {
   const entityId = match?.params?.entityId;
-  const tokenId = Selectors.usm.getTokenId(state, entityId)
+  const tokenId = Selectors.usm.getTokenId(state, entityId);
   const tokenType = Selectors.usm.getTokenType(state, entityId);
 
   return {

@@ -10,8 +10,8 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   playback: playbackReducer,
   user: userReducer,
-  usm: usmReducer,  
-  web3: web3Reducer,
+  usm: usmReducer,
+  web3: web3Reducer
 });
 
 export default rootReducer;

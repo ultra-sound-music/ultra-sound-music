@@ -1,5 +1,5 @@
 export function getAccountAddress(state) {
-  return state.web3.account
+  return state.web3.account;
 }
 
 export function getNetworkStatus(state) {

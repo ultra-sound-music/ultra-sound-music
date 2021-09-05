@@ -1,10 +1,10 @@
-import React  from 'react';
-import { connect } from 'react-redux'; 
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-import * as Actions from '../redux/actions';
+import * as Actions from '../redux/actions/index';
 
 export class Alert extends React.Component {
   static propTypes = {
@@ -20,7 +20,7 @@ export class Alert extends React.Component {
       window.location.reload();
     }
     this.props.hideModal();
-  }
+  };
 
   render() {
     return (
@@ -28,17 +28,19 @@ export class Alert extends React.Component {
         <Modal.Header closeButton>
           <Modal.Title>{this.props.title}</Modal.Title>
         </Modal.Header>
-      
-        <Modal.Body>
-          {this.props.bodyText}
-        </Modal.Body>
-      
+
+        <Modal.Body>{this.props.bodyText}</Modal.Body>
+
         <Modal.Footer>
-          <Button variant="secondary" onClick={this.onHide}>Close</Button>
-          {this.props.ctaText && <Button variant="primary">{this.props.ctaText}</Button>}
+          <Button variant='secondary' onClick={this.onHide}>
+            Close
+          </Button>
+          {this.props.ctaText && (
+            <Button variant='primary'>{this.props.ctaText}</Button>
+          )}
         </Modal.Footer>
       </Modal>
-    );    
+    );
   }
 }
 
@@ -47,8 +49,8 @@ export function mapStateToProps(state) {
     shouldShowModal: state.modal.shouldShowModal,
     title: state.modal.modalTitle,
     bodyText: state.modal.modalBodyText,
-    ctaText: state.modal.modalCTA,
-  }
+    ctaText: state.modal.modalCTA
+  };
 }
 
 const mapDispatchToProps = {

@@ -1,4 +1,4 @@
-import { put } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects';
 import * as Actions from '../../actions';
 
 export function* initApp() {

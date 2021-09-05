@@ -1,11 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -17,7 +13,8 @@ import User from './components/User';
 import Alert from './components/Alert';
 import Token from './components/Tokens/Token';
 import Searchable from './components/Searchable';
-import NetworkButton from './components/Buttons/NetworkButton'
+
+import NetworkButton from './components/Buttons/NetworkButton';
 import Onboarding from './components/Onboarding';
 import ProcessingIndicator from './components/ProcessingIndicator';
 
@@ -28,14 +25,14 @@ import './App.scss';
 export class App extends React.Component {
   static propTypes = {
     accountAddress: PropTypes.string,
-    isProcessingTransaction: PropTypes.bool,
-  }
+    isProcessingTransaction: PropTypes.bool
+  };
 
   renderProcessingIndicator() {
     if (this.props.isProcessingTransaction) {
       return (
         <div className='App__banner'>
-          <ProcessingIndicator />          
+          <ProcessingIndicator />
         </div>
       );
     }
@@ -45,14 +42,16 @@ export class App extends React.Component {
     return (
       <div>
         <Router>
-          <div className="App">
+          <div className='App'>
             <Container>
-              <Navbar bg="light">
-                <Navbar.Brand href="/">🦇 🔉 🎼 Ultra Sound Music Project</Navbar.Brand>
+              <Navbar bg='light'>
+                <Navbar.Brand href='/'>
+                  🦇 🔉 🎼 Ultra Sound Music Project
+                </Navbar.Brand>
                 <Nav>
-                  <Nav.Link href="/about">About</Nav.Link>
+                  <Nav.Link href='/about'>About</Nav.Link>
                 </Nav>
-                <Nav className="ms-auto">
+                <Nav className='ms-auto'>
                   <NetworkButton />
                   <Nav.Link>Profile</Nav.Link>
                 </Nav>
@@ -61,22 +60,28 @@ export class App extends React.Component {
               {this.renderProcessingIndicator()}
 
               <Switch>
-                <Route path="/about" component={About} />
-                <Route path="/token/:entityId">
+                <Route path='/about' component={About} />
+                <Route path='/token/:entityId'>
                   <Row>
-                    <Col><Token /></Col>
-                  </Row>
-                </Route>                
-
-                <Route path="/">
-                  <Row>
-                    <Col>{this.props.accountAddress ? <User /> : <Onboarding />}</Col>
-                  </Row>
-                  <Row>
-                    <Col><Searchable /></Col>
+                    <Col>
+                      <Token />
+                    </Col>
                   </Row>
                 </Route>
-              </Switch>             
+
+                <Route path='/'>
+                  <Row>
+                    <Col>
+                      {this.props.accountAddress ? <User /> : <Onboarding />}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Searchable />
+                    </Col>
+                  </Row>
+                </Route>
+              </Switch>
             </Container>
           </div>
         </Router>
@@ -90,7 +95,7 @@ export function mapStateToProps(state) {
   return {
     isProcessingTransaction: Selectors.usm.isProcessingTransaction(state),
     accountAddress: Selectors.web3.getAccountAddress(state)
-  }
+  };
 }
 
 export default connect(mapStateToProps)(App);

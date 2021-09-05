@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Controls from '../../Controls';
@@ -15,8 +15,8 @@ export class ActiveArtist extends React.Component {
     activeArtistName: PropTypes.string,
     activeArtistId: PropTypes.string,
     hasMintedABand: PropTypes.bool,
-    accountAddress: PropTypes.string  
-  }
+    accountAddress: PropTypes.string
+  };
 
   onClick() {
     if (this.props.canActiveArtistCreateTrackForBand) {
@@ -27,14 +27,11 @@ export class ActiveArtist extends React.Component {
   }
 
   isDisabled() {
-    return !(this.props.canActiveArtistCreateTrackForBand);
+    return !this.props.canActiveArtistCreateTrackForBand;
   }
 
   render() {
-    const {
-      hasMintedABand,
-      accountAddress
-    } = this.props;
+    const { hasMintedABand, accountAddress } = this.props;
 
     let content;
     if (hasMintedABand) {
@@ -46,10 +43,15 @@ export class ActiveArtist extends React.Component {
     return (
       <div className='ActiveArtist'>
         <Canvas addresses={[accountAddress]} />
-        {this.props.activeArtistName && <div className='User__activeArtist'>Active Artist: {this.props.activeArtistName} <PlaybackButton entityId={this.props.activeArtistId} /> </div>}
+        {this.props.activeArtistName && (
+          <div className='User__activeArtist'>
+            Active Artist: {this.props.activeArtistName}{' '}
+            <PlaybackButton entityId={this.props.activeArtistId} />{' '}
+          </div>
+        )}
         {content}
-      </div>      
-    )
+      </div>
+    );
   }
 }
 
@@ -58,12 +60,12 @@ export function mapStateToProps(state) {
     activeArtistName: Selectors.usm.getActiveArtistName(state),
     activeArtistId: Selectors.usm.getActiveArtistId(state),
     hasMintedABand: Selectors.hasMintedABand(state),
-    accountAddress: Selectors.web3.getAccountAddress(state),
+    accountAddress: Selectors.web3.getAccountAddress(state)
   };
 }
 
 export const mapDispatchToProps = {
-  createTrack: Actions.usm.createTrack,
+  createTrack: Actions.usm.createTrack
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveArtist);

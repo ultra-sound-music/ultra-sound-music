@@ -10,10 +10,12 @@ brew install mongodb-community@4.4
 ```
 
 2. Setup local environment
-  * Create .env file inside of the `/api` folder and populate it with api environment variables (see `.env.example`).
-  * Create .env file inside of the `/client` folder and populate it with client environment variables
+
+- Create .env file inside of the `/api` folder and populate it with api environment variables (see `.env.example`).
+- Create .env file inside of the `/client` folder and populate it with client environment variables
 
 3. Run setup scripts
+
 ```
 npm run start-blockchain
 
@@ -29,6 +31,7 @@ npm run start-client
 ## Debugging the ExpressJS Server
 
 1. Upon setup, instead of running `npm run start-api`, you do:
+
 ```
 npm run start-api:debug
 ```
@@ -44,3 +47,9 @@ npm run start-api:debug
 ## Enabled 3rd Party integrations
 
 Set the `<SERVICE>_ENABLED` environment variable for the given service to `'true'`
+
+## VS Code
+
+Plugins:
+
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)

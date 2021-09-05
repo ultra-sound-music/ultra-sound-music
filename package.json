@@ -11,7 +11,8 @@
     "start-client": " npm run set-token-configs -- client && cd client && npm start",
     "deploy-contracts": "cd contracts && npm run deploy-contracts",
     "seed-chain-data": "cd contracts && npm run seed-chain-data",
-    "set-token-configs": "node scripts/setTokenConfigs.js"
+    "set-token-configs": "node scripts/setTokenConfigs.js",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,19 @@
   "bugs": {
     "url": "https://github.com/DonGambas/ultra-sound-music/issues"
   },
-  "homepage": "https://github.com/DonGambas/ultra-sound-music#readme"
+  "homepage": "https://github.com/DonGambas/ultra-sound-music#readme",
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.15.4",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.25.1",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "2.3.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-prettier": "^1.2.0"
+  }
 }

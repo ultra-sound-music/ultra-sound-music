@@ -7,13 +7,13 @@ const path = './conf';
 const made = mkdirp.sync(path);
 
 if (made) {
-  console.log(`made directories, starting with ${made}`)
+  console.log(`made directories, starting with ${made}`);
 }
 
 const jsString = `module.exports = ${tokenConfigs}`;
-fs.writeFile(`${path}/tokenConfigs.js`, jsString, {flag: 'w+'}, err => {
+fs.writeFile(`${path}/tokenConfigs.js`, jsString, { flag: 'w+' }, (err) => {
   if (err) {
-    console.error(err)
-    return
+    console.error(err);
+    return;
   }
-})
+});

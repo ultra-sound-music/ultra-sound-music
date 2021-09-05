@@ -1,13 +1,16 @@
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 
 export class InviteToBandButton extends React.Component {
-  static propTypes = {
-  }
+  static propTypes = {};
 
   render() {
-    return <Button className='InviteToBandButton' disabled={true}>Needs X more members</Button>
+    return (
+      <Button className='InviteToBandButton' disabled={true}>
+        Needs X more members
+      </Button>
+    );
   }
 }
 

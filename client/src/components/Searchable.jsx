@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -12,9 +12,9 @@ export class Searchable extends React.Component {
 
   render() {
     return (
-      <div className="Searchable">
+      <div className='Searchable'>
         <TokenCards entityIds={this.props.entityIds} />
-      </div>      
+      </div>
     );
   }
 }
@@ -22,7 +22,7 @@ export class Searchable extends React.Component {
 export function mapStateToProps(state) {
   return {
     entityIds: Selectors.usm.selectEntityIds(state)
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Searchable);

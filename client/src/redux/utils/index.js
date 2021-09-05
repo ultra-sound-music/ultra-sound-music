@@ -1,4 +1,4 @@
-let store = {}
+let store = {};
 
 export function setStore(reduxStore) {
   store = reduxStore;

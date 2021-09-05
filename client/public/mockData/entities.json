@@ -4,7 +4,7 @@
   },
   {
     "type": "artist"
-  }, 
+  },
   {
     "type": "band"
   },
@@ -13,7 +13,7 @@
   },
   {
     "type": "track"
-  },   
+  },
   {
     "type": "band"
   },
@@ -22,7 +22,7 @@
   },
   {
     "type": "artist"
-  }, 
+  },
   {
     "type": "band"
   },
@@ -31,8 +31,8 @@
   },
   {
     "type": "track"
-  },   
+  },
   {
     "type": "band"
-  } 
+  }
 ]

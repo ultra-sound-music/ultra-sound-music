@@ -3,7 +3,7 @@ export function bindCoreEventListeners(emitter, ethereum, listeners) {
     const handler = (...args) => {
       const getAction = listeners[eventName];
       const action = getAction(...args);
-      emitter(action)
+      emitter(action);
     };
     ethereum.on(eventName, handler);
     boundEventListeners[eventName] = handler;

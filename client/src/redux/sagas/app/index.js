@@ -1,4 +1,4 @@
-import { takeLatest } from 'redux-saga/effects'
+import { takeLatest } from 'redux-saga/effects';
 import * as ActionTypes from '../../actionTypes';
 import * as Workers from './workers';
 

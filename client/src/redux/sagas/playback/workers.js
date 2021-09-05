@@ -1,20 +1,24 @@
-import { select, call, put } from 'redux-saga/effects'
-import { toggleSingleArtistPlayback, toggleTrackAudioPlayback } from '../../../audio'
+import { select, call, put } from 'redux-saga/effects';
+import {
+  toggleSingleArtistPlayback,
+  toggleTrackAudioPlayback
+} from '../../../audio';
 import * as Actions from '../../actions';
 import * as Selectors from '../../selectors';
 
-export function* init() {
-}
+export function* init() {}
 
 // @TODO this is a temporary solution for mapping to the current way of generating trackDNA
 export function tempTrackSourceMapper(dna) {
   if (typeof dna === 'string') {
-    return dna
+    return dna;
   }
 
   const trackCreator = dna.pop();
   const mappedDNA = dna.slice(0, 4);
-  return mappedDNA.sort((x,y) => { return x == trackCreator ? -1 : y == trackCreator ? 1 : 0; });
+  return mappedDNA.sort((x, y) => {
+    return x == trackCreator ? -1 : y == trackCreator ? 1 : 0;
+  });
 }
 
 export function* toggle({ data }) {
@@ -25,7 +29,11 @@ export function* toggle({ data }) {
     source = yield select(Selectors.playback.selectActiveSource);
   }
 
-  const playableSource = tempTrackSourceMapper(source.startsWith('0x') ? source : yield select(Selectors.usm.selectPlayableSourceById, source));
+  const playableSource = tempTrackSourceMapper(
+    source.startsWith('0x')
+      ? source
+      : yield select(Selectors.usm.selectPlayableSourceById, source)
+  );
   try {
     const isPlaying = Array.isArray(playableSource)
       ? yield call(toggleTrackAudioPlayback, ...playableSource)

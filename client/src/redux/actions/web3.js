@@ -3,16 +3,16 @@ import * as ActionTypes from '../actionTypes';
 export function init() {
   return {
     type: ActionTypes.INIT_WEB3
-  }
+  };
 }
 
 export function initWeb3Success({ web3Client }) {
   return {
     type: ActionTypes.INIT_WEB3_SUCCESS,
     data: {
-      web3Client      
+      web3Client
     }
-  }
+  };
 }
 
 export function installWallet() {
@@ -34,7 +34,7 @@ export function processAccountUpdate({ status, account }) {
       status,
       account
     }
-  }
+  };
 }
 
 export function processNetworkUpdate({ networkId }) {
@@ -43,7 +43,7 @@ export function processNetworkUpdate({ networkId }) {
     data: {
       networkId
     }
-  }
+  };
 }
 
 export function updateNetworkStatus({ status, account, networkId }) {
@@ -54,5 +54,5 @@ export function updateNetworkStatus({ status, account, networkId }) {
       account,
       networkId
     }
-  }
+  };
 }

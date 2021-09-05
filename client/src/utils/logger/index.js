@@ -1,6 +1,1 @@
-export const {
-  log,
-  warn,
-  debug,
-  error
-} = window.console;
+export const { log, warn, debug, error } = window.console;

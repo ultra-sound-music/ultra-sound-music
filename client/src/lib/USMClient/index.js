@@ -15,7 +15,7 @@ export default class USMClient {
       info: noop,
       error: noop
     }
-  }) { 
+  }) {
     const signer = provider.getSigner();
 
     this.apiHost = apiHost;
@@ -24,9 +24,21 @@ export default class USMClient {
     this.logger = logger;
     this.signer = signer;
 
-    this.artistWriteContract = new ethers.Contract(artistConfig.address, artistConfig.abi, signer);
-    this.bandWriteContract = new ethers.Contract(bandConfig.address, bandConfig.abi, signer);
-    this.trackWriteContract = new ethers.Contract(trackConfig.address, trackConfig.abi, signer);
+    this.artistWriteContract = new ethers.Contract(
+      artistConfig.address,
+      artistConfig.abi,
+      signer
+    );
+    this.bandWriteContract = new ethers.Contract(
+      bandConfig.address,
+      bandConfig.abi,
+      signer
+    );
+    this.trackWriteContract = new ethers.Contract(
+      trackConfig.address,
+      trackConfig.abi,
+      signer
+    );
   }
 
   updateAccount({ accountAddress }) {
@@ -39,22 +51,28 @@ export default class USMClient {
   }
 
   async createMetadataUri({ metadata, options }) {
-    return axios.post(`${this.apiHost}/api/create_metadata_uri`, { metadata, options });
+    return axios.post(`${this.apiHost}/api/create_metadata_uri`, {
+      metadata,
+      options
+    });
   }
 
   async recordTransaction({ transactionType, tokenId }) {
-    return axios.put(`${this.apiHost}/api/record_transaction`, { transactionType, tokenId });
+    return axios.put(`${this.apiHost}/api/record_transaction`, {
+      transactionType,
+      tokenId
+    });
   }
-  
+
   // Providing a pendingTransaction enables long polling on the server
   async fetchAll({ pendingTransaction } = {}) {
     const pendingType = pendingTransaction?.type;
     const metadataUri = pendingTransaction?.metadataUri;
-    let pendingMetadataUri
+    let pendingMetadataUri;
     if (metadataUri) {
       pendingMetadataUri = encodeURIComponent(metadataUri);
     }
-    
+
     return await axios.get(`${this.apiHost}/api/tokens`, {
       params: { pendingType, pendingMetadataUri }
     });
@@ -71,17 +89,22 @@ export default class USMClient {
       description,
       artistDNA: this.accountAddress
     };
-  
-    const options = {
-      transactionType: 'create-artist',
-    }
 
-    const { data } = await this.createMetadataUri({ metadata,  options });
-    const transaction = await this.artistWriteContract.createArtist(data?.metadataUri, {
-      value: ethers.utils.parseEther('.15'),
-    });
-    this.artistWriteContract.once(transaction, (transaction) => onComplete({ transaction, data: metadata }))
-    
+    const options = {
+      transactionType: 'create-artist'
+    };
+
+    const { data } = await this.createMetadataUri({ metadata, options });
+    const transaction = await this.artistWriteContract.createArtist(
+      data?.metadataUri,
+      {
+        value: ethers.utils.parseEther('.15')
+      }
+    );
+    this.artistWriteContract.once(transaction, (transaction) =>
+      onComplete({ transaction, data: metadata })
+    );
+
     return transaction;
   }
 
@@ -90,7 +113,7 @@ export default class USMClient {
       throw new Error('Missing required information');
     }
 
-    if(!artistTid) {
+    if (!artistTid) {
       throw new Error('An artist is required when starting a band.');
     }
 
@@ -108,16 +131,24 @@ export default class USMClient {
       transactionType: 'start-band'
     };
 
-    const { data } = await this.createMetadataUri({ metadata,  options });
-    const transaction = await this.bandWriteContract.startBand(artistTid, data.metadataUri);
-    this.bandWriteContract.once(transaction, (transaction) => onComplete({ transaction, data: contextData }));
+    const { data } = await this.createMetadataUri({ metadata, options });
+    const transaction = await this.bandWriteContract.startBand(
+      artistTid,
+      data.metadataUri
+    );
+    this.bandWriteContract.once(transaction, (transaction) =>
+      onComplete({ transaction, data: contextData })
+    );
     return transaction;
   }
 
   async joinBand({ artistTid, bandTid }, onComplete) {
     let response;
     try {
-      response = await this.recordTransaction({ transactionType: 'join-band', tokenId: bandTid });
+      response = await this.recordTransaction({
+        transactionType: 'join-band',
+        tokenId: bandTid
+      });
     } catch (error) {
       // We weren't able to record the transaction - not a big deal but this means we may
       // face a race condition between the db and the contract when updating the ui
@@ -127,33 +158,44 @@ export default class USMClient {
     const metadataUri = response?.data?.metadataUri ?? '';
     const data = { metadataUri, artistTid, bandTid };
 
-    const transaction = await this.bandWriteContract.joinBand(artistTid, bandTid);
-    this.bandWriteContract.once(transaction, (transaction) => onComplete({ transaction, data }));
+    const transaction = await this.bandWriteContract.joinBand(
+      artistTid,
+      bandTid
+    );
+    this.bandWriteContract.once(transaction, (transaction) =>
+      onComplete({ transaction, data })
+    );
     return transaction;
   }
 
   async createTrack({ name, description, artistTid, bandTid }, onComplete) {
-      const metadata = {
-        name,
-        description
-      };
+    const metadata = {
+      name,
+      description
+    };
 
-      const options = {
-        transactionType: 'create-track' 
-      };
+    const options = {
+      transactionType: 'create-track'
+    };
 
-      const { data } = await this.createMetadataUri({ metadata,  options });
-      const metadataUri = data?.metadataUri;
-      const transaction = await this.trackWriteContract.createTrack(artistTid, bandTid, metadataUri);
-      const contextData = {
-        name,
-        description,
-        metadataUri,
-        artistTid,
-        bandTid
-      };
-      this.trackWriteContract.once(transaction, (transaction) => onComplete({ transaction, data: contextData }));
-      return transaction;
+    const { data } = await this.createMetadataUri({ metadata, options });
+    const metadataUri = data?.metadataUri;
+    const transaction = await this.trackWriteContract.createTrack(
+      artistTid,
+      bandTid,
+      metadataUri
+    );
+    const contextData = {
+      name,
+      description,
+      metadataUri,
+      artistTid,
+      bandTid
+    };
+    this.trackWriteContract.once(transaction, (transaction) =>
+      onComplete({ transaction, data: contextData })
+    );
+    return transaction;
   }
 
   inviteToJoinBand() {

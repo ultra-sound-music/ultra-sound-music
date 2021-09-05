@@ -1,16 +1,19 @@
 const fs = require('fs');
-const {exec} = require('child_process');
+const { exec } = require('child_process');
 
-const tokenConfigs  = require('../contracts');
+const tokenConfigs = require('../contracts');
 const jsString = JSON.stringify(tokenConfigs);
 
-const package = process.argv[2];
+const packageName = process.argv[2];
 
-exec(`cd ${package} && npm run set-token-configs -- '${jsString}'`, (err) => {
-  if (err) {
-    console.error(err)
-    return
+exec(
+  `cd ${packageName} && npm run set-token-configs -- '${jsString}'`,
+  (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log(`Successfully wrote token configs to the ${packageName}`);
   }
-  
-  console.log(`Successfully wrote token configs to the ${package}`);
-});
+);

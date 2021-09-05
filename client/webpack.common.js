@@ -1,17 +1,19 @@
 require('dotenv').config();
 const path = require('path');
-const webpack = require('webpack')
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: './src/index'    
+    index: './src/index'
   },
   plugins: [
     new webpack.DefinePlugin({
-      __GOOGLE_ANALYTICS_ENABLED__: JSON.stringify(process.env.GOOGLE_ANALYTICS_ENABLED === 'true'),
+      __GOOGLE_ANALYTICS_ENABLED__: JSON.stringify(
+        process.env.GOOGLE_ANALYTICS_ENABLED === 'true'
+      ),
       __GOOGLE_ANALYTICS_ID__: JSON.stringify(process.env.GOOGLE_ANALYTICS_ID),
       __ENVIRONMENT__: JSON.stringify(process.env.ENVIRONMENT),
       __SENTRY_ENABLED__: JSON.stringify(process.env.SENTRY_ENABLED === 'true'),
@@ -28,17 +30,17 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx|tsx|ts)$/,
-        exclude: /node_modules/,          
+        exclude: /node_modules/,
         loader: 'string-replace-loader',
         options: {
           search: '__BLOCKCHAIN_NAME__',
-          replace: process.env.BLOCKCHAIN_NAME,
+          replace: process.env.BLOCKCHAIN_NAME
         }
-      },        
+      },
       {
-          test: /\.(js|jsx|tsx|ts)$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader'
+        test: /\.(js|jsx|tsx|ts)$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       },
       {
         test: /\.s[ac]ss$/i,
@@ -48,13 +50,13 @@ module.exports = {
           // Translates CSS into CommonJS
           'css-loader',
           // Compiles Sass to CSS
-          'sass-loader',
-        ],
+          'sass-loader'
+        ]
       },
       {
-          test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-          use: ['file-loader']
-      },
+        test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
+        use: ['file-loader']
+      }
     ]
   },
   resolve: {
@@ -62,11 +64,11 @@ module.exports = {
     plugins: [
       new DirectoryNamedWebpackPlugin({
         honorIndex: true
-      })           
+      })
     ],
     fallback: {
-      util: require.resolve("util/")
-    }    
+      util: require.resolve('util/')
+    }
   },
   output: {
     filename: '[name].bundle.js',
@@ -78,7 +80,7 @@ module.exports = {
     compress: true,
     port: 9000,
     proxy: {
-      '/api': 'http://localhost:9001',
-    },      
+      '/api': 'http://localhost:9001'
+    }
   }
-}
+};
