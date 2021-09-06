@@ -6,7 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import * as Actions from '../../../redux/actions';
 import * as Selectors from '../../../redux/selectors';
 
-import './CreateArtistButton.scss';
+import styles from './CreateArtistButton.scss';
 
 export class CreateArtistButton extends React.Component {
   static propTypes = {
@@ -29,7 +29,7 @@ export class CreateArtistButton extends React.Component {
     if (this.props.isProcessing) {
       return (
         <Spinner
-          className='CreateArtistButton__spinner'
+          className={styles.spinner}
           as='span'
           animation='border'
           size='sm'
@@ -49,7 +49,7 @@ export class CreateArtistButton extends React.Component {
   render() {
     return (
       <Button
-        className='CreateArtistButton'
+        className={styles.CreateArtistButton}
         onClick={this.onClick}
         disabled={this.props.isProcessing || this.isDisabled()}
       >
@@ -61,10 +61,8 @@ export class CreateArtistButton extends React.Component {
 
 export function mapStateToProps(state) {
   const accountAddress = Selectors.web3.getAccountAddress(state);
-  const isProcessing = Selectors.usm.isProcessingCreateArtist(
-    state,
-    accountAddress
-  );
+  const isProcessing = true;
+  Selectors.usm.isProcessingCreateArtist(state, accountAddress);
 
   return {
     isProcessing

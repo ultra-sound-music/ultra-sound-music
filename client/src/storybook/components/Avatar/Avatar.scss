@@ -1,0 +1,27 @@
+.Avatar {
+}
+
+.image {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.small {
+  width: 45px;
+  height: 45px;
+}
+
+.medium {
+  width: 75px;
+  height: 75px;
+}
+
+.large {
+  width: 300px;
+  height: 300px;
+}
+
+.round {
+  border-radius: 100%;
+}

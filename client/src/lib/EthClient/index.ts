@@ -10,9 +10,9 @@ const methods = {
 };
 
 export default class Eth {
-  provider = null;
   isWeb3Available = false;
-  ethereum = null;
+  provider: ethers.providers.Web3Provider | null = null;
+  ethereum: ethers.providers.ExternalProvider | null = null;
 
   constructor({ ethereum }: TEthConstructorProps) {
     this.ethereum = ethereum;

@@ -38,7 +38,19 @@ module.exports = {
         }
       },
       {
-        test: /\.(js|jsx|tsx|ts)$/,
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'ts-loader'
+          }
+        ]
+      },
+      {
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
@@ -48,7 +60,24 @@ module.exports = {
           // Creates `style` nodes from JS strings
           'style-loader',
           // Translates CSS into CommonJS
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              esModule: true,
+              modules: {
+                mode: (resourcePath) => {
+                  console.log(resourcePath);
+                  if (resourcePath.includes('/src/styles/')) {
+                    return 'global';
+                  }
+
+                  return 'local';
+                },
+                localIdentName: '[name]--[local]--[hash]',
+                localIdentHashDigestLength: 5
+              }
+            }
+          },
           // Compiles Sass to CSS
           'sass-loader'
         ]
