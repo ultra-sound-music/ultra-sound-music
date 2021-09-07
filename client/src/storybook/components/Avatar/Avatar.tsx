@@ -16,23 +16,27 @@ export enum EShape {
 export interface IAvatarProps {
   image?: JSX.Element;
   imageUrl?: string;
-  size: ESize;
+  size?: ESize;
   shape?: EShape;
 }
 
 export const Avatar = ({
   image,
   imageUrl,
-  size,
+  size = ESize.SMALL,
   shape = EShape.ROUND
 }: IAvatarProps): JSX.Element => {
   const rootclassNames = cn(styles.Avatar, styles[size]);
   const imgClassNames = cn(styles.image, styles[shape]);
-  const img = imageUrl ? (
-    <img src={imageUrl} className={imgClassNames} />
-  ) : (
-    React.cloneElement(image, { className: imgClassNames })
-  );
+
+  let img;
+  if (imageUrl) {
+    img = <img src={imageUrl} className={imgClassNames} />;
+  } else if (image) {
+    img = React.cloneElement(image, { className: imgClassNames });
+  } else {
+    img = '@todo - placeholder image';
+  }
 
   return <div className={rootclassNames}>{img}</div>;
 };

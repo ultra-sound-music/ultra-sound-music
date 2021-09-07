@@ -19,10 +19,11 @@ export interface IButtonProps {
   isPrimary?: boolean;
   style?: EButtonStyle;
   size?: EButtonSize;
+  isFullWidth?: boolean;
   text: string;
-  subText: string;
-  image: JSX.Element;
-  to: string;
+  subText?: string;
+  image?: JSX.Element;
+  to?: string;
   onClick?: () => void;
 }
 
@@ -30,6 +31,7 @@ export const Button = ({
   isPrimary = false,
   style = EButtonStyle.DARK,
   size = EButtonSize.MEDIUM,
+  isFullWidth = false,
   text,
   subText,
   image,
@@ -43,7 +45,8 @@ export const Button = ({
     styles.Button,
     styles[size],
     styles[role],
-    styles[style]
+    styles[style],
+    { [styles.fullWidth]: isFullWidth }
   );
 
   if (to) {

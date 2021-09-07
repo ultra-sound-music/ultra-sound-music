@@ -1,6 +1,11 @@
-$text-small: 1.2rem;
-$text-body: 1.6rem;
-$text-med: 1.8rem;
-$text-large: 2.5rem;
-$text-x-lrg: 5rem;
-$text-xx-lrg: 7rem;
+$text-sml: 1.2rem;
+$text-medsml: 1.6rem;
+$text-med: 1.6rem;
+$text-medlrg: 1.8rem;
+$text-lrg: 2rem;
+$text-x-lrg: 2.5rem;
+$text-xx-lrg: 5rem;
+$text-xxx-lrg: 7rem;
+
+$text-h3: $text-x-lrg;
+$text-body: $text-med;

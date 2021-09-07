@@ -1,0 +1,44 @@
+@import '../../../styles/fonts.scss';
+@import '../../../styles/colors.scss';
+@import '../../../styles/typo.scss';
+
+.Pillbox {
+  position: relative;
+  background-color: $color-dark-grey;
+  border-radius: 30px;
+  box-sizing: border-box;
+  color: $color-white;
+  width: 100%;
+  height: 100%;
+  padding: 23px 22px;
+}
+
+.sections-2 {
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.sections-3 {
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.headers {
+  margin-bottom: 13px;
+}
+
+.header {
+  font-family: $font-roboto;
+  font-size: $text-h3;
+  text-transform: capitalize;
+}
+
+.subheader {
+  font-size: $text-med;
+}
+
+.button {
+  position: absolute;
+  left: 25px;
+  right: 25px;
+  bottom: 25px;
+  width: calc(100% - 50px);
+}

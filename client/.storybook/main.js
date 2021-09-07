@@ -9,6 +9,8 @@ module.exports = {
       rules: commonConfigs.module.rules
     };
 
+    const resolve = commonConfigs.resolve;
+
     return { ...defaultConfigs, module };
   },
   core: {
