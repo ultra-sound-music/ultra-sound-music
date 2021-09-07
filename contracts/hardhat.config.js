@@ -2,7 +2,7 @@ require('@nomiclabs/hardhat-ethers');
 
 module.exports = {
   hardhat: {
-    chainId: 1337
+    chainId: 31337
   },
   solidity: {
     version: '0.8.0',

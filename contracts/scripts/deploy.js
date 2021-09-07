@@ -6,8 +6,26 @@
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const fs = require('fs');
+const mkdirp = require('mkdirp');
+
+
+const getNetworkName = (chainId) => {
+  switch (chainId) {
+    case 31337:
+      return "local"
+    case 4:
+      return "rinkeby"
+    case 1:
+      return "mainnet"
+    default:
+      return "local"
+  }
+}
+
 
 async function main() {
+
+
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
@@ -16,11 +34,11 @@ async function main() {
   // await hre.run('compile');
   // We get the contract to deploy
 
-  const USMArtistToken = await ethers.getContractFactory('USMArtistToken');
-  const usmArtistToken = await USMArtistToken.deploy(
-    'USM Artist Token',
-    'USM-A'
-  );
+  const {chainId} = await ethers.provider.getNetwork();
+  const networkName = getNetworkName(chainId)
+  
+  const USMArtistToken = await ethers.getContractFactory("USMArtistToken");
+  const usmArtistToken = await USMArtistToken.deploy("USM Artist Token", "USM-A");
 
   await usmArtistToken.deployed();
 
@@ -55,10 +73,30 @@ async function main() {
     track: usmTrackToken.address
   });
 
-  const addressfile = './addresses.json';
-  await fs.writeFileSync(addressfile, addresses, { flag: 'w+' });
+  const addressPath = './networks/addresses';
+  const abiPath = `./networks/abis/${networkName}`;
 
-  console.log('Addresses written to the artifacts folder:', addressfile);
+  const madeAddress = mkdirp.sync(addressPath);
+  const madeAbi = mkdirp.sync(abiPath)
+
+  if (madeAddress || madeAbi) {
+    console.log(`made network directories`)
+  }
+
+  const addressfile = `./networks/addresses/${networkName}.json`
+
+  console.log("addresses written to network configs")
+
+  await fs.writeFileSync(addressfile, addresses, {flag: 'w+'}); 
+
+  await fs.copyFileSync('./artifacts/contracts/USMArtistToken.sol/USMArtistToken.json', `./networks/abis/${networkName}/USMArtistToken.json`);
+
+  await fs.copyFileSync('./artifacts/contracts/USMBandToken.sol/USMBandToken.json', `./networks/abis/${networkName}/USMBandToken.json`);
+
+  await fs.copyFileSync('./artifacts/contracts/USMTrackToken.sol/USMTrackToken.json', `./networks/abis/${networkName}/USMTrackToken.json`);
+
+ 
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -3,6 +3,7 @@ node_modules
 #Hardhat files
 cache
 artifacts
+networks
 
 #Custom addresses cache
 /addresses.json

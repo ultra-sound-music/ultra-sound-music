@@ -1,22 +1,31 @@
-const addresses = require('./addresses.json');
-const USMArtistTokenAbi =
-  require('./artifacts/contracts/USMArtistToken.sol/USMArtistToken.json').abi;
-const USMBandTokenAbi =
-  require('./artifacts/contracts/USMBandToken.sol/USMBandToken.json').abi;
-const USMTrackTokenAbi =
-  require('./artifacts/contracts/USMTrackToken.sol/USMTrackToken.json').abi;
+const localAddresses = require('./networks/addresses/local.json');
+const USMArtistTokenAbiLocal = require('./networks/abis/local/USMArtistToken.json').abi;
+const USMBandTokenAbiLocal = require('./networks/abis/local/USMBandToken.json').abi;
+const USMTrackTokenAbiLocal = require('./networks/abis/local/USMTrackToken.json').abi;
 
 module.exports = {
-  artist: {
-    abi: USMArtistTokenAbi,
-    address: addresses.artist
+  local:{
+    artist: {
+      abi: USMArtistTokenAbiLocal,
+      address: localAddresses.artist
+    },
+    band: {
+      abi: USMBandTokenAbiLocal,
+      address: localAddresses.band
+    },
+    track: {
+      abi: USMTrackTokenAbiLocal,
+      address: localAddresses.track
+    }
   },
-  band: {
-    abi: USMBandTokenAbi,
-    address: addresses.band
+  rinkeby:{
+    artist:{},
+    band:{},
+    track:{}
   },
-  track: {
-    abi: USMTrackTokenAbi,
-    address: addresses.track
+  mainnet:{
+    artist:{},
+    band:{},
+    track:{}
   }
 };

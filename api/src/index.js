@@ -13,11 +13,15 @@ const Transaction = require('./db/models/Transaction');
 const fleekStorage = require('@fleekhq/fleek-storage-js');
 const fetch = require('node-fetch');
 
+const allConfigs = require('../conf/tokenConfigs.js');
+
+const tokenConfigs = process.env.NETWORK === 'local' ? allConfigs.local : process.env.NETWORK === 'rinkeby' ? allConfigs.rinkeby : process.env.NETWORK === "mainnet" ? allConfigs.mainnet : "";
+
 const {
   artist: artistConfigs,
   band: bandConfigs,
   track: trackConfigs
-} = require('../conf/tokenConfigs');
+ } = tokenConfigs;
 
 const sentryDsn =
   process.env.SENTRY_ENABLED === 'true' ? process.env.SENTRY_DSN : '';
