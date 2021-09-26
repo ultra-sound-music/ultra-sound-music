@@ -1,7 +1,9 @@
 import { ethers } from 'ethers';
 import axios from 'axios';
 
-const noop = () => {};
+const noop = () => {
+  console.log('TODO');
+};
 
 export default class USMClient {
   constructor({
@@ -79,14 +81,8 @@ export default class USMClient {
   }
 
   // @TODO pass in an onError callback
-  async createArtist({ name, description }, onComplete) {
-    if (!name) {
-      throw new Error('Missing required information');
-    }
-
+  async createArtist(onComplete) {
     const metadata = {
-      name,
-      description,
       artistDNA: this.accountAddress
     };
 
@@ -109,10 +105,6 @@ export default class USMClient {
   }
 
   async startBand({ name, description, artistTid }, onComplete) {
-    if (!name) {
-      throw new Error('Missing required information');
-    }
-
     if (!artistTid) {
       throw new Error('An artist is required when starting a band.');
     }

@@ -2,36 +2,28 @@ import React from 'react';
 import cn from 'classnames';
 import styles from './Avatar.scss';
 
-export enum ESize {
-  SMALL = 'small',
-  MEDIUM = 'medium',
-  LARGE = 'large'
-}
-
-export enum EShape {
-  ROUND = 'round',
-  SQUARE = 'square'
-}
+export type TAvatarSize = 'tiny' | 'small' | 'medium' | 'large';
+export type TAvatarShape = 'round' | 'square';
 
 export interface IAvatarProps {
   image?: JSX.Element;
-  imageUrl?: string;
-  size?: ESize;
-  shape?: EShape;
+  src?: string;
+  size?: TAvatarSize;
+  shape?: TAvatarShape;
 }
 
 export const Avatar = ({
   image,
-  imageUrl,
-  size = ESize.SMALL,
-  shape = EShape.ROUND
+  src,
+  size = 'medium',
+  shape = 'round'
 }: IAvatarProps): JSX.Element => {
   const rootclassNames = cn(styles.Avatar, styles[size]);
   const imgClassNames = cn(styles.image, styles[shape]);
 
   let img;
-  if (imageUrl) {
-    img = <img src={imageUrl} className={imgClassNames} />;
+  if (src) {
+    img = <img src={src} className={imgClassNames} />;
   } else if (image) {
     img = React.cloneElement(image, { className: imgClassNames });
   } else {

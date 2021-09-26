@@ -1,0 +1,54 @@
+@use '../../../styles/colors.scss' as *;
+@use '../../../styles/typo.scss' as *;
+
+.PillSwitch {
+  border-radius: 15px;
+  display: inline-flex;
+  column-gap: 19px;
+  justify-content: center;
+  padding-right: 27px;
+  padding-left: 27px;
+  line-height: 54px;
+  min-width: 150px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.icon {
+  margin-top: -2px;
+  svg {
+    vertical-align: middle;
+  }
+}
+
+.text {
+  text-transform: uppercase;
+  line-height: 54px;
+  @extend %font-body;
+}
+
+.on {
+  background-color: $color-evening-sky;
+
+  svg {
+    fill: $color-ok;
+  }
+}
+
+.pending {
+  background-color: $color-evening-sky;
+
+  svg {
+    fill: $color-warn;
+  }
+}
+
+.off {
+  background-color: $color-dolpin-blue;
+
+  svg {
+    fill: $color-error;
+  }
+}

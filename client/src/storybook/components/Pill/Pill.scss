@@ -1,0 +1,13 @@
+@use '../../../styles/colors' as *;
+
+.Pill {
+  color: $color-night-sky;
+  padding: 10px 40px;
+  background-color: $color-old-towel;
+  border-radius: 50px;
+  display: inline-block;
+}
+
+.muted {
+  background-color: $color-winter-swim;
+}

@@ -1,0 +1,18 @@
+.TraitsBlock {
+  // margin-top: 40px;
+  margin-bottom: 15px;
+}
+
+.traitsList {
+  
+}
+
+.trait {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}

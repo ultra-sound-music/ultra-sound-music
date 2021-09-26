@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import * as Actions from '../redux/actions';
-import * as Selectors from '../redux/selectors';
+import * as Selectors from '../redux/selectors/core';
 import CreateArtistButton from './Buttons/CreateArtistButton';
 import StartBandButton from './Buttons/StartBandButton';
 import PlaybackButton from './Buttons/PlaybackButton';

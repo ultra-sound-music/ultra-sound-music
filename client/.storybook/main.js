@@ -1,3 +1,4 @@
+const path = require('path');
 const commonConfigs = require('../webpack.common.js');
 
 module.exports = {
@@ -9,9 +10,12 @@ module.exports = {
       rules: commonConfigs.module.rules
     };
 
-    const resolve = commonConfigs.resolve;
+    const resolve = {
+      alias: commonConfigs.resolve.alias,
+      extensions: commonConfigs.resolve.extensions
+    };
 
-    return { ...defaultConfigs, module };
+    return { ...defaultConfigs, module, resolve };
   },
   core: {
     builder: 'webpack5'

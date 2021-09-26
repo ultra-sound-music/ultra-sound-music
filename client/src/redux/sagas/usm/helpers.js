@@ -3,7 +3,7 @@ import * as ReduxUtils from '../../utils';
 import * as Actions from '../../actions';
 import * as Constants from '../../../constants';
 import * as Utils from '../../../utils';
-import * as Selectors from '../../../redux/selectors';
+import * as Selectors from '../../selectors/core';
 
 export function onCreateArtistComplete({
   transaction,

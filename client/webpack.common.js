@@ -66,7 +66,6 @@ module.exports = {
               esModule: true,
               modules: {
                 mode: (resourcePath) => {
-                  console.log(resourcePath);
                   if (resourcePath.includes('/src/styles/')) {
                     return 'global';
                   }
@@ -74,7 +73,8 @@ module.exports = {
                   return 'local';
                 },
                 localIdentName: '[name]--[local]--[hash]',
-                localIdentHashDigestLength: 5
+                localIdentHashDigestLength: 5,
+                exportLocalsConvention: 'asIs'
               }
             }
           },
@@ -89,7 +89,17 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.tsx', '.ts'],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      '@components$': path.resolve(__dirname, 'src/storybook/components.ts'),
+      '@constants$': path.resolve(__dirname, 'src/constants/index.js'),
+      '@copy$': path.resolve(__dirname, 'src/copy/index.ts'),
+      '@images': path.resolve(__dirname, 'src/images'),
+      '@layouts$': path.resolve(__dirname, 'src/storybook/layouts.ts'),
+      '@store': path.resolve(__dirname, 'src/redux'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
+      '@uiTypes$': path.resolve(__dirname, 'src/storybook/types.ts')
+    },
     plugins: [
       new DirectoryNamedWebpackPlugin({
         honorIndex: true
@@ -108,6 +118,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000,
+    historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:9001'
     }

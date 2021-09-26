@@ -49,23 +49,15 @@ export function fetchTokensComplete({ tokens }) {
   };
 }
 
-export function createArtist({ name, description }) {
+export function createArtist() {
   return {
-    type: ActionTypes.CREATE_ARTIST_REQUEST,
-    data: {
-      name,
-      description
-    }
+    type: ActionTypes.CREATE_ARTIST_REQUEST
   };
 }
 
-export function startBand({ name, description }) {
+export function startBand() {
   return {
-    type: ActionTypes.START_BAND_REQUEST,
-    data: {
-      name,
-      description
-    }
+    type: ActionTypes.START_BAND_REQUEST
   };
 }
 
@@ -78,13 +70,11 @@ export function joinBand({ bandId }) {
   };
 }
 
-export function createTrack({ bandId, name, description }) {
+export function createTrack({ bandId }) {
   return {
     type: ActionTypes.CREATE_TRACK_REQUEST,
     data: {
-      bandId,
-      name,
-      description
+      bandId
     }
   };
 }

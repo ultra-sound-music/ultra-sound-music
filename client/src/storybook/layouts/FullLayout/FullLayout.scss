@@ -1,0 +1,8 @@
+.FullLayout {
+  display: grid;
+  grid-template-columns: repeat(24, minmax(25px, 1fr));
+  grid-gap: 18px 15px;
+  grid-auto-flow: row;
+  max-width: 1210px;
+  margin: 0 auto;
+}

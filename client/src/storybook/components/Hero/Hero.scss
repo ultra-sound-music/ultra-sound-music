@@ -1,0 +1,46 @@
+@use '../../../styles/colors.scss' as *;
+
+.Hero {
+  background-color: $color-evening-sky;
+  border-radius: 26px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.small {
+  width: 250px;
+  height: 250px;
+}
+
+.medium {
+  width: 350px;
+  height: 350px;
+}
+
+.large {
+  width: 300px;
+  height: 300px;
+}
+
+.stretch {
+  position: relative;
+
+  &::after {
+    display: block;
+    content: '';
+    padding-bottom: 100%;
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

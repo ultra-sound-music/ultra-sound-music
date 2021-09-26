@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import Button from 'react-bootstrap/Button';
 import * as Actions from '../../../redux/actions';
-import * as Selectors from '../../../redux/selectors';
+import * as Selectors from '../../../redux/selectors/core';
 
 export class PlaybackButton extends React.Component {
   static propTypes = {

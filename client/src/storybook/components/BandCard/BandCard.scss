@@ -1,3 +1,17 @@
 .members {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
+}
+
+.traits {
+  margin-top: 20px;
+}
+
+.trait {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 }

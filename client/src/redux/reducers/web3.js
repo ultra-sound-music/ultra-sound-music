@@ -5,6 +5,7 @@ import * as ActionTypes from '../actionTypes';
 
 const initialState = {
   networkStatus: Constants.web3.networkStatus.NOT_AVAILABLE,
+  hasProvider: false,
   account: null,
   networkId: null
 };
@@ -14,6 +15,7 @@ function initWeb3() {
 }
 
 function updateNetworkStatus(state, { data }) {
+  state.hasProvider = data?.hasProvider ?? initialState.hasProvider;
   state.networkStatus = data?.status ?? initialState.networkStatus;
   state.account = data?.account ?? initialState.account;
   state.networkId = data?.networkId ?? initialState.networkId;

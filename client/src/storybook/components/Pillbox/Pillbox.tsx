@@ -1,114 +1,96 @@
 import React from 'react';
 import cn from 'classnames';
 
-import Button, { EButtonSize, EButtonStyle } from '../Button/Button';
-import Copy from '../../copy/copy';
-
 import styles from './Pillbox.scss';
-
-export enum EPillboxSize {
-  SMALL = 'small',
-  MEDIUM = 'medium',
-  LARGE = 'large'
-}
-
-export enum EPillboxStyle {
-  LIGHT = 'light',
-  DARK = 'dark'
-}
-
 export interface IPillboxProps {
-  header?: string;
-  subheader?: string;
-  ctaText?: string;
-  ctaOnClick?: () => void;
-  children: JSX.Element | JSX.Element[];
+  image?: JSX.Element;
+  subject?: React.ReactNode;
+  header?: React.ReactNode;
+  subHeader?: React.ReactNode;
+  isMuted?: boolean;
+  withPadding?: boolean;
+  withBackground?: boolean;
+  secondaryCta?: JSX.Element;
+  cta?: JSX.Element;
+  children?: React.ReactNode;
 }
 
 export class Pillbox extends React.Component<IPillboxProps> {
-  getNumSections = (): number => {
-    const { header, subheader, ctaOnClick } = this.props;
-
-    let numSections = 1;
-    if (header || subheader) numSections++;
-    if (ctaOnClick) numSections++;
-    return numSections;
+  static defaultProps = {
+    withPadding: true,
+    withBackground: true
   };
 
-  renderHeader = (): JSX.Element => {
-    const { header } = this.props;
-
-    if (!header) {
+  renderImage = (): JSX.Element => {
+    if (!this.props.image) {
       return;
     }
 
-    return <div className={styles.header}>{header}</div>;
-  };
-
-  renderSubheader = (): JSX.Element => {
-    const { subheader } = this.props;
-
-    if (!subheader) {
-      return;
-    }
-
-    return <div className={styles.subheader}>{subheader}</div>;
+    return <div className={styles.image}>{this.props.image}</div>;
   };
 
   renderHeaders = (): JSX.Element => {
-    const header = this.renderHeader();
-    let subheader;
-    if (header) {
-      subheader = this.renderSubheader();
+    const { subject, header, subHeader } = this.props;
+    if (!(subject || header || subHeader)) {
+      return;
     }
 
     return (
       <div className={styles.headers}>
-        {header}
-        {subheader}
+        {subject && <div className={styles.subject}>{subject}</div>}
+        {header && <div className={styles.header}>{header}</div>}
+        {subHeader && <div className={styles.subHeader}>{subHeader}</div>}
       </div>
     );
   };
 
-  ctaOnClick = (): void => {
-    if (!this.props.ctaOnClick) {
+  renderCtas = (): JSX.Element => {
+    const { cta, secondaryCta, isMuted } = this.props;
+
+    if (!(cta || secondaryCta)) {
       return;
     }
 
-    this.props.ctaOnClick();
-  };
+    let ctaButton: React.ReactNode;
+    if (isMuted && cta) {
+      ctaButton = React.cloneElement(cta, { isDisabled: true });
+    } else {
+      ctaButton = cta;
+    }
 
-  renderCta = (): JSX.Element => {
-    const { ctaText = Copy.submit, ctaOnClick } = this.props;
-
-    if (!ctaOnClick) {
-      return;
+    let secondaryCtaButton: React.ReactNode;
+    if (isMuted && secondaryCta) {
+      secondaryCtaButton = React.cloneElement(secondaryCta, {
+        isDisabled: true
+      });
+    } else {
+      secondaryCtaButton = secondaryCta;
     }
 
     return (
-      <div className={styles.button}>
-        <Button
-          onClick={this.ctaOnClick}
-          text={ctaText}
-          size={EButtonSize.LARGE}
-          style={EButtonStyle.LIGHT}
-          isFullWidth={true}
-        />
+      <div className={styles.buttons}>
+        {secondaryCtaButton && secondaryCtaButton}
+        {ctaButton && ctaButton}
       </div>
     );
   };
 
   render(): JSX.Element {
-    const { children } = this.props;
+    const { withPadding, withBackground, isMuted, children } = this.props;
 
-    const numSections = this.getNumSections();
-    const classNames = cn(styles.Pillbox, styles[`sections-${numSections}`]);
+    const classNames = cn(
+      styles.Pillbox,
+      { [styles.padded]: withPadding },
+      { [styles.muted]: isMuted },
+      { [styles.withBackground]: withBackground }
+    );
 
     return (
       <div className={classNames}>
+        {this.renderImage()}
         {this.renderHeaders()}
         <div className={styles.content}>{children}</div>
-        {this.renderCta()}
+        {this.renderCtas()}
       </div>
     );
   }

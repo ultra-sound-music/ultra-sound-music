@@ -2,27 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
-import Button from '../Button';
-import * as Selectors from '../../../redux/selectors';
+import { Button } from '@components';
+import * as Selectors from '../../../redux/selectors/core';
 import * as Actions from '../../../redux/actions';
 
 export class StartBandButton extends React.Component {
   static propTypes = {
-    name: PropTypes.string,
-    description: PropTypes.string,
     isProcessing: PropTypes.bool,
     startBand: PropTypes.func
   };
 
   onClick = () => {
-    const { name, description } = this.props;
-
-    const { startBand } = this.props;
-
-    startBand({
-      name,
-      description
-    });
+    this.props.startBand();
   };
 
   renderSpinner() {
@@ -40,19 +31,9 @@ export class StartBandButton extends React.Component {
     }
   }
 
-  isDisabled() {
-    const { name } = this.props;
-
-    return !(name && name.length > 1);
-  }
-
   render() {
     return (
-      <Button
-        className='StartBandButton'
-        onClick={this.onClick}
-        disabled={this.props.isProcessing || this.isDisabled()}
-      >
+      <Button onClick={this.onClick} isProcessing={this.props.isProcessing}>
         {this.renderSpinner()}Start A Band
       </Button>
     );

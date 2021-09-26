@@ -1,11 +1,53 @@
-$text-sml: 1.2rem;
-$text-medsml: 1.6rem;
-$text-med: 1.6rem;
-$text-medlrg: 1.8rem;
-$text-lrg: 2rem;
-$text-x-lrg: 2.5rem;
-$text-xx-lrg: 5rem;
-$text-xxx-lrg: 7rem;
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap');
+@import url('https://use.typekit.net/yqc5zwz.css');
 
-$text-h3: $text-x-lrg;
-$text-body: $text-med;
+$font-lato: 'Lato', sans-serif;
+$font-motor: 'motor', monospace;
+$font-fam-header: $font-motor;
+$font-fam-body: $font-lato;
+
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$font-weight-x-bold: 900;
+
+$font-size-h1: 6.5rem;
+$font-size-h2: 4rem;
+$font-size-h3: 3rem;
+$font-size-cta: 2rem;
+$font-size-body: 1.8rem;
+$font-size-medium: 1.6rem;
+$font-size-small: 1.4rem;
+
+%font-h1 {
+  font: $font-weight-normal #{$font-size-h1} / 1 $font-fam-header;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+%font-h2 {
+  font: $font-weight-normal #{$font-size-h2} / 1 $font-fam-header;
+  text-transform: uppercase;
+}
+
+%font-h3 {
+  font: $font-weight-bold #{$font-size-h3} / 1.2 $font-fam-body;
+}
+
+%font-h4 {
+  font: $font-weight-bold #{$font-size-body} / 1.2 $font-fam-body;
+  text-transform: uppercase;
+}
+
+%font-body {
+  font: $font-weight-bold #{$font-size-body} / 1.5 $font-fam-body;
+}
+
+%font-cta {
+  font: $font-weight-x-bold #{$font-size-cta} / 1.2 $font-fam-body;
+  letter-spacing: 0.025em;
+}
+
+%font-small {
+  font: $font-weight-normal #{$font-size-small} / 1.4 $font-fam-body;
+}

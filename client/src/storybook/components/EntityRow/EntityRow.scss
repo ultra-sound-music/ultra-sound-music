@@ -1,0 +1,25 @@
+@use '../../../styles/colors.scss' as *;
+@use '../../../styles/typo.scss' as *;
+
+.EntityRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 20px;
+  padding: 20px 15px;
+}
+
+.label {
+  position: absolute;
+  background-color: $color-old-towel;
+  border-radius: 24px;
+  color: $color-night-sky;
+  padding: 4px 9px;
+  right: 15px;
+  top: calc(50% - 11.5px);
+  text-transform: uppercase;
+
+  @extend %font-small;
+  line-height: $font-size-small;
+}

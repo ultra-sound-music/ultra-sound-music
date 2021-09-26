@@ -2,90 +2,74 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
-import About from './components/About';
-import User from './components/User';
-import Alert from './components/Alert';
-import Token from './components/Tokens/Token';
-import Searchable from './components/Searchable';
+import { FullLayout } from '@layouts';
+import { SiteFooter, Overlay } from '@components';
+import usm from '@store/usm';
+import ui from '@store/ui';
+import web3 from '@store/web3';
 
-import NetworkButton from './components/Buttons/NetworkButton';
-import Onboarding from './components/Onboarding';
-import ProcessingIndicator from './components/ProcessingIndicator';
+// import About from './components/About';
+// import User from './components/User';
+import SiteHeader from './components/SiteHeader/SiteHeader';
+import Modal from './components/Modal/Modal';
+import Landing from './pages/Landing';
+import BandsPage from './pages/BandsPage';
+// import Token from './components/Tokens/Token';
+// import Searchable from './components/Searchable';
 
-import * as Selectors from './redux/selectors';
+// import ProcessingIndicator from './components/ProcessingIndicator';
 
-import './App.scss';
+import styles from './App.scss';
 
 export class App extends React.Component {
   static propTypes = {
     accountAddress: PropTypes.string,
-    isProcessingTransaction: PropTypes.bool
+    isProcessingTransaction: PropTypes.bool,
+    shouldShowModal: PropTypes.bool,
+    modalType: PropTypes.string,
+    modalProps: PropTypes.object
   };
 
   renderProcessingIndicator() {
     if (this.props.isProcessingTransaction) {
-      return (
-        <div className='App__banner'>
-          <ProcessingIndicator />
-        </div>
-      );
+      return <Overlay />;
     }
   }
 
   render() {
+    const { shouldShowModal, modalType, modalProps } = this.props;
+
     return (
       <div>
         <Router>
           <div className='App'>
-            <Container>
-              <Navbar bg='light'>
-                <Navbar.Brand href='/'>
-                  🦇 🔉 🎼 Ultra Sound Music Project
-                </Navbar.Brand>
-                <Nav>
-                  <Nav.Link href='/about'>About</Nav.Link>
-                </Nav>
-                <Nav className='ms-auto'>
-                  <NetworkButton />
-                  <Nav.Link>Profile</Nav.Link>
-                </Nav>
-              </Navbar>
+            <FullLayout>
+              <div className={styles.site_header}>
+                <SiteHeader />
+              </div>
+            </FullLayout>
 
-              {this.renderProcessingIndicator()}
+            <Switch>
+              <Route path='/bands'>
+                <BandsPage />
+              </Route>
 
-              <Switch>
-                <Route path='/about' component={About} />
-                <Route path='/token/:entityId'>
-                  <Row>
-                    <Col>
-                      <Token />
-                    </Col>
-                  </Row>
-                </Route>
+              <Route path='/tracks'></Route>
 
-                <Route path='/'>
-                  <Row>
-                    <Col>
-                      {this.props.accountAddress ? <User /> : <Onboarding />}
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <Searchable />
-                    </Col>
-                  </Row>
-                </Route>
-              </Switch>
-            </Container>
+              <Route path='/'>
+                <FullLayout>
+                  <Landing />
+                </FullLayout>
+                <div className={styles.site_footer}>
+                  <SiteFooter />
+                </div>
+              </Route>
+            </Switch>
           </div>
         </Router>
-        <Alert />
+        {this.renderProcessingIndicator()}
+        {shouldShowModal && <Modal type={modalType} modalProps={modalProps} />}
       </div>
     );
   }
@@ -93,8 +77,11 @@ export class App extends React.Component {
 
 export function mapStateToProps(state) {
   return {
-    isProcessingTransaction: Selectors.usm.isProcessingTransaction(state),
-    accountAddress: Selectors.web3.getAccountAddress(state)
+    isProcessingTransaction: usm.selectors.isProcessingTransaction(state),
+    shouldShowModal: ui.selectors.shouldShowModal(state),
+    modalType: ui.selectors.getModalType(state),
+    modalProps: ui.selectors.getModalProps(state),
+    accountAddress: web3.selectors.getAccountAddress(state)
   };
 }
 

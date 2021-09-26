@@ -8,7 +8,7 @@ import RequestToJoinBandButton from '../../Buttons/RequestToJoinBandButton';
 import JoinBandButton from '../../Buttons/JoinBandButton';
 import BandMemberIcon from '../../Icons/BandMemberIcon';
 import * as Constants from '../../../constants';
-import * as Selectors from '../../../redux/selectors';
+import * as Selectors from '../../../redux/selectors/core';
 
 export class BandCard extends React.Component {
   static propTypes = {

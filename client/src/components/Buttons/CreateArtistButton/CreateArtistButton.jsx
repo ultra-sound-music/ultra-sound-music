@@ -1,68 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
-import * as Actions from '../../../redux/actions';
-import * as Selectors from '../../../redux/selectors';
-
-import styles from './CreateArtistButton.scss';
+import { Button } from '@components';
+import usm from '@store/usm';
+import web3 from '@store/web3';
 
 export class CreateArtistButton extends React.Component {
   static propTypes = {
     isProcessing: PropTypes.bool,
-    name: PropTypes.string,
-    description: PropTypes.string,
     createArtist: PropTypes.func
   };
 
   onClick = () => {
-    const { name, description } = this.props;
-
-    this.props.createArtist({
-      name,
-      description
-    });
+    this.props.createArtist();
   };
-
-  renderSpinner() {
-    if (this.props.isProcessing) {
-      return (
-        <Spinner
-          className={styles.spinner}
-          as='span'
-          animation='border'
-          size='sm'
-          role='status'
-          aria-hidden='true'
-        />
-      );
-    }
-  }
-
-  isDisabled() {
-    const { name } = this.props;
-
-    return !(name && name.length > 1);
-  }
 
   render() {
     return (
       <Button
-        className={styles.CreateArtistButton}
+        type='primary'
         onClick={this.onClick}
-        disabled={this.props.isProcessing || this.isDisabled()}
+        isProcessing={this.props.isProcessing}
       >
-        {this.renderSpinner()}Create Artist
+        Mint an Artist
       </Button>
     );
   }
 }
 
 export function mapStateToProps(state) {
-  const accountAddress = Selectors.web3.getAccountAddress(state);
-  const isProcessing = true;
-  Selectors.usm.isProcessingCreateArtist(state, accountAddress);
+  const accountAddress = web3.selectors.getAccountAddress(state);
+  const isProcessing = usm.selectors.isProcessingCreateArtist(
+    state,
+    accountAddress
+  );
 
   return {
     isProcessing
@@ -70,7 +41,7 @@ export function mapStateToProps(state) {
 }
 
 export const mapDispatchToProps = {
-  createArtist: Actions.usm.createArtist
+  createArtist: usm.actions.createArtist
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateArtistButton);

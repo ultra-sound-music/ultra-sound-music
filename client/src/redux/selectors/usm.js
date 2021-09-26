@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import * as Constants from '../../constants';
 import * as Utils from '../../utils';
-import tokensAdapter from '../utils/tokensAdapter';
+import { tokensAdapter } from '../utils/tokensAdapter';
 
 const tokenSelectors = tokensAdapter.getSelectors((state) => state.usm);
 
@@ -12,6 +12,10 @@ export const {
   selectTotal: selectTokenTotal,
   selectById: selectTokenById
 } = tokenSelectors;
+
+export function getUsmState(state) {
+  return state.usm;
+}
 
 export function getActiveArtistId(state) {
   return state.usm.activeArtistId;
@@ -58,6 +62,19 @@ export const getActiveArtistName = createSelector(
   getActiveArtist,
   (artist) => artist?.name ?? ''
 );
+
+export const getActiveArtistTraits = () => {
+  return [
+    { name: 'foo', value: 10 },
+    { name: 'shmoo', value: 98 },
+    { name: 'blew', value: 15 },
+    { name: 'who', value: 45 }
+  ];
+};
+
+export const getActiveArtistImageUrl = () => {
+  return './test.png';
+};
 
 export const getActiveArtistBands = createSelector(
   getActiveArtistTid,
@@ -124,28 +141,77 @@ export const getTokenName = createSelector(
   (token) => token?.name
 );
 
-export function selectOpenTransactions(state) {
-  return state.usm.transactions.filter((transaction) => {
-    return ![
-      Constants.usm.transactionStatus.MINED,
-      Constants.usm.transactionStatus.FAILED
-    ].includes(transaction.status);
-  });
-}
+export const selectAllTransactions = createSelector(
+  getUsmState,
+  (usmState) => usmState.transactions
+);
 
-export function selectOpenTransaction(state, key) {
-  const openTransactions = selectOpenTransactions(state);
-  return openTransactions.some((transaction) => transaction.key === key);
-}
+export const getTransactionStatusByType = createSelector(
+  selectAllTransactions,
+  (state, { type, artistTid, bandTid }) =>
+    Utils.usm.genTransactionKeyByType(type, artistTid, bandTid),
+  (transactions, transactionKey) => {
+    const tx = transactions.find(
+      (transaction) => transaction.key === transactionKey
+    );
+    return tx?.status ?? '';
+  }
+);
+
+export const selectCompletedTransactions = createSelector(
+  selectAllTransactions,
+  (transactions) =>
+    transactions.filter((transaction) => {
+      return [
+        Constants.usm.transactionStatus.MINED,
+        Constants.usm.transactionStatus.FAILED
+      ].includes(transaction.status);
+    })
+);
+
+export const hasTransactionCompleted = createSelector(
+  selectCompletedTransactions,
+  ({ transactionId, key }) => {
+    transactionId, key;
+  },
+  (transactions, { transactionId, key }) =>
+    transactions.some((tx) => {
+      tx.key === key || tx.transactionId === transactionId;
+    })
+);
+
+export const selectOpenTransactions = createSelector(
+  selectAllTransactions,
+  (transactions) =>
+    transactions.filter((transaction) => {
+      return ![
+        Constants.usm.transactionStatus.MINED,
+        Constants.usm.transactionStatus.FAILED
+      ].includes(transaction.status);
+    })
+);
+
+export const selectOpenTransaction = createSelector(
+  selectOpenTransactions,
+  ({ key, transactionId }) => {
+    key, transactionId;
+  },
+  (transactions, { key, transactionId }) =>
+    transactions.find(
+      (transaction) =>
+        transaction.key === key || transaction.transactionId === transactionId
+    )
+);
 
 export const hasOpenTransactions = createSelector(
   selectOpenTransactions,
   (openTransactions) => !!openTransactions?.length
 );
 
-export function hasOpenTransaction(state, key) {
-  return !!selectOpenTransaction(state, key);
-}
+export const isOpenTransaction = createSelector(
+  selectOpenTransaction,
+  (openTransaction) => !!openTransaction
+);
 
 export const isProcessingCreateArtist = createSelector(
   selectOpenTransactions,
@@ -218,6 +284,19 @@ export const getBandByTrackId = createSelector(
       return band.tokenId === bandTid;
     });
   }
+);
+
+export const getBand = createSelector(selectTokenById, (band) =>
+  band.tokenType === Constants.usm.tokenType.BAND ? band : null
+);
+
+export const getBandName = createSelector(getBand, ({ name }) => name);
+
+export const getBandTraits = createSelector(getBand, () =>
+  [1, 2, 3, 4].map((n) => ({
+    name: `Trait ${n}`,
+    value: `${n}${n}${n}`
+  }))
 );
 
 export const getTrackCreatorByTrackId = createSelector(
@@ -336,6 +415,10 @@ export const canJoinBand = createSelector(
     return !isMemberOfBand && numBandMembers < Constants.usm.MAX_BAND_MEMBERS;
   }
 );
+
+export const getSuggestedBandName = (state) => {
+  return state.usm.suggestedBandName;
+};
 
 // @TODO - Still need to sort out how to manage permissions to join a band
 export const canRequestToJoinBand = canJoinBand;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Avatar, { IAvatarProps, ESize } from './Avatar';
+import Avatar, { IAvatarProps } from './Avatar';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import auroryImg from '../../assets/img/aurory.png';
@@ -11,8 +11,8 @@ export default {
 
 export const Template: ComponentStory<typeof Avatar> = (args) => {
   const defaultProps: IAvatarProps = {
-    imageUrl: auroryImg,
-    size: ESize.MEDIUM
+    src: auroryImg,
+    size: 'medium'
   };
 
   const props = Object.assign({}, defaultProps, args);
@@ -21,12 +21,12 @@ export const Template: ComponentStory<typeof Avatar> = (args) => {
 
 export const imageUrl = Template.bind({});
 imageUrl.args = {
-  imageUrl: auroryImg,
-  size: ESize.MEDIUM
+  src: auroryImg,
+  size: 'medium'
 };
 
 export const ImageComponet = Template.bind({});
 ImageComponet.args = {
   image: <img src={auroryImg} />,
-  size: ESize.MEDIUM
+  size: 'medium'
 };

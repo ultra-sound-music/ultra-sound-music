@@ -1,0 +1,18 @@
+.SidebarLayout {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
+  grid-gap: 18px 15px;
+  grid-auto-flow: row;
+  max-width: 1210px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.main {
+  grid-column-start: 2;
+  grid-column-end: end;
+}

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import * as Constants from '../../constants';
+import * as Constants from '@constants';
 import * as ActionTypes from '../actionTypes';
-import tokensAdapter from '../utils/tokensAdapter';
+import { mapTokenProps, tokensAdapter } from '../utils/tokensAdapter';
 
 const initialState = tokensAdapter.getInitialState({
   activeArtistId: null,
@@ -22,7 +22,7 @@ export function onFetchTokensRequest(state) {
 export function onFetchTokensComplete(state, { data }) {
   state.isFetchingTokens = false;
   state.isProcessingTransaction = false;
-  tokensAdapter.setAll(state, data?.tokens);
+  tokensAdapter.setAll(state, mapTokenProps(data?.tokens));
 }
 
 export function setActiveArtist(state, { data }) {

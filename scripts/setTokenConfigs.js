@@ -2,18 +2,21 @@ const fs = require('fs');
 const { exec } = require('child_process');
 
 const tokenConfigs = require('../contracts');
-const jsString = JSON.stringify(tokenConfigs);
+const HARD_CODED_ENV_FOR_NOW = 'local';
+const jsString = JSON.stringify(tokenConfigs[HARD_CODED_ENV_FOR_NOW]);
 
 const packageName = process.argv[2];
 
 exec(
   `cd ${packageName} && npm run set-token-configs -- '${jsString}'`,
-  (err) => {
+  (err, stdout) => {
     if (err) {
       console.error(err);
       return;
     }
 
-    console.log(`Successfully wrote token configs to the ${packageName}`);
+    if (stdout) {
+      console.log(stdout.split('<*>')[1]);
+    }
   }
 );

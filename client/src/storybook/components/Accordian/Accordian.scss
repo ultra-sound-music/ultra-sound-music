@@ -1,0 +1,23 @@
+@use '../../../styles/colors.scss' as *;
+@use '../../../styles/typo.scss' as *;
+
+.Accordian {
+  border-radius: 16px;
+  border: 2px solid $color-dolpin-blue;
+  padding: 30px 42px 35px;
+}
+
+.closed {
+  .content {
+    display: none;
+  }
+}
+
+.title {
+  @extend %font-h3;
+}
+
+.content {
+  margin-top: 35px;
+  margin-bottom: 10px;
+}

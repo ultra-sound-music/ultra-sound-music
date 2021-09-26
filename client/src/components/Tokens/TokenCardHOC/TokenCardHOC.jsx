@@ -7,7 +7,7 @@ import BandCard from '../BandCard';
 import TrackCard from '../TrackCard';
 
 import * as Constants from '../../../constants';
-import * as Selectors from '../../../redux/selectors';
+import * as Selectors from '../../../redux/selectors/core';
 
 import './TokenCardHOC.scss';
 

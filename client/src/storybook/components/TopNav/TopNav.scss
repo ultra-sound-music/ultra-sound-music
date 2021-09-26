@@ -1,0 +1,25 @@
+@use '../../../styles/colors.scss' as *;
+@use '../../../styles/typo.scss' as *;
+
+.TopNav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 80px;
+  min-width: 620px;
+}
+
+.topNavItem {
+  color: $color-winter-sky;
+  text-decoration: none;
+  @extend %font-cta;
+
+  &:hover,
+  &:active {
+    color: $color-polar-bear;
+  }
+}
+
+.active {
+  color: $color-polar-bear;
+}

@@ -1,0 +1,49 @@
+@use '../../../styles/typo' as *;
+@use '../../../styles/colors' as *;
+
+.TextBlock {
+  width: 100%;
+  height: 100%;
+}
+
+.muted {
+  color: $color-winter-swim;
+}
+
+.subject {
+  color: $color-old-towel;
+  margin-bottom: 10px;
+  @extend %font-h4;
+
+  + .title {
+    margin-top: 23px;
+  }
+}
+
+.title {
+  margin-bottom: 4px;
+  @extend %font-h1;
+}
+
+.subTitle {
+  margin-bottom: 4px;
+  @extend %font-h3;
+}
+
+.content {}
+
+.callout {
+  margin-top: 50px;
+}
+
+.dataPoint {
+  margin-top: 50px;
+
+  + .cta {
+    margin-top: 10px;
+  }
+}
+
+.cta {
+  margin-top: 50px;
+}

@@ -1,15 +1,13 @@
 import { combineReducers } from 'redux';
 
-import modalReducer from './modal';
+import uiReducer from './ui';
 import playbackReducer from './playback';
-import userReducer from './user';
 import usmReducer from './usm';
 import web3Reducer from './web3';
 
 const rootReducer = combineReducers({
-  modal: modalReducer,
+  ui: uiReducer,
   playback: playbackReducer,
-  user: userReducer,
   usm: usmReducer,
   web3: web3Reducer
 });

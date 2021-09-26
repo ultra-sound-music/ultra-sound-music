@@ -1,6 +1,6 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 import * as Actions from '../../actions';
-import * as Selectors from '../../selectors';
+import * as Selectors from '../../selectors/core';
 import * as ActionTypes from '../../actionTypes';
 import * as Workers from './__BLOCKCHAIN_NAME__/workers';
 

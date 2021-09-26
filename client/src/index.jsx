@@ -6,12 +6,12 @@ import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 
-import initStore from './redux/store';
+import initStore from '@store/store';
 import App from './App';
 import Borked from './components/Borked';
 import reportWebVitals from './reportWebVitals';
 
-import './index.scss';
+import '@styles/core.scss';
 
 const sentryDsn = __SENTRY_ENABLED__ ? __SENTRY_DSN__ : '';
 

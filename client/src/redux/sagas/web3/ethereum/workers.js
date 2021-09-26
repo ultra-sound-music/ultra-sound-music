@@ -17,9 +17,16 @@ export function* init() {
     const chainId = yield call([ethClient, 'getChainId']);
     yield put(
       Actions.web3.updateNetworkStatus({
+        hasProvider: true,
         status: Constants.web3.networkStatus.CONNECTED,
         account: connectedAccount,
         networkId: chainId
+      })
+    );
+  } else {
+    yield put(
+      Actions.web3.updateNetworkStatus({
+        hasProvider: true
       })
     );
   }

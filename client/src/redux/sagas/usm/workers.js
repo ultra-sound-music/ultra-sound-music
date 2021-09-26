@@ -3,7 +3,7 @@ import USMClient from '../../../lib/USMClient';
 import * as Constants from '../../../constants';
 import * as Utils from '../../../utils';
 import * as Actions from '../../../redux/actions';
-import * as Selectors from '../../../redux/selectors';
+import * as Selectors from '../../selectors/core';
 import * as Helpers from './helpers';
 
 let usmClient;
@@ -47,9 +47,7 @@ export function* fetchAllTokens({ data }) {
   yield call(Helpers.initializeActiveBand);
 }
 
-export function* createArtist({ data }) {
-  const { name, description } = data;
-
+export function* createArtist() {
   const artistDNA = yield select(Selectors.web3.getAccountAddress);
   const key = yield call(Utils.usm.genCreateArtistTransactionKey, artistDNA);
   yield put(
@@ -62,7 +60,6 @@ export function* createArtist({ data }) {
   try {
     const transaction = yield call(
       [usmClient, 'createArtist'],
-      { artistDNA, name, description },
       Helpers.onCreateArtistComplete
     );
     yield put(
@@ -91,12 +88,10 @@ export function* createArtist({ data }) {
   }
 }
 
-export function* startBand({ data }) {
+export function* startBand() {
   if (!usmClient) {
     throw new Error('USM not initialized');
   }
-
-  const { name, description } = data;
 
   const artistTid = yield select(Selectors.usm.getActiveArtistTid);
   const key = yield call(Utils.usm.genStartBandTransactionKey, artistTid);
@@ -110,7 +105,7 @@ export function* startBand({ data }) {
   try {
     const transaction = yield call(
       [usmClient, 'startBand'],
-      { name, description, artistTid },
+      { artistTid },
       Helpers.onCreateBandComplete
     );
     yield put(

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Button } from '../../components';
 
 import Pillbox from './Pillbox';
 
@@ -27,5 +28,5 @@ export const Template: ComponentStory<typeof Pillbox> = (args) => {
 export const Basic = Template.bind({});
 Basic.args = {
   header: 'El Yimmie Henrix',
-  ctaText: 'Bring him back'
+  cta: <Button>Bring him back</Button>
 };

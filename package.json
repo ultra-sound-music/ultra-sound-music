@@ -8,7 +8,7 @@
     "start-api": "npm run set-token-configs -- api && cd api && npm start",
     "start-api:debug": "npm run set-token-configs -- api && cd api && npm run start-debug",
     "stop-db": "cd api && npm run stop-db",
-    "start-client": " npm run set-token-configs -- client && cd client && npm start",
+    "start-client": "npm run set-token-configs -- client && cd client && npm start",
     "deploy-contracts": "cd contracts && npm run deploy-contracts",
     "seed-chain-data": "cd contracts && npm run seed-chain-data",
     "set-token-configs": "node scripts/setTokenConfigs.js",

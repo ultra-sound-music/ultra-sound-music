@@ -1,5 +1,8 @@
-.App__banner {
-  position: sticky;
-  top: 1rem;
-  z-index: 1;
+.site_header {
+  grid-column-start: 1;
+  grid-column-end: -1;
+}
+
+.site_footer {
+  background-color: red;
 }

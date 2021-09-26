@@ -1,44 +1,53 @@
-@import '../../../styles/fonts.scss';
-@import '../../../styles/colors.scss';
-@import '../../../styles/typo.scss';
+@use '../../../styles/colors.scss' as *;
+@use '../../../styles/typo.scss' as *;
 
 .Pillbox {
+  display: flex;
+  flex-direction: column;
   position: relative;
-  background-color: $color-dark-grey;
-  border-radius: 30px;
+  border-radius: 20px;
   box-sizing: border-box;
-  color: $color-white;
   width: 100%;
   height: 100%;
+}
+
+.muted {
+  color: $color-winter-sky;
+}
+
+.padded {
   padding: 23px 22px;
 }
 
-.sections-2 {
-  grid-template-rows: repeat(2, 1fr);
+.withBackground {
+  background-color: $color-dusk-sky;
 }
 
-.sections-3 {
-  grid-template-rows: repeat(3, 1fr);
+.image {
+  margin-bottom: 10px;
 }
 
 .headers {
-  margin-bottom: 13px;
+  margin-bottom: 20px;
+}
+
+.subject {
+  color: $color-old-towel;
+  margin-bottom: 5px;
+  @extend %font-h4;
 }
 
 .header {
-  font-family: $font-roboto;
-  font-size: $text-h3;
-  text-transform: capitalize;
+  @extend %font-h2;
 }
 
-.subheader {
-  font-size: $text-med;
+.subHeader {
+  @extend %font-h3;
 }
 
-.button {
-  position: absolute;
-  left: 25px;
-  right: 25px;
-  bottom: 25px;
-  width: calc(100% - 50px);
+.buttons {
+  display: flex;
+  flex-direction: column;
+  row-gap: 13px;
+  margin-top: auto;
 }

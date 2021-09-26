@@ -4,7 +4,7 @@ import {
   toggleTrackAudioPlayback
 } from '../../../audio';
 import * as Actions from '../../actions';
-import * as Selectors from '../../selectors';
+import * as Selectors from '../../selectors/core';
 
 export function* init() {}
 
