@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button } from '@components';
+import { Button } from '@uiComponents';
 import usm from '@store/usm';
 import web3 from '@store/web3';
 

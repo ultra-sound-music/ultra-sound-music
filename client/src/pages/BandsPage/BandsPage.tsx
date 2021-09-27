@@ -1,22 +1,40 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import copy from '@copy';
 import xolotl from '@images/mock/xolotl.png';
-import { Button, ArtistCard, Avatar, BandCard } from '@components';
+import { Button, ArtistCard, Avatar, BandCard } from '@uiComponents';
+import { ITraitDefinition } from '@uiTypes';
+
 import { SidebarLayout } from '@layouts';
-
-import {
-  TBandsPageProps,
-  IBandsPageState,
-  IBandsPageActions
-} from './BandsPage.types';
-
 import { IRootState } from '@store/types';
 import ui from '@store/ui';
 import usm from '@store/usm';
 
 import styles from './BandsPage.scss';
-import copy from '@copy';
+
+export type TBandsPageProps = IBandsPageState & IBandsPageActions;
+
+export interface tempBand {
+  name: string;
+  members: string[];
+  id: string;
+  tokenId: string;
+}
+
+export interface IBandsPageState {
+  bands: tempBand[];
+  activeArtistImageUrl: string;
+  activeArtistName: string;
+  activeArtistId: string;
+  activeArtistTraits: ITraitDefinition[];
+}
+
+export interface IBandsPageActions {
+  showStartBandModal: () => void;
+  showJoinBandModal: ({ bandId: string }) => void;
+  showMintTrackModal: ({ bandId: string }) => void;
+}
 
 export class BandsPage extends React.Component<TBandsPageProps> {
   openStartBandModal = (): void => {

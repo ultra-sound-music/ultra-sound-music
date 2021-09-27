@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Button } from '@components';
+import { Button } from '@uiComponents';
 
 import xolotl from '@images/mock/xolotl.png';
 import mixcoatl from '@images/mock/mixcoatl.png';
@@ -10,7 +10,7 @@ import tlaloc from '@images/mock/tlaloc.png';
 import ModalBandDetails from './ModalBandDetails';
 
 export default {
-  title: 'Component/Modal/ModalBandDetails ',
+  title: 'Modal/ModalBandDetails ',
   component: ModalBandDetails
 } as ComponentMeta<typeof ModalBandDetails>;
 
@@ -36,8 +36,9 @@ Basic.args = {
   trackImageSrc: tlaloc,
   currentStep: 2,
   totalSteps: 3,
+  isOpen: true,
   ctaButton: <Button type='primary'>Boom</Button>,
-  onHideModal: () => {
+  onHide: () => {
     console.log('TODO');
   }
 };

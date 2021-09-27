@@ -1,8 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import cn from 'classnames';
 
-import { Image } from '@components';
+import { Image } from '@uiComponents';
 import usmLogo from '@images/usmLogo.png';
 
 import styles from './TopNav.scss';

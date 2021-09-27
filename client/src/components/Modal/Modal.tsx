@@ -22,6 +22,10 @@ export const ModalComponent = ({
   type,
   modalProps
 }: IModalProps): JSX.Element => {
+  if (!type) {
+    return null;
+  }
+
   const Modal = modals[type];
   return <Modal {...modalProps} />;
 };

@@ -13,6 +13,7 @@ export interface IButtonProps {
   to?: string;
   isFullWidth?: boolean;
   isWide?: boolean;
+  isSlim?: boolean;
   isDisabled?: boolean;
   isProcessing?: boolean;
   children?: React.ReactNode;
@@ -26,6 +27,7 @@ export const Button = ({
   isFullWidth = false,
   isDisabled = false,
   isWide = false,
+  isSlim = false,
   isProcessing = false,
   onClick,
   children,
@@ -35,17 +37,19 @@ export const Button = ({
   const classNames = cn(
     styles.Button,
     styles[type],
+    { [styles.withImage]: !!image },
     { [styles.disabled]: disabled },
     { [styles.fullWidth]: isFullWidth },
+    { [styles.slim]: isSlim },
     { [styles.wide]: isWide }
   );
 
   if (to && !disabled) {
     return (
       <Link to={to} className={classNames} {...props}>
-        {isProcessing && <Spinner cover={true} />}
-        {children ? <span className={styles.text}>{children}</span> : ''}
         {image ? <span className={styles.image}>{image}</span> : null}
+        {children ? <span className={styles.content}>{children}</span> : ''}
+        {isProcessing && <Spinner cover={true} />}
       </Link>
     );
   }
@@ -58,9 +62,9 @@ export const Button = ({
       disabled={disabled}
       {...props}
     >
-      {isProcessing && <Spinner cover={true} />}
-      {children ? <span className={styles.text}>{children}</span> : ''}
       {image ? <span className={styles.image}>{image}</span> : null}
+      {children ? <span className={styles.content}>{children}</span> : ''}
+      {isProcessing && <Spinner cover={true} />}
     </button>
   );
 };

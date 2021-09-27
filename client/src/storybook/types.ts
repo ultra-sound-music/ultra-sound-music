@@ -1,6 +1,3 @@
-// export { default as Accordian } from './Accordian/Accordian';
-// export { default as ArtistCard } from './ArtistCard/ArtistCard';
-// export { default as Avatar } from './Avatar/Avatar';
 export { IArtistCardProps } from './components/ArtistCard/ArtistCard';
 export { IBandCardProps } from './components/BandCard/BandCard';
 export { IButtonProps, TButtonType } from './components/Button/Button';
@@ -10,6 +7,7 @@ export {
   IPillSwitchProps,
   TPillSwitchStatus
 } from './components/PillSwitch/PillSwitch';
+export { ISelectorProps } from './components/Selector/Selector';
 export { ISpinnerProps } from './components/Spinner/Spinner';
 export { ITextBlockProps } from './components/TextBlock/TextBlock';
 export {
@@ -17,4 +15,3 @@ export {
   ITraitDefinition
 } from './components/TraitsBlock/TraitsBlock';
 export { ITopNavItem, ITopNavProps } from './components/TopNav/TopNav';
-// export { default as Dropdown } from './Dropdown/Dropdown';

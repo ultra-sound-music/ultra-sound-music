@@ -27,7 +27,11 @@ export const StepIndicator = ({
       const stepClassNames = cn(styles.step, {
         [styles.current]: step === currentStep
       });
-      return <li className={stepClassNames}>{step}</li>;
+      return (
+        <li key={step} className={stepClassNames}>
+          {step}
+        </li>
+      );
     },
     [steps, currentStep]
   );

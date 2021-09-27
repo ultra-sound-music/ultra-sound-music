@@ -4,21 +4,19 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { FullLayout } from '@layouts';
-import { SiteFooter, Overlay } from '@components';
+import { SiteFooter, Overlay } from '@uiComponents';
 import usm from '@store/usm';
 import ui from '@store/ui';
 import web3 from '@store/web3';
 
 // import About from './components/About';
 // import User from './components/User';
-import SiteHeader from './components/SiteHeader/SiteHeader';
-import Modal from './components/Modal/Modal';
+import SiteHeader from '@appComponents/SiteHeader/SiteHeader';
+import Modal from '@appComponents/Modal/Modal';
 import Landing from './pages/Landing';
 import BandsPage from './pages/BandsPage';
 // import Token from './components/Tokens/Token';
 // import Searchable from './components/Searchable';
-
-// import ProcessingIndicator from './components/ProcessingIndicator';
 
 import styles from './App.scss';
 
@@ -26,7 +24,6 @@ export class App extends React.Component {
   static propTypes = {
     accountAddress: PropTypes.string,
     isProcessingTransaction: PropTypes.bool,
-    shouldShowModal: PropTypes.bool,
     modalType: PropTypes.string,
     modalProps: PropTypes.object
   };
@@ -38,7 +35,7 @@ export class App extends React.Component {
   }
 
   render() {
-    const { shouldShowModal, modalType, modalProps } = this.props;
+    const { modalType, modalProps } = this.props;
 
     return (
       <div>
@@ -69,7 +66,7 @@ export class App extends React.Component {
           </div>
         </Router>
         {this.renderProcessingIndicator()}
-        {shouldShowModal && <Modal type={modalType} modalProps={modalProps} />}
+        <Modal type={modalType} modalProps={modalProps} />
       </div>
     );
   }
@@ -78,7 +75,6 @@ export class App extends React.Component {
 export function mapStateToProps(state) {
   return {
     isProcessingTransaction: usm.selectors.isProcessingTransaction(state),
-    shouldShowModal: ui.selectors.shouldShowModal(state),
     modalType: ui.selectors.getModalType(state),
     modalProps: ui.selectors.getModalProps(state),
     accountAddress: web3.selectors.getAccountAddress(state)

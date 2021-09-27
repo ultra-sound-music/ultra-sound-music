@@ -5,14 +5,14 @@ import { FaCircle } from 'react-icons/fa';
 
 export type TPillSwitchStatus = 'on' | 'pending' | 'off';
 export interface IPillSwitchProps {
-  status: TPillSwitchStatus;
+  status?: TPillSwitchStatus;
   isDisabled?: boolean;
   onClick?: () => void;
-  children: string;
+  children: React.ReactNode;
 }
 
 export const PillSwitch = ({
-  status = 'off',
+  status,
   isDisabled = false,
   onClick,
   children
@@ -25,11 +25,13 @@ export const PillSwitch = ({
     onClick();
   }, [isDisabled, onClick]);
 
-  const classNames = cn(styles.PillSwitch, styles[status]);
+  const classNames = cn(styles.PillSwitch, styles[status], {
+    [styles.clickable]: onClick
+  });
 
   return (
     <div className={classNames} onClick={onClickHandler}>
-      <div className={styles.icon}>{<FaCircle />}</div>
+      {status && <div className={styles.icon}>{<FaCircle />}</div>}
       <div className={styles.text}>{children}</div>
     </div>
   );

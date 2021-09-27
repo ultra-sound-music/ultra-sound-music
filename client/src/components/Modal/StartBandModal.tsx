@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ModalStartBand } from '@components';
+import { ModalStartBand } from '@uiComponents';
 import { usm as UsmConstants } from '@constants';
 import { IRootState } from '@store/types';
 import { TModalStartBandStep } from '@uiTypes';
 import ui from '@store/ui';
 import usm from '@store/usm';
-import core from '@store/core';
 
 export type TStartBandModalProps = IStartBandModalState &
   IStartBandModalDispatch;
@@ -17,6 +16,7 @@ export interface IStartBandModalState {
   activeArtistName: string;
   activeArtistImageSrc: string;
   txStatus: string;
+  isOpen: boolean;
 }
 
 export interface IStartBandModalDispatch {
@@ -45,6 +45,7 @@ export class StartBandModal extends React.Component<TStartBandModalProps> {
       activeArtistName,
       activeArtistImageSrc,
       txStatus,
+      isOpen,
       hideModal
     } = this.props;
 
@@ -53,7 +54,8 @@ export class StartBandModal extends React.Component<TStartBandModalProps> {
       activeArtistName,
       activeArtistImageSrc,
       step: getStep(txStatus),
-      onHideModal: hideModal,
+      isOpen,
+      onHide: hideModal,
       onStartBand: this.onStartBand
     };
 
@@ -70,6 +72,7 @@ type HackSelector = (
 export function mapState(state: IRootState): IStartBandModalState {
   const activeArtistTid = usm.selectors.getActiveArtistTid(state);
   return {
+    isOpen: ui.selectors.shouldShowModal(state),
     bandName: usm.selectors.getSuggestedBandName(state),
     activeArtistName: usm.selectors.getActiveArtistName(state),
     activeArtistImageSrc: usm.selectors.getActiveArtistImageUrl(),

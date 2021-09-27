@@ -29,7 +29,8 @@
     "moduleResolution": "node",                          /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": "./",                                     /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      "@components": ["src/storybook/components.ts"],
+      "@appComponents/*": ["src/components/*"],
+      "@uiComponents": ["src/storybook/components.ts"],
       "@constants": ["src/constants/index.js"],
       "@copy": ["src/copy/index.ts"],
       "@images/*": ["src/images/*"],

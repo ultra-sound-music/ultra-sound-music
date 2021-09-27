@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { Modal, TraitsBlock, EntityRow, StepIndicator } from '@components';
+import { Modal, TraitsBlock, EntityRow, StepIndicator } from '@uiComponents';
 import { ITraitDefinition } from '@uiTypes';
 
 import copy from '@copy';
@@ -12,8 +12,9 @@ export interface IModalBandOverviewProps {
   totalSteps: number;
   bandMembers?: Record<string, string>[];
   traits?: ITraitDefinition[];
+  isOpen: boolean;
   ctaButton: JSX.Element;
-  onHideModal: () => void;
+  onHide: () => void;
 }
 
 export const ModalBandOverview = ({
@@ -23,13 +24,14 @@ export const ModalBandOverview = ({
   totalSteps,
   traits,
   bandMembers,
+  isOpen,
   ctaButton,
-  onHideModal
+  onHide
 }: IModalBandOverviewProps): JSX.Element => {
   const renderBandMember = useCallback(
     ({ imageSrc, name }) => {
       return (
-        <li>
+        <li key={name}>
           <EntityRow imageSrc={imageSrc} line1={name} />
         </li>
       );
@@ -41,8 +43,9 @@ export const ModalBandOverview = ({
     <Modal
       subject={subject}
       title={bandName}
+      isOpen={isOpen}
       ctaButton={ctaButton}
-      onHideModal={onHideModal}
+      onHide={onHide}
     >
       <div>
         <TraitsBlock traits={traits} />

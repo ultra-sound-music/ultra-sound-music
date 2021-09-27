@@ -2,18 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import truncate from 'lodash/truncate';
 import copy from '../../../copy';
-import { PillSwitch } from '@components';
+import { PillSwitch } from '@uiComponents';
 
 import { IRootState } from '@store/types';
 import web3 from '@store/web3';
 
 import { IPillSwitchProps } from '@uiTypes';
-import {
-  TConnectButtonProps,
-  IConnectButtonActions,
-  IConnectButtonState
-} from './ConnectButton.types';
 import * as Constants from '../../../constants';
+
+export type TConnectButtonProps = IConnectButtonState & IConnectButtonActions;
+
+export interface IConnectButtonState {
+  networkStatus: string;
+  address: string;
+}
+
+export interface IConnectButtonActions {
+  connectWallet: () => void;
+}
 
 export class ConnectButton extends React.Component<TConnectButtonProps> {
   getProps = (networkStatus: string): IPillSwitchProps => {
@@ -42,7 +48,7 @@ export class ConnectButton extends React.Component<TConnectButtonProps> {
         return {
           status: 'on',
           isDisabled: true,
-          children: `${copy.connectedTo} ${addr}`
+          children: `${addr}`
         };
       }
       default:

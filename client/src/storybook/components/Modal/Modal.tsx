@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import ReactModal from 'react-modal';
 
-import { Button, Pillbox } from '@components';
+import { Button, Pillbox } from '@uiComponents';
 
 import styles from './Modal.scss';
 
@@ -12,8 +12,9 @@ export interface IModalProps {
   shouldCloseOnEscape?: boolean;
   withCloseX?: boolean;
   withCloseButton?: boolean;
+  isOpen: boolean;
   ctaButton?: JSX.Element;
-  onHideModal: () => void;
+  onHide?: () => void;
   children?: React.ReactNode;
 }
 
@@ -22,17 +23,18 @@ export const Modal = ({
   title,
   shouldCloseOnEscape = true,
   withCloseX = true,
+  isOpen,
   withCloseButton = true,
   ctaButton,
-  onHideModal,
+  onHide,
   children
 }: IModalProps): JSX.Element => {
-  const [isOpen, setIsOpen] = useState(true);
+  // const [isOpen, setIsOpen] = useState(false);
 
-  const hideModal = useCallback(() => {
-    setIsOpen(false);
-    onHideModal();
-  }, [isOpen]);
+  // const hideModal = useCallback(() => {
+  //   setIsOpen(false);
+  //   onHide();
+  // }, [isOpen]);
 
   const classNames = cn(styles.Modal);
   const overlayClassNames = cn(styles.overlay);
@@ -43,7 +45,7 @@ export const Modal = ({
     isOpen,
     shouldCloseOnEscape,
     appElement: document?.getElementById('root') || undefined,
-    onRequestClose: onHideModal
+    onRequestClose: onHide
   };
 
   return (
@@ -54,7 +56,7 @@ export const Modal = ({
         cta={ctaButton}
         secondaryCta={
           withCloseButton && (
-            <Button type='secondary' onClick={hideModal}>
+            <Button type='secondary' onClick={onHide}>
               Close
             </Button>
           )
@@ -63,7 +65,7 @@ export const Modal = ({
         <div className={styles.body}>{children}</div>
       </Pillbox>
       {withCloseX && (
-        <div className={styles.x} onClick={hideModal}>
+        <div className={styles.x} onClick={onHide}>
           X
         </div>
       )}

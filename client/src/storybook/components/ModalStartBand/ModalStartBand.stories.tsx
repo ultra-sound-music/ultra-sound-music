@@ -6,7 +6,7 @@ import mixcoatl from '@images/mock/mixcoatl.png';
 import ModalStartBand from './ModalStartBand';
 
 export default {
-  title: 'Component/Modal/ModalStartBand ',
+  title: 'Modal/ModalStartBand ',
   component: ModalStartBand
 } as ComponentMeta<typeof ModalStartBand>;
 
@@ -24,7 +24,8 @@ Basic.args = {
   activeArtistName: 'Mixcoatl',
   activeArtistImageSrc: mixcoatl,
   step: 'confirm',
-  onHideModal: () => {
+  isOpen: true,
+  onHide: () => {
     console.log('TODO');
   },
   onStartBand: () => {

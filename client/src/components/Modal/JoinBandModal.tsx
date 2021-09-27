@@ -2,7 +2,7 @@ import React from 'react';
 
 import ui from '@store/ui';
 import { IRootState } from '@store/types';
-import { Button, ModalBandOverview } from '@components';
+import { Button, ModalBandOverview } from '@uiComponents';
 import { connect } from 'react-redux';
 import usm from '@store/usm';
 
@@ -13,7 +13,7 @@ export interface IJoinBandModalState {
   bandName: string;
   bandTraits: { name: string; value: string }[];
   bandMembers: Record<string, string>[];
-  bodyText: React.ReactNode;
+  isOpen: boolean;
   ctaText: React.ReactNode;
 }
 
@@ -23,7 +23,7 @@ export interface IJoinBandModalDispatch {
 
 export class JoinBandModal extends React.Component<TModalProps> {
   render(): JSX.Element {
-    const { bandName, bandMembers, bandTraits, hideModal } = this.props;
+    const { bandName, bandMembers, bandTraits, isOpen, hideModal } = this.props;
 
     const props = {
       subject: 'Band Overview',
@@ -32,8 +32,9 @@ export class JoinBandModal extends React.Component<TModalProps> {
       currentStep: 1,
       totalSteps: 3,
       traits: bandTraits,
+      isOpen: true,
       ctaButton: <Button>{}</Button>,
-      onHideModal: hideModal
+      onHide: hideModal
     };
 
     return <ModalBandOverview {...props} />;
@@ -45,10 +46,10 @@ export function mapState(
   { bandId }: Record<string, string>
 ): IJoinBandModalState {
   return {
+    isOpen: ui.selectors.shouldShowModal(state),
     bandName: usm.selectors.getBandName(state, bandId),
     bandTraits: usm.selectors.getBandTraits(state, bandId),
     bandMembers: usm.selectors.getBandMembers(state, bandId),
-    bodyText: ui.selectors.getModalBody(state),
     ctaText: ui.selectors.getModalCta(state)
   };
 }

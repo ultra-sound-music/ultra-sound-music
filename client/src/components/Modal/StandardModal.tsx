@@ -2,7 +2,7 @@ import React from 'react';
 
 import ui from '@store/ui';
 import { IRootState } from '@store/types';
-import { Modal } from '@components';
+import { Modal } from '@uiComponents';
 import { connect } from 'react-redux';
 
 export type TModalProps = IStandardModalState & IStandardModalDispatch;
@@ -13,6 +13,7 @@ export interface IStandardModalState {
   title: React.ReactNode;
   bodyText: React.ReactNode;
   ctaText: React.ReactNode;
+  isOpen: boolean;
 }
 
 export interface IStandardModalDispatch {
@@ -21,13 +22,14 @@ export interface IStandardModalDispatch {
 
 export class StandardModal extends React.Component<TModalProps> {
   render(): JSX.Element {
-    const { title, bodyText, ctaText, hideModal } = this.props;
+    const { title, bodyText, ctaText, isOpen, hideModal } = this.props;
 
     const props = {
       title,
       bodyText,
       ctaText,
-      onHideModal: hideModal
+      isOpen,
+      onHide: hideModal
     };
 
     return <Modal {...props} />;
@@ -36,6 +38,7 @@ export class StandardModal extends React.Component<TModalProps> {
 
 export function mapState(state: IRootState): IStandardModalState {
   return {
+    isOpen: ui.selectors.shouldShowModal(state),
     title: ui.selectors.getModalTitle(state),
     bodyText: ui.selectors.getModalBody(state),
     ctaText: ui.selectors.getModalCta(state)

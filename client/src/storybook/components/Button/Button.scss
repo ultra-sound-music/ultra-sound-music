@@ -2,16 +2,14 @@
 @use '../../../styles/typo.scss' as *;
 
 .Button {
-  position: relative;
-  border: 0;
+  border: 2px solid transparent;
   border-radius: 15px;
   cursor: pointer;
-  display: inline-block;
-  padding: 20px 57px;
+  padding: 19px 55px;
   text-decoration: none;
   text-transform: uppercase;
-  text-align: center;
   line-height: 1;
+  text-align: center;
   @extend %font-body;
 
   .class:after:empty {
@@ -24,6 +22,30 @@
   @extend %font-small;
 }
 
+.slim {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.fullWidth {
+  padding-right: 0;
+  padding-left: 0;
+  width: 100%;
+}
+
+.withImage {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  column-gap: 15px;
+  padding: 10px 25px;
+
+  &.slim {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}
+
 .primary {
   background-color: $color-usm-yellow;
   color: $color-night-sky;
@@ -31,6 +53,7 @@
 
 .secondary {
   background-color: $color-dolpin-blue;
+  color: $color-polar-bear;
 }
 
 .minimal {
@@ -46,8 +69,10 @@
   color: $color-night-sky;
 }
 
-.fullWidth {
-  padding-right: 0;
-  padding-left: 0;
-  width: 100%;
+.content {
+  max-width: 100px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

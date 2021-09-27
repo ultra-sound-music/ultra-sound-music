@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
-import { Button } from '@components';
+import { Button } from '@uiComponents';
 import * as Selectors from '../../../redux/selectors/core';
 import * as Actions from '../../../redux/actions';
 

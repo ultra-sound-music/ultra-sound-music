@@ -1,6 +1,6 @@
 import React from 'react';
 import copy from '@copy';
-import { Button, TraitsBlock } from '@components';
+import { Button, TraitsBlock } from '@uiComponents';
 import { IPillboxProps, ITraitDefinition } from '@uiTypes';
 import Pillbox from '../Pillbox/Pillbox';
 

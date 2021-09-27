@@ -5,6 +5,10 @@
   border-radius: 16px;
   border: 2px solid $color-dolpin-blue;
   padding: 30px 42px 35px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .closed {

@@ -6,7 +6,7 @@ import {
   InlineList,
   StepIndicator,
   Avatar
-} from '@components';
+} from '@uiComponents';
 
 export interface IModalStartBandProps {
   subject: string;
@@ -19,8 +19,9 @@ export interface IModalStartBandProps {
   trackImageSrc?: string;
   currentStep?: number;
   totalSteps?: number;
+  isOpen: boolean;
   ctaButton: JSX.Element;
-  onHideModal: () => void;
+  onHide: () => void;
 }
 
 export const ModalStartBand = ({
@@ -34,8 +35,9 @@ export const ModalStartBand = ({
   trackImageSrc,
   currentStep,
   totalSteps,
+  isOpen,
   ctaButton,
-  onHideModal
+  onHide
 }: IModalStartBandProps): JSX.Element => {
   const genAvatar = useCallback(
     (src) => {
@@ -45,7 +47,12 @@ export const ModalStartBand = ({
   );
 
   return (
-    <Modal subject={subject} ctaButton={ctaButton} onHideModal={onHideModal}>
+    <Modal
+      subject={subject}
+      ctaButton={ctaButton}
+      isOpen={isOpen}
+      onHide={onHide}
+    >
       {message && <div>{message}</div>}
       {artistName && artistImageSrc && (
         <div>

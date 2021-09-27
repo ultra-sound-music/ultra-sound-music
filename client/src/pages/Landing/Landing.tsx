@@ -10,11 +10,10 @@ import {
   Pillbox,
   ScrollBlock,
   TextBlock
-} from '@components';
-import { ITextBlockProps } from '@uiTypes';
+} from '@uiComponents';
+import { ITextBlockProps, ITraitDefinition } from '@uiTypes';
 import Copy from '@copy';
 
-import { ILandingProps } from './Landing.types';
 import LandingCopy from './Landing.copy';
 
 import { IRootState } from '@store/types';
@@ -25,6 +24,15 @@ import usm from '@store/usm';
 
 import styles from './Landing.scss';
 import copy from '@copy';
+
+export interface ILandingProps {
+  activeArtistName: string;
+  activeArtistTraits: ITraitDefinition[];
+  ownsAnArtist: boolean;
+  ownsABand: boolean;
+  totalArtists: number;
+  totalArtistsMinted: number;
+}
 
 export class Landing extends React.Component<ILandingProps> {
   renderIntroTextBlock = (): JSX.Element => {

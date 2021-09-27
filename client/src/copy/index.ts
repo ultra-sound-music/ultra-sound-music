@@ -43,5 +43,6 @@ export default Object.freeze({
   start_band: 'Start a band',
   band_overview: 'Band overview',
   name_of_band: 'Name of band',
-  mint_track: 'Mint track'
+  mint_track: 'Mint track',
+  switch_artist: 'Switch artist'
 });

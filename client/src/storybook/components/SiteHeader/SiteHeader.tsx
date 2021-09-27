@@ -1,12 +1,11 @@
 import React from 'react';
-import { TopNav } from '../../components';
-import { ITopNavItem } from '../../types';
+import { TopNav } from '@uiComponents';
+import { ITopNavItem } from '@uiTypes';
 import styles from './SiteHeader.scss';
 
 export interface ISiteHeaderProps {
-  activePage: 'home' | 'bands' | 'tracks' | 'socials';
-  doShowActiveArtistPicker: boolean;
-  connectButton: React.ReactNode;
+  artistSelector?: React.ReactNode; // Should be a <Selector>
+  connectButton?: React.ReactNode; // Should be a <PillSwitch>
 }
 
 export const pageConfigs: ITopNavItem[] = [
@@ -29,7 +28,8 @@ export const pageConfigs: ITopNavItem[] = [
 ];
 
 export const SiteHeader = ({
-  connectButton
+  connectButton,
+  artistSelector
 }: ISiteHeaderProps): JSX.Element => {
   return (
     <div className={styles.SiteHeader}>
@@ -37,8 +37,10 @@ export const SiteHeader = ({
         <TopNav items={pageConfigs} />
       </div>
 
-      {/* <div className={styles.artistSelector}>-- Placeholder --</div> */}
-      <div className='connect'>{connectButton}</div>
+      {artistSelector && (
+        <div className={styles.artistSelector}>{artistSelector}</div>
+      )}
+      {connectButton && <div className='connect'>{connectButton}</div>}
     </div>
   );
 };

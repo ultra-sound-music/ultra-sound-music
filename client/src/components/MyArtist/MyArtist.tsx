@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { Image } from '@components';
+import { Image } from '@uiComponents';
 
-import { IMyArtistProps } from './MyArtist.types';
+export interface IMyArtistProps {
+  artisId: string;
+}
 
 export class MyArtist extends React.Component<IMyArtistProps> {
-  render() {
+  render(): JSX.Element {
     return (
       <div className='MyArtist'>
         <div className='artistImage'></div>

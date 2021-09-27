@@ -21,7 +21,7 @@ export const Avatar = ({
   const rootclassNames = cn(styles.Avatar, styles[size]);
   const imgClassNames = cn(styles.image, styles[shape]);
 
-  let img;
+  let img: React.ReactNode;
   if (src) {
     img = <img src={src} className={imgClassNames} />;
   } else if (image) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, EntityRow } from '@components';
+import { Modal, Button, EntityRow } from '@uiComponents';
 
 import copy from '@copy';
 
@@ -10,7 +10,8 @@ export interface IModalStartBandProps {
   activeArtistName: string;
   activeArtistImageSrc: string;
   step: TModalStartBandStep;
-  onHideModal: () => void;
+  isOpen: boolean;
+  onHide: () => void;
   onStartBand: () => void;
 }
 
@@ -19,7 +20,8 @@ export const ModalStartBand = ({
   step,
   activeArtistName,
   activeArtistImageSrc,
-  onHideModal,
+  isOpen,
+  onHide,
   onStartBand
 }: IModalStartBandProps): JSX.Element => {
   let onClick: () => void;
@@ -43,7 +45,7 @@ export const ModalStartBand = ({
     }
 
     case 'success': {
-      onClick = onHideModal;
+      onClick = onHide;
       userMessage = copy.congratulations_band_has_been_created;
       buttonText = copy.close;
       isProcessing = false;
@@ -51,7 +53,7 @@ export const ModalStartBand = ({
     }
 
     case 'error': {
-      onClick = onHideModal;
+      onClick = onHide;
       userMessage = copy.error_creating_band;
       buttonText = copy.close;
       isProcessing = false;
@@ -71,7 +73,8 @@ export const ModalStartBand = ({
           {buttonText}
         </Button>
       }
-      onHideModal={onHideModal}
+      isOpen={isOpen}
+      onHide={onHide}
     >
       {userMessage && <div>{userMessage}</div>}
       <div>{copy.with}</div>

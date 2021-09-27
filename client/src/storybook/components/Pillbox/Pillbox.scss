@@ -45,9 +45,12 @@
   @extend %font-h3;
 }
 
+.content {
+  margin-top: auto;
+}
+
 .buttons {
   display: flex;
   flex-direction: column;
   row-gap: 13px;
-  margin-top: auto;
 }

@@ -91,7 +91,8 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
     alias: {
-      '@components$': path.resolve(__dirname, 'src/storybook/components.ts'),
+      '@appComponents': path.resolve(__dirname, 'src/components'),
+      '@uiComponents$': path.resolve(__dirname, 'src/storybook/components.ts'),
       '@constants$': path.resolve(__dirname, 'src/constants/index.js'),
       '@copy$': path.resolve(__dirname, 'src/copy/index.ts'),
       '@images': path.resolve(__dirname, 'src/images'),
