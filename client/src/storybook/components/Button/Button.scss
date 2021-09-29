@@ -12,7 +12,7 @@
   text-align: center;
   @extend %font-body;
 
-  .class:after:empty {
+  &:after:empty {
     content: '\200b';
   }
 }

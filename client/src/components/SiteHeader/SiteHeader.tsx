@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  SiteHeader as SiteHeaderUi,
+  SiteHeader as UiSiteHeader,
   Selector,
   Button,
   Avatar
@@ -10,8 +10,8 @@ import ConnectButton from '@appComponents/Buttons/ConnectButton/ConnectButton';
 
 import usm from '@store/usm';
 import core from '@store/core';
+import { IRootState } from '@store/types';
 
-import xolotl from '@images/mock/xolotl.png';
 import copy from '@copy';
 
 export interface ISiteHeaderProps {
@@ -21,7 +21,7 @@ export interface ISiteHeaderProps {
 }
 
 export class SiteHeader extends React.Component<ISiteHeaderProps> {
-  generateArtistSelector = () => {
+  generateArtistSelector = (): JSX.Element => {
     if (!this.props.activeArtistName) {
       return;
     }
@@ -46,13 +46,13 @@ export class SiteHeader extends React.Component<ISiteHeaderProps> {
         onSelect={() => {
           console.log('Test');
         }}
-      ></Selector>
+      />
     );
   };
 
   render(): JSX.Element {
     return (
-      <SiteHeaderUi
+      <UiSiteHeader
         artistSelector={this.generateArtistSelector()}
         connectButton={<ConnectButton />}
       />
@@ -60,7 +60,7 @@ export class SiteHeader extends React.Component<ISiteHeaderProps> {
   }
 }
 
-export function mapState(state): ISiteHeaderProps {
+export function mapState(state: IRootState): ISiteHeaderProps {
   return {
     activeArtistName: usm.selectors.getActiveArtistName(state),
     activeArtistImageSrc: usm.selectors.getActiveArtistImageUrl(),

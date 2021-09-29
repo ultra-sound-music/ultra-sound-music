@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 
 module.exports = {
@@ -10,6 +11,7 @@ module.exports = {
     index: './src/index'
   },
   plugins: [
+    new LodashModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       __GOOGLE_ANALYTICS_ENABLED__: JSON.stringify(
         process.env.GOOGLE_ANALYTICS_ENABLED === 'true'
@@ -83,8 +85,12 @@ module.exports = {
         ]
       },
       {
-        test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-        use: ['file-loader']
+        test: /\.svg/,
+        type: 'asset/inline'
+      },
+      {
+        test: /\.(jpg|jpeg|png|gif|mp3)$/,
+        type: 'asset/resource'
       }
     ]
   },
@@ -113,6 +119,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'images/[hash][ext][query]',
     clean: true
   },
   devServer: {
@@ -122,6 +129,12 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:9001'
+    }
+  },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all'
     }
   }
 };

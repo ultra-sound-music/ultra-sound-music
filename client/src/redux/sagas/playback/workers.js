@@ -1,12 +1,16 @@
 import { select, call, put } from 'redux-saga/effects';
-import {
-  toggleSingleArtistPlayback,
-  toggleTrackAudioPlayback
-} from '../../../audio';
 import * as Actions from '../../actions';
 import * as Selectors from '../../selectors/core';
 
 export function* init() {}
+
+function toggleSingleArtistPlayback(...args) {
+  console.log(...args);
+}
+
+function toggleTrackAudioPlayback(...args) {
+  console.log(...args);
+}
 
 // @TODO this is a temporary solution for mapping to the current way of generating trackDNA
 export function tempTrackSourceMapper(dna) {
