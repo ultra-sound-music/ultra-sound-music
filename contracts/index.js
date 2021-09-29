@@ -1,31 +1,21 @@
-const localAddresses = require('./networks/addresses/local.json');
-const USMArtistTokenAbiLocal = require('./networks/abis/local/USMArtistToken.json').abi;
-const USMBandTokenAbiLocal = require('./networks/abis/local/USMBandToken.json').abi;
-const USMTrackTokenAbiLocal = require('./networks/abis/local/USMTrackToken.json').abi;
+const fs = require('fs');
 
-module.exports = {
-  local:{
-    artist: {
-      abi: USMArtistTokenAbiLocal,
-      address: localAddresses.artist
-    },
-    band: {
-      abi: USMBandTokenAbiLocal,
-      address: localAddresses.band
-    },
-    track: {
-      abi: USMTrackTokenAbiLocal,
-      address: localAddresses.track
-    }
-  },
-  rinkeby:{
-    artist:{},
-    band:{},
-    track:{}
-  },
-  mainnet:{
-    artist:{},
-    band:{},
-    track:{}
-  }
-};
+function loadJSON(file) {
+  const str = fs.readFileSync(`${__dirname}/${file}`, 'utf8');
+  return JSON.parse(str);
+}
+
+function getTokenConfigs(network) {
+  const addresses = loadJSON(`networks/addresses/${network}.json`);
+  return ['artist', 'band', 'track'].reduce((configs, tokenName) => {
+    const capitalized = tokenName.charAt(0).toUpperCase() + tokenName.slice(1);
+    const fileName = `USM${capitalized}Token.json`;
+    configs[tokenName] = {
+      abi: loadJSON(`networks/abis/${network}/${fileName}`).abi,
+      address: addresses[tokenName]
+    };
+    return configs;
+  }, {});
+}
+
+module.exports = getTokenConfigs;
