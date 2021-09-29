@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { ModalStartBand } from '@uiComponents';
-import { usm as UsmConstants } from '@constants';
+import constants from '@constants';
 import { IRootState } from '@store/types';
 import { TModalStartBandStep } from '@uiTypes';
 import ui from '@store/ui';
@@ -24,10 +24,10 @@ export interface IStartBandModalDispatch {
 }
 
 export const mapTxStatusToStep: Record<string, TModalStartBandStep> = {
-  [UsmConstants.transactionStatus.SUBMITTED]: 'pending',
-  [UsmConstants.transactionStatus.AUTHORIZED]: 'pending',
-  [UsmConstants.transactionStatus.MINED]: 'success',
-  [UsmConstants.transactionStatus.FAILED]: 'error'
+  [constants.usm.transactionStatus.SUBMITTED]: 'pending',
+  [constants.usm.transactionStatus.AUTHORIZED]: 'pending',
+  [constants.usm.transactionStatus.MINED]: 'success',
+  [constants.usm.transactionStatus.FAILED]: 'error'
 };
 
 export function getStep(txStatus: string): TModalStartBandStep {

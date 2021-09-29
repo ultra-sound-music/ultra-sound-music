@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import * as Constants from '@constants';
+import constants from '@constants';
 import * as ActionTypes from '../actionTypes';
 import { mapTokenProps, tokensAdapter } from '../utils/tokensAdapter';
 
@@ -39,12 +39,12 @@ function addTransaction(state, { data }) {
     key,
     transactionId,
     block,
-    status = Constants.usm.transactionStatus.SUBMITTED,
+    status = constants.usm.transactionStatus.SUBMITTED,
     errorCode,
     errorMessage
   } = data;
 
-  if (status === Constants.usm.transactionStatus.SUBMITTED) {
+  if (status === constants.usm.transactionStatus.SUBMITTED) {
     state.isProcessingTransaction = true;
   }
 
@@ -64,7 +64,7 @@ function updateTransaction(state, { data }) {
     key,
     transactionId,
     block,
-    status = Constants.usm.transactionStatus.SUBMITTED,
+    status = constants.usm.transactionStatus.SUBMITTED,
     errorCode,
     errorMessage
   } = data;
@@ -84,7 +84,7 @@ function updateTransaction(state, { data }) {
     return tx;
   });
 
-  if (status === Constants.usm.transactionStatus.FAILED) {
+  if (status === constants.usm.transactionStatus.FAILED) {
     state.isProcessingTransaction = false;
   }
 

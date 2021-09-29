@@ -1,6 +1,6 @@
 import { call, fork, put } from 'redux-saga/effects';
 import EthClient from '../../../../lib/EthClient';
-import * as Constants from '../../../../constants';
+import constants from '@constants';
 import * as Actions from '../../../actions';
 import * as Helpers from './helpers';
 
@@ -18,7 +18,7 @@ export function* init() {
     yield put(
       Actions.web3.updateNetworkStatus({
         hasProvider: true,
-        status: Constants.web3.networkStatus.CONNECTED,
+        status: constants.web3.networkStatus.CONNECTED,
         account: connectedAccount,
         networkId: chainId
       })
@@ -42,14 +42,14 @@ export function* connectWallet() {
   try {
     yield put(
       Actions.web3.updateNetworkStatus({
-        status: Constants.web3.networkStatus.CONNECTING
+        status: constants.web3.networkStatus.CONNECTING
       })
     );
     yield call([ethClient, 'connectWallet']);
   } catch (error) {
     yield put(
       Actions.web3.updateNetworkStatus({
-        status: Constants.web3.networkStatus.NOT_CONNECTED
+        status: constants.web3.networkStatus.NOT_CONNECTED
       })
     );
 

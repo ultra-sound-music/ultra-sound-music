@@ -1,6 +1,6 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
-import * as Constants from '../../../../constants';
+import constants from '@constants';
 import * as EthereumConstants from './constants';
 import * as Actions from '../../../actions';
 import * as Utils from '../../../../utils';
@@ -27,12 +27,12 @@ export function onAccountsChanged(accounts) {
   const account = accounts?.[0];
   if (account) {
     return Actions.web3.processAccountUpdate({
-      status: Constants.web3.networkStatus.CONNECTED,
+      status: constants.web3.networkStatus.CONNECTED,
       account
     });
   } else {
     return Actions.web3.processAccountUpdate({
-      status: Constants.web3.networkStatus.NOT_CONNECTED
+      status: constants.web3.networkStatus.NOT_CONNECTED
     });
   }
 }

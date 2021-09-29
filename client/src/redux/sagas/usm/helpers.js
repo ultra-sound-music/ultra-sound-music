@@ -1,7 +1,7 @@
 import { put, select } from 'redux-saga/effects';
 import * as ReduxUtils from '../../utils';
 import * as Actions from '../../actions';
-import * as Constants from '../../../constants';
+import constants from '@constants';
 import * as Utils from '../../../utils';
 import * as Selectors from '../../selectors/core';
 
@@ -14,7 +14,7 @@ export function onCreateArtistComplete({
     Actions.usm.updateTransaction({
       key: Utils.usm.genCreateArtistTransactionKey(artistDNA),
       transaction,
-      status: Constants.usm.transactionStatus.MINED
+      status: constants.usm.transactionStatus.MINED
     })
   );
   store.dispatch(
@@ -34,7 +34,7 @@ export function onCreateBandComplete({
     Actions.usm.updateTransaction({
       key: Utils.usm.genStartBandTransactionKey(artistTid),
       transaction,
-      status: Constants.usm.transactionStatus.MINED
+      status: constants.usm.transactionStatus.MINED
     })
   );
   store.dispatch(
@@ -54,7 +54,7 @@ export function onJoinBandComplete({
     Actions.usm.updateTransaction({
       key: Utils.usm.genJoinBandTransactionKey(bandTid, artistTid),
       transaction,
-      status: Constants.usm.transactionStatus.MINED
+      status: constants.usm.transactionStatus.MINED
     })
   );
   store.dispatch(
@@ -74,7 +74,7 @@ export function onCreateTrackComplete({
     Actions.usm.updateTransaction({
       key: Utils.usm.genCreateTrackTransactionKey(bandTid, artistTid),
       transaction,
-      status: Constants.usm.transactionStatus.MINED
+      status: constants.usm.transactionStatus.MINED
     })
   );
   store.dispatch(

@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import * as Constants from '../../constants';
+import constants from '@constants';
 import * as Utils from '../../utils';
 import { tokensAdapter } from '../utils/tokensAdapter';
 
@@ -34,7 +34,7 @@ export function getIsProcessingTransaction(state) {
 export const selectAllArtistEntities = createSelector(
   selectAllTokenEntities,
   (tokens) =>
-    tokens.filter((token) => token.tokenType === Constants.usm.tokenType.ARTIST)
+    tokens.filter((token) => token.tokenType === constants.usm.tokenType.ARTIST)
 );
 
 export const getActiveArtist = createSelector(
@@ -46,7 +46,7 @@ export const getActiveArtist = createSelector(
 export const selectAllBandEntities = createSelector(
   selectAllTokenEntities,
   (tokens) =>
-    tokens.filter((token) => token.tokenType === Constants.usm.tokenType.BAND)
+    tokens.filter((token) => token.tokenType === constants.usm.tokenType.BAND)
 );
 
 export const getActiveBand = createSelector(
@@ -106,7 +106,7 @@ export const getTokenId = createSelector(
 export const selectAllTrackEntities = createSelector(
   selectAllTokenEntities,
   (tokens) =>
-    tokens.filter((token) => token.tokenType === Constants.usm.tokenType.TRACK)
+    tokens.filter((token) => token.tokenType === constants.usm.tokenType.TRACK)
 );
 
 export const getTokenType = createSelector(
@@ -165,8 +165,8 @@ export const selectCompletedTransactions = createSelector(
   (transactions) =>
     transactions.filter((transaction) => {
       return [
-        Constants.usm.transactionStatus.MINED,
-        Constants.usm.transactionStatus.FAILED
+        constants.usm.transactionStatus.MINED,
+        constants.usm.transactionStatus.FAILED
       ].includes(transaction.status);
     })
 );
@@ -187,8 +187,8 @@ export const selectOpenTransactions = createSelector(
   (transactions) =>
     transactions.filter((transaction) => {
       return ![
-        Constants.usm.transactionStatus.MINED,
-        Constants.usm.transactionStatus.FAILED
+        constants.usm.transactionStatus.MINED,
+        constants.usm.transactionStatus.FAILED
       ].includes(transaction.status);
     })
 );
@@ -273,7 +273,7 @@ export function isProcessingTransaction(state) {
 }
 
 export const getBandTidByTrackId = createSelector(selectTokenById, (track) => {
-  if (track?.tokenType === Constants.usm.tokenType.TRACK) {
+  if (track?.tokenType === constants.usm.tokenType.TRACK) {
     return track.band;
   }
 });
@@ -289,7 +289,7 @@ export const getBandByTrackId = createSelector(
 );
 
 export const getBand = createSelector(selectTokenById, (band) =>
-  band.tokenType === Constants.usm.tokenType.BAND ? band : null
+  band.tokenType === constants.usm.tokenType.BAND ? band : null
 );
 
 export const getBandName = createSelector(getBand, ({ name }) => name);
@@ -304,7 +304,7 @@ export const getBandTraits = createSelector(getBand, () =>
 export const getTrackCreatorByTrackId = createSelector(
   selectTokenById,
   (track) => {
-    if (track?.tokenType === Constants.usm.tokenType.TRACK) {
+    if (track?.tokenType === constants.usm.tokenType.TRACK) {
       return track.creator;
     }
   }
@@ -339,7 +339,7 @@ export const getBandLeaderTokenIdByTrackId = createSelector(
 export const getTrackCreatorTokenIdByTrackId = createSelector(
   selectTokenById,
   (track) =>
-    track?.tokenType === Constants.usm.tokenType.TRACK ? track?.creator : void 0
+    track?.tokenType === constants.usm.tokenType.TRACK ? track?.creator : void 0
 );
 
 export const getBandMemberTokenIdsByTrackId = createSelector(
@@ -379,10 +379,10 @@ export const selectPlayableSourceById = createSelector(
   getTrackDNA,
   ({ artistDNA, tokenType }, trackDNA) => {
     switch (tokenType) {
-      case Constants.usm.tokenType.ARTIST: {
+      case constants.usm.tokenType.ARTIST: {
         return artistDNA;
       }
-      case Constants.usm.tokenType.TRACK: {
+      case constants.usm.tokenType.TRACK: {
         return trackDNA;
       }
     }
@@ -404,7 +404,7 @@ export const canCreateTrackForBand = createSelector(
   (isMemberOfBand, numBandMembers, hasMintedATrackForBand) => {
     return (
       isMemberOfBand &&
-      numBandMembers > Constants.usm.MIN_BAND_MEMBERS &&
+      numBandMembers > constants.usm.MIN_BAND_MEMBERS &&
       !hasMintedATrackForBand
     );
   }
@@ -414,7 +414,7 @@ export const canJoinBand = createSelector(
   isMemberOfBand,
   getNumBandMembers,
   (isMemberOfBand, numBandMembers) => {
-    return !isMemberOfBand && numBandMembers < Constants.usm.MAX_BAND_MEMBERS;
+    return !isMemberOfBand && numBandMembers < constants.usm.MAX_BAND_MEMBERS;
   }
 );
 
@@ -429,5 +429,5 @@ export const canInviteBandMembers = createSelector(
   isMemberOfBand,
   getNumBandMembers,
   (isMemberOfBand, numBandMembers) =>
-    isMemberOfBand && numBandMembers < Constants.usm.MAX_BAND_MEMBERS
+    isMemberOfBand && numBandMembers < constants.usm.MAX_BAND_MEMBERS
 );

@@ -7,7 +7,7 @@ import CreateTrackButton from '../../Buttons/CreateTrackButton';
 import RequestToJoinBandButton from '../../Buttons/RequestToJoinBandButton';
 import JoinBandButton from '../../Buttons/JoinBandButton';
 import BandMemberIcon from '../../Icons/BandMemberIcon';
-import * as Constants from '../../../constants';
+import constants from '@constants';
 import * as Selectors from '../../../redux/selectors/core';
 
 export class BandCard extends React.Component {
@@ -23,7 +23,7 @@ export class BandCard extends React.Component {
 
   renderBandMemberIcons() {
     const { bandMemberIds } = this.props;
-    const emptyArray = Array.from(new Array(Constants.usm.MAX_BAND_MEMBERS));
+    const emptyArray = Array.from(new Array(constants.usm.MAX_BAND_MEMBERS));
     return emptyArray.map((n, i) => {
       const artistId = bandMemberIds[i];
       return <BandMemberIcon key={artistId} artistId={artistId} />;

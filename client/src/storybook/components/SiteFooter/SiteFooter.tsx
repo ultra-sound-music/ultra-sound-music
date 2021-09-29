@@ -1,8 +1,9 @@
 import React from 'react';
 
-import copy from '../../../copy';
+import copy from '@copy';
+import constants from '@constants';
+import { Button } from '@uiComponents';
 
-import { Button } from '../../components';
 import styles from './SiteFooter.scss';
 
 export const SiteFooter = (): JSX.Element => {
@@ -11,15 +12,21 @@ export const SiteFooter = (): JSX.Element => {
       <div className={styles.Header}>{copy.join_the_community}</div>
       <div className={styles.text}>{copy.have_questions_join_discord}</div>
       <div className={styles.buttonRow}>
-        <Button type='primary' isWide={true} to='TODO'>
-          Discord
-        </Button>
-        <Button type='primary' isWide={true} to='TODO'>
-          Twitter
-        </Button>
-        <Button type='primary' isWide={true} to='TODO'>
-          OpenSea
-        </Button>
+        {constants.DISCORD_URL && (
+          <Button type='primary' isWide={true} to={constants.DISCORD_URL}>
+            Discord
+          </Button>
+        )}
+        {constants.TWITTER_URL && (
+          <Button type='primary' isWide={true} to={constants.TWITTER_URL}>
+            Twitter
+          </Button>
+        )}
+        {constants.OPEN_SEA_URL && (
+          <Button type='primary' isWide={true} to={constants.OPEN_SEA_URL}>
+            OpenSea
+          </Button>
+        )}
       </div>
     </div>
   );

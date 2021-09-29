@@ -6,7 +6,7 @@ import ArtistCard from '../ArtistCard';
 import BandCard from '../BandCard';
 import TrackCard from '../TrackCard';
 
-import * as Constants from '../../../constants';
+import constants from '@constants';
 import * as Selectors from '../../../redux/selectors/core';
 
 import './TokenCardHOC.scss';
@@ -25,11 +25,11 @@ export class TokenCardHOC extends React.Component {
     };
 
     switch (tokenType) {
-      case Constants.usm.tokenType.ARTIST:
+      case constants.usm.tokenType.ARTIST:
         return <ArtistCard {...props} />;
-      case Constants.usm.tokenType.BAND:
+      case constants.usm.tokenType.BAND:
         return <BandCard {...props} />;
-      case Constants.usm.tokenType.TRACK:
+      case constants.usm.tokenType.TRACK:
         return <TrackCard {...props} />;
       default:
         return null;

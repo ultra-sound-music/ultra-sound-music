@@ -1,10 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import * as Constants from '../../constants';
+import constants from '@constants';
 import * as ActionTypes from '../actionTypes';
 
 const initialState = {
-  networkStatus: Constants.web3.networkStatus.NOT_AVAILABLE,
+  networkStatus: constants.web3.networkStatus.NOT_AVAILABLE,
   hasProvider: false,
   account: null,
   networkId: null

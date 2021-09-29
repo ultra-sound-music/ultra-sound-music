@@ -7,7 +7,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import StartBandButton from '../../Buttons/StartBandButton';
 import PlaybackButton from '../../Buttons/PlaybackButton';
 import * as Selectors from '../../../redux/selectors/core';
-import * as Constants from '../../../constants';
+import constants from '@constants';
 
 export class Token extends React.Component {
   static propTypes = {
@@ -66,7 +66,7 @@ export class Token extends React.Component {
     const { name, description } = this.state;
 
     let buttons = [];
-    if (tokenType === Constants.usm.tokenType.ARTIST) {
+    if (tokenType === constants.usm.tokenType.ARTIST) {
       const startBandProps = {
         name,
         description
@@ -76,9 +76,9 @@ export class Token extends React.Component {
         <StartBandButton key='startBand' {...startBandProps} />,
         <PlaybackButton key='playback' entityId={entityId} />
       ];
-    } else if (tokenType === Constants.usm.tokenType.BAND) {
+    } else if (tokenType === constants.usm.tokenType.BAND) {
       buttons = [];
-    } else if (tokenType === Constants.usm.tokenType.TRACK) {
+    } else if (tokenType === constants.usm.tokenType.TRACK) {
       buttons = [];
     }
 

@@ -15,6 +15,7 @@ import SiteHeader from '@appComponents/SiteHeader/SiteHeader';
 import Modal from '@appComponents/Modal/Modal';
 import Landing from './pages/Landing';
 import BandsPage from './pages/BandsPage';
+import NotFound from './pages/NotFound';
 // import Token from './components/Tokens/Token';
 // import Searchable from './components/Searchable';
 
@@ -47,6 +48,15 @@ export class App extends React.Component {
               </div>
             </FullLayout>
 
+            <Route exact path='/'>
+              <FullLayout>
+                <Landing />
+              </FullLayout>
+              <div className={styles.site_footer}>
+                <SiteFooter />
+              </div>
+            </Route>
+
             <Switch>
               <Route path='/bands'>
                 <BandsPage />
@@ -54,13 +64,8 @@ export class App extends React.Component {
 
               <Route path='/tracks'></Route>
 
-              <Route path='/'>
-                <FullLayout>
-                  <Landing />
-                </FullLayout>
-                <div className={styles.site_footer}>
-                  <SiteFooter />
-                </div>
+              <Route path='*'>
+                <NotFound />
               </Route>
             </Switch>
           </div>

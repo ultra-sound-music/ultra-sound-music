@@ -1,6 +1,6 @@
 import { put, call, select } from 'redux-saga/effects';
 import USMClient from '../../../lib/USMClient';
-import * as Constants from '../../../constants';
+import constants from '@constants';
 import * as Utils from '../../../utils';
 import * as Actions from '../../../redux/actions';
 import * as Selectors from '../../selectors/core';
@@ -66,7 +66,7 @@ export function* createArtist() {
       Actions.usm.updateTransaction({
         key,
         transactionId: transaction.hash,
-        status: Constants.usm.transactionStatus.AUTHORIZED
+        status: constants.usm.transactionStatus.AUTHORIZED
       })
     );
   } catch (error) {
@@ -80,7 +80,7 @@ export function* createArtist() {
     yield put(
       Actions.usm.updateTransaction({
         key,
-        status: Constants.usm.transactionStatus.FAILED,
+        status: constants.usm.transactionStatus.FAILED,
         errorCode: error.code,
         errorMessage: error.message
       })
@@ -112,7 +112,7 @@ export function* startBand() {
       Actions.usm.updateTransaction({
         key,
         transactionId: transaction.hash,
-        status: Constants.usm.transactionStatus.AUTHORIZED
+        status: constants.usm.transactionStatus.AUTHORIZED
       })
     );
   } catch (error) {
@@ -126,7 +126,7 @@ export function* startBand() {
     yield put(
       Actions.usm.updateTransaction({
         key,
-        status: Constants.usm.transactionStatus.FAILED,
+        status: constants.usm.transactionStatus.FAILED,
         errorCode: error.code,
         errorMessage: error.message
       })
@@ -165,7 +165,7 @@ export function* joinBand({ data }) {
       Actions.usm.updateTransaction({
         key,
         transactionId: transaction.hash,
-        status: Constants.usm.transactionStatus.AUTHORIZED
+        status: constants.usm.transactionStatus.AUTHORIZED
       })
     );
   } catch (error) {
@@ -178,7 +178,7 @@ export function* joinBand({ data }) {
     yield put(
       Actions.usm.updateTransaction({
         key,
-        status: Constants.usm.transactionStatus.FAILED,
+        status: constants.usm.transactionStatus.FAILED,
         errorCode: error.code,
         errorMessage: error?.data?.message || error.message
       })
@@ -218,7 +218,7 @@ export function* createTrack({ data }) {
       Actions.usm.updateTransaction({
         key,
         transactionId: transaction.hash,
-        status: Constants.usm.transactionStatus.AUTHORIZED
+        status: constants.usm.transactionStatus.AUTHORIZED
       })
     );
   } catch (error) {
@@ -231,7 +231,7 @@ export function* createTrack({ data }) {
     yield put(
       Actions.usm.updateTransaction({
         key,
-        status: Constants.usm.transactionStatus.FAILED,
+        status: constants.usm.transactionStatus.FAILED,
         errorCode: error.code,
         errorMessage: error?.data?.message || error.message
       })

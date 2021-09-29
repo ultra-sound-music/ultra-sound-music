@@ -1,0 +1,8 @@
+@use '../../styles/typo.scss' as *;
+
+.content {
+  grid-column-start: 1;
+  grid-column-end: -1;
+  margin: 30px auto 100px auto;
+  @extend %font-h2;
+}
