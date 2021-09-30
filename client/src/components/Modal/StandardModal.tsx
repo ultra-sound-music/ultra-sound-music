@@ -26,14 +26,13 @@ export class StandardModal extends React.Component<TModalProps> {
 
     const props = {
       title,
-      body,
-      ctaButton: <Button type='primary'>{ctaText}</Button>,
+      ctaButton: ctaText ? <Button type='secondary'>{ctaText}</Button> : null,
       isOpen,
       withCloseButton: false,
       onHide: hideModal
     };
 
-    return <Modal {...props} />;
+    return <Modal {...props}>{body}</Modal>;
   }
 }
 

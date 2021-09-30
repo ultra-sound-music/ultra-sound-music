@@ -88,7 +88,7 @@ export function* createArtist() {
     yield put(
       Actions.ui.showModal({
         title: 'Error',
-        body: error.message
+        body: 'Unable to create an artist, please try again later.'
       })
     );
     yield put(
@@ -134,7 +134,7 @@ export function* startBand() {
     yield put(
       Actions.ui.showModal({
         title: 'Error',
-        body: error.message
+        body: 'Unable to start a band, please try again later.'
       })
     );
     yield put(
@@ -183,10 +183,11 @@ export function* joinBand({ data }) {
       })
     );
   } catch (error) {
+    console.error(error);
     yield put(
       Actions.ui.showModal({
         title: 'Error',
-        body: error?.data?.message || error.message
+        body: 'Unable to join the band, please try again later.'
       })
     );
     yield put(
@@ -236,10 +237,11 @@ export function* createTrack({ data }) {
       })
     );
   } catch (error) {
+    console.error(error);
     yield put(
       Actions.ui.showModal({
         title: 'Error',
-        body: JSON.stringify(error?.data?.message || error.message)
+        body: 'Unable to create a track, please try again later.'
       })
     );
     yield put(
