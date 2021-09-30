@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import auroryImg from '../../assets/img/aurory.png';
+import auroryImg from '@images/mock/aurory.png';
 
 import ThumbCard from './ThumbCard';
 

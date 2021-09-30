@@ -18,13 +18,11 @@ export default class USMClient {
       error: noop
     }
   }) {
-    const signer = provider.getSigner();
+    const signer = provider?.getSigner();
 
     this.apiHost = apiHost;
     this.updateAccount({ accountAddress });
-    this.provider = provider;
     this.logger = logger;
-    this.signer = signer;
 
     this.artistWriteContract = new ethers.Contract(
       artistConfig.address,

@@ -10,7 +10,7 @@ import Mixcoatl from '@images/mock/mixcoatl.png';
 import Tlaloc from '@images/mock/tlaloc.png';
 
 const mockImages = [Xolotl, Mixcoatl, Tlaloc];
-function rand(min, max) {
+function rand(min: number, max: number) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -28,18 +28,17 @@ export const Hero = ({
   size = 'medium',
   shape = 'round'
 }: IHeroProps): JSX.Element => {
-  const rootclassNames = cn(styles.Hero, styles[size]);
-  const imgClassNames = cn(styles.image, styles[shape]);
+  const rootclassNames = cn(styles.Hero, styles[size], styles[shape]);
 
   let img;
   if (src) {
-    img = <img src={src} className={imgClassNames} />;
+    img = <img src={src} />;
   } else if (image) {
-    img = React.cloneElement(image, { className: imgClassNames });
+    img = image;
   } else {
     // img = '@todo - placeholder image';
     const s = mockImages[rand(0, 2)];
-    img = <img src={s} className={imgClassNames} />;
+    img = <img src={s} />;
   }
 
   return <div className={rootclassNames}>{img}</div>;

@@ -1,8 +1,9 @@
 import React from 'react';
-import Hero, { IHeroProps } from './Hero';
+import Hero from './Hero';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import auroryImg from '../../assets/img/aurory.png';
+import { GenerativeImage } from '@uiComponents';
+import auroryImg from '@images/mock/aurory.png';
 
 export default {
   title: 'Component/Hero',
@@ -10,19 +11,13 @@ export default {
 } as ComponentMeta<typeof Hero>;
 
 export const Template: ComponentStory<typeof Hero> = (args) => {
-  const defaultProps: IHeroProps = {
-    src: auroryImg,
-    size: 'medium'
-  };
-
-  const props = Object.assign({}, defaultProps, args);
   const styles = {
     width: '600px',
     height: '600px'
   };
   return (
     <div style={styles}>
-      <Hero {...props} />
+      <Hero {...args} />
     </div>
   );
 };
@@ -37,4 +32,14 @@ export const ImageComponet = Template.bind({});
 ImageComponet.args = {
   image: <img src={auroryImg} />,
   size: 'large'
+};
+
+export const generative = Template.bind({});
+generative.args = {
+  image: (
+    <GenerativeImage
+      addresses={['0x70997970c51812dc3a010c7d01b50e0d17dc79c8']}
+    />
+  ),
+  size: 'medium'
 };

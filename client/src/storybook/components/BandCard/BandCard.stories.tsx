@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import BandCard from './BandCard';
 
-import auroryImg from '../../assets/img/aurory.png';
+import auroryImg from '@images/mock/aurory.png';
 
 export default {
   title: 'Component/BandCard',

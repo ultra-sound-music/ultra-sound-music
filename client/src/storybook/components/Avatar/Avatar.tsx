@@ -18,14 +18,13 @@ export const Avatar = ({
   size = 'medium',
   shape = 'round'
 }: IAvatarProps): JSX.Element => {
-  const rootclassNames = cn(styles.Avatar, styles[size]);
-  const imgClassNames = cn(styles.image, styles[shape]);
+  const rootclassNames = cn(styles.Avatar, styles[size], styles[shape]);
 
   let img: React.ReactNode;
   if (src) {
-    img = <img src={src} className={imgClassNames} />;
+    img = <img src={src} />;
   } else if (image) {
-    img = React.cloneElement(image, { className: imgClassNames });
+    img = image;
   } else {
     img = '@todo - placeholder image';
   }

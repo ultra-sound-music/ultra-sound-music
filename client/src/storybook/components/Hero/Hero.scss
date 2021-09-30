@@ -1,30 +1,41 @@
 @use '../../../styles/colors.scss' as *;
 
 .Hero {
-  background-color: $color-evening-sky;
-  border-radius: 26px;
-  overflow: hidden;
-}
-
-.image {
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
+  img {
+    background-color: $color-evening-sky;
+    border-radius: 26px;
+    overflow: hidden;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .small {
-  width: 250px;
-  height: 250px;
+  img {
+    width: 250px;
+    height: 250px;
+  }
 }
 
 .medium {
-  width: 350px;
-  height: 350px;
+  img {
+    width: 350px;
+    height: 350px;
+  }
 }
 
 .large {
-  width: 300px;
-  height: 300px;
+  img {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+.round {
+  img {
+    border-radius: 50%;
+  }
 }
 
 .stretch {

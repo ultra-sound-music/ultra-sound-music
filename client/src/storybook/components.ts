@@ -6,6 +6,7 @@ export { default as Avatar } from './components/Avatar/Avatar';
 export { default as BandCard } from './components/BandCard/BandCard';
 export { default as Button } from './components/Button/Button';
 export { default as FigureCard } from './components/FigureCard/FigureCard';
+export { default as GenerativeImage } from './components/GenerativeImage/GenerativeImage';
 export { default as Hero } from './components/Hero/Hero';
 export { default as Image } from './components/Image/Image';
 export { default as Info } from './components/InfoText/InfoText';

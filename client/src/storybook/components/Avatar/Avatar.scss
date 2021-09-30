@@ -1,29 +1,41 @@
-.image {
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
+.Avatar {
+  img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;    
+  }
 }
 
 .tiny {
-  width: 36px;
-  height: 36px;
+  img {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .small {
-  width: 45px;
-  height: 45px;
+  img {
+    width: 45px;
+    height: 45px;
+  }
 }
 
 .medium {
-  width: 65px;
-  height: 65px;
+  img {
+    width: 65px;
+    height: 65px;
+  }
 }
 
 .large {
-  width: 300px;
-  height: 300px;
+  img {
+    width: 300px;
+    height: 300px;
+  }
 }
 
 .round {
-  border-radius: 100%;
+  img {
+    border-radius: 100%;
+  }
 }

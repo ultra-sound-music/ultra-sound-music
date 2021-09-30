@@ -2,7 +2,10 @@ import React from 'react';
 import Avatar, { IAvatarProps } from './Avatar';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import auroryImg from '../../assets/img/aurory.png';
+import { GenerativeImage } from '@uiComponents';
+// import auroryImg from '@images/mock/aurory.png';
+import tlaloc from '@images/mock/tlaloc.png';
+import auroryImg from '@images/mock/aurory.png';
 
 export default {
   title: 'Component/Avatar',
@@ -10,13 +13,7 @@ export default {
 } as ComponentMeta<typeof Avatar>;
 
 export const Template: ComponentStory<typeof Avatar> = (args) => {
-  const defaultProps: IAvatarProps = {
-    src: auroryImg,
-    size: 'medium'
-  };
-
-  const props = Object.assign({}, defaultProps, args);
-  return <Avatar {...props} />;
+  return <Avatar {...args} />;
 };
 
 export const imageUrl = Template.bind({});
@@ -25,8 +22,18 @@ imageUrl.args = {
   size: 'medium'
 };
 
-export const ImageComponet = Template.bind({});
-ImageComponet.args = {
-  image: <img src={auroryImg} />,
+export const imageComponet = Template.bind({});
+imageComponet.args = {
+  image: <img src={tlaloc} />,
+  size: 'medium'
+};
+
+export const generative = Template.bind({});
+generative.args = {
+  image: (
+    <GenerativeImage
+      addresses={['0x70997970c51812dc3a010c7d01b50e0d17dc79c8']}
+    />
+  ),
   size: 'medium'
 };

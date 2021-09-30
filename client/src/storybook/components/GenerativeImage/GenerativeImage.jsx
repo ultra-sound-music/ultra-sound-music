@@ -116,7 +116,7 @@ export class Canvas extends React.Component {
         if (container.childNodes.length > 1) {
           container.replaceChild(pngImage, container.childNodes[1]);
         } else {
-          container.appendChild(pngImage);
+          container.prependChild(pngImage);
         }
         j++;
       }
@@ -128,8 +128,6 @@ export class Canvas extends React.Component {
       <div ref={this.containRef}>
         <canvas
           ref={this.canvasRef}
-          width='256'
-          height='256'
           style={{ visibility: 'hidden', display: 'none' }}
         />
       </div>
