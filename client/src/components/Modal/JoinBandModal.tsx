@@ -32,7 +32,7 @@ export class JoinBandModal extends React.Component<TModalProps> {
       currentStep: 1,
       totalSteps: 3,
       traits: bandTraits,
-      isOpen: true,
+      isOpen: isOpen,
       ctaButton: <Button>{}</Button>,
       onHide: hideModal
     };

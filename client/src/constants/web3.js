@@ -6,3 +6,5 @@ export const networkStatus = Object.freeze({
   CONNECTED: 'CONNECTED',
   PROCESSING_TRANSACTION: 'PROCESSING_TRANSACTION'
 });
+
+export const METAMASK_DOWNLOAD_URL = 'https://metamask.io/download';

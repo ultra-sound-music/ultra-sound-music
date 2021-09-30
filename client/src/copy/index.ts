@@ -2,6 +2,9 @@ export const k = {};
 export const l = {};
 
 export default Object.freeze({
+  error: 'error',
+  need_wallet: 'You need an ethereum wallet in order to connect.',
+  install_metamask: 'Install Metamask',
   ultra_sound_music: 'Ultra Sound Music',
   limited_unique_nfts: 'Limited, unique NFTs on Solana',
   mint_your_artist: 'Mint your artist',
@@ -44,5 +47,6 @@ export default Object.freeze({
   band_overview: 'Band overview',
   name_of_band: 'Name of band',
   mint_track: 'Mint track',
-  switch_artist: 'Switch artist'
+  switch_artist: 'Switch artist',
+  problem_connecting: 'There was a problem connecting to the server'
 });

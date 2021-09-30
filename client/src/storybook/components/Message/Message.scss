@@ -1,0 +1,43 @@
+@use '@styles/colors.scss' as *;
+@use '@styles/typo.scss' as *;
+@use '@styles/core.scss' as *;
+
+.Message {
+  color: $color-polar-bear;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $color-evening-sky;
+  border-radius: 0 0 15px 15px;
+  width: $app-width-full;
+  margin: 0 auto;
+  padding: 10px 20px 20px 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: top 300ms cubic-bezier(0.17, 0.04, 0.5, 0.94);
+  z-index: 90;
+}
+
+.closed {
+  top: -150px;
+}
+
+.open {
+  top: 0;
+}
+
+.title {
+  text-transform: capitalize;
+  height: 1em;
+  margin-bottom: 10px;
+  @extend %font-h3;
+}
+
+.close {
+  height: 1em;
+  position: absolute;
+  cursor: pointer;
+  padding: 3px;
+  top: 15px;
+  right: 25px;
+}

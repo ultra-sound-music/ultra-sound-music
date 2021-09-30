@@ -6,14 +6,29 @@ export function updateAppUI() {
   };
 }
 
-export function showModal({ title, bodyText, ctaText }) {
+export function showModal({ title, body, ctaText }) {
   return {
     type: ActionTypes.SHOW_MODAL,
     payload: {
       type: 'standard',
       title,
-      bodyText,
+      body,
       ctaText
+    }
+  };
+}
+
+export function hideModal() {
+  return {
+    type: ActionTypes.HIDE_MODAL
+  };
+}
+
+export function showInstallWalletModal() {
+  return {
+    type: ActionTypes.SHOW_MODAL,
+    payload: {
+      type: 'install-wallet'
     }
   };
 }
@@ -47,8 +62,19 @@ export function showMintTrackModal({ bandId }) {
   };
 }
 
-export function hideModal() {
+export function showAppMessage({ title, message, timeout }) {
   return {
-    type: ActionTypes.HIDE_MODAL
+    type: ActionTypes.SHOW_APP_MESSAGE,
+    payload: {
+      title,
+      message,
+      timeout
+    }
+  };
+}
+
+export function hideAppMessage() {
+  return {
+    type: ActionTypes.HIDE_APP_MESSAGE
   };
 }

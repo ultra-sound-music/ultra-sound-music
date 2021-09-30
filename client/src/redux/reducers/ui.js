@@ -3,30 +3,35 @@ import * as ActionTypes from '../actionTypes';
 const initialState = Object.freeze({
   shouldShowModal: false,
   modalType: '',
-  modalProps: null,
+  modalProps: {},
   modalTitle: '',
-  modalBodyText: '',
-  modalCTA: ''
+  modalBody: '',
+  modalCta: '',
+  isAppMessageOpen: false,
+  appMessageTitle: '',
+  appMessageMessage: '',
+  appMessageTimeout: null
 });
 
 export function getStandardModalState(state, payload) {
-  let body;
-  if (typeof payload.bodyText === 'string') {
-    body = payload.bodyText;
-  } else {
-    body = JSON.stringify(payload.bodyText);
-  }
-
   const newState = {
     ...state,
     shouldShowModal: true,
     modalType: payload.type,
     modalTitle: payload.title,
-    modalBodyText: body,
-    modalCTA: payload.ctaText
+    modalBody: payload.body,
+    modalCta: payload.ctaText
   };
 
   return newState;
+}
+
+export function getInstallWalletModalState(state, { type }) {
+  return {
+    ...state,
+    shouldShowModal: true,
+    modalType: type
+  };
 }
 
 export function getStartBandModalState(state, { type }) {
@@ -57,13 +62,14 @@ export function getMintTrackModalState(state, { type, bandId }) {
 
 export const modalMap = {
   standard: getStandardModalState,
+  'install-wallet': getInstallWalletModalState,
   'start-band': getStandardModalState,
   'join-band': getJoinBandModalState,
   'mint-track': getMintTrackModalState
 };
 
 export default function uiReducer(state = initialState, action) {
-  const { type, payload } = action;
+  const { type, payload = {} } = action;
 
   switch (type) {
     case ActionTypes.SHOW_MODAL: {
@@ -82,8 +88,31 @@ export default function uiReducer(state = initialState, action) {
         modalType: initialState.modalType,
         modalProps: initialState.modalProps,
         modalTitle: initialState.modalTitle,
-        modalBodyText: initialState.modalBodyText,
+        modalBody: initialState.modalBody,
         modalCTA: initialState.modalCTA
+      };
+
+      return newState;
+    }
+
+    case ActionTypes.HIDE_APP_MESSAGE: {
+      const newState = {
+        ...state,
+        isAppMessageOpen: initialState.isAppMessageOpen
+      };
+
+      return newState;
+    }
+
+    case ActionTypes.SHOW_APP_MESSAGE: {
+      const { title, message, timeout } = payload;
+
+      const newState = {
+        ...state,
+        isAppMessageOpen: true,
+        appMessageTitle: title || initialState.appMessageTitle,
+        appMessageMessage: message || initialState.appMessageMessage,
+        appMessageTimeout: timeout || initialState.timeout
       };
 
       return newState;

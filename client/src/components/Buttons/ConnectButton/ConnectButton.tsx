@@ -5,6 +5,7 @@ import copy from '@copy';
 import { PillSwitch } from '@uiComponents';
 
 import { IRootState } from '@store/types';
+import ui from '@store/ui';
 import web3 from '@store/web3';
 
 import { IPillSwitchProps } from '@uiTypes';
@@ -18,13 +19,27 @@ export interface IConnectButtonState {
 }
 
 export interface IConnectButtonActions {
+  showInstallWalletModal: () => void;
   connectWallet: () => void;
 }
 
 export class ConnectButton extends React.Component<TConnectButtonProps> {
+  onClickConnect = (): void => {
+    this.props.connectWallet();
+  };
+
+  onClickInstall = (): void => {
+    this.props.showInstallWalletModal();
+  };
+
   getProps = (networkStatus: string): IPillSwitchProps => {
     switch (networkStatus) {
       case constants.web3.networkStatus.NOT_AVAILABLE:
+        return {
+          status: 'off',
+          onClick: this.onClickInstall,
+          children: `${copy.connect}`
+        };
       case constants.web3.networkStatus.NOT_CONNECTED:
         return {
           status: 'off',
@@ -56,10 +71,6 @@ export class ConnectButton extends React.Component<TConnectButtonProps> {
     }
   };
 
-  onClickConnect = (): void => {
-    this.props.connectWallet();
-  };
-
   render(): JSX.Element {
     const { children, ...props } = this.getProps(this.props.networkStatus);
     return <PillSwitch {...props}>{children}</PillSwitch>;
@@ -74,6 +85,7 @@ export function mapState(state: IRootState): IConnectButtonState {
 }
 
 export const mapDispatch: IConnectButtonActions = {
+  showInstallWalletModal: ui.actions.showInstallWalletModal,
   connectWallet: web3.actions.connectWallet
 };
 

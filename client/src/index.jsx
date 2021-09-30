@@ -11,7 +11,7 @@ import App from './App';
 import Borked from './components/Borked';
 import reportWebVitals from './reportWebVitals';
 
-import '@styles/core.scss';
+import '@styles/app.scss';
 
 const sentryDsn = __SENTRY_ENABLED__ ? __SENTRY_DSN__ : '';
 

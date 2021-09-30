@@ -11,6 +11,7 @@ import web3 from '@store/web3';
 
 // import About from './components/About';
 // import User from './components/User';
+import AppMessage from '@appComponents/AppMessage/AppMessage';
 import SiteHeader from '@appComponents/SiteHeader/SiteHeader';
 import Modal from '@appComponents/Modal/Modal';
 import Landing from './pages/Landing';
@@ -43,6 +44,7 @@ export class App extends React.Component {
         <Router>
           <div className='App'>
             <FullLayout>
+              <AppMessage />
               <div className={styles.site_header}>
                 <SiteHeader />
               </div>
@@ -69,9 +71,9 @@ export class App extends React.Component {
               </Route>
             </Switch>
           </div>
+          <Modal type={modalType} modalProps={modalProps} />
         </Router>
         {this.renderProcessingIndicator()}
-        <Modal type={modalType} modalProps={modalProps} />
       </div>
     );
   }

@@ -1,5 +1,6 @@
 export { default as Accordian } from './components/Accordian/Accordian';
 export { default as ArtistCard } from './components/ArtistCard/ArtistCard';
+export { default as Message } from './components/Message/Message';
 export { default as EntityRow } from './components/EntityRow/EntityRow';
 export { default as Avatar } from './components/Avatar/Avatar';
 export { default as BandCard } from './components/BandCard/BandCard';

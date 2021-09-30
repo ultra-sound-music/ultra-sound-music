@@ -1,5 +1,6 @@
 import { put, call, select } from 'redux-saga/effects';
 import USMClient from '../../../lib/USMClient';
+import copy from '@copy';
 import constants from '@constants';
 import * as Utils from '../../../utils';
 import * as Actions from '../../../redux/actions';
@@ -40,9 +41,22 @@ export function* fetchAllTokens({ data }) {
     };
   }
 
-  const response = yield call([usmClient, 'fetchAll'], { pendingTransaction });
+  try {
+    const response = yield call([usmClient, 'fetchAll'], {
+      pendingTransaction
+    });
+    yield put(Actions.usm.fetchTokensComplete({ tokens: response?.data }));
+  } catch (error) {
+    console.error(error);
+    yield put(
+      Actions.ui.showAppMessage({
+        title: copy.error,
+        message: copy.problem_connecting,
+        timeout: 5000
+      })
+    );
+  }
 
-  yield put(Actions.usm.fetchTokensComplete({ tokens: response?.data }));
   yield call(Helpers.initializeActiveArtist);
   yield call(Helpers.initializeActiveBand);
 }
@@ -74,7 +88,7 @@ export function* createArtist() {
     yield put(
       Actions.ui.showModal({
         title: 'Error',
-        bodyText: error.message
+        body: error.message
       })
     );
     yield put(
@@ -120,7 +134,7 @@ export function* startBand() {
     yield put(
       Actions.ui.showModal({
         title: 'Error',
-        bodyText: error.message
+        body: error.message
       })
     );
     yield put(
@@ -172,7 +186,7 @@ export function* joinBand({ data }) {
     yield put(
       Actions.ui.showModal({
         title: 'Error',
-        bodyText: error?.data?.message || error.message
+        body: error?.data?.message || error.message
       })
     );
     yield put(
@@ -225,7 +239,7 @@ export function* createTrack({ data }) {
     yield put(
       Actions.ui.showModal({
         title: 'Error',
-        bodyText: error?.data?.message || error.message
+        body: JSON.stringify(error?.data?.message || error.message)
       })
     );
     yield put(

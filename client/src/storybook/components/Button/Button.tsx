@@ -10,12 +10,13 @@ export type TButtonType = 'primary' | 'secondary' | 'minimal';
 export interface IButtonProps {
   type?: TButtonType;
   image?: JSX.Element;
-  to?: string;
+  to?: typeof Link.prototype.to;
   isFullWidth?: boolean;
   isWide?: boolean;
   isSlim?: boolean;
   isDisabled?: boolean;
   isProcessing?: boolean;
+  isExternal?: boolean;
   children?: React.ReactNode;
   onClick?: () => void;
 }
@@ -29,6 +30,7 @@ export const Button = ({
   isWide = false,
   isSlim = false,
   isProcessing = false,
+  isExternal = false,
   onClick,
   children,
   ...props
@@ -45,8 +47,13 @@ export const Button = ({
   );
 
   if (to && !disabled) {
+    const moreProps: Record<string, string> = {};
+    if (isExternal) {
+      moreProps.target = '_blank';
+    }
+
     return (
-      <Link to={to} className={classNames} {...props}>
+      <Link to={to} className={classNames} {...props} {...moreProps}>
         {image ? <span className={styles.image}>{image}</span> : null}
         {children ? <span className={styles.content}>{children}</span> : ''}
         {isProcessing && <Spinner cover={true} />}

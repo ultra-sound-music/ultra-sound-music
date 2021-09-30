@@ -15,9 +15,25 @@ export function getModalTitle(state) {
 }
 
 export function getModalBody(state) {
-  return state.ui.modalBodyText;
+  return state.ui.modalBody;
 }
 
 export function getModalCta(state) {
   return state.ui.modalCta;
+}
+
+export function isAppMessageOpen(state) {
+  return state.ui.isAppMessageOpen;
+}
+
+export function getAppMessageTitle(state) {
+  return state.ui.appMessageTitle;
+}
+
+export function getAppMessageMessage(state) {
+  return state.ui.appMessageMessage;
+}
+
+export function getAppMessageTimeout(state) {
+  return state.ui.appMessageTimeout;
 }

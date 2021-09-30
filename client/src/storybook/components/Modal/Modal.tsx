@@ -29,13 +29,6 @@ export const Modal = ({
   onHide,
   children
 }: IModalProps): JSX.Element => {
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const hideModal = useCallback(() => {
-  //   setIsOpen(false);
-  //   onHide();
-  // }, [isOpen]);
-
   const classNames = cn(styles.Modal);
   const overlayClassNames = cn(styles.overlay);
 
