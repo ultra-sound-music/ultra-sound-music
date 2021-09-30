@@ -116,7 +116,7 @@ export class Canvas extends React.Component {
         if (container.childNodes.length > 1) {
           container.replaceChild(pngImage, container.childNodes[1]);
         } else {
-          container.prependChild(pngImage);
+          container.appendChild(pngImage);
         }
         j++;
       }

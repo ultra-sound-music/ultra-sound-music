@@ -18,11 +18,15 @@ export default class USMClient {
       error: noop
     }
   }) {
-    const signer = provider?.getSigner();
-
     this.apiHost = apiHost;
     this.updateAccount({ accountAddress });
     this.logger = logger;
+
+    if (!provider) {
+      return;
+    }
+
+    const signer = provider.getSigner();
 
     this.artistWriteContract = new ethers.Contract(
       artistConfig.address,
@@ -47,6 +51,12 @@ export default class USMClient {
       axios.defaults.headers.common['x-owner'] = accountAddress;
     } else {
       axios.defaults.headers.common['x-owner'] = null;
+    }
+  }
+
+  ensureConnectionToContract(name) {
+    if (!this[`${name}WriteContract`]) {
+      throw new Error(`Connection to ${name} contract not established`);
     }
   }
 
@@ -80,6 +90,8 @@ export default class USMClient {
 
   // @TODO pass in an onError callback
   async createArtist(onComplete) {
+    this.ensureConnectionToContract('artist');
+
     const metadata = {
       artistDNA: this.accountAddress
     };
@@ -103,6 +115,8 @@ export default class USMClient {
   }
 
   async startBand({ name, description, artistTid }, onComplete) {
+    this.ensureConnectionToContract('band');
+
     if (!artistTid) {
       throw new Error('An artist is required when starting a band.');
     }
@@ -133,6 +147,8 @@ export default class USMClient {
   }
 
   async joinBand({ artistTid, bandTid }, onComplete) {
+    this.ensureConnectionToContract('band');
+
     let response;
     try {
       response = await this.recordTransaction({
@@ -159,6 +175,8 @@ export default class USMClient {
   }
 
   async createTrack({ name, description, artistTid, bandTid }, onComplete) {
+    this.ensureConnectionToContract('track');
+
     const metadata = {
       name,
       description
@@ -186,21 +204,5 @@ export default class USMClient {
       onComplete({ transaction, data: contextData })
     );
     return transaction;
-  }
-
-  inviteToJoinBand() {
-    // @todo - state for this should go in IPS - but how would IPFS communicate with the blockchain
-  }
-
-  requestToJoinBand() {
-    // @todo - state for this should go in IPS - but how would IPFS communicate with the blockchain
-  }
-
-  messageArtist() {
-    // @todo is there any way to implement a message streaming system over ethereum?
-  }
-
-  messageBand() {
-    // @todo is there any way to implement a message streaming system over ethereum?
   }
 }
