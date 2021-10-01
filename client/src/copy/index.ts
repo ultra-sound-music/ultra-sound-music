@@ -2,6 +2,8 @@ export const k = {};
 export const l = {};
 
 export default Object.freeze({
+  lorem:
+    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
   error: 'error',
   need_wallet: 'You need an ethereum wallet in order to connect.',
   install_metamask: 'Install Metamask',
@@ -48,5 +50,7 @@ export default Object.freeze({
   name_of_band: 'Name of band',
   mint_track: 'Mint track',
   switch_artist: 'Switch artist',
-  problem_connecting: 'There was a problem connecting to the server'
+  problem_connecting: 'There was a problem connecting to the server',
+  bidding_on_artists_soon_available:
+    'Bidding for your own unqie NFT artist will soon be available. Each artist is a specially constructed musician. For your ears only. For now.'
 });

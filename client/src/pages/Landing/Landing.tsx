@@ -12,6 +12,7 @@ import {
   TextBlock
 } from '@uiComponents';
 import { ITextBlockProps, ITraitDefinition } from '@uiTypes';
+import { FullLayout } from '@layouts';
 import Copy from '@copy';
 
 import LandingCopy from './Landing.copy';
@@ -135,38 +136,60 @@ export class Landing extends React.Component<ILandingProps> {
 
     return (
       <div className={styles.Landing}>
-        {ownsAnArtist ? this.renderOwnerIntro() : this.renderNewIntro()}
+        <FullLayout>
+          <>
+            {ownsAnArtist ? this.renderOwnerIntro() : this.renderNewIntro()}
 
-        <div className={styles.onboarding_scroller}>
-          <ScrollBlock>
-            <div data-isMuted={this.props.ownsAnArtist}>
-              <div>
-                <Hero src='' size='stretch' />
-              </div>
-              <div>{this.renderMintArtistTextBlock()}</div>
+            <div className={styles.onboarding_scroller}>
+              <ScrollBlock>
+                <div data-isMuted={this.props.ownsAnArtist}>
+                  <div>
+                    <Hero src='' size='stretch' />
+                  </div>
+                  <div>{this.renderMintArtistTextBlock()}</div>
+                </div>
+                <div data-isMuted={this.props.ownsABand}>
+                  <div>
+                    <Hero src='' size='stretch' />
+                  </div>
+                  <div>{this.renderMintBandTextBlock()}</div>
+                </div>
+                <div>
+                  <div>
+                    <Hero src='' size='stretch' />
+                  </div>
+                  <div>{this.renderMintTrackTextBlock()}</div>
+                </div>
+              </ScrollBlock>
             </div>
-            <div data-isMuted={this.props.ownsABand}>
-              <div>
-                <Hero src='' size='stretch' />
-              </div>
-              <div>{this.renderMintBandTextBlock()}</div>
+            <div className={styles.faq_section}>
+              <Accordian
+                term='What’s this all about?'
+                details={LandingCopy.faq}
+              />
+              <Accordian
+                term='What’s this all about?'
+                details={LandingCopy.faq}
+              />
+              <Accordian
+                term='What’s this all about?'
+                details={LandingCopy.faq}
+              />
+              <Accordian
+                term='What’s this all about?'
+                details={LandingCopy.faq}
+              />
+              <Accordian
+                term='What’s this all about?'
+                details={LandingCopy.faq}
+              />
+              <Accordian
+                term='What’s this all about?'
+                details={LandingCopy.faq}
+              />
             </div>
-            <div>
-              <div>
-                <Hero src='' size='stretch' />
-              </div>
-              <div>{this.renderMintTrackTextBlock()}</div>
-            </div>
-          </ScrollBlock>
-        </div>
-        <div className={styles.faq_section}>
-          <Accordian term='What’s this all about?' details={LandingCopy.faq} />
-          <Accordian term='What’s this all about?' details={LandingCopy.faq} />
-          <Accordian term='What’s this all about?' details={LandingCopy.faq} />
-          <Accordian term='What’s this all about?' details={LandingCopy.faq} />
-          <Accordian term='What’s this all about?' details={LandingCopy.faq} />
-          <Accordian term='What’s this all about?' details={LandingCopy.faq} />
-        </div>
+          </>
+        </FullLayout>
       </div>
     );
   }

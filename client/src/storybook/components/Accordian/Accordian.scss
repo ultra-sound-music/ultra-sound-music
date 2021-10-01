@@ -1,5 +1,5 @@
-@use '../../../styles/colors.scss' as *;
-@use '../../../styles/typo.scss' as *;
+@use '@styles/colors.scss' as *;
+@use '@styles/typo.scss' as *;
 
 .Accordian {
   border-radius: 16px;
@@ -18,7 +18,7 @@
 }
 
 .title {
-  @extend %font-h3;
+  @extend %font-h2;
 }
 
 .content {

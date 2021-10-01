@@ -2,7 +2,7 @@
 
 .content {
   grid-column-start: 1;
-  grid-column-end: -1;
+  grid-column-end: end;
   margin: 30px auto 100px auto;
   @extend %font-h2;
 }

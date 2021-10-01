@@ -18,6 +18,7 @@ export { default as Overlay } from './components/Overlay/Overlay';
 export { default as Pill } from './components/Pill/Pill';
 export { default as Pillbox } from './components/Pillbox/Pillbox';
 export { default as PillSwitch } from './components/PillSwitch/PillSwitch';
+export { default as Section } from './components/Section/Section';
 export { default as Selector } from './components/Selector/Selector';
 export { default as ScrollBlock } from './components/ScrollBlock/ScrollBlock';
 export { default as SiteFooter } from './components/SiteFooter/SiteFooter';

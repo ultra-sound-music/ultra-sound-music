@@ -4,38 +4,19 @@ import { ITopNavItem } from '@uiTypes';
 import styles from './SiteHeader.scss';
 
 export interface ISiteHeaderProps {
+  nav?: React.ReactNode; // Should be a <TopNav>
   artistSelector?: React.ReactNode; // Should be a <Selector>
   connectButton?: React.ReactNode; // Should be a <PillSwitch>
 }
 
-export const pageConfigs: ITopNavItem[] = [
-  {
-    itemName: 'home',
-    isRoot: true,
-    text: 'Home',
-    to: '/'
-  },
-  {
-    itemName: 'bands',
-    text: 'Bands',
-    to: '/bands'
-  },
-  {
-    itemName: 'tracks',
-    text: 'Tracks',
-    to: '/tracks'
-  }
-];
-
 export const SiteHeader = ({
+  nav,
   connectButton,
   artistSelector
 }: ISiteHeaderProps): JSX.Element => {
   return (
     <div className={styles.SiteHeader}>
-      <div className={styles.topNav}>
-        <TopNav items={pageConfigs} />
-      </div>
+      {nav && <div className={styles.topNav}>{nav}</div>}
 
       {artistSelector && (
         <div className={styles.artistSelector}>{artistSelector}</div>

@@ -26,7 +26,7 @@ export const Hero = ({
   image,
   src,
   size = 'medium',
-  shape = 'round'
+  shape = 'square'
 }: IHeroProps): JSX.Element => {
   const rootclassNames = cn(styles.Hero, styles[size], styles[shape]);
 

@@ -1,0 +1,48 @@
+@use '@styles/core.scss' as *;
+@use '@styles/typo.scss' as *;
+@use '@styles/colors.scss' as *;
+
+$spacing: 90px;
+
+.Section {
+  grid-column-start: 1;
+  grid-column-end: end;
+
+  &.spaced_top {
+    margin-top: $spacing;
+  }
+
+  &.spaced_bottom {
+    margin-bottom: $spacing;
+  }
+
+  &.altBackground {
+    background-color: $color-dusk-sky;
+
+    &.spaced_top {
+      margin-top: 0;
+      padding-top: $spacing;
+    }
+
+    &.spaced_bottom {
+      margin-bottom: 0;
+      padding-bottom: $spacing;
+    }
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(24, minmax(25px, 1fr));
+  grid-gap: 18px 15px;
+  grid-auto-flow: row;
+  max-width: $app-width-full;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 25px;
+  grid-column-start: 1;
+  grid-column-end: end;
+  @extend %font-h2;
+}
