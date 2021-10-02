@@ -9,6 +9,12 @@ import * as Helpers from './helpers';
 
 let usmClient;
 
+// There's a race condition where fetchNewMints() is called before init() but I don't have time to dig in right now
+let HACK_RES;
+const HACK = new Promise((res) => {
+  HACK_RES = res;
+});
+
 export function* init({ data }) {
   const ethClient = data?.web3Client;
   // @todo optimize this loading to be async and not block the app
@@ -26,7 +32,19 @@ export function* init({ data }) {
     logger: Utils.logger
   });
 
+  HACK_RES(usmClient);
   yield put(Actions.usm.fetchAllTokens());
+}
+
+export function* fetchNewMints() {
+  yield HACK;
+  try {
+    // @TODO disabled while waiting for endpoing
+    // const response = yield call([usmClient, 'fetchNewMints']);
+    yield put(Actions.usm.fetchNewMintsSuccess({ mints: {} }));
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export function* fetchAllTokens({ data }) {
@@ -62,6 +80,15 @@ export function* fetchAllTokens({ data }) {
 }
 
 export function* createArtist() {
+  const networkStatus = yield select(Selectors.web3.getNetworkStatus);
+  if (!networkStatus) {
+    yield put(Actions.ui.showInstallWalletModal());
+    return;
+  } else if (networkStatus === constants.web3.networkStatus.NOT_AVAILABLE) {
+    yield put(Actions.web3.connectWallet());
+    return;
+  }
+
   const artistDNA = yield select(Selectors.web3.getAccountAddress);
   const key = yield call(Utils.usm.genCreateArtistTransactionKey, artistDNA);
   yield put(
@@ -103,6 +130,12 @@ export function* createArtist() {
 }
 
 export function* startBand() {
+  const networkStatus = yield select(Selectors.web3.getNetworkStatus);
+  if (!networkStatus) {
+    yield put(Actions.ui.showInstallWalletModal());
+    return;
+  }
+
   if (!usmClient) {
     throw new Error('USM not initialized');
   }
@@ -149,6 +182,12 @@ export function* startBand() {
 }
 
 export function* joinBand({ data }) {
+  const networkStatus = yield select(Selectors.web3.getNetworkStatus);
+  if (!networkStatus) {
+    yield put(Actions.ui.showInstallWalletModal());
+    return;
+  }
+
   if (!usmClient) {
     throw new Error('USM not initialized');
   }
@@ -202,6 +241,12 @@ export function* joinBand({ data }) {
 }
 
 export function* createTrack({ data }) {
+  const networkStatus = yield select(Selectors.web3.getNetworkStatus);
+  if (!networkStatus) {
+    yield put(Actions.ui.showInstallWalletModal());
+    return;
+  }
+
   if (!usmClient) {
     throw new Error('USM not initialized');
   }

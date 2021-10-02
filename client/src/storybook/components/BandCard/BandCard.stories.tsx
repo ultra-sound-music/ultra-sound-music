@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
+import { getMockTraits } from '../../utils';
+
 import BandCard from './BandCard';
 
 import auroryImg from '@images/mock/aurory.png';
@@ -27,8 +29,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   name: 'The Solanas',
   members: [auroryImg, auroryImg, auroryImg, auroryImg, auroryImg],
-  traits: [1, 2, 3, 4].map((n) => ({
-    name: `Trait ${n}`,
-    value: `${n}${n}${n}`
-  }))
+  traits: getMockTraits()
 };

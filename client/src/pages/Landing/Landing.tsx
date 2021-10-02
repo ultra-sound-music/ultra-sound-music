@@ -11,7 +11,7 @@ import {
   ScrollBlock,
   TextBlock
 } from '@uiComponents';
-import { ITextBlockProps, ITraitDefinition } from '@uiTypes';
+import { ITextBlockProps, ITraitsDefinition } from '@uiTypes';
 import { FullLayout } from '@layouts';
 import Copy from '@copy';
 
@@ -28,7 +28,7 @@ import copy from '@copy';
 
 export interface ILandingProps {
   activeArtistName: string;
-  activeArtistTraits: ITraitDefinition[];
+  activeArtistTraits: ITraitsDefinition;
   ownsAnArtist: boolean;
   ownsABand: boolean;
   totalArtists: number;

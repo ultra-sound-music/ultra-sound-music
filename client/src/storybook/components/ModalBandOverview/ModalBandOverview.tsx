@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import { Modal, TraitsBlock, EntityRow, StepIndicator } from '@uiComponents';
-import { ITraitDefinition } from '@uiTypes';
+import { ITraitsDefinition } from '@uiTypes';
 
 import copy from '@copy';
 
@@ -11,7 +11,7 @@ export interface IModalBandOverviewProps {
   currentStep: number;
   totalSteps: number;
   bandMembers?: Record<string, string>[];
-  traits?: ITraitDefinition[];
+  traits?: ITraitsDefinition;
   isOpen: boolean;
   ctaButton: JSX.Element;
   onHide: () => void;

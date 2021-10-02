@@ -35,11 +35,6 @@ export class ConnectButton extends React.Component<TConnectButtonProps> {
   getProps = (networkStatus: string): IPillSwitchProps => {
     switch (networkStatus) {
       case constants.web3.networkStatus.NOT_AVAILABLE:
-        return {
-          status: 'off',
-          onClick: this.onClickInstall,
-          children: `${copy.connect}`
-        };
       case constants.web3.networkStatus.NOT_CONNECTED:
         return {
           status: 'off',
@@ -67,7 +62,11 @@ export class ConnectButton extends React.Component<TConnectButtonProps> {
         };
       }
       default:
-        return null;
+        return {
+          status: 'off',
+          onClick: this.onClickInstall,
+          children: `${copy.connect}`
+        };
     }
   };
 

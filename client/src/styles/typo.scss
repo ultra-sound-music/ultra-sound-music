@@ -14,10 +14,8 @@ $font-weight-x-bold: 900;
 $font-size-h1: 6.5rem;
 $font-size-h2: 4rem;
 $font-size-h3: 3rem;
-$font-size-cta: 2rem;
 $font-size-body: 1.8rem;
-$font-size-medium: 1.6rem;
-$font-size-small: 1.4rem;
+$font-size-small: 1.6rem;
 
 %font-h1 {
   font: $font-weight-normal #{$font-size-h1} / 1 $font-fam-header;
@@ -43,11 +41,7 @@ $font-size-small: 1.4rem;
   font: $font-weight-bold #{$font-size-body} / 1.5 $font-fam-body;
 }
 
-%font-cta {
-  font: $font-weight-x-bold #{$font-size-cta} / 1.2 $font-fam-body;
-  letter-spacing: 0.025em;
-}
-
 %font-small {
-  font: $font-weight-normal #{$font-size-small} / 1.4 $font-fam-body;
+  font: $font-weight-x-bold #{$font-size-small} / 1.4 $font-fam-body;
+  letter-spacing: 0.025em;
 }

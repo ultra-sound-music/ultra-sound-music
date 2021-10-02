@@ -17,6 +17,7 @@ import SiteHeader from '@appComponents/SiteHeader/SiteHeader';
 import Modal from '@appComponents/Modal/Modal';
 import Landing from './pages/Landing';
 import LandingArtistOnly from './pages/LandingArtistOnly';
+import MempoolPlayer from './pages/MempoolPlayer/MempoolPlayer';
 import BandsPage from './pages/BandsPage';
 import NotFound from './pages/NotFound';
 // import Token from './components/Tokens/Token';
@@ -61,7 +62,7 @@ export class App extends React.Component {
 
             <Route path='/dao'></Route>
 
-            <Route path='/memplayer'></Route>
+            <Route path='/memplayer'>{<MempoolPlayer />}</Route>
 
             <Route path='*'>
               <NotFound />

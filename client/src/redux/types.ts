@@ -1,4 +1,7 @@
-import { IConfigsState } from './configs/reducer';
+export interface IConfigsState {
+  lfg: boolean;
+  isArtistOnly: boolean;
+}
 
 export interface IRootState {
   configs: IConfigsState;

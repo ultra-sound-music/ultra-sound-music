@@ -12,7 +12,7 @@
 .topNavItem {
   color: $color-winter-sky;
   text-decoration: none;
-  @extend %font-cta;
+  @extend %font-small;
 
   &:hover,
   &:active {

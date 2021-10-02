@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from '@uiComponents';
 import usm from '@store/usm';
-import web3 from '@store/web3';
 
 export class CreateArtistButton extends React.Component {
   static propTypes = {
@@ -29,11 +28,7 @@ export class CreateArtistButton extends React.Component {
 }
 
 export function mapStateToProps(state) {
-  const accountAddress = web3.selectors.getAccountAddress(state);
-  const isProcessing = usm.selectors.isProcessingCreateArtist(
-    state,
-    accountAddress
-  );
+  const isProcessing = usm.selectors.isProcessingCreateArtist(state);
 
   return {
     isProcessing

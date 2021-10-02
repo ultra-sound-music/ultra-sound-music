@@ -9,6 +9,21 @@ export function init({ web3Client }) {
   };
 }
 
+export function fetchNewMints() {
+  return {
+    type: ActionTypes.FETCH_NEW_MINTS_REQUEST
+  };
+}
+
+export function fetchNewMintsSuccess({ mints }) {
+  return {
+    type: ActionTypes.FETCH_NEW_MINTS_SUCCESS,
+    payload: {
+      mints
+    }
+  };
+}
+
 export function setActiveArtist({ artistId }) {
   return {
     type: ActionTypes.SET_ACTIVE_ARTIST,

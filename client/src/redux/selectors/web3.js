@@ -13,7 +13,3 @@ export function getNetworkId(state) {
 export function isConnected(state) {
   return !!getAccountAddress(state);
 }
-
-export function hasProvider(state) {
-  return !!state.web3.hasProvider;
-}

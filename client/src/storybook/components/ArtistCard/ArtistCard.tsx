@@ -1,13 +1,15 @@
 import React from 'react';
 import copy from '@copy';
 import { Button, TraitsBlock } from '@uiComponents';
-import { IPillboxProps, ITraitDefinition } from '@uiTypes';
+import { IPillboxProps, ITraitsDefinition } from '@uiTypes';
 import Pillbox from '../Pillbox/Pillbox';
+
+import styles from './ArtistCard.scss';
 
 export interface IArtistCardProps {
   avatar?: JSX.Element;
   name: string;
-  traits?: ITraitDefinition[];
+  traits?: ITraitsDefinition;
   isShowingActiveArtist?: boolean;
   doShowExternalLink?: boolean;
   withPadding?: boolean;
@@ -30,7 +32,7 @@ export const ArtistCard = ({
   const pillboxProps: IPillboxProps = {
     image: avatar,
     subject,
-    header: name,
+    subHeader: name,
     withPadding,
     withBackground,
     cta: ctaButton ? ctaButton : null
@@ -46,7 +48,9 @@ export const ArtistCard = ({
 
   return (
     <Pillbox {...pillboxProps}>
-      <TraitsBlock traits={traits} />
+      <div className={styles.traits}>
+        <TraitsBlock traits={traits} />
+      </div>
     </Pillbox>
   );
 };

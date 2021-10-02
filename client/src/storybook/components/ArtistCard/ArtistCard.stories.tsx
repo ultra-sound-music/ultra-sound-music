@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Button, Avatar } from '@uiComponents';
+import { getMockTraits } from '../../utils';
 
 import xolotl from '@images/mock/xolotl.png';
 
@@ -27,10 +28,7 @@ const Template: ComponentStory<typeof ArtistCard> = (args) => {
 export const Basic = Template.bind({});
 Basic.args = {
   name: 'Fraggle Rock',
-  traits: [1, 2, 3, 4].map((n) => ({
-    name: `Trait ${n}`,
-    value: `${n}${n}${n}`
-  })),
+  traits: getMockTraits(),
   isShowingActiveArtist: false,
   doShowExternalLink: false,
   cta: <Button>Do stuff</Button>
@@ -39,10 +37,7 @@ Basic.args = {
 export const Alt1 = Template.bind({});
 Alt1.args = {
   name: 'Fraggle Rock',
-  traits: [1, 2, 3, 4].map((n) => ({
-    name: `Trait ${n}`,
-    value: `${n}${n}${n}`
-  })),
+  traits: getMockTraits(),
   isShowingActiveArtist: true,
   doShowExternalLink: true,
   cta: <Button>Do stuff</Button>
@@ -52,10 +47,7 @@ export const Alt2 = Template.bind({});
 Alt2.args = {
   avatar: <Avatar src={xolotl} />,
   name: 'Fraggle Rock',
-  traits: [1, 2, 3, 4].map((n) => ({
-    name: `Trait ${n}`,
-    value: `${n}${n}${n}`
-  })),
+  traits: getMockTraits(),
   isShowingActiveArtist: true,
   doShowExternalLink: true,
   cta: <Button>Do stuff</Button>

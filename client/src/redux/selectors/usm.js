@@ -31,6 +31,10 @@ export function getIsProcessingTransaction(state) {
   return state.usm.isProcessingTransaction;
 }
 
+export function getAllNewMints(state) {
+  return state.usm.newMints;
+}
+
 export const selectAllArtistEntities = createSelector(
   selectAllTokenEntities,
   (tokens) =>
@@ -66,12 +70,13 @@ export const getActiveArtistName = createSelector(
 );
 
 export const getActiveArtistTraits = () => {
-  return [
-    { name: 'foo', value: 10 },
-    { name: 'shmoo', value: 98 },
-    { name: 'blew', value: 15 },
-    { name: 'who', value: 45 }
-  ];
+  return {
+    texture: 3,
+    warmth: 2,
+    dissonance: 3,
+    aggression: 1,
+    space: 4
+  };
 };
 
 export const getActiveArtistImageUrl = () => {
@@ -294,12 +299,13 @@ export const getBand = createSelector(selectTokenById, (band) =>
 
 export const getBandName = createSelector(getBand, ({ name }) => name);
 
-export const getBandTraits = createSelector(getBand, () =>
-  [1, 2, 3, 4].map((n) => ({
-    name: `Trait ${n}`,
-    value: `${n}${n}${n}`
-  }))
-);
+export const getBandTraits = createSelector(getBand, () => ({
+  texture: 3,
+  warmth: 2,
+  dissonance: 3,
+  aggression: 1,
+  space: 4
+}));
 
 export const getTrackCreatorByTrackId = createSelector(
   selectTokenById,

@@ -1,0 +1,20 @@
+@use '@styles/typo.scss' as *;
+
+.MintArtist {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  height: 100%;
+}
+
+.header {
+  margin-bottom: 15px;
+}
+
+.artistName {
+  @extend %font-h2;
+}
+
+.buttons {
+  margin-top: 35px;
+}

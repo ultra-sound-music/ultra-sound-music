@@ -12,6 +12,6 @@ export { ISpinnerProps } from './components/Spinner/Spinner';
 export { ITextBlockProps } from './components/TextBlock/TextBlock';
 export {
   ITraitsBlockProps,
-  ITraitDefinition
+  ITraitsDefinition
 } from './components/TraitsBlock/TraitsBlock';
 export { ITopNavItem, ITopNavProps } from './components/TopNav/TopNav';

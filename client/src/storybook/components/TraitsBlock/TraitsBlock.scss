@@ -1,18 +1,38 @@
-.TraitsBlock {
-  // margin-top: 40px;
-  margin-bottom: 15px;
-}
+@use '@styles/typo.scss' as *;
 
-.traitsList {
-  
+.TraitsBlock {
+  .traitsList {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+  }
 }
 
 .trait {
-  display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  @extend %font-small;
 
   &:last-of-type {
     margin-bottom: 0;
   }
+}
+
+.name {
+  margin-bottom: 3px;
+  text-transform: capitalize;
+}
+
+.meterContainer {
+  background-color: #2a2942;
+  border-radius: 4px;
+  height: 12px;
+}
+
+.meter {
+  background-color: red;
+  border-radius: 4px;
+  text-indent: -9999px;
+  width: 50%;
+  height: 100%;
 }

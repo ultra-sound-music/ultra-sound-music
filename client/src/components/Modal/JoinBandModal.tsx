@@ -5,13 +5,14 @@ import { IRootState } from '@store/types';
 import { Button, ModalBandOverview } from '@uiComponents';
 import { connect } from 'react-redux';
 import usm from '@store/usm';
+import { ITraitsDefinition } from '@uiTypes';
 
 export type TModalProps = IJoinBandModalState & IJoinBandModalDispatch;
 export type TModalType = 'standard' | 'start-band';
 
 export interface IJoinBandModalState {
   bandName: string;
-  bandTraits: { name: string; value: string }[];
+  bandTraits: ITraitsDefinition;
   bandMembers: Record<string, string>[];
   isOpen: boolean;
   ctaText: React.ReactNode;

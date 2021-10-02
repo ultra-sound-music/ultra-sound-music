@@ -1,5 +1,11 @@
 import * as ActionTypes from '../actionTypes';
 
+export function parseNetworkId(networkId) {
+  if (networkId) {
+    return parseInt(networkId);
+  }
+}
+
 export function init() {
   return {
     type: ActionTypes.INIT_WEB3

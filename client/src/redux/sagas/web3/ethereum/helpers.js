@@ -38,7 +38,7 @@ export function onAccountsChanged(accounts) {
 }
 
 export function onChainChanged(chainId) {
-  return Actions.web3.processNetworkUpdate({ networkId: chainId });
+  return Actions.web3.processNetworkUpdate({ networkId: parseInt(chainId) });
 }
 
 export function createEthereumEventChannel(ethereum) {

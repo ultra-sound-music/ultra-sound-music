@@ -8,11 +8,54 @@ const initialState = tokensAdapter.getInitialState({
   activeBandId: null,
   transactions: [],
   isFetchingTokens: false,
-  isProcessingTransaction: false
+  isProcessingTransaction: false,
+  newMints: []
 });
 
 export function initUsm() {
   return initialState;
+}
+
+export function onFetchNewMintsSuccess(state, { payload = {} }) {
+  // state.newMints = payload?.mints;
+  state.newMints = [
+    {
+      tokenType: 'artist',
+      tokenId: 2,
+      id: '1233',
+      name: 'Rodrigo',
+      artUrl:
+        'https://ipfs.io/ipfs/bafybeignkeymrpl6ocnoxfnhzowcxru3tu6ro5pmksr45csjclszgrw3ni',
+      price: 2.5
+    },
+    {
+      tokenType: 'artist',
+      tokenId: 3,
+      id: '1234',
+      name: 'Minelirma',
+      artUrl:
+        'https://ipfs.io/ipfs/bafybeidohwmeckcxb7ydrcwa6kml5bg7em6mxvusljjmaymgh4juoo3diq',
+      price: 2.5
+    },
+    {
+      tokenType: 'artist',
+      tokenId: 4,
+      id: '1235',
+      name: 'Bondigano',
+      artUrl:
+        'https://ipfs.io/ipfs/bafybeib4kfsjv5knx4d6xwdxceivwzrcbyaunp4povfn5ow55jjd7dmuhy',
+      price: 2.5
+    },
+    {
+      tokenType: 'artist',
+      tokenId: 5,
+      id: '1236',
+      name: 'Samuela',
+      artUrl:
+        'https://ipfs.io/ipfs/bafybeifvowtlrae57lw5sappdw4abxsp53uos3mxggggd6lznw3goc5lx4',
+      price: 2.5
+    }
+  ];
 }
 
 export function onFetchTokensRequest(state) {
@@ -94,6 +137,7 @@ function updateTransaction(state, { data }) {
 export default createReducer(initialState, (builder) => {
   builder
     .addCase(ActionTypes.INIT_USM, initUsm)
+    .addCase(ActionTypes.FETCH_NEW_MINTS_SUCCESS, onFetchNewMintsSuccess)
     .addCase(ActionTypes.FETCH_TOKENS_REQUEST, onFetchTokensRequest)
     .addCase(ActionTypes.FETCH_TOKENS_COMPLETE, onFetchTokensComplete)
     .addCase(ActionTypes.SET_ACTIVE_ARTIST, setActiveArtist)

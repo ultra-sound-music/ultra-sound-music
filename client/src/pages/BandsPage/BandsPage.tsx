@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import copy from '@copy';
 import xolotl from '@images/mock/xolotl.png';
 import { Button, ArtistCard, Avatar, BandCard } from '@uiComponents';
-import { ITraitDefinition } from '@uiTypes';
+import { ITraitsDefinition } from '@uiTypes';
 
 import { SidebarLayout } from '@layouts';
 import { IRootState } from '@store/types';
@@ -27,7 +27,7 @@ export interface IBandsPageState {
   activeArtistImageUrl: string;
   activeArtistName: string;
   activeArtistId: string;
-  activeArtistTraits: ITraitDefinition[];
+  activeArtistTraits?: ITraitsDefinition;
 }
 
 export interface IBandsPageActions {

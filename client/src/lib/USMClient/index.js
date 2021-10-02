@@ -74,6 +74,10 @@ export default class USMClient {
     });
   }
 
+  async fetchNewMints() {
+    return await axios.get(`${this.apiHost}/api/mints`);
+  }
+
   // Providing a pendingTransaction enables long polling on the server
   async fetchAll({ pendingTransaction } = {}) {
     const pendingType = pendingTransaction?.type;
