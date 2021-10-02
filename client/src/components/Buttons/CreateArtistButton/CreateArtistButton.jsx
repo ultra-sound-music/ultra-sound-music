@@ -6,12 +6,13 @@ import usm from '@store/usm';
 
 export class CreateArtistButton extends React.Component {
   static propTypes = {
+    imageUrl: PropTypes.string,
     isProcessing: PropTypes.bool,
     createArtist: PropTypes.func
   };
 
   onClick = () => {
-    this.props.createArtist();
+    this.props.createArtist({ imageUrl: this.props.imageUrl });
   };
 
   render() {

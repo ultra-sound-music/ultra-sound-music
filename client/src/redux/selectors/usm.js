@@ -3,8 +3,6 @@ import constants from '@constants';
 import * as Utils from '../../utils';
 import { tokensAdapter } from '../utils/tokensAdapter';
 
-import mixcoatl from '@images/mock/mixcoatl.png';
-
 const tokenSelectors = tokensAdapter.getSelectors((state) => state.usm);
 
 export const {
@@ -69,19 +67,15 @@ export const getActiveArtistName = createSelector(
   (artist) => artist?.name ?? ''
 );
 
-export const getActiveArtistTraits = () => {
-  return {
-    texture: 3,
-    warmth: 2,
-    dissonance: 3,
-    aggression: 1,
-    space: 4
-  };
-};
+export const getActiveArtistTraits = createSelector(
+  getActiveArtist,
+  (artist) => artist?.traits ?? ''
+);
 
-export const getActiveArtistImageUrl = () => {
-  return mixcoatl;
-};
+export const getActiveArtistImageUrl = createSelector(
+  getActiveArtist,
+  (artist) => artist?.image ?? ''
+);
 
 export const getActiveArtistBands = createSelector(
   getActiveArtistTid,

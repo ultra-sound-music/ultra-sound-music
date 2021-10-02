@@ -79,7 +79,7 @@ export function* fetchAllTokens({ data }) {
   yield call(Helpers.initializeActiveBand);
 }
 
-export function* createArtist() {
+export function* createArtist({ data }) {
   const networkStatus = yield select(Selectors.web3.getNetworkStatus);
   if (!networkStatus) {
     yield put(Actions.ui.showInstallWalletModal());
@@ -89,6 +89,7 @@ export function* createArtist() {
     return;
   }
 
+  const imageUrl = data.imageUrl;
   const artistDNA = yield select(Selectors.web3.getAccountAddress);
   const key = yield call(Utils.usm.genCreateArtistTransactionKey, artistDNA);
   yield put(
@@ -101,6 +102,7 @@ export function* createArtist() {
   try {
     const transaction = yield call(
       [usmClient, 'createArtist'],
+      { imageUrl },
       Helpers.onCreateArtistComplete
     );
     yield put(

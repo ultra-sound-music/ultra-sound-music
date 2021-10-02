@@ -1,0 +1,21 @@
+@use '@styles/layout.scss' as *;
+
+.ArtistsPage {
+  grid-column-start: 1;
+  grid-column-end: end;
+}
+
+.artist {
+  @extend %full-layout;
+  margin-bottom: 60px;
+}
+
+.hero {
+  grid-column-start: 1;
+  grid-column-end: 7;
+}
+
+.info {
+  grid-column-start: 11;
+  grid-column-end: end;
+}

@@ -75,7 +75,7 @@ export function mapState(state: IRootState): IStartBandModalState {
     isOpen: ui.selectors.shouldShowModal(state),
     bandName: usm.selectors.getSuggestedBandName(state),
     activeArtistName: usm.selectors.getActiveArtistName(state),
-    activeArtistImageSrc: usm.selectors.getActiveArtistImageUrl(),
+    activeArtistImageSrc: usm.selectors.getActiveArtistImageUrl(state),
     txStatus: (usm.selectors.getTransactionStatusByType as HackSelector)(
       state,
       {

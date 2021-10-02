@@ -64,9 +64,12 @@ export function fetchTokensComplete({ tokens }) {
   };
 }
 
-export function createArtist() {
+export function createArtist({ imageUrl }) {
   return {
-    type: ActionTypes.CREATE_ARTIST_REQUEST
+    type: ActionTypes.CREATE_ARTIST_REQUEST,
+    data: {
+      imageUrl
+    }
   };
 }
 

@@ -200,7 +200,7 @@ export function mapState(state: IRootState): ILandingProps {
     ownsAnArtist: core.selectors.ownsAnArtist(state),
     ownsABand: core.selectors.ownsABand(state),
     activeArtistName: usm.selectors.getActiveArtistName(state),
-    activeArtistTraits: usm.selectors.getActiveArtistTraits(),
+    activeArtistTraits: usm.selectors.getActiveArtistTraits(state),
     totalArtists: 999, // @TODO
     totalArtistsMinted: 999 // @TODO
   };

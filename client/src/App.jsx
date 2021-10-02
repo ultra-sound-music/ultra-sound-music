@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { FullLayout } from '@layouts';
-import { SiteFooter, Overlay } from '@uiComponents';
+import { SiteFooter, Overlay, Spinner } from '@uiComponents';
 import usm from '@store/usm';
 import ui from '@store/ui';
 import web3 from '@store/web3';
@@ -17,6 +17,7 @@ import SiteHeader from '@appComponents/SiteHeader/SiteHeader';
 import Modal from '@appComponents/Modal/Modal';
 import Landing from './pages/Landing';
 import LandingArtistOnly from './pages/LandingArtistOnly';
+import ArtistsPage from './pages/ArtistsPage/ArtistsPage';
 import MempoolPlayer from './pages/MempoolPlayer/MempoolPlayer';
 import BandsPage from './pages/BandsPage';
 import NotFound from './pages/NotFound';
@@ -36,7 +37,11 @@ export class App extends React.Component {
 
   renderProcessingIndicator() {
     if (this.props.isProcessingTransaction) {
-      return <Overlay />;
+      return (
+        <Overlay>
+          <Spinner cover='fixed' />
+        </Overlay>
+      );
     }
   }
 
@@ -58,9 +63,7 @@ export class App extends React.Component {
               </div>
             </Route>
 
-            <Route path='/docs'></Route>
-
-            <Route path='/dao'></Route>
+            <Route path='/artists'>{<ArtistsPage />}</Route>
 
             <Route path='/memplayer'>{<MempoolPlayer />}</Route>
 

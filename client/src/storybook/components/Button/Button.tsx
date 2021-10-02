@@ -56,7 +56,7 @@ export const Button = ({
       <Link to={to} className={classNames} {...props} {...moreProps}>
         {image ? <span className={styles.image}>{image}</span> : null}
         {children ? <span className={styles.content}>{children}</span> : ''}
-        {isProcessing && <Spinner cover={true} />}
+        {isProcessing && <Spinner cover='relative' />}
       </Link>
     );
   }
@@ -71,7 +71,7 @@ export const Button = ({
     >
       {image ? <span className={styles.image}>{image}</span> : null}
       {children ? <span className={styles.content}>{children}</span> : ''}
-      {isProcessing && <Spinner cover={true} />}
+      {isProcessing && <Spinner cover='relative' />}
     </button>
   );
 };

@@ -12,11 +12,16 @@ const initialState = tokensAdapter.getInitialState({
   newMints: []
 });
 
-export function initUsm() {
+export function initUsm(state) {
+  // HACK - preserve new mints between connected sessions
+  if (state.newMints.length) {
+    return Object.assign({}, initialState, { newMints: state.newMints });
+  }
+
   return initialState;
 }
 
-export function onFetchNewMintsSuccess(state, { payload = {} }) {
+export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
   // state.newMints = payload?.mints;
   state.newMints = [
     {
@@ -24,7 +29,7 @@ export function onFetchNewMintsSuccess(state, { payload = {} }) {
       tokenId: 2,
       id: '1233',
       name: 'Rodrigo',
-      artUrl:
+      image:
         'https://ipfs.io/ipfs/bafybeignkeymrpl6ocnoxfnhzowcxru3tu6ro5pmksr45csjclszgrw3ni',
       price: 2.5
     },
@@ -33,7 +38,7 @@ export function onFetchNewMintsSuccess(state, { payload = {} }) {
       tokenId: 3,
       id: '1234',
       name: 'Minelirma',
-      artUrl:
+      image:
         'https://ipfs.io/ipfs/bafybeidohwmeckcxb7ydrcwa6kml5bg7em6mxvusljjmaymgh4juoo3diq',
       price: 2.5
     },
@@ -42,7 +47,7 @@ export function onFetchNewMintsSuccess(state, { payload = {} }) {
       tokenId: 4,
       id: '1235',
       name: 'Bondigano',
-      artUrl:
+      image:
         'https://ipfs.io/ipfs/bafybeib4kfsjv5knx4d6xwdxceivwzrcbyaunp4povfn5ow55jjd7dmuhy',
       price: 2.5
     },
@@ -51,7 +56,7 @@ export function onFetchNewMintsSuccess(state, { payload = {} }) {
       tokenId: 5,
       id: '1236',
       name: 'Samuela',
-      artUrl:
+      image:
         'https://ipfs.io/ipfs/bafybeifvowtlrae57lw5sappdw4abxsp53uos3mxggggd6lznw3goc5lx4',
       price: 2.5
     }

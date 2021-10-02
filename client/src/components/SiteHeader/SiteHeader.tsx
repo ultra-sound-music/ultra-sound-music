@@ -44,14 +44,9 @@ const topNavItems = [
 
 const artistOnlyTopNavItems = [
   {
-    itemName: 'docs',
-    text: 'Docs',
-    to: '/docs'
-  },
-  {
-    itemName: 'dao',
-    text: 'DAO',
-    to: '/dao'
+    itemName: 'artists',
+    text: 'Artists',
+    to: '/artists'
   },
   {
     itemName: 'memplayer',
@@ -115,7 +110,7 @@ export function mapState(state: IRootState): ISiteHeaderProps {
   return {
     isArtistOnly: configs.selectors.getIsArtistOnly(state),
     activeArtistName: usm.selectors.getActiveArtistName(state),
-    activeArtistImageSrc: usm.selectors.getActiveArtistImageUrl(),
+    activeArtistImageSrc: usm.selectors.getActiveArtistImageUrl(state),
     ownedArtists: core.selectors.getOwnedArtists(state)
   };
 }

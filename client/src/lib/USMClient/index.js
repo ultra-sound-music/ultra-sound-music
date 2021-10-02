@@ -93,10 +93,11 @@ export default class USMClient {
   }
 
   // @TODO pass in an onError callback
-  async createArtist(onComplete) {
+  async createArtist({ imageUrl }, onComplete) {
     this.ensureConnectionToContract('artist');
 
     const metadata = {
+      image: imageUrl,
       artistDNA: this.accountAddress
     };
 

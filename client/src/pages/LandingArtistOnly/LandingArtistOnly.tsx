@@ -76,14 +76,13 @@ export class LandingArtistOnly extends React.Component<TLandingArtistOnlyProps> 
   };
 
   renderNewMint = (mint: Record<string, unknown>): JSX.Element => {
-    const { name, price, id } = mint;
-
+    const { name, price, id, image } = mint;
     return (
       <MintArtist
         key={id as string}
         name={name as string}
         price={price as number}
-        ctaButton={<CreateArtistButton />}
+        ctaButton={<CreateArtistButton imageUrl={image as string} />}
       />
     );
   };
@@ -116,8 +115,8 @@ export class LandingArtistOnly extends React.Component<TLandingArtistOnlyProps> 
           </Carousel>
         </div>
         <div className={styles.mint_hero}>
-          {mint && mint.artUrl && (
-            <Hero src={mint.artUrl as string} size='stretch' />
+          {mint && mint.image && (
+            <Hero src={mint.image as string} size='stretch' />
           )}
         </div>
       </>

@@ -24,7 +24,13 @@ $button-size: 50px;
   -webkit-animation: spin 1s ease-in-out infinite;
 }
 
-.cover {
+.cover_relative {
+  position: absolute;
+  top: calc(50% - #{$button-size} / 2);
+  left: calc(50% - #{$button-size} / 2);
+}
+
+.cover_fixed {
   position: absolute;
   top: calc(50% - #{$button-size} / 2);
   left: calc(50% - #{$button-size} / 2);

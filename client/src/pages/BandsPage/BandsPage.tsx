@@ -126,10 +126,10 @@ export class BandsPage extends React.Component<TBandsPageProps> {
 export function mapState(state: IRootState): IBandsPageState {
   return {
     bands: usm.selectors.selectAllBandEntities(state),
-    activeArtistImageUrl: xolotl, // usm.selectors.getActiveArtistImageUrl(),
+    activeArtistImageUrl: usm.selectors.getActiveArtistImageUrl(state),
     activeArtistName: usm.selectors.getActiveArtistName(state),
     activeArtistId: usm.selectors.getActiveArtistId(state),
-    activeArtistTraits: usm.selectors.getActiveArtistTraits()
+    activeArtistTraits: usm.selectors.getActiveArtistTraits(state)
   };
 }
 
