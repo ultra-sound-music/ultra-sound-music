@@ -1,4 +1,9 @@
-export * as account from './account';
-export * as logger from './logger';
-export * as usm from './usm';
-export * as web3 from './web3';
+import * as account from './account';
+import * as logger from './logger';
+import * as usm from './usm';
+
+export default {
+  ...account,
+  ...logger,
+  ...usm
+};

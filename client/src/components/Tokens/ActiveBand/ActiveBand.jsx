@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as Selectors from '../../../redux/selectors/core';
+import * as Selectors from '../../../redux/core/selectors';
 
 export class ActiveBand extends React.Component {
   static propTypes = {

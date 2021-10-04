@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import truncate from 'lodash/truncate';
+
 import copy from '@copy';
 import { PillSwitch } from '@uiComponents';
-
+import { IPillSwitchProps } from '@uiTypes';
 import { IRootState } from '@store/types';
 import ui from '@store/ui';
 import web3 from '@store/web3';
-
-import { IPillSwitchProps } from '@uiTypes';
-import constants from '@constants';
 
 export type TConnectButtonProps = IConnectButtonState & IConnectButtonActions;
 
@@ -34,26 +32,26 @@ export class ConnectButton extends React.Component<TConnectButtonProps> {
 
   getProps = (networkStatus: string): IPillSwitchProps => {
     switch (networkStatus) {
-      case constants.web3.networkStatus.NOT_AVAILABLE:
-      case constants.web3.networkStatus.NOT_CONNECTED:
+      case web3.constants.networkStatus.NOT_AVAILABLE:
+      case web3.constants.networkStatus.NOT_CONNECTED:
         return {
           status: 'off',
           onClick: this.onClickConnect,
           children: `${copy.connect}`
         };
-      case constants.web3.networkStatus.INSTALLING:
+      case web3.constants.networkStatus.INSTALLING:
         return {
           status: 'pending',
           isDisabled: true,
           children: `${copy.installing}`
         };
-      case constants.web3.networkStatus.CONNECTING:
+      case web3.constants.networkStatus.CONNECTING:
         return {
           status: 'pending',
           isDisabled: true,
           children: `${copy.connecting}`
         };
-      case constants.web3.networkStatus.CONNECTED: {
+      case web3.constants.networkStatus.CONNECTED: {
         const addr = truncate(this.props.address, { length: 9 });
         return {
           status: 'on',

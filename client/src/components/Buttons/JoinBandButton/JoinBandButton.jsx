@@ -5,7 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Button from '../Button';
 
 import * as Actions from '../../../redux/actions';
-import * as Selectors from '../../../redux/selectors/core';
+import * as Selectors from '../../../redux/core/selectors';
 
 export class JoinBandButton extends React.Component {
   static propTypes = {

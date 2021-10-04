@@ -1,9 +1,3 @@
-let store = {};
-
-export function setStore(reduxStore) {
-  store = reduxStore;
-}
-
-export function getStore() {
-  return store;
-}
+export * from './selectorUtils';
+export * as storeUtils from './storeUtils';
+export * from './tokensAdapter';

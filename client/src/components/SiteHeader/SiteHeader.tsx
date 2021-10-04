@@ -68,7 +68,7 @@ export class SiteHeader extends React.Component<ISiteHeaderProps> {
     if (!this.props.activeArtistName) {
       return;
     }
-
+    console.log(this.props);
     return (
       <Selector
         title={copy.switch_artist}

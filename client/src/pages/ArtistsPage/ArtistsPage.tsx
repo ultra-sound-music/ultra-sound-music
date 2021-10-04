@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { IRootState } from '@store/types';
-import usm from '@store/usm';
-
 import { Button, ArtistCard, Hero } from '@uiComponents';
 import { FullLayout } from '@layouts';
+import { IRootState } from '@store/types';
+import usm from '@store/usm';
+import PlaybackButton from '@appComponents/Buttons/PlaybackButton/PlaybackButton';
 
 import styles from './ArtistsPage.scss';
 
@@ -29,7 +29,7 @@ export class ArtistsPage extends React.Component<TArtistsPageProps> {
             <ArtistCard
               name={artist.name}
               traits={artist.traits}
-              ctaButton={<Button type='primary'>Play artist demo</Button>}
+              ctaButton={<PlaybackButton entityId={artist.id} />}
             />
           }
         </div>

@@ -1,0 +1,10 @@
+@use '@styles/layout.scss' as *;
+
+.MempoolPlayer {
+  @extend %full-layout;
+}
+
+.content {
+  grid-column-start: 1;
+  grid-column-end: end;
+}

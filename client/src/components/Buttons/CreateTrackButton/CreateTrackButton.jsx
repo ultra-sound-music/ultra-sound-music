@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import * as Actions from '../../../redux/actions';
-import * as Selectors from '../../../redux/selectors/core';
+import * as Selectors from '../../../redux/core/selectors';
 
 export class CreateTrackButton extends React.Component {
   static propTypes = {

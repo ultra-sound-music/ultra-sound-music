@@ -2,10 +2,10 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import * as Sentry from '@sentry/react';
 
-import rootSaga from './sagas';
-import rootReducer from './reducers';
-import * as Actions from './actions';
-import * as ReduxUtils from './utils';
+import rootSaga from './rootSaga';
+import rootReducer from './rootReducer';
+import app from './app';
+import { storeUtils } from './utils';
 
 const sagaMiddleware = createSagaMiddleware();
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
@@ -24,9 +24,9 @@ export default () => {
     )
   );
 
-  ReduxUtils.setStore(store);
+  storeUtils.setStore(store);
   sagaMiddleware.run(rootSaga);
-  store.dispatch(Actions.app.init());
+  store.dispatch(app.actions.init());
 
   return store;
 };

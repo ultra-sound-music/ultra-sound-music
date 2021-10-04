@@ -6,7 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import StartBandButton from '../../Buttons/StartBandButton';
 import PlaybackButton from '../../Buttons/PlaybackButton';
-import * as Selectors from '../../../redux/selectors/core';
+import * as Selectors from '../../../redux/core/selectors';
 import constants from '@constants';
 
 export class Token extends React.Component {

@@ -4,7 +4,7 @@ import { FilePersonFill, FilePerson } from 'react-bootstrap-icons';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import PropTypes from 'prop-types';
-import * as Selectors from '../../../redux/selectors/core';
+import * as Selectors from '../../../redux/core/selectors';
 
 export class BandMemberIcon extends React.Component {
   static propTypes = {

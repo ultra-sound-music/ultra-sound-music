@@ -30,14 +30,16 @@
     "baseUrl": "./",                                     /* Specify the base directory to resolve non-relative module names. */
     "paths": {
       "@appComponents/*": ["src/components/*"],
-      "@uiComponents": ["src/storybook/components.ts"],
       "@constants": ["src/constants/index.js"],
       "@copy": ["src/copy/index.ts"],
       "@images/*": ["src/images/*"],
+      "@layouts": ["src/storybook/layouts.ts"],      
+      "@lib/*": ["src/lib/*"],
       "@store/*": ["src/redux/*"],
+      "@styles": ["src/styles/*"],
+      "@uiComponents": ["src/storybook/components.ts"],
       "@uiTypes": ["src/storybook/types.ts"],
-      "@layouts": ["src/storybook/layouts.ts"],
-      "@styles": ["src/styles/*"]
+      "@utils": ["src/utils/index.js"]
     },                                                   /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like `./node_modules/@types`. */

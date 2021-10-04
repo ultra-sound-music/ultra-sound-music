@@ -118,14 +118,16 @@ module.exports = {
     extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '@appComponents': path.resolve(__dirname, 'src/components'),
-      '@uiComponents$': path.resolve(__dirname, 'src/storybook/components.ts'),
       '@constants$': path.resolve(__dirname, 'src/constants/index.js'),
       '@copy$': path.resolve(__dirname, 'src/copy/index.ts'),
       '@images': path.resolve(__dirname, 'src/images'),
       '@layouts$': path.resolve(__dirname, 'src/storybook/layouts.ts'),
+      '@lib': path.resolve(__dirname, 'src/lib'),
       '@store': path.resolve(__dirname, 'src/redux'),
       '@styles': path.resolve(__dirname, 'src/styles'),
-      '@uiTypes$': path.resolve(__dirname, 'src/storybook/types.ts')
+      '@uiComponents$': path.resolve(__dirname, 'src/storybook/components.ts'),
+      '@uiTypes$': path.resolve(__dirname, 'src/storybook/types.ts'),
+      '@utils$': path.resolve(__dirname, 'src/utils/index.js')
     },
     plugins: [
       new DirectoryNamedWebpackPlugin({
