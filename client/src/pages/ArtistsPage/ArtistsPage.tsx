@@ -9,6 +9,8 @@ import PlaybackButton from '@appComponents/Buttons/PlaybackButton/PlaybackButton
 
 import styles from './ArtistsPage.scss';
 
+import UsmPlayer from '@lib/UsmPlayer';
+
 export type TArtistsPageProps = IArtistsPageState & IArtistsPageActions;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -19,7 +21,13 @@ export interface IArtistsPageState {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IArtistsPageActions {}
 
+let usmPlayer;
+
 export class ArtistsPage extends React.Component<TArtistsPageProps> {
+  componentDidMount(): void {
+    usmPlayer = new UsmPlayer();
+  }
+
   renderArtist(artist): JSX.Element {
     return (
       <li key={artist.id} className={styles.artist}>
@@ -41,6 +49,30 @@ export class ArtistsPage extends React.Component<TArtistsPageProps> {
     return (
       <FullLayout>
         <div className={styles.ArtistsPage}>
+          <div
+            onClick={() => {
+              usmPlayer.play();
+            }}
+          >
+            PLAY
+          </div>
+
+          <div
+            onClick={() => {
+              usmPlayer.pause();
+            }}
+          >
+            PAUSE
+          </div>
+
+          <div
+            onClick={() => {
+              usmPlayer.stop();
+            }}
+          >
+            STOP
+          </div>
+
           <ul>{this.props.artists.map(this.renderArtist)}</ul>
         </div>
       </FullLayout>
