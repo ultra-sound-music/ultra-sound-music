@@ -3,7 +3,6 @@ import mediator from '@store/mediator';
 
 export function* initApp() {
   yield put(mediator.actions.initWeb3());
-  yield put(mediator.actions.initPlayback());
 }
 
 export function* onInitWeb3Success({ data }) {

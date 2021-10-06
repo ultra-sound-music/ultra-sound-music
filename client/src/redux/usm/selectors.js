@@ -49,7 +49,7 @@ export const getArtistName = createSelector(
 export const getActiveArtist = createSelector(
   getActiveArtistId,
   selectAllArtistEntities,
-  (artistId, artists) => artists.find((artist) => artist._id === artistId)
+  (artistId, artists) => artists.find((artist) => artist.id === artistId)
 );
 
 export const selectAllBandEntities = createSelector(
@@ -61,7 +61,7 @@ export const selectAllBandEntities = createSelector(
 export const getActiveBand = createSelector(
   getActiveArtistId,
   selectAllBandEntities,
-  (bandId, bands) => bands.find((band) => band._id === bandId)
+  (bandId, bands) => bands.find((band) => band.id === bandId)
 );
 
 export const getActiveArtistTid = createSelector(
@@ -86,7 +86,7 @@ export const getActiveArtistImageUrl = createSelector(
 
 export const getActiveArtistAudioUrl = createSelector(
   getActiveArtist,
-  (artist) => artist?.audio ?? ''
+  (artist) => artist?.s3Sound ?? ''
 );
 
 export const getActiveArtistBands = createSelector(
@@ -127,7 +127,7 @@ export const getTokenType = createSelector(
 
 export const getTokenAudioUrl = createSelector(
   selectTokenById,
-  (token) => token?.audio
+  (token) => token?.s3Sound
 );
 
 export const getBandMemberTids = createSelector(
@@ -146,7 +146,7 @@ export const getBandMembers = createSelector(
 );
 
 export const getBandMemberIds = createSelector(getBandMembers, (artists) =>
-  artists.map((artist) => artist._id)
+  artists.map((artist) => artist.id)
 );
 
 export const getNumBandMembers = createSelector(

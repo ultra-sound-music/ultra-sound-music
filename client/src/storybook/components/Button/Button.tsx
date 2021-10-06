@@ -47,13 +47,24 @@ export const Button = ({
   );
 
   if (to && !disabled) {
-    const moreProps: Record<string, string> = {};
     if (isExternal) {
-      moreProps.target = '_blank';
+      return (
+        <a
+          href={to}
+          className={classNames}
+          target='_blank'
+          rel='noreferrer'
+          {...props}
+        >
+          {image ? <span className={styles.image}>{image}</span> : null}
+          {children ? <span className={styles.content}>{children}</span> : ''}
+          {isProcessing && <Spinner cover='relative' />}
+        </a>
+      );
     }
 
     return (
-      <Link to={to} className={classNames} {...props} {...moreProps}>
+      <Link to={to} className={classNames} {...props}>
         {image ? <span className={styles.image}>{image}</span> : null}
         {children ? <span className={styles.content}>{children}</span> : ''}
         {isProcessing && <Spinner cover='relative' />}

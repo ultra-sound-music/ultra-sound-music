@@ -101,7 +101,7 @@ export function* initializeActiveArtist() {
   });
 
   if (activeArtistEntity) {
-    yield put(usmActions.setActiveArtist({ artistId: activeArtistEntity._id }));
+    yield put(usmActions.setActiveArtist({ artistId: activeArtistEntity.id }));
   }
 }
 
@@ -114,6 +114,6 @@ export function* initializeActiveBand() {
   const activeArtistBands = yield select(usmSelectors.getActiveArtistBands);
   const activeBand = activeArtistBands[0];
   if (activeBand) {
-    yield put(usmActions.setActiveBand({ bandId: activeBand._id }));
+    yield put(usmActions.setActiveBand({ bandId: activeBand.id }));
   }
 }

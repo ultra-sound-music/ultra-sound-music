@@ -2,6 +2,7 @@
 @use '../../../styles/typo.scss' as *;
 
 .Button {
+  box-sizing: border-box;
   border: 2px solid transparent;
   border-radius: 15px;
   cursor: pointer;
@@ -18,8 +19,7 @@
 }
 
 .wide {
-  width: 150px;
-  @extend %font-small;
+  min-width: 300px;
 }
 
 .slim {

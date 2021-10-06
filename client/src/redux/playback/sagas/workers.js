@@ -4,35 +4,41 @@ import mediator from '@store/mediator';
 
 import * as actions from '../actions';
 
+// const defaultUrl = 'https://storageapi.fleek.co/ultrasoundmusic-team-bucket/trim_abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde_zyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxw_1633123514640.wav';
 let player;
 
-export function init() {
-  player = new UsmPlayer();
+export function getPlayer() {
+  if (!player) {
+    player = new UsmPlayer({
+      logger: {
+        info: console.info,
+        error: console.error
+      }
+    });
+  }
+
+  return player;
 }
 
-export function* toggle({ data }) {
-  let entityId = data?.entityId;
-  let isPlaying;
+export function* play({ data }) {
+  const entityId = data?.entityId;
+  const audioUrl = yield select(mediator.selectors.getTokenAudioUrl, entityId);
 
   try {
-    if (entityId) {
-      const audioUrl = yield select(
-        mediator.selectors.getTokenAudioUrl,
-        entityId
-      );
-      player.play(audioUrl);
-      isPlaying = true;
-    } else {
-      player.stop();
-      isPlaying = false;
-    }
-
-    if (isPlaying) {
-      yield put(actions.playSuccess({ entityId }));
-    } else {
-      yield put(actions.stopSuccess());
-    }
+    const player = getPlayer();
+    player.play(audioUrl || '');
+    yield put(actions.playSuccess({ entityId }));
   } catch (error) {
-    console.log(error);
+    console.error(error);
+  }
+}
+
+export function* stop() {
+  try {
+    const player = getPlayer();
+    player.stop();
+    yield put(actions.stopSuccess());
+  } catch (error) {
+    console.error(error);
   }
 }

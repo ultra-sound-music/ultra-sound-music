@@ -1,4 +1,4 @@
-export default function load(url: string): Promise<ArrayBuffer> {
+export default function load(url: string): Promise<ArrayBuffer | void> {
   return new Promise(function (resolve, reject) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -13,6 +13,10 @@ export default function load(url: string): Promise<ArrayBuffer> {
           statusText: xhr.statusText
         });
       }
+    };
+
+    xhr.onabort = function () {
+      resolve();
     };
 
     xhr.onerror = function () {

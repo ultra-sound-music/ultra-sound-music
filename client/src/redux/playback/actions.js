@@ -1,11 +1,5 @@
 import * as ActionType from './actionTypes';
 
-export function init() {
-  return {
-    type: ActionType.INIT_PLAYBACK
-  };
-}
-
 export function play({ entityId }) {
   return {
     type: ActionType.PLAY,

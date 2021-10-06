@@ -1,12 +1,7 @@
-// ex: https://codepen.io/ianmcgregor/pen/EjdJZZ
-
 import load from './loader';
 
 export const WHEN_TIME = 0;
 export const START_TIME = 0;
-
-const defaultAudioUrl =
-  'https://storageapi.fleek.co/ultrasoundmusic-team-bucket/trim_abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde_zyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxwvzyxw_1633123514640.wav';
 
 export type TAudioUrl = string;
 
@@ -37,6 +32,10 @@ export default class UsmPlayer {
 
   loadAudio = async (audioUrl: TAudioUrl): Promise<AudioBufferSourceNode> => {
     const arrayBuffer = await load(audioUrl);
+    if (!arrayBuffer) {
+      return;
+    }
+
     const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
 
     const audioSource = this.audioContext.createBufferSource();
@@ -47,12 +46,12 @@ export default class UsmPlayer {
     return audioSource;
   };
 
-  play = async (audioUrl: TAudioUrl = defaultAudioUrl): Promise<void> => {
-    try {
-      await this.loadAudio(audioUrl);
-    } catch (error) {
-      this.logger.error(error);
+  play = async (audioUrl: TAudioUrl = ''): Promise<void> => {
+    if (!audioUrl) {
+      this.logger.info('audioUrl must be provided');
     }
+
+    await this.loadAudio(audioUrl);
 
     const startTime = this.currentTime;
     this.audioSource.start(WHEN_TIME, startTime);
