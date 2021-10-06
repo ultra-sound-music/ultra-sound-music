@@ -28,7 +28,7 @@ export class ArtistsPage extends React.Component<TArtistsPageProps> {
           {
             <ArtistCard
               name={artist.name}
-              traits={artist.traits}
+              traits={artist.artistTraits}
               ctaButton={<PlaybackButton entityId={artist.id} />}
             />
           }

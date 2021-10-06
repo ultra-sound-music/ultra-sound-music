@@ -76,7 +76,7 @@ export const getActiveArtistName = createSelector(
 
 export const getActiveArtistTraits = createSelector(
   getActiveArtist,
-  (artist) => artist?.traits ?? ''
+  (artist) => artist?.artistTraits ?? ''
 );
 
 export const getActiveArtistImageUrl = createSelector(
