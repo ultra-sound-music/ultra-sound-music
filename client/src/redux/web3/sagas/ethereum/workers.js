@@ -57,8 +57,11 @@ export function* connectWallet() {
     if (error.code === -32002) {
       body =
         'There was an error connecting to MetaMask. Please try connecting manually to MetaMask by clicking on the MetaMask wallet.';
+    } else if (error.code === 4001) {
+      body = 'The request to connect was rejected.';
     } else {
-      body = error;
+      console.error(error);
+      body = 'There was an errro connecting to MetaMask';
     }
 
     const modalProps = {
