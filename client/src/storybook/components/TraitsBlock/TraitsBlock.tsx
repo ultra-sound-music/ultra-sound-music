@@ -19,7 +19,7 @@ export interface ITraitsBlockProps {
 export const TraitsBlock = ({ traits }: ITraitsBlockProps): JSX.Element => {
   const renderTrait = useCallback(({ name, value = 0 }) => {
     const inlineStyles = {
-      width: `${value * 20}%`
+      width: `${Math.min(value, 5) * 20}%`
     };
 
     return (
