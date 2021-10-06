@@ -30,7 +30,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       id: '1233',
       name: 'Rodrigo',
       image:
-        'https://ipfs.io/ipfs/bafybeignkeymrpl6ocnoxfnhzowcxru3tu6ro5pmksr45csjclszgrw3ni',
+        'https://storageapi.fleek.co/dongambas-team-bucket/tepeyollotl.png',
       price: 2.5
     },
     {
@@ -39,7 +39,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       id: '1234',
       name: 'Minelirma',
       image:
-        'https://ipfs.io/ipfs/bafybeidohwmeckcxb7ydrcwa6kml5bg7em6mxvusljjmaymgh4juoo3diq',
+        'https://storageapi.fleek.co/dongambas-team-bucket/quetzalcoatl.png',
       price: 2.5
     },
     {
@@ -47,8 +47,15 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       tokenId: 4,
       id: '1235',
       name: 'Bondigano',
-      image:
-        'https://ipfs.io/ipfs/bafybeib4kfsjv5knx4d6xwdxceivwzrcbyaunp4povfn5ow55jjd7dmuhy',
+      image: 'https://storageapi.fleek.co/dongambas-team-bucket/patecatl.png',
+      price: 2.5
+    },
+    {
+      tokenType: 'artist',
+      tokenId: 5,
+      id: '1236',
+      name: 'Luciana',
+      image: 'https://storageapi.fleek.co/dongambas-team-bucket/xolotl.png',
       price: 2.5
     },
     {
@@ -57,7 +64,16 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       id: '1236',
       name: 'Samuela',
       image:
-        'https://ipfs.io/ipfs/bafybeifvowtlrae57lw5sappdw4abxsp53uos3mxggggd6lznw3goc5lx4',
+        'https://storageapi.fleek.co/dongambas-team-bucket/chalchiuhtlicue.png',
+      price: 2.5
+    },
+    {
+      tokenType: 'artist',
+      tokenId: 5,
+      id: '1236',
+      name: 'Timbaleo',
+      image:
+        'https://storageapi.fleek.co/dongambas-team-bucket/tezcatlipoca.png',
       price: 2.5
     }
   ];
