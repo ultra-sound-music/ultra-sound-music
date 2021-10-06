@@ -131,7 +131,7 @@ export class LandingArtistOnly extends React.Component<TLandingArtistOnlyProps> 
         </div>
         <div className={styles.pending_intro_hero}>
           <Hero
-            src='https://ipfs.io/ipfs/bafybeib4kfsjv5knx4d6xwdxceivwzrcbyaunp4povfn5ow55jjd7dmuhy'
+            src='https://storageapi.fleek.co/dongambas-team-bucket/patecatl.png'
             size='stretch'
           />
         </div>
@@ -144,7 +144,7 @@ export class LandingArtistOnly extends React.Component<TLandingArtistOnlyProps> 
       <>
         <div className={styles.lfg_intro_hero}>
           <Hero
-            src='https://ipfs.io/ipfs/bafybeib4kfsjv5knx4d6xwdxceivwzrcbyaunp4povfn5ow55jjd7dmuhy'
+            src='https://storageapi.fleek.co/dongambas-team-bucket/xolotl.png'
             size='stretch'
           />
         </div>
@@ -168,7 +168,7 @@ export class LandingArtistOnly extends React.Component<TLandingArtistOnlyProps> 
         </div>
         <div className={styles.preview_artist_hero}>
           <Hero
-            src='https://ipfs.io/ipfs/bafybeidohwmeckcxb7ydrcwa6kml5bg7em6mxvusljjmaymgh4juoo3diq'
+            src='https://storageapi.fleek.co/dongambas-team-bucket/chalchiuhtlicue.png'
             size='stretch'
           />
         </div>
