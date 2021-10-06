@@ -18,8 +18,7 @@ const sentryDsn = __SENTRY_ENABLED__ ? __SENTRY_DSN__ : '';
 Sentry.init({
   environment: __ENVIRONMENT__,
   dsn: sentryDsn,
-  integrations: [new Integrations.BrowserTracing()],
-  tracesSampleRate: 1.0
+  integrations: [new Integrations.BrowserTracing()]
 });
 
 ReactDOM.render(
