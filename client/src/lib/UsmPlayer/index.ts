@@ -111,6 +111,7 @@ export default class UsmPlayer {
     }
 
     this.audioSource.start(WHEN_TIME, this.currentTime);
+    this.isPlaying = true;
     this.onPlay({
       id: this.currentId,
       audioUrl: this.currentUrl,
@@ -122,6 +123,7 @@ export default class UsmPlayer {
   pause(): void {
     this.currentTime = this.audioContext.currentTime;
     this.audioSource.stop();
+    this.isPlaying = false;
     this.onStop({
       id: this.currentId,
       audioUrl: this.currentUrl,
@@ -133,6 +135,7 @@ export default class UsmPlayer {
   stop(): void {
     this.currentTime = 0;
     this.audioSource.stop();
+    this.isPlaying = false;
     this.onStop({
       id: this.currentId,
       audioUrl: this.currentUrl,
