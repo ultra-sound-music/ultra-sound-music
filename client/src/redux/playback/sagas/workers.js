@@ -1,6 +1,7 @@
-import { select, put } from 'redux-saga/effects';
+import { select } from 'redux-saga/effects';
 import UsmPlayer from '@lib/UsmPlayer';
 import mediator from '@store/mediator';
+import { storeUtils } from '@store/utils';
 
 import * as actions from '../actions';
 
@@ -9,10 +10,23 @@ let player;
 
 export function getPlayer() {
   if (!player) {
+    const { dispatch } = storeUtils.getStore();
+
     player = new UsmPlayer({
       logger: {
         info: console.info,
         error: console.error
+      },
+      onPlay: ({ id }) => {
+        dispatch(actions.onPlaySuccess({ entityId: id }));
+      },
+
+      onStop: ({ id }) => {
+        dispatch(actions.onStopSuccess({ entityId: id }));
+      },
+
+      onLoad: ({ id }) => {
+        dispatch(actions.onLoadSuccess({ entityId: id }));
       }
     });
   }
@@ -20,24 +34,25 @@ export function getPlayer() {
   return player;
 }
 
-export function* play({ data }) {
-  const entityId = data?.entityId;
+export function* play({ payload }) {
+  const entityId = payload?.entityId;
   const audioUrl = yield select(mediator.selectors.getTokenAudioUrl, entityId);
 
   try {
     const player = getPlayer();
-    player.play(audioUrl || '');
-    yield put(actions.playSuccess({ entityId }));
+    player.play({
+      audioUrl: audioUrl || '',
+      id: entityId
+    });
   } catch (error) {
     console.error(error);
   }
 }
 
-export function* stop() {
+export function stop() {
   try {
     const player = getPlayer();
-    player.stop();
-    yield put(actions.stopSuccess());
+    player.pause();
   } catch (error) {
     console.error(error);
   }

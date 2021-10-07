@@ -1,7 +1,15 @@
-export function selectActiveSource(state) {
-  return state.playback.source;
+import { createSelector } from '@reduxjs/toolkit';
+
+export function getPlaybackState(state) {
+  return state.playback;
 }
 
-export function isPlaying(state) {
-  return state.playback.status === 'playing';
-}
+export const selectActiveSource = createSelector(
+  getPlaybackState,
+  (playback) => playback.activeSource
+);
+
+export const isPlaying = createSelector(
+  getPlaybackState,
+  (playback) => !!playback.isPlaying
+);

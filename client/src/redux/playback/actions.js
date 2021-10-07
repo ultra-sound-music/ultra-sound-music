@@ -3,16 +3,16 @@ import * as ActionType from './actionTypes';
 export function play({ entityId }) {
   return {
     type: ActionType.PLAY,
-    data: {
+    payload: {
       entityId
     }
   };
 }
 
-export function playSuccess({ entityId }) {
+export function onPlaySuccess({ entityId }) {
   return {
     type: ActionType.PLAY_SUCCESS,
-    data: {
+    payload: {
       entityId
     }
   };
@@ -24,8 +24,17 @@ export function stop() {
   };
 }
 
-export function stopSuccess() {
+export function onStopSuccess() {
   return {
     type: ActionType.STOP_SUCCESS
+  };
+}
+
+export function onLoadSuccess({ audioUrl }) {
+  return {
+    type: ActionType.ON_LOAD_SUCCESS,
+    payload: {
+      audioUrl
+    }
   };
 }

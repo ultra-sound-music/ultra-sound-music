@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import debounce from 'lodash/debounce';
 
 import { IRootState } from '@store/types';
 import { Button } from '@uiComponents';
@@ -38,11 +37,7 @@ export class PlaybackButton extends React.Component<TPlaybackButtonProps> {
   }
 
   render(): JSX.Element {
-    return (
-      <Button onClick={debounce(this.onClick, 300)}>
-        {this.renderButtonText()}
-      </Button>
-    );
+    return <Button onClick={this.onClick}>{this.renderButtonText()}</Button>;
   }
 }
 
@@ -50,10 +45,13 @@ export function mapStateToProps(
   state: IRootState,
   { entityId }: IPlaybackButtonOwnProps
 ): IPlaybackButtonProps {
+  const isPlaying = playback.selectors.isPlaying(state);
+  const isActiveSource =
+    playback.selectors.selectActiveSource(state) === entityId;
+
   return {
     entityId,
-    isEntityPlaying:
-      entityId && playback.selectors.selectActiveSource(state) === entityId
+    isEntityPlaying: entityId && isActiveSource && isPlaying
   };
 }
 
