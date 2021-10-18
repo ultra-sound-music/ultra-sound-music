@@ -7,7 +7,17 @@ const schema = mongoose.Schema({
   tokenType: String,
   artistDNA: String,
   name: String,
-  description: String
+  description: String,
+  s3Sound: String,
+  soundIpfs: String,
+  image: String,
+  artistTraits: {
+    texture: Number,
+    warmth: Number,
+    dissonance: Number,
+    aggression: Number,
+    space: Number
+  }
 });
 
 module.exports = mongoose.model('Artist', schema);

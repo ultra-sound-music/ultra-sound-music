@@ -12,8 +12,9 @@ const Band = require('./db/models/Band');
 const Transaction = require('./db/models/Transaction');
 const fleekStorage = require('@fleekhq/fleek-storage-js');
 const fetch = require('node-fetch');
+const fs = require('fs');
 
-const tokenConfigs = require('../conf/tokenConfigs.js');
+const tokenConfigs = require('../conf/tokenConfigs');
 
 const {
   artist: artistConfigs,
@@ -24,22 +25,22 @@ const {
 const sentryDsn =
   process.env.SENTRY_ENABLED === 'true' ? process.env.SENTRY_DSN : '';
 
+const nullAddress = '0x0000000000000000000000000000000000000000';
+const ARTIST_SOUND = 'artistSound';
+const TRACK_SOUND = 'trackSound';
 const POLLING_TIMEOUT = 1000;
 const POLLING_INTERVAL = 100;
 
-const nullAddress = '0x0000000000000000000000000000000000000000';
-
 // start express app
 const app = express();
-const port = 9001;
+const port = process.env.PORT || 9001;
 
 Sentry.init({
   dsn: sentryDsn,
   integrations: [
     new Sentry.Integrations.Http({ tracing: true }),
     new Tracing.Integrations.Express({ app })
-  ],
-  tracesSampleRate: 1.0
+  ]
 });
 
 // RequestHandler creates a separate execution context using domains, so that every
@@ -76,11 +77,18 @@ let trackContract = new ethers.Contract(
 // connect to DB
 mongoose.connect(
   process.env.MONGO_DB,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  () => mongoose.connection.db.dropDatabase()
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  },
+  // only dump database when running locally
+  process.env.ENV === 'local'
+    ? () => mongoose.connection.db.dropDatabase()
+    : null
 );
 
-//Get the default connection
+//Get the default connectiona
 var db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
@@ -91,9 +99,66 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+const generateMedia = async (data, metadata, mediaType) => {
+  // TODO: determine what data needs to be sent to generative media server, what will be returned
+  // call generative media server
+  const {
+    generatedAssets: { fleekWavUrl },
+    fleekUpload: { ipfsHash },
+    artistTraits
+  } = await fetch(
+    process.env.GENERATIVE_MEDIA_SERVER_ENDPOINT +
+      `${
+        mediaType === ARTIST_SOUND
+          ? `/artist?`
+          : mediaType === TRACK_SOUND
+          ? '/track?'
+          : ''
+      }` +
+      new URLSearchParams({
+        a: data.dna,
+        t: data.blockHash
+      }),
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  ).then((data) => data.json());
+
+  //update metadata object
+
+  const soundUri = `https://ipfs.io/ipfs/` + ipfsHash;
+
+  console.log(artistTraits);
+
+  metadata.sound = soundUri;
+  metadata.artistTraits = artistTraits;
+
+  //upload updated metadata to IPFS
+  // TODO: make sure this updates the existing ipfs hash
+
+  await fleekStorage.upload({
+    apiKey: process.env.FLEEK_API_KEY,
+    apiSecret: process.env.FLEEK_API_SECRET,
+    key: data.key,
+    data: JSON.stringify(metadata)
+  });
+
+  // return s3 key an soundUri
+
+  return { fleekWavUrl, soundUri, artistTraits };
+};
+
 const handleArtistToken = async (from, to, id) => {
   console.log('handle artist being called');
   if (from === nullAddress) {
+    //filter for this transaction
+    const artistFilter = artistContract.filters.Transfer(from, to, id);
+    //get transaction logs for this transaction
+    const [tx] = await artistContract.queryFilter(artistFilter, 0, 'latest');
+
     console.log('handling new artist token');
     const metadataUri = await artistContract.tokenURI(id);
     const metadata = await fetch(metadataUri).then((result) => result.json());
@@ -104,9 +169,22 @@ const handleArtistToken = async (from, to, id) => {
       metadataUri,
       tokenType: 'artist',
       name: metadata.name,
+      image: metadata.image,
       description: metadata.description
     });
+    // save artist immediately so api data is updated
+    await artist.save();
+    //generate media get s3Key and ipfs uri back
+    const { fleekWavUrl, soundUri, artistTraits } = await generateMedia(
+      { dna: to, blockHash: tx.blockHash, key: metadata.key },
+      metadata,
+      ARTIST_SOUND
+    );
 
+    //upate artist in db/api with sound data
+    artist.s3Sound = fleekWavUrl;
+    artist.soundIpfs = soundUri;
+    artist.artistTraits = artistTraits;
     await artist.save();
     Transaction.recordCompletedTransaction(
       Transaction.types.CREATE_ARTIST,
@@ -154,7 +232,7 @@ const handleJoinBand = async (id, artistId, owner) => {
   const currMembers = band.members;
   currMembers.push(Number(artistId));
   band.members = currMembers;
-  band.active = currMembers.length >= 2;
+  band.active = currMembers.length >= 2 ? true : false;
   await band.save();
   Transaction.recordCompletedTransaction(
     Transaction.types.JOIN_BAND,
@@ -165,6 +243,19 @@ const handleJoinBand = async (id, artistId, owner) => {
 
 const handleTrackToken = async (trackId, bandId, artistId, owner) => {
   console.log('handling new Track');
+  //filter for this transaction
+  const trackFilter = trackContract.filters.trackCreated(
+    trackId,
+    bandId,
+    artistId,
+    owner
+  );
+  //get transaction logs for this transaction
+  const [tx] = await trackContract.queryFilter(trackFilter, 0, 'latest');
+
+  //get band to send members array to media server
+  const band = await Band.findOne({ tokenId: bandId.toNumber() });
+
   const metadataUri = await trackContract.tokenURI(trackId);
   const metadata = await fetch(metadataUri).then((result) => result.json());
   const track = new Track({
@@ -177,11 +268,22 @@ const handleTrackToken = async (trackId, bandId, artistId, owner) => {
     name: metadata.name,
     description: metadata.description
   });
+
+  await track.save();
+  //generate media get s3Key and ipfs uri back
+  const { s3Key, soundUri } = await generateMedia(
+    { dna: band.members, blockHash: tx.blockHash },
+    metadata,
+    TRACK_SOUND
+  );
+  //upate artist in db/api with sound data
+  track.s3Sound = s3Key;
+  track.soundIpfs = soundUri;
   await track.save();
   Transaction.recordCompletedTransaction(
     Transaction.types.CREATE_TRACK,
     owner,
-    metadataUri
+    band.metadataUri
   );
 };
 
@@ -234,6 +336,10 @@ async function waitForTransactionsToComplete({ type, owner, tokenKey }) {
   });
 }
 
+app.get('/', (req, res) => {
+  res.send({ status: 'usm-api-online' });
+});
+
 app.get('/api/artists', async (req, res) => {
   const artists = await Artist.find();
   res.send(artists);
@@ -285,11 +391,13 @@ app.post('/api/create_metadata_uri', async (req, res) => {
   const { metadata, options } = req.body;
   const transactionType = options?.transactionType;
   const owner = req.headers?.['x-owner'];
+  const key = uuidv4();
+  metadata.key = key;
 
   const { publicUrl: metadataUri } = await fleekStorage.upload({
     apiKey: process.env.FLEEK_API_KEY,
     apiSecret: process.env.FLEEK_API_SECRET,
-    key: uuidv4(),
+    key: key,
     data: JSON.stringify(metadata)
   });
 
@@ -357,7 +465,7 @@ app.listen(port, async () => {
     console.log(`track was created by ${owner} id = ${artistId}`);
   });
 
-  console.log(`Example app listening on port ${port}!`);
+  console.log(`USM app listening on port ${port}!`);
 });
 
 // The error handler must be before any other error middleware and after all controllers

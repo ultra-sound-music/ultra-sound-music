@@ -1,5 +1,7 @@
+
 @use './colors.scss' as *;
 %bg-grid {
+
   background-color: $color-night-sky;
   background-image: linear-gradient(180deg, transparent, $color-night-sky 90%),
     linear-gradient(90deg, rgba(110, 110, 110, 0.1) 1px, transparent 1px),

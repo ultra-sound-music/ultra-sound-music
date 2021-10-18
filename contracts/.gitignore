@@ -6,3 +6,4 @@ artifacts
 
 #Custom addresses cache
 /addresses.json
+hardhat.config.js

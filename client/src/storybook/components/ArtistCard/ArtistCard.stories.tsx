@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Button, Avatar } from '@uiComponents';
+
 import { getMockTraits } from '../../utils';
 
 import xolotl from '@images/mock/xolotl.png';

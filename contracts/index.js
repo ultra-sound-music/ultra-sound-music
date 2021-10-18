@@ -19,3 +19,4 @@ function getTokenConfigs(network) {
 }
 
 module.exports = getTokenConfigs;
+

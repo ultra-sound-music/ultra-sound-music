@@ -7,8 +7,8 @@ const {
 } = require('./constants');
 
 const artistMetadata = [
-  'https://storageapi.fleek.co/dongambas-team-bucket/1625348399326',
-  'https://storageapi.fleek.co/dongambas-team-bucket/1625348399361',
+  'https://storageapi.fleek.co/dongambas-team-bucket/1625348399326'
+  /*'https://storageapi.fleek.co/dongambas-team-bucket/1625348399361',
   'https://storageapi.fleek.co/dongambas-team-bucket/1625348399363',
   'https://storageapi.fleek.co/dongambas-team-bucket/1625348399364',
   'https://storageapi.fleek.co/dongambas-team-bucket/1625348399365',
@@ -26,7 +26,7 @@ const artistMetadata = [
   'https://storageapi.fleek.co/dongambas-team-bucket/1625348399378',
   'https://storageapi.fleek.co/dongambas-team-bucket/1625348399379',
   'https://storageapi.fleek.co/dongambas-team-bucket/1625348399380',
-  'https://storageapi.fleek.co/dongambas-team-bucket/1625348399381'
+  'https://storageapi.fleek.co/dongambas-team-bucket/1625348399381'*/
 ];
 
 const bandMetadata = [
@@ -74,7 +74,12 @@ async function main() {
     const bandContract = await USMBandToken.attach(BAND_DEPLOYED_ADDRESS);
     const trackContract = await USMTrackToken.attach(TRACK_DEPLOYED_ADDRESS);
 
-    await Promise.all(
+    const aC = await artistContract.connect(user1);
+    await aC.createArtist(artistMetadata[0], {
+      value: ethers.utils.parseEther('.15')
+    });
+
+    /*await Promise.all(
       addresses.map(async (address, i) => {
         const aC = await artistContract.connect(address);
         return aC.createArtist(artistMetadata[i], {
@@ -152,7 +157,7 @@ async function main() {
     await tU15.createTrack(15, 4, trackMetadata[3]);
     await tU16.createTrack(16, 4, trackMetadata[4]);
 
-    console.log('band 4 joined and active and four tracks created');
+    console.log('band 4 joined and active and four tracks created');*/
   } catch (error) {
     console.log(error);
   }
