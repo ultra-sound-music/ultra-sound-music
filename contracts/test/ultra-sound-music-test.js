@@ -3,6 +3,10 @@ const { waffle, ethers } = require('hardhat');
 const provider = waffle.provider;
 
 const testURI = 'http://ipfs.io/ipfs/test';
+const testBandMetadata =
+  'https://storageapi.fleek.co/dongambas-team-bucket/1625349161380';
+const testTrackMetadata =
+  'https://storageapi.fleek.co/dongambas-team-bucket/1625349236642';
 const nullAddress = '0x0000000000000000000000000000000000000000';
 
 describe('test USM tokens', async () => {
@@ -33,6 +37,11 @@ describe('test USM tokens', async () => {
       .connect(deployer)
       .deploy('USM Track Token', 'USM-T', USMA.address, USMB.address);
     await USMT.deployTransaction.wait();
+  });
+
+  it('should have owner equal to the deployer address', async () => {
+    const usmaOwner = await USMA.owner();
+    expect(usmaOwner).to.eq(deployer.address);
   });
 
   it('should mint an artist tokens for wallet 1-4', async () => {
@@ -82,7 +91,7 @@ describe('test USM tokens', async () => {
       .attach(USMA.address);
     const artistId = await USMA_w1.tokenOfOwnerByIndex(wallet1.address, 0);
     const USMB_w1 = factory_USMBandToken.connect(wallet1).attach(USMB.address);
-    await expect(USMB_w1.startBand(artistId))
+    await expect(USMB_w1.startBand(artistId, testBandMetadata))
       .to.emit(USMB_w1, 'bandCreate')
       .withArgs(1, artistId, wallet1.address);
   });
@@ -121,8 +130,8 @@ describe('test USM tokens', async () => {
     // on 4th member joining band is created and minted to band leader
 
     await expect(USMB_w4.joinBand(artistId_4, 1))
-      .to.emit(USMB_w4, 'Transfer')
-      .withArgs(nullAddress, wallet1.address, 1);
+      .to.emit(USMB_w4, 'bandJoined')
+      .withArgs(1, artistId_4, wallet4.address);
   });
 
   it('should mint a track from wallet 1', async () => {
