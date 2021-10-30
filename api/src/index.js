@@ -12,7 +12,6 @@ const Band = require('./db/models/Band');
 const Transaction = require('./db/models/Transaction');
 const fleekStorage = require('@fleekhq/fleek-storage-js');
 const fetch = require('node-fetch');
-const fs = require('fs');
 
 const tokenConfigs = require('../conf/tokenConfigs');
 
@@ -100,191 +99,210 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const generateMedia = async (data, metadata, mediaType) => {
-  // TODO: determine what data needs to be sent to generative media server, what will be returned
-  // call generative media server
-  const {
-    generatedAssets: { fleekWavUrl },
-    fleekUpload: { ipfsHash },
-    artistTraits
-  } = await fetch(
-    process.env.GENERATIVE_MEDIA_SERVER_ENDPOINT +
-      `${
-        mediaType === ARTIST_SOUND
-          ? `/artist?`
-          : mediaType === TRACK_SOUND
-          ? '/track?'
-          : ''
-      }` +
-      new URLSearchParams({
-        a: data.dna,
-        t: data.blockHash
-      }),
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
+  try {
+    // call generative media server
+    const {
+      generatedAssets: { fleekWavUrl },
+      fleekUpload: { ipfsHash },
+      artistTraits
+    } = await fetch(
+      process.env.GENERATIVE_MEDIA_SERVER_ENDPOINT +
+        `${
+          mediaType === ARTIST_SOUND
+            ? `/artist?`
+            : mediaType === TRACK_SOUND
+            ? '/track?'
+            : ''
+        }` +
+        new URLSearchParams({
+          a: data.dna,
+          t: data.blockHash
+        }),
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    }
-  ).then((data) => data.json());
+    ).then((data) => data.json());
 
-  //update metadata object
+    //update metadata object
 
-  const soundUri = `https://ipfs.io/ipfs/` + ipfsHash;
+    const soundUri = `https://ipfs.io/ipfs/` + ipfsHash;
 
-  console.log(artistTraits);
+    console.log(artistTraits);
 
-  metadata.sound = soundUri;
-  metadata.artistTraits = artistTraits;
+    metadata.sound = soundUri;
+    metadata.artistTraits = artistTraits;
 
-  //upload updated metadata to IPFS
-  // TODO: make sure this updates the existing ipfs hash
+    //upload updated metadata to IPFS
 
-  await fleekStorage.upload({
-    apiKey: process.env.FLEEK_API_KEY,
-    apiSecret: process.env.FLEEK_API_SECRET,
-    key: data.key,
-    data: JSON.stringify(metadata)
-  });
+    await fleekStorage.upload({
+      apiKey: process.env.FLEEK_API_KEY,
+      apiSecret: process.env.FLEEK_API_SECRET,
+      key: data.key,
+      data: JSON.stringify(metadata)
+    });
 
-  // return s3 key an soundUri
+    // return s3 key an soundUri
 
-  return { fleekWavUrl, soundUri, artistTraits };
+    return { fleekWavUrl, soundUri, artistTraits };
+  } catch (e) {
+    process.env.ENV === 'local' ? console.log(e) : Sentry.captureException(e);
+  }
 };
 
 const handleArtistToken = async (from, to, id) => {
   console.log('handle artist being called');
-  if (from === nullAddress) {
-    //filter for this transaction
-    const artistFilter = artistContract.filters.Transfer(from, to, id);
-    //get transaction logs for this transaction
-    const [tx] = await artistContract.queryFilter(artistFilter, 0, 'latest');
 
-    console.log('handling new artist token');
-    const metadataUri = await artistContract.tokenURI(id);
-    const metadata = await fetch(metadataUri).then((result) => result.json());
-    const artist = new Artist({
-      tokenId: id,
-      artistDNA: metadata.artistDNA,
-      owner: to,
-      metadataUri,
-      tokenType: 'artist',
-      name: metadata.name,
-      image: metadata.image,
-      description: metadata.description
-    });
-    // save artist immediately so api data is updated
-    await artist.save();
-    //generate media get s3Key and ipfs uri back
-    const { fleekWavUrl, soundUri, artistTraits } = await generateMedia(
-      { dna: to, blockHash: tx.blockHash, key: metadata.key },
-      metadata,
-      ARTIST_SOUND
-    );
+  try {
+    if (from === nullAddress) {
+      //filter for this transaction
+      const artistFilter = artistContract.filters.Transfer(from, to, id);
+      //get transaction logs for this transaction
+      const [tx] = await artistContract.queryFilter(artistFilter, 0, 'latest');
 
-    //upate artist in db/api with sound data
-    artist.s3Sound = fleekWavUrl;
-    artist.soundIpfs = soundUri;
-    artist.artistTraits = artistTraits;
-    await artist.save();
-    Transaction.recordCompletedTransaction(
-      Transaction.types.CREATE_ARTIST,
-      to,
-      metadataUri
-    );
+      console.log('handling new artist token');
+      const metadataUri = await artistContract.tokenURI(id);
+      const metadata = await fetch(metadataUri).then((result) => result.json());
+      const artist = new Artist({
+        tokenId: id,
+        artistDNA: metadata.artistDNA,
+        owner: to,
+        metadataUri,
+        tokenType: 'artist',
+        name: metadata.name,
+        image: metadata.image,
+        description: metadata.description
+      });
+      // save artist immediately so api data is updated
+      await artist.save();
+      //generate media get s3Key and ipfs uri back
+      const { fleekWavUrl, soundUri, artistTraits } = await generateMedia(
+        { dna: to, blockHash: tx.blockHash, key: metadata.key },
+        metadata,
+        ARTIST_SOUND
+      );
+
+      //upate artist in db/api with sound data
+      artist.s3Sound = fleekWavUrl;
+      artist.soundIpfs = soundUri;
+      artist.artistTraits = artistTraits;
+      await artist.save();
+      Transaction.recordCompletedTransaction(
+        Transaction.types.CREATE_ARTIST,
+        to,
+        metadataUri
+      );
+    }
+  } catch (e) {
+    process.env.ENV === 'local' ? console.log(e) : Sentry.captureException(e);
   }
 };
 
 const handleBandToken = async (id, artistId, owner) => {
   console.log('handling new band token id', id.toNumber());
-  //const metadataUri = await contract.uri(id)
-  const metadataUri = await bandContract.tokenURI(id);
-  const metadata = await fetch(metadataUri).then((result) => result.json());
-  const band = new Band({
-    tokenId: id.toNumber(),
-    creator: Number(artistId),
-    owner,
-    metadataUri,
-    members: [Number(artistId)],
-    active: false,
-    tokenType: 'band',
-    name: metadata.name,
-    description: metadata.description
-  });
+  try {
+    //const metadataUri = await contract.uri(id)
+    const metadataUri = await bandContract.tokenURI(id);
+    const metadata = await fetch(metadataUri).then((result) => result.json());
+    const band = new Band({
+      tokenId: id.toNumber(),
+      creator: Number(artistId),
+      owner,
+      metadataUri,
+      members: [Number(artistId)],
+      active: false,
+      tokenType: 'band',
+      name: metadata.name,
+      description: metadata.description
+    });
 
-  await band.save();
-  Transaction.recordCompletedTransaction(
-    Transaction.types.START_BAND,
-    owner,
-    metadataUri
-  );
+    await band.save();
+    Transaction.recordCompletedTransaction(
+      Transaction.types.START_BAND,
+      owner,
+      metadataUri
+    );
+  } catch (e) {
+    process.env.ENV === 'local' ? console.log(e) : Sentry.captureException(e);
+  }
 };
 
 const handleJoinBand = async (id, artistId, owner) => {
   console.log('handling join band id =', id.toNumber());
+  try {
+    const band = await Band.findOne({ tokenId: id.toNumber() });
+    if (!band) {
+      console.error(`Failed updating db. Band "${id}" was not found`);
+      return;
+    }
 
-  const band = await Band.findOne({ tokenId: id.toNumber() });
-  if (!band) {
-    console.error(`Failed updating db. Band "${id}" was not found`);
-    return;
+    console.log('band: ', band);
+    const currMembers = band.members;
+    currMembers.push(Number(artistId));
+    band.members = currMembers;
+    band.active = currMembers.length >= 2 ? true : false;
+    await band.save();
+    Transaction.recordCompletedTransaction(
+      Transaction.types.JOIN_BAND,
+      owner,
+      band.metadataUri
+    );
+  } catch (e) {
+    process.env.ENV === 'local' ? console.log(e) : Sentry.captureException(e);
   }
-
-  console.log('band: ', band);
-  const currMembers = band.members;
-  currMembers.push(Number(artistId));
-  band.members = currMembers;
-  band.active = currMembers.length >= 2 ? true : false;
-  await band.save();
-  Transaction.recordCompletedTransaction(
-    Transaction.types.JOIN_BAND,
-    owner,
-    band.metadataUri
-  );
 };
 
 const handleTrackToken = async (trackId, bandId, artistId, owner) => {
   console.log('handling new Track');
-  //filter for this transaction
-  const trackFilter = trackContract.filters.trackCreated(
-    trackId,
-    bandId,
-    artistId,
-    owner
-  );
-  //get transaction logs for this transaction
-  const [tx] = await trackContract.queryFilter(trackFilter, 0, 'latest');
 
-  //get band to send members array to media server
-  const band = await Band.findOne({ tokenId: bandId.toNumber() });
+  try {
+    //filter for this transaction
+    const trackFilter = trackContract.filters.trackCreated(
+      trackId,
+      bandId,
+      artistId,
+      owner
+    );
+    //get transaction logs for this transaction
+    const [tx] = await trackContract.queryFilter(trackFilter, 0, 'latest');
 
-  const metadataUri = await trackContract.tokenURI(trackId);
-  const metadata = await fetch(metadataUri).then((result) => result.json());
-  const track = new Track({
-    tokenId: trackId,
-    creator: Number(artistId),
-    owner,
-    metadataUri,
-    band: bandId,
-    tokenType: 'track',
-    name: metadata.name,
-    description: metadata.description
-  });
+    //get band to send members array to media server
+    const band = await Band.findOne({ tokenId: bandId.toNumber() });
 
-  await track.save();
-  //generate media get s3Key and ipfs uri back
-  const { s3Key, soundUri } = await generateMedia(
-    { dna: band.members, blockHash: tx.blockHash },
-    metadata,
-    TRACK_SOUND
-  );
-  //upate artist in db/api with sound data
-  track.s3Sound = s3Key;
-  track.soundIpfs = soundUri;
-  await track.save();
-  Transaction.recordCompletedTransaction(
-    Transaction.types.CREATE_TRACK,
-    owner,
-    band.metadataUri
-  );
+    const metadataUri = await trackContract.tokenURI(trackId);
+    const metadata = await fetch(metadataUri).then((result) => result.json());
+    const track = new Track({
+      tokenId: trackId,
+      creator: Number(artistId),
+      owner,
+      metadataUri,
+      band: bandId,
+      tokenType: 'track',
+      name: metadata.name,
+      description: metadata.description
+    });
+
+    await track.save();
+    //generate media get s3Key and ipfs uri back
+    const { s3Key, soundUri } = await generateMedia(
+      { dna: band.members, blockHash: tx.blockHash },
+      metadata,
+      TRACK_SOUND
+    );
+    //upate artist in db/api with sound data
+    track.s3Sound = s3Key;
+    track.soundIpfs = soundUri;
+    await track.save();
+    Transaction.recordCompletedTransaction(
+      Transaction.types.CREATE_TRACK,
+      owner,
+      band.metadataUri
+    );
+  } catch (e) {
+    process.env.ENV === 'local' ? console.log(e) : Sentry.captureException(e);
+  }
 };
 
 async function waitForTransactionsToComplete({ type, owner, tokenKey }) {
@@ -355,13 +373,17 @@ app.get('/api/tracks', async (req, res) => {
   res.send(tracks);
 });
 
-async function getAllTokens() {
-  const tracks = await Track.find();
-  const bands = await Band.find();
-  const artists = await Artist.find();
+const getAllTokens = async () => {
+  try {
+    const tracks = await Track.find();
+    const bands = await Band.find();
+    const artists = await Artist.find();
 
-  return [].concat.apply([], [tracks, bands, artists]);
-}
+    return [].concat.apply([], [tracks, bands, artists]);
+  } catch (e) {
+    process.env.ENV === 'local' ? console.log(e) : Sentry.captureException(e);
+  }
+};
 
 app.get('/api/tokens', async (req, res) => {
   const type = req.query?.pendingType;
@@ -445,27 +467,34 @@ app.put('/api/record_transaction', async (req, res) => {
 });
 
 app.listen(port, async () => {
-  artistContract.on('Transfer', async (from, to, tokenId) => {
-    await handleArtistToken(from, to, tokenId);
-    console.log(`artist token id = ${tokenId} transfered`);
-  });
+  try {
+    artistContract.on('Transfer', async (from, to, tokenId) => {
+      await handleArtistToken(from, to, tokenId);
+      console.log(`artist token id = ${tokenId} transfered`);
+    });
 
-  bandContract.on('bandCreate', async (id, artistId, owner) => {
-    await handleBandToken(id, artistId, owner);
-    console.log(`band token id = ${id} created`);
-  });
+    bandContract.on('bandCreate', async (id, artistId, owner) => {
+      await handleBandToken(id, artistId, owner);
+      console.log(`band token id = ${id} created`);
+    });
 
-  bandContract.on('bandJoined', async (id, artistId, owner) => {
-    await handleJoinBand(id, artistId, owner);
-    console.log(`band was joined by ${owner} id = ${id}`);
-  });
+    bandContract.on('bandJoined', async (id, artistId, owner) => {
+      await handleJoinBand(id, artistId, owner);
+      console.log(`band was joined by ${owner} id = ${id}`);
+    });
 
-  trackContract.on('trackCreated', async (trackId, bandId, artistId, owner) => {
-    await handleTrackToken(trackId, bandId, artistId, owner);
-    console.log(`track was created by ${owner} id = ${artistId}`);
-  });
+    trackContract.on(
+      'trackCreated',
+      async (trackId, bandId, artistId, owner) => {
+        await handleTrackToken(trackId, bandId, artistId, owner);
+        console.log(`track was created by ${owner} id = ${artistId}`);
+      }
+    );
 
-  console.log(`USM app listening on port ${port}!`);
+    console.log(`USM app listening on port ${port}!`);
+  } catch (e) {
+    process.env.ENV === 'local' ? console.log(e) : Sentry.captureException(e);
+  }
 });
 
 // The error handler must be before any other error middleware and after all controllers
