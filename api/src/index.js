@@ -36,6 +36,7 @@ const app = express();
 const port = process.env.PORT || 9001;
 
 Sentry.init({
+  environment: process.env.ENVIRONMENT,
   dsn: sentryDsn,
   integrations: [
     new Sentry.Integrations.Http({ tracing: true }),
