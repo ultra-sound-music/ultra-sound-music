@@ -1,6 +1,6 @@
 import { put, call, select } from 'redux-saga/effects';
 
-import USMClient from '@lib/USMClient';
+import USMClient from '@lib/UsmClient';
 import copy from '@copy';
 import constants from '@constants';
 import utils from '@utils';

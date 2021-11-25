@@ -42,15 +42,12 @@ export class JoinBandModal extends React.Component<TModalProps> {
   }
 }
 
-export function mapState(
-  state: IRootState,
-  { bandId }: Record<string, string>
-): IJoinBandModalState {
+export function mapState(state: IRootState): IJoinBandModalState {
   return {
     isOpen: ui.selectors.shouldShowModal(state),
-    bandName: usm.selectors.getBandName(state, bandId),
-    bandTraits: usm.selectors.getBandTraits(state, bandId),
-    bandMembers: usm.selectors.getBandMembers(state, bandId),
+    bandName: usm.selectors.getBandName(state),
+    bandTraits: usm.selectors.getBandTraits(state),
+    bandMembers: usm.selectors.getBandMembers(state),
     ctaText: ui.selectors.getModalCta(state)
   };
 }

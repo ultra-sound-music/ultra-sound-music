@@ -8,7 +8,7 @@ import { Integrations } from '@sentry/tracing';
 
 import initStore from '@store/store';
 import App from './App';
-import Borked from './components/Borked';
+import Borked from './components/Borked/Borked';
 import reportWebVitals from './reportWebVitals';
 
 import '@styles/app.scss';

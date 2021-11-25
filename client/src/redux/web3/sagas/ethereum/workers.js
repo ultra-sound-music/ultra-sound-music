@@ -1,6 +1,10 @@
-import { call, fork, put } from 'redux-saga/effects';
-import EthClient from '@lib/EthClient';
+import { select, call, fork, put } from 'redux-saga/effects';
+import EthClient, {
+  isValidProductionNetworkId,
+  isValidTestNetworkId
+} from '@lib/EthClient';
 import mediator from '@store/mediator';
+import * as web3Selectors from '../selectors';
 import * as web3Constants from '../../constants';
 import * as web3Actions from '../../actions';
 import * as helpers from './helpers';
@@ -15,7 +19,7 @@ export function* init() {
   }
 
   if (connectedAccount) {
-    const chainId = yield call([ethClient, 'getChainId']);
+    const chainId = yield call([ethClient, 'getNetworkId']);
     yield put(
       web3Actions.updateNetworkStatus({
         status: web3Constants.networkStatus.CONNECTED,
@@ -70,5 +74,57 @@ export function* connectWallet() {
     };
 
     yield put(mediator.actions.showModal(modalProps));
+  }
+}
+
+export function* processAccountUpdate({ data }) {
+  const { status, account } = data;
+
+  const activeAccount = yield select(web3Selectors.getAccountAddress);
+  if (account !== activeAccount) {
+    yield put(mediator.actions.initApp());
+    return;
+  }
+
+  yield put(web3Actions.updateNetworkStatus({ status, account }));
+}
+
+export function* processNetworkUpdate({ data }) {
+  const { networkId } = data;
+
+  const activeNetworkId = yield select(web3Selectors.getNetworkId);
+  if (activeNetworkId !== networkId) {
+    yield put(web3Actions.init());
+    return;
+  }
+
+  yield put(web3Actions.updateNetworkStatus({ networkId }));
+}
+
+export function* onUpdateNetworkStatus({ data }) {
+  const { networkId } = data;
+  if (!networkId) {
+    return;
+  }
+
+  const isValidProductionNetwork = isValidProductionNetworkId(networkId);
+  if (!isValidProductionNetwork) {
+    const isValidTestNetwork = isValidTestNetworkId(networkId);
+    if (!isValidTestNetwork) {
+      yield put(
+        mediator.actions.showModal({
+          title: 'Unrecognized Network',
+          body: 'Please switch to a valid Ethereum network.'
+        })
+      );
+    } else {
+      yield put(
+        mediator.actions.showAppMessage({
+          title: 'Test Mode',
+          message: 'You have connected using an Ethereum test network',
+          timeout: 4000
+        })
+      );
+    }
   }
 }
