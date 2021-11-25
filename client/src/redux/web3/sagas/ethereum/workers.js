@@ -36,6 +36,7 @@ export function* init() {
   }
 
   yield put(web3Actions.initWeb3Success({ web3Client: ethClient }));
+  return ethClient;
 }
 
 export function* installWallet() {

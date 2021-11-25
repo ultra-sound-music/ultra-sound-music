@@ -59,9 +59,9 @@ export default class EthClient implements IWeb3Client {
     return accounts?.[0] ?? null;
   }
 
-  async getNetworkId(): Promise<string> {
+  async getNetworkId(): Promise<INetworkId> {
     if (!this.ethereum) {
-      return '';
+      return null;
     }
 
     return this.ethereum.request({ method: methods.GET_CHAIN_ID });
@@ -75,8 +75,8 @@ export default class EthClient implements IWeb3Client {
     return !!this.getWalletAddress();
   }
 
-  async mint() {
-    /** @TODO */
+  async mint(): Promise<string> {
+    return '';
   }
 
   onAccountChanged(): void {

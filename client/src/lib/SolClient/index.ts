@@ -2,37 +2,37 @@ import { IPubKeyString, INetworkId, IWeb3Client } from '../Web3Client';
 
 export const DEFAULT_PUBLIC_KEY = '';
 
-export function getProvider(): Record<string, unknown> {
+export function getWallet(): Record<string, unknown> {
   return {};
 }
 
 export default class SolClient implements IWeb3Client {
   isWeb3Available = false;
-  providerConfig = null;
-  provider = null;
+  walletConfig = null;
+  wallet = null;
   solana = null;
 
   constructor() {
-    const provider = getProvider();
-    this.provider = provider;
-    this.isWeb3Available = !!provider;
+    const wallet = getWallet();
+    this.wallet = wallet;
+    this.isWeb3Available = !!wallet;
   }
 
   async connectWallet(): Promise<string> {
-    if (!this.provider) {
+    if (!this.wallet) {
       return '';
     }
 
-    await this.provider.connect();
+    await this.wallet.connect();
     return this.getWalletAddress();
   }
 
   async getWalletAddress(): Promise<IPubKeyString | null> {
-    if (!this.provider) {
+    if (!this.wallet) {
       return null;
     }
 
-    const key = this.provider.publicKey;
+    const key = this.wallet.publicKey;
     return key === DEFAULT_PUBLIC_KEY ? null : key.toString();
   }
 
@@ -41,7 +41,7 @@ export default class SolClient implements IWeb3Client {
   }
 
   async isConnected(): Promise<boolean> {
-    return !!this.provider && !!this.provider.connected;
+    return !!this.wallet && !!this.wallet.connected;
   }
 
   async mint(): Promise<string> {
