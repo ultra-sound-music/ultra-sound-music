@@ -111,7 +111,7 @@ export function mapState(state: IRootState): ISiteHeaderProps {
     isArtistOnly: configs.selectors.getIsArtistOnly(state),
     activeArtistName: usm.selectors.getActiveArtistName(state),
     activeArtistImageSrc: usm.selectors.getActiveArtistImageUrl(state),
-    ownedArtists: core.selectors.getOwnedArtists(state)
+    ownedArtists: core.selectors.getOwnedArtists(state as never)
   };
 }
 

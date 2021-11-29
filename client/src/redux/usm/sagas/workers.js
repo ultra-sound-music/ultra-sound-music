@@ -1,13 +1,12 @@
 import { put, call, select } from 'redux-saga/effects';
 
-import USMClient from '@lib/USMClient';
+import USMClient from '@lib/UsmClient';
 import copy from '@copy';
 import constants from '@constants';
 import utils from '@utils';
 import mediator from '@store/mediator';
 
 import * as actions from '../actions';
-import * as selectors from '../selectors';
 import * as helpers from './helpers';
 
 let usmClient;
@@ -135,168 +134,13 @@ export function* createArtist({ data }) {
 }
 
 export function* startBand() {
-  const networkStatus = yield select(mediator.selectors.getNetworkStatus);
-  if (!networkStatus) {
-    yield put(mediator.actions.showInstallWalletModal());
-    return;
-  }
-
-  if (!usmClient) {
-    throw new Error('USM not initialized');
-  }
-
-  const artistTid = yield select(selectors.getActiveArtistTid);
-  const key = yield call(utils.genStartBandTransactionKey, artistTid);
-  yield put(
-    actions.addTransaction({
-      method: 'startBand',
-      key
-    })
-  );
-
-  try {
-    const transaction = yield call(
-      [usmClient, 'startBand'],
-      { artistTid },
-      helpers.onCreateBandComplete
-    );
-    yield put(
-      actions.updateTransaction({
-        key,
-        transactionId: transaction.hash,
-        status: constants.usm.transactionStatus.AUTHORIZED
-      })
-    );
-  } catch (error) {
-    console.error(error);
-    yield put(
-      mediator.actions.showModal({
-        title: 'Error',
-        body: 'Unable to start a band, please try again later.'
-      })
-    );
-    yield put(
-      actions.updateTransaction({
-        key,
-        status: constants.usm.transactionStatus.FAILED,
-        errorCode: error.code,
-        errorMessage: error.message
-      })
-    );
-  }
+  /** @TODO */
 }
 
-export function* joinBand({ data }) {
-  const networkStatus = yield select(mediator.selectors.getNetworkStatus);
-  if (!networkStatus) {
-    yield put(mediator.actions.showInstallWalletModal());
-    return;
-  }
-
-  if (!usmClient) {
-    throw new Error('USM not initialized');
-  }
-
-  const { bandId } = data;
-
-  const bandTid = yield select(selectors.getTokenId, bandId);
-  const artistTid = yield select(selectors.getActiveArtistTid);
-  const key = yield call(utils.genJoinBandTransactionKey, bandTid, artistTid);
-  yield put(
-    actions.addTransaction({
-      method: 'joinBand',
-      key
-    })
-  );
-
-  try {
-    const transaction = yield call(
-      [usmClient, 'joinBand'],
-      { bandTid, artistTid },
-      helpers.onJoinBandComplete
-    );
-    yield put(
-      actions.updateTransaction({
-        key,
-        transactionId: transaction.hash,
-        status: constants.usm.transactionStatus.AUTHORIZED
-      })
-    );
-  } catch (error) {
-    console.error(error);
-    yield put(
-      mediator.actions.showModal({
-        title: 'Error',
-        body: 'Unable to join the band, please try again later.'
-      })
-    );
-    yield put(
-      actions.updateTransaction({
-        key,
-        status: constants.usm.transactionStatus.FAILED,
-        errorCode: error.code,
-        errorMessage: error?.data?.message || error.message
-      })
-    );
-  }
+export function* joinBand() {
+  /** @TODO */
 }
 
-export function* createTrack({ data }) {
-  const networkStatus = yield select(mediator.selectors.getNetworkStatus);
-  if (!networkStatus) {
-    yield put(mediator.actions.showInstallWalletModal());
-    return;
-  }
-
-  if (!usmClient) {
-    throw new Error('USM not initialized');
-  }
-
-  const { name, description, bandId } = data;
-
-  const artistTid = yield select(selectors.getActiveArtistTid);
-  const bandTid = yield select(selectors.getTokenId, bandId);
-  const key = yield call(
-    utils.genCreateTrackTransactionKey,
-    bandTid,
-    artistTid
-  );
-
-  yield put(
-    actions.addTransaction({
-      method: 'joinBand',
-      key
-    })
-  );
-
-  try {
-    const transaction = yield call(
-      [usmClient, 'createTrack'],
-      { artistTid, bandTid, name, description },
-      helpers.onCreateTrackComplete
-    );
-    yield put(
-      actions.updateTransaction({
-        key,
-        transactionId: transaction.hash,
-        status: constants.usm.transactionStatus.AUTHORIZED
-      })
-    );
-  } catch (error) {
-    console.error(error);
-    yield put(
-      mediator.actions.showModal({
-        title: 'Error',
-        body: 'Unable to create a track, please try again later.'
-      })
-    );
-    yield put(
-      actions.updateTransaction({
-        key,
-        status: constants.usm.transactionStatus.FAILED,
-        errorCode: error.code,
-        errorMessage: error?.data?.message || error.message
-      })
-    );
-  }
+export function* createTrack() {
+  /** @TODO */
 }

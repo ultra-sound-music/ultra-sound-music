@@ -15,12 +15,12 @@ import configs from '@store/configs';
 import AppMessage from '@appComponents/AppMessage/AppMessage';
 import SiteHeader from '@appComponents/SiteHeader/SiteHeader';
 import Modal from '@appComponents/Modal/Modal';
-import Landing from './pages/Landing';
-import LandingArtistOnly from './pages/LandingArtistOnly';
+import Landing from './pages/Landing/Landing';
+import LandingArtistOnly from './pages/LandingArtistOnly/LandingArtistOnly';
 import ArtistsPage from './pages/ArtistsPage/ArtistsPage';
 import MempoolPlayer from './pages/MempoolPlayer/MempoolPlayer';
-import BandsPage from './pages/BandsPage';
-import NotFound from './pages/NotFound';
+import BandsPage from './pages/BandsPage/BandsPage';
+import NotFound from './pages/NotFound/NotFound';
 // import Token from './components/Tokens/Token';
 // import Searchable from './components/Searchable';
 

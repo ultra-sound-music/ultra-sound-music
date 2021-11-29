@@ -1,5 +1,7 @@
 import { ethers } from 'ethers';
 
+import { INetworkId, IWeb3Client } from '../Web3Client';
+
 type TEthConstructorProps = {
   ethereum: Record<string, unknown>;
 };
@@ -9,7 +11,16 @@ const methods = {
   GET_CHAIN_ID: 'eth_chainId'
 };
 
-export default class Eth {
+const validProductionChainIds = {
+  MAINNET: 1
+};
+
+const validTestChainIds = {
+  RINKEBY: 4,
+  LOCAL: 31337
+};
+
+export default class EthClient implements IWeb3Client {
   isWeb3Available = false;
   provider: ethers.providers.Web3Provider | null = null;
   ethereum: ethers.providers.ExternalProvider | null = null;
@@ -48,9 +59,9 @@ export default class Eth {
     return accounts?.[0] ?? null;
   }
 
-  async getChainId(): Promise<string> {
+  async getNetworkId(): Promise<INetworkId> {
     if (!this.ethereum) {
-      return '';
+      return null;
     }
 
     return this.ethereum.request({ method: methods.GET_CHAIN_ID });
@@ -63,4 +74,24 @@ export default class Eth {
 
     return !!this.getWalletAddress();
   }
+
+  async mint(): Promise<string> {
+    return '';
+  }
+
+  onAccountChanged(): void {
+    /** @TODO */
+  }
+
+  onChangedNetwork(): void {
+    /** @TODO */
+  }
+}
+
+export function isValidTestNetworkId(networkId: INetworkId): boolean {
+  return Object.values(validTestChainIds).includes(networkId);
+}
+
+export function isValidProductionNetworkId(networkId: INetworkId): boolean {
+  return Object.values(validProductionChainIds).includes(networkId);
 }

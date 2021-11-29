@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
@@ -31,6 +30,9 @@ module.exports = {
           }
         }
       ]
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer']
     }),
     new webpack.DefinePlugin({
       __GOOGLE_ANALYTICS_ENABLED__: JSON.stringify(
@@ -128,14 +130,6 @@ module.exports = {
       '@uiComponents$': path.resolve(__dirname, 'src/storybook/components.ts'),
       '@uiTypes$': path.resolve(__dirname, 'src/storybook/types.ts'),
       '@utils$': path.resolve(__dirname, 'src/utils/index.js')
-    },
-    plugins: [
-      new DirectoryNamedWebpackPlugin({
-        honorIndex: true
-      })
-    ],
-    fallback: {
-      util: require.resolve('util/')
     }
   },
   output: {

@@ -48,9 +48,9 @@ export function mapState(
 ): IJoinBandModalState {
   return {
     isOpen: ui.selectors.shouldShowModal(state),
-    bandName: usm.selectors.getBandName(state, bandId),
-    bandTraits: usm.selectors.getBandTraits(state, bandId),
-    bandMembers: usm.selectors.getBandMembers(state, bandId),
+    bandName: usm.selectors.getBandName(state as never, bandId),
+    bandTraits: usm.selectors.getBandTraits(state as never, bandId),
+    bandMembers: usm.selectors.getBandMembers(state as never, bandId),
     ctaText: ui.selectors.getModalCta(state)
   };
 }

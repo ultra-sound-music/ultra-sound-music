@@ -1,18 +1,18 @@
-export function bindCoreEventListeners(emitter, ethereum, listeners) {
+export function bindCoreEventListeners(emitter, obj, listeners) {
   return Object.keys(listeners).reduce((boundEventListeners, eventName) => {
     const handler = (...args) => {
       const getAction = listeners[eventName];
       const action = getAction(...args);
       emitter(action);
     };
-    ethereum.on(eventName, handler);
+    obj.on(eventName, handler);
     boundEventListeners[eventName] = handler;
     return boundEventListeners;
   }, {});
 }
 
-export function removeCoreEventListeners(ethereum, listeners) {
+export function removeCoreEventListeners(obj, listeners) {
   Object.keys(listeners).forEach((eventName) => {
-    ethereum.removeListener(eventName, listeners[eventName]);
+    obj.removeListener(eventName, listeners[eventName]);
   });
 }

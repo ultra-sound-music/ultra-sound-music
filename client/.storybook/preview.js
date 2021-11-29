@@ -1,4 +1,7 @@
 import '../src/styles/app.scss';
+import buffer from 'buffer';
+
+window.Buffer = buffer.Buffer;
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
