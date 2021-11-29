@@ -1,4 +1,5 @@
 import * as ActionTypes from './actionTypes';
+import * as web3Constants from './constants';
 
 export function parseNetworkId(networkId) {
   if (networkId) {
@@ -6,16 +7,19 @@ export function parseNetworkId(networkId) {
   }
 }
 
-export function init() {
+export function init(autoConnect) {
   return {
-    type: ActionTypes.INIT_WEB3
+    type: ActionTypes.INIT_WEB3,
+    payload: {
+      autoConnect
+    }
   };
 }
 
 export function initWeb3Success({ web3Client }) {
   return {
     type: ActionTypes.INIT_WEB3_SUCCESS,
-    data: {
+    payload: {
       web3Client
     }
   };
@@ -41,6 +45,19 @@ export function processAccountUpdate({ status, account }) {
       account
     }
   };
+}
+
+export function onProcessAccountUpdate(account) {
+  if (account) {
+    return processAccountUpdate({
+      status: web3Constants.networkStatus.CONNECTED,
+      account
+    });
+  } else {
+    return processAccountUpdate({
+      status: web3Constants.networkStatus.NOT_CONNECTED
+    });
+  }
 }
 
 export function processNetworkUpdate({ networkId }) {

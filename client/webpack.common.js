@@ -32,7 +32,8 @@ module.exports = {
       ]
     }),
     new webpack.ProvidePlugin({
-      Buffer: ['buffer', 'Buffer']
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser'
     }),
     new webpack.DefinePlugin({
       __GOOGLE_ANALYTICS_ENABLED__: JSON.stringify(
@@ -113,6 +114,12 @@ module.exports = {
       {
         test: /\.(jpg|jpeg|png|gif|mp3)$/,
         type: 'asset/resource'
+      },
+      {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false // https://github.com/webpack/webpack/issues/11467
+        }
       }
     ]
   },
@@ -130,7 +137,8 @@ module.exports = {
       '@uiComponents$': path.resolve(__dirname, 'src/storybook/components.ts'),
       '@uiTypes$': path.resolve(__dirname, 'src/storybook/types.ts'),
       '@utils$': path.resolve(__dirname, 'src/utils/index.js')
-    }
+    },
+    fallback: { crypto: false }
   },
   output: {
     filename: '[name].bundle.js',

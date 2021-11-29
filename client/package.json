@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
+    "lint": "eslint src --ext .ts,.js",
+    "lint:fix": "npm run lint -- --fix",
     "start": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "build:stats": "npm run build && --profile --json > build/stats.json",
@@ -19,6 +21,7 @@
     "@reduxjs/toolkit": "^1.6.0",
     "@sentry/react": "^6.11.0",
     "@sentry/tracing": "^6.11.0",
+    "@solana/wallet-adapter-wallets": "^0.11.3",
     "@solana/web3.js": "^1.30.2",
     "@types/react-router-dom": "^5.3.0",
     "axios": "^0.21.1",

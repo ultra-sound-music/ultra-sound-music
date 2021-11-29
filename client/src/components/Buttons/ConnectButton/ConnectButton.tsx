@@ -6,7 +6,6 @@ import copy from '@copy';
 import { PillSwitch } from '@uiComponents';
 import { IPillSwitchProps } from '@uiTypes';
 import { IRootState } from '@store/types';
-import ui from '@store/ui';
 import web3 from '@store/web3';
 
 export type TConnectButtonProps = IConnectButtonState & IConnectButtonActions;
@@ -17,17 +16,12 @@ export interface IConnectButtonState {
 }
 
 export interface IConnectButtonActions {
-  showInstallWalletModal: () => void;
   connectWallet: () => void;
 }
 
 export class ConnectButton extends React.Component<TConnectButtonProps> {
   onClickConnect = (): void => {
     this.props.connectWallet();
-  };
-
-  onClickInstall = (): void => {
-    this.props.showInstallWalletModal();
   };
 
   getProps = (networkStatus: string): IPillSwitchProps => {
@@ -62,7 +56,7 @@ export class ConnectButton extends React.Component<TConnectButtonProps> {
       default:
         return {
           status: 'off',
-          onClick: this.onClickInstall,
+          onClick: this.onClickConnect,
           children: `${copy.connect}`
         };
     }
@@ -82,7 +76,6 @@ export function mapState(state: IRootState): IConnectButtonState {
 }
 
 export const mapDispatch: IConnectButtonActions = {
-  showInstallWalletModal: ui.actions.showInstallWalletModal,
   connectWallet: web3.actions.connectWallet
 };
 
