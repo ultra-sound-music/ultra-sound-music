@@ -4,7 +4,7 @@ import EthClient, {
   isValidTestNetworkId
 } from '@lib/EthClient';
 import mediator from '@store/mediator';
-import * as web3Selectors from '../selectors';
+import * as web3Selectors from '../../selectors';
 import * as web3Constants from '../../constants';
 import * as web3Actions from '../../actions';
 import * as helpers from './helpers';
