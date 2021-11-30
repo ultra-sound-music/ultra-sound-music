@@ -2,6 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import * as ActionTypes from './actionTypes';
 
 const initialState = {
+  walletName: null,
   networkStatus: null,
   account: null,
   networkId: null
@@ -12,6 +13,7 @@ function initWeb3() {
 }
 
 function updateNetworkStatus(state, { data }) {
+  state.walletName = data?.walletName ?? initialState.walletName;
   state.networkStatus = data?.status ?? initialState.networkStatus;
   state.account = data?.account ?? initialState.account;
   state.networkId = data?.networkId ?? initialState.networkId;

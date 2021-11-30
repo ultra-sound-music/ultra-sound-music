@@ -1,6 +1,7 @@
 import { put, call, select } from 'redux-saga/effects';
 
-import USMClient from '@lib/UsmClient';
+import { createUsmClient } from './adapters/__BLOCKCHAIN_NAME__.js';
+
 import copy from '@copy';
 import constants from '@constants';
 import utils from '@utils';
@@ -18,21 +19,7 @@ const HACK = new Promise((res) => {
 });
 
 export function* init({ data }) {
-  const ethClient = data?.web3Client;
-  // @todo optimize this loading to be async and not block the app
-  const {
-    default: { artist: artistConfig, band: bandConfig, track: trackConfig }
-  } = yield call(() => import('../../../deps/tokenConfigs'));
-
-  usmClient = new USMClient({
-    artistConfig,
-    bandConfig,
-    trackConfig,
-    accountAddress: yield select(mediator.selectors.getAccountAddress),
-    apiHost: `//${document.location.host}`,
-    provider: ethClient.provider,
-    logger: utils.logger
-  });
+  usmClient = createUsmClient({ web3Client: data?.web3Client });
 
   HACK_RES(usmClient);
   yield put(actions.fetchAllTokens());

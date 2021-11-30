@@ -1,56 +1,41 @@
-import { fork, put } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
-import * as web3Actions from '../../actions';
-import * as web3Constants from '../../constants';
+import * as web3Helpers from '../helpers';
 import * as helpers from './helpers';
 import SolClient from '@lib/SolClient';
 
-let solClient;
-
-export function* init() {
-  solClient = new SolClient();
-  const connectedAccount = solClient.getWalletAddress();
-  if (solClient.isWeb3Available) {
-    yield fork(helpers.startWatchingForSolanaEvents, solClient.wallet);
-  }
-
-  if (connectedAccount) {
-    const networkId = solClient.getNetworkId();
-    yield put(
-      web3Actions.updateNetworkStatus({
-        status: web3Constants.networkStatus.CONNECTED,
-        account: connectedAccount,
-        networkId: parseInt(networkId)
-      })
-    );
-  } else if (solClient.isWeb3Available) {
-    yield put(
-      web3Actions.updateNetworkStatus({
-        status: web3Constants.networkStatus.NOT_AVAILABLE
-      })
-    );
-  }
-
-  yield put(web3Actions.initWeb3Success({ web3Client: solClient }));
-  return solClient;
+export function* init(action) {
+  yield call([web3Helpers, web3Helpers.init], action, {
+    web3Client: new SolClient(),
+    eventListeners: helpers.coreEventListeners,
+    autoConnect: action?.payload?.autoConnect
+  });
 }
 
-export function installWallet() {
+export function* installWallet() {
   // @TODO
 }
 
-export function connectWallet() {
-  // @TODO
+export function* connectWallet(action) {
+  yield call([web3Helpers, web3Helpers.connectWallet], action, {
+    parseError(error) {
+      console.log(error);
+      return 'There was an error connecting: 5678';
+    }
+  });
 }
 
-export function processAccountUpdate() {
-  // @TODO
+export function* processAccountUpdate(action) {
+  yield call([web3Helpers, web3Helpers.processAccountUpdate], action);
 }
 
-export function* processNetworkUpdate() {
-  // @TODO
+export function* processNetworkUpdate(action) {
+  yield call([web3Helpers, web3Helpers.processNetworkUpdate], action);
 }
 
-export function* onUpdateNetworkStatus() {
-  // @TODO
+export function* onUpdateNetworkStatus(action) {
+  yield call([web3Helpers, web3Helpers.onUpdateNetworkStatus], action, {
+    isValidProductionNetworkId: () => {},
+    isValidTestNetworkId: () => {}
+  });
 }

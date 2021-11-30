@@ -3,8 +3,15 @@ import { ethers } from 'ethers';
 import { INetworkId, IWeb3Client } from '../Web3Client';
 
 type TEthConstructorProps = {
-  ethereum: Record<string, unknown>;
+  ethereum: EthereumProvider;
 };
+
+type EthereumProvider =
+  | (ethers.providers.ExternalProvider & {
+      on: (n: string, h: () => void) => void;
+      removeListener: (n: string, h: () => void) => void;
+    })
+  | null;
 
 const methods = {
   CONNECT_WALLET: 'eth_requestAccounts',
@@ -23,7 +30,7 @@ const validTestChainIds = {
 export default class EthClient implements IWeb3Client {
   isWeb3Available = false;
   provider: ethers.providers.Web3Provider | null = null;
-  ethereum: ethers.providers.ExternalProvider | null = null;
+  ethereum: EthereumProvider;
 
   constructor({ ethereum }: TEthConstructorProps) {
     this.ethereum = ethereum;
@@ -79,12 +86,12 @@ export default class EthClient implements IWeb3Client {
     return '';
   }
 
-  onAccountChanged(): void {
-    /** @TODO */
+  on(eventName: string, eventHandler: () => void): void {
+    this?.ethereum.on(eventName, eventHandler);
   }
 
-  onChangedNetwork(): void {
-    /** @TODO */
+  off(eventName: string, eventHandler: () => void): void {
+    this?.ethereum.removeListener(eventName, eventHandler);
   }
 }
 

@@ -1,21 +1,44 @@
+import { getWalletAdapter, detaultWalletName, IWalletName } from './wallets';
+import {
+  MessageSignerWalletAdapter,
+  SignerWalletAdapter,
+  WalletAdapter,
+  WalletAdapterEvents
+  // WalletAdapterNetwork,
+} from '@solana/wallet-adapter-base';
+import { PublicKey } from '@solana/web3.js';
+
 import { IPubKeyString, INetworkId, IWeb3Client } from '../Web3Client';
 
-export const DEFAULT_PUBLIC_KEY = '';
-
-export function getWallet(): Record<string, unknown> {
-  return {};
+export function isValidSolanaAddress(address: string): boolean {
+  return !!address;
 }
 
 export default class SolClient implements IWeb3Client {
   isWeb3Available = false;
-  walletConfig = null;
-  wallet = null;
-  solana = null;
+  walletName: string;
+  walletUrl: string;
+  walletIcon: string;
+  wallet: MessageSignerWalletAdapter | SignerWalletAdapter | WalletAdapter;
 
-  constructor() {
-    const wallet = getWallet();
-    this.wallet = wallet;
+  constructor(walletName: IWalletName = detaultWalletName) {
+    const config = {};
+    const walletAdapter = getWalletAdapter(walletName, config);
+    const wallet = walletAdapter.adapter();
+
     this.isWeb3Available = !!wallet;
+    this.walletName = walletName;
+    this.walletUrl = walletAdapter.url;
+    this.walletIcon = walletAdapter.icon;
+    this.wallet = wallet;
+  }
+
+  async init(): Promise<string> {
+    if (!this.isWeb3Available) {
+      return null;
+    }
+
+    return await this.connectWallet();
   }
 
   async connectWallet(): Promise<string> {
@@ -24,16 +47,16 @@ export default class SolClient implements IWeb3Client {
     }
 
     await this.wallet.connect();
-    return this.getWalletAddress();
+    return await this.getWalletAddress();
   }
 
-  async getWalletAddress(): Promise<IPubKeyString | null> {
+  async getWalletAddress(): Promise<IPubKeyString> {
     if (!this.wallet) {
       return null;
     }
 
-    const key = this.wallet.publicKey;
-    return key === DEFAULT_PUBLIC_KEY ? null : key.toString();
+    const key = this.wallet.publicKey as PublicKey;
+    return key && key !== PublicKey.default ? key.toString() : '';
   }
 
   async getNetworkId(): Promise<INetworkId> {
@@ -48,11 +71,11 @@ export default class SolClient implements IWeb3Client {
     return '';
   }
 
-  onAccountChanged(): void {
-    /** @TODO */
+  on(eventName: keyof WalletAdapterEvents, eventHandler: () => void): void {
+    this.wallet.on(eventName, eventHandler);
   }
 
-  onChangedNetwork(): void {
-    /** @TODO */
+  off(eventName: keyof WalletAdapterEvents, eventHandler: () => void): void {
+    this.wallet.off(eventName, eventHandler);
   }
 }

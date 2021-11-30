@@ -10,6 +10,6 @@ export interface IWeb3Client {
   getNetworkId(): Promise<INetworkId>;
   isConnected(): Promise<boolean>;
   mint(): Promise<string>;
-  onAccountChanged(): void;
-  onChangedNetwork(): void;
+  on(eventName: string, eventHandler: () => void): void;
+  off(eventName: string, eventHandler: () => void): void;
 }

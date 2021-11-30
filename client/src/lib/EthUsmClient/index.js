@@ -5,7 +5,7 @@ const noop = () => {
   console.log('TODO');
 };
 
-export default class USMClient {
+export default class EthUsmClient {
   constructor({
     artistConfig,
     bandConfig,
