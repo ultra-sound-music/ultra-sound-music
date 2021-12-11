@@ -1,5 +1,7 @@
+import { IWeb3Client } from '../Web3Client';
+
 export interface ISolUsmClientArgs {
-  solClient: Record<string, unknown>;
+  solClient: IWeb3Client;
   accountAddress: string;
   logger: Record<string, unknown>;
 }

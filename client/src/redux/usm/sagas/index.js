@@ -1,4 +1,3 @@
-// import { eventChannel } from 'redux-saga';
 import { takeLatest } from 'redux-saga/effects';
 import * as ActionTypes from '../actionTypes';
 import * as Workers from './workers';
