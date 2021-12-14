@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ultra-sound-music/audio-player": ["libs/audio-player/src/index.ts"],
+      "@ultra-sound-music/copy": ["libs/copy/src/index.ts"],
+      "@ultra-sound-music/sol-client": ["libs/sol-client/src/index.ts"],
+      "@ultra-sound-music/store": ["libs/store/src/index.ts"],
+      "@ultra-sound-music/styles": ["libs/styles/src/index.ts"],
+      "@ultra-sound-music/ui": ["libs/ui/src/index.ts"],
+      "@ultra-sound-music/utils": ["libs/utils/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
