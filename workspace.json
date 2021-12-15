@@ -4,11 +4,12 @@
     "audio-player": "libs/audio-player",
     "copy": "libs/copy",
     "sol-client": "libs/sol-client",
-    "sol-wallet": "libs/sol-wallet",
     "store": "libs/store",
     "styles": "libs/styles",
     "ui": "libs/ui",
     "utils": "libs/utils",
+    "wallets-sol-wallet": "libs/wallets/sol-wallet",
+    "wallets-types": "libs/wallets/types",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }

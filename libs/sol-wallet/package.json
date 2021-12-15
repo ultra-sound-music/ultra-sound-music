@@ -1,6 +1,0 @@
-{
-  "name": "@ultra-sound-music/sol-wallet",
-  "scripts": {
-    "test": "node index.js"
-  }
-}

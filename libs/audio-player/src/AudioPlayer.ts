@@ -1,4 +1,4 @@
-import load from './loader';
+import { loadAudio } from '@usm/utils';
 
 export const WHEN_TIME = 0;
 export const START_TIME = 0;
@@ -44,7 +44,7 @@ export default class UsmPlayer {
   currentTime = START_TIME;
   isPlaying = false;
   audioContext: AudioContext;
-  audioSource: AudioBufferSourceNode;
+  audioSource: AudioBufferSourceNode | undefined;
   onLoad: (e: IUsmPlayerEvent) => void;
   onPlay: (e: IUsmPlayerEvent) => void;
   onStop: (e: IUsmPlayerEvent) => void;
@@ -78,7 +78,7 @@ export default class UsmPlayer {
   };
 
   loadAudio = async (audioUrl: TAudioUrl): Promise<AudioBuffer> => {
-    const arrayBuffer = await load(audioUrl);
+    const arrayBuffer = await loadAudio(audioUrl);
     if (!arrayBuffer) {
       return;
     }

@@ -15,13 +15,16 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ultra-sound-music/audio-player": ["libs/audio-player/src/index.ts"],
-      "@ultra-sound-music/copy": ["libs/copy/src/index.ts"],
-      "@ultra-sound-music/sol-client": ["libs/sol-client/src/index.ts"],
-      "@ultra-sound-music/store": ["libs/store/src/index.ts"],
-      "@ultra-sound-music/styles": ["libs/styles/src/index.ts"],
-      "@ultra-sound-music/ui": ["libs/ui/src/index.ts"],
-      "@ultra-sound-music/utils": ["libs/utils/src/index.ts"]
+      "@usm/audio-player": ["libs/audio-player/src/index.ts"],
+      "@usm/components": ["apps/web/src/components.ts"],
+      "@usm/copy": ["libs/copy/src/index.ts"],
+      "@usm/sol-client": ["libs/sol-client/src/index.ts"],
+      "@usm/store/*": ["libs/store/src/*"],
+      "@usm/styles": ["libs/styles/src/index.ts"],
+      "@usm/ui": ["libs/ui/src/index.ts"],
+      "@usm/utils/*": ["libs/utils/src/*"],
+      "@usm/wallets/sol-wallet": ["libs/wallets/sol-wallet/src/index.ts"],
+      "@usm/wallets/types": ["libs/wallets/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

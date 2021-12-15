@@ -10,12 +10,12 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/web",
-        "index": "apps/web/src/index.html",
+        "index": "apps/web/public/index.html",
         "baseHref": "/",
-        "main": "apps/web/src/main.tsx",
+        "main": "apps/web/src/index.tsx",
         "polyfills": "apps/web/src/polyfills.ts",
         "tsConfig": "apps/web/tsconfig.app.json",
-        "assets": ["apps/web/src/favicon.ico", "apps/web/src/assets"],
+        "assets": ["apps/web/src/assets"],
         "styles": [],
         "scripts": [],
         "webpackConfig": "apps/web/build/webpack.js"

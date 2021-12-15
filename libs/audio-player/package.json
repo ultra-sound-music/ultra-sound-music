@@ -1,4 +1,12 @@
 {
   "name": "@ultra-sound-music/audio-player",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "description": "Audio Player for USM.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
+
