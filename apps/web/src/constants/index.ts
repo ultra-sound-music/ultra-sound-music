@@ -5,5 +5,5 @@ import * as socials from './socials';
 export default {
   web3,
   usm,
-  socials
+  socials,
 };

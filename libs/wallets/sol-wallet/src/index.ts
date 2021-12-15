@@ -3,7 +3,7 @@ import {
   MessageSignerWalletAdapter,
   SignerWalletAdapter,
   WalletAdapter,
-  WalletAdapterEvents
+  WalletAdapterEvents,
   // WalletAdapterNetwork,
 } from '@solana/wallet-adapter-base';
 import { PublicKey } from '@solana/web3.js';

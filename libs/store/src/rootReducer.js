@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   playback: playbackReducer,
   ui: uiReducer,
   usm: usmReducer,
-  web3: web3Reducer
+  web3: web3Reducer,
 });
 
 export default rootReducer;

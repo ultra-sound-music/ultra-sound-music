@@ -9,80 +9,80 @@ import * as usmSelectors from '../selectors';
 
 export function onCreateArtistComplete({
   transaction,
-  data: { metadataUri, artistDNA }
+  data: { metadataUri, artistDNA },
 }) {
   const store = storeUtils.getStore();
   store.dispatch(
     usmActions.updateTransaction({
       key: utils.genCreateArtistTransactionKey(artistDNA),
       transaction,
-      status: constants.usm.transactionStatus.MINED
+      status: constants.usm.transactionStatus.MINED,
     })
   );
   store.dispatch(
     usmActions.fetchAllTokens({
       pendingTransactionType: 'create-artist',
-      pendingMetadataUri: metadataUri
+      pendingMetadataUri: metadataUri,
     })
   );
 }
 
 export function onCreateBandComplete({
   transaction,
-  data: { metadataUri, artistTid }
+  data: { metadataUri, artistTid },
 }) {
   const store = storeUtils.getStore();
   store.dispatch(
     usmActions.updateTransaction({
       key: utils.genStartBandTransactionKey(artistTid),
       transaction,
-      status: constants.usm.transactionStatus.MINED
+      status: constants.usm.transactionStatus.MINED,
     })
   );
   store.dispatch(
     usmActions.fetchAllTokens({
       pendingTransactionType: 'start-band',
-      pendingMetadataUri: metadataUri
+      pendingMetadataUri: metadataUri,
     })
   );
 }
 
 export function onJoinBandComplete({
   transaction,
-  data: { metadataUri, bandTid, artistTid }
+  data: { metadataUri, bandTid, artistTid },
 }) {
   const store = storeUtils.getStore();
   store.dispatch(
     usmActions.updateTransaction({
       key: utils.genJoinBandTransactionKey(bandTid, artistTid),
       transaction,
-      status: constants.usm.transactionStatus.MINED
+      status: constants.usm.transactionStatus.MINED,
     })
   );
   store.dispatch(
     usmActions.fetchAllTokens({
       pendingTransactionType: 'join-band',
-      pendingMetadataUri: metadataUri
+      pendingMetadataUri: metadataUri,
     })
   );
 }
 
 export function onCreateTrackComplete({
   transaction,
-  data: { metadataUri, bandTid, artistTid }
+  data: { metadataUri, bandTid, artistTid },
 }) {
   const store = storeUtils.getStore();
   store.dispatch(
     usmActions.updateTransaction({
       key: utils.genCreateTrackTransactionKey(bandTid, artistTid),
       transaction,
-      status: constants.usm.transactionStatus.MINED
+      status: constants.usm.transactionStatus.MINED,
     })
   );
   store.dispatch(
     usmActions.fetchAllTokens({
       pendingTransactionType: 'create-track',
-      pendingMetadataUri: metadataUri
+      pendingMetadataUri: metadataUri,
     })
   );
 }

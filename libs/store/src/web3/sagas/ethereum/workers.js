@@ -1,7 +1,7 @@
 import { call } from 'redux-saga/effects';
 import EthClient, {
   isValidProductionNetworkId,
-  isValidTestNetworkId
+  isValidTestNetworkId,
 } from '@lib/EthClient';
 import * as web3Helpers from '../helpers';
 import * as helpers from './helpers';
@@ -10,7 +10,7 @@ export function* init(action) {
   yield call([web3Helpers, web3Helpers.init], action, {
     web3Client: new EthClient({ ethereum: window.ethereum }),
     eventListeners: helpers.coreEventListeners,
-    autoConnect: true
+    autoConnect: true,
   });
 }
 
@@ -31,7 +31,7 @@ export function* connectWallet(action) {
 
       console.error(error);
       return body;
-    }
+    },
   });
 }
 
@@ -46,6 +46,6 @@ export function* processNetworkUpdate(action) {
 export function* onUpdateNetworkStatus(action) {
   yield call([web3Helpers, web3Helpers.onUpdateNetworkStatus], action, {
     isValidProductionNetworkId,
-    isValidTestNetworkId
+    isValidTestNetworkId,
   });
 }

@@ -5,7 +5,7 @@ const initialState = {
   walletName: null,
   networkStatus: null,
   account: null,
-  networkId: null
+  networkId: null,
 };
 
 function initWeb3() {

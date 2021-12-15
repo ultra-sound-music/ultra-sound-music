@@ -4,11 +4,11 @@ module.exports = (config) => {
   config = getDefaultConfig(config);
 
   config.module.rules = config.module.rules.filter((rule) => {
-    // Find any default CSS & SCSS rules and remove them so 
+    // Find any default CSS & SCSS rules and remove them so
     // we can use our own in order to support css modules
     return !(rule.test.test('.css') || rule.test.test('.scss'));
-  });  
-    
+  });
+
   config.module.rules.push(
     {
       test: /\.s[ac]ss$/i,
@@ -30,23 +30,23 @@ module.exports = (config) => {
               },
               localIdentName: '[name]--[local]--[hash]',
               localIdentHashDigestLength: 5,
-              exportLocalsConvention: 'asIs'
-            }
-          }
+              exportLocalsConvention: 'asIs',
+            },
+          },
         },
         // Compiles Sass to CSS
-        'sass-loader'
-      ]
+        'sass-loader',
+      ],
     },
     {
       test: /\.svg/,
-      type: 'asset/inline'
+      type: 'asset/inline',
     },
     {
       test: /\.(jpg|jpeg|png|gif|mp3)$/,
-      type: 'asset/resource'
-    }    
+      type: 'asset/resource',
+    }
   );
 
   return config;
-}
+};

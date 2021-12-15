@@ -8,7 +8,7 @@ export function* init(action) {
   yield call([web3Helpers, web3Helpers.init], action, {
     web3Client: new SolClient(),
     eventListeners: helpers.coreEventListeners,
-    autoConnect: action?.payload?.autoConnect
+    autoConnect: action?.payload?.autoConnect,
   });
 }
 
@@ -21,7 +21,7 @@ export function* connectWallet(action) {
     parseError(error) {
       console.log(error);
       return 'There was an error connecting: 5678';
-    }
+    },
   });
 }
 
@@ -36,6 +36,6 @@ export function* processNetworkUpdate(action) {
 export function* onUpdateNetworkStatus(action) {
   yield call([web3Helpers, web3Helpers.onUpdateNetworkStatus], action, {
     isValidProductionNetworkId: () => {},
-    isValidTestNetworkId: () => {}
+    isValidTestNetworkId: () => {},
   });
 }

@@ -4,14 +4,14 @@ export function init({ web3Client }) {
   return {
     type: ActionTypes.INIT_USM,
     data: {
-      web3Client
-    }
+      web3Client,
+    },
   };
 }
 
 export function fetchNewMints() {
   return {
-    type: ActionTypes.FETCH_NEW_MINTS_REQUEST
+    type: ActionTypes.FETCH_NEW_MINTS_REQUEST,
   };
 }
 
@@ -19,8 +19,8 @@ export function fetchNewMintsSuccess({ mints }) {
   return {
     type: ActionTypes.FETCH_NEW_MINTS_SUCCESS,
     payload: {
-      mints
-    }
+      mints,
+    },
   };
 }
 
@@ -28,8 +28,8 @@ export function setActiveArtist({ artistId }) {
   return {
     type: ActionTypes.SET_ACTIVE_ARTIST,
     data: {
-      artistId
-    }
+      artistId,
+    },
   };
 }
 
@@ -37,21 +37,21 @@ export function setActiveBand({ bandId }) {
   return {
     type: ActionTypes.SET_ACTIVE_BAND,
     data: {
-      bandId
-    }
+      bandId,
+    },
   };
 }
 
 export function fetchAllTokens({
   pendingTransactionType,
-  pendingMetadataUri
+  pendingMetadataUri,
 } = {}) {
   return {
     type: ActionTypes.FETCH_TOKENS_REQUEST,
     data: {
       pendingTransactionType,
-      pendingMetadataUri
-    }
+      pendingMetadataUri,
+    },
   };
 }
 
@@ -59,8 +59,8 @@ export function fetchTokensComplete({ tokens }) {
   return {
     type: ActionTypes.FETCH_TOKENS_COMPLETE,
     data: {
-      tokens
-    }
+      tokens,
+    },
   };
 }
 
@@ -68,14 +68,14 @@ export function createArtist({ imageUrl }) {
   return {
     type: ActionTypes.CREATE_ARTIST_REQUEST,
     data: {
-      imageUrl
-    }
+      imageUrl,
+    },
   };
 }
 
 export function startBand() {
   return {
-    type: ActionTypes.START_BAND_REQUEST
+    type: ActionTypes.START_BAND_REQUEST,
   };
 }
 
@@ -83,8 +83,8 @@ export function joinBand({ bandId }) {
   return {
     type: ActionTypes.JOIN_BAND_REQUEST,
     data: {
-      bandId
-    }
+      bandId,
+    },
   };
 }
 
@@ -92,8 +92,8 @@ export function createTrack({ bandId }) {
   return {
     type: ActionTypes.CREATE_TRACK_REQUEST,
     data: {
-      bandId
-    }
+      bandId,
+    },
   };
 }
 
@@ -103,7 +103,7 @@ export function addTransaction({
   transactionId,
   status,
   errorCode,
-  errorMessage
+  errorMessage,
 }) {
   return {
     type: ActionTypes.ADD_TRANSACTION,
@@ -113,8 +113,8 @@ export function addTransaction({
       transactionId,
       status,
       errorCode,
-      errorMessage
-    }
+      errorMessage,
+    },
   };
 }
 
@@ -124,7 +124,7 @@ export function updateTransaction({
   transactionId,
   status,
   errorCode,
-  errorMessage
+  errorMessage,
 }) {
   return {
     type: ActionTypes.UPDATE_TRANSACTION,
@@ -134,7 +134,7 @@ export function updateTransaction({
       transactionId,
       status,
       errorCode,
-      errorMessage
-    }
+      errorMessage,
+    },
   };
 }

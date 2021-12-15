@@ -5,5 +5,5 @@ import * as selectors from './selectors';
 export default {
   actions,
   actionTypes,
-  selectors
+  selectors,
 };

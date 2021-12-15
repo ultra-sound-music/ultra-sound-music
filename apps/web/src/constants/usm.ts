@@ -4,14 +4,14 @@ export const MAX_BAND_MEMBERS = 6;
 export const tokenType = Object.freeze({
   ARTIST: 'artist',
   BAND: 'band',
-  TRACK: 'track'
+  TRACK: 'track',
 });
 
 export const transactionStatus = Object.freeze({
   SUBMITTED: 'SUBMITTED',
   AUTHORIZED: 'AUTHORIZED',
   MINED: 'MINED',
-  FAILED: 'FAILED'
+  FAILED: 'FAILED',
 });
 
 export const transactionErrorCodes = Object.freeze({});
@@ -21,5 +21,5 @@ export const traitNames = [
   'warmth',
   'dissonance',
   'aggression',
-  'space'
+  'space',
 ];

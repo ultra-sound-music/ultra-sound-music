@@ -1,3 +1,1 @@
-export default Object.freeze({
-  
-});
+export default Object.freeze({});

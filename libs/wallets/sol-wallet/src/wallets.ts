@@ -1,7 +1,4 @@
-import {
-  Wallet,
-  WalletName,  
-} from '@solana/wallet-adapter-base';
+import { Wallet, WalletName } from '@solana/wallet-adapter-base';
 
 import {
   getLedgerWallet,
@@ -11,7 +8,7 @@ import {
   getSolflareWebWallet,
   getSolletWallet,
   getSolletExtensionWallet,
-  getTorusWallet
+  getTorusWallet,
 } from '@solana/wallet-adapter-wallets';
 
 export type IWalletName = WalletName;
@@ -26,7 +23,7 @@ export const walletsMap = {
   ['SolflareWeb' as IWalletName]: getSolflareWebWallet,
   ['Sollet' as IWalletName]: getSolletWallet,
   ['SolletExtension' as IWalletName]: getSolletExtensionWallet,
-  ['Torus' as IWalletName]: getTorusWallet
+  ['Torus' as IWalletName]: getTorusWallet,
 };
 
 export const supportedWallets = Object.keys(walletsMap);

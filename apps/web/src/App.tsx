@@ -1,7 +1,7 @@
 import logger from '@usm/utils/logger';
 import { Button, Link, Image } from '@usm/ui';
 
-logger.info('test')
+logger.info('test');
 
 export function App() {
   return (

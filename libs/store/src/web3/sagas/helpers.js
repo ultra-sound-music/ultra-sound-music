@@ -24,7 +24,7 @@ export function* init(
 
   if (web3Client.isWeb3Available) {
     yield fork(startWatchingForWalletEvents, web3Client, eventListeners, [
-      web3Client
+      web3Client,
     ]);
   }
 
@@ -34,13 +34,13 @@ export function* init(
       web3Actions.updateNetworkStatus({
         status: web3Constants.networkStatus.CONNECTED,
         account: connectedAccount,
-        networkId: parseInt(networkId)
+        networkId: parseInt(networkId),
       })
     );
   } else if (web3Client.isWeb3Available) {
     yield put(
       web3Actions.updateNetworkStatus({
-        status: web3Constants.networkStatus.NOT_AVAILABLE
+        status: web3Constants.networkStatus.NOT_AVAILABLE,
       })
     );
   }
@@ -53,14 +53,14 @@ export function* connectWallet(action, { parseError }) {
   try {
     yield put(
       web3Actions.updateNetworkStatus({
-        status: web3Constants.networkStatus.CONNECTING
+        status: web3Constants.networkStatus.CONNECTING,
       })
     );
     yield call([web3Client, 'connectWallet']);
   } catch (error) {
     yield put(
       web3Actions.updateNetworkStatus({
-        status: web3Constants.networkStatus.NOT_CONNECTED
+        status: web3Constants.networkStatus.NOT_CONNECTED,
       })
     );
 
@@ -68,7 +68,7 @@ export function* connectWallet(action, { parseError }) {
 
     const modalProps = {
       title: 'Failed to connect',
-      body: modalBody
+      body: modalBody,
     };
 
     yield put(mediator.actions.showModal(modalProps));
@@ -115,7 +115,7 @@ export function* onUpdateNetworkStatus(
       yield put(
         mediator.actions.showModal({
           title: 'Unrecognized Network',
-          body: 'Please switch to a valid Ethereum network.'
+          body: 'Please switch to a valid Ethereum network.',
         })
       );
     } else {
@@ -123,7 +123,7 @@ export function* onUpdateNetworkStatus(
         mediator.actions.showAppMessage({
           title: 'Test Mode',
           message: 'You have connected using an Ethereum test network',
-          timeout: 4000
+          timeout: 4000,
         })
       );
     }

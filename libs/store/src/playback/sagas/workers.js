@@ -15,7 +15,7 @@ export function getPlayer() {
     player = new UsmPlayer({
       logger: {
         info: console.info,
-        error: console.error
+        error: console.error,
       },
       onPlay: ({ id }) => {
         dispatch(actions.onPlaySuccess({ entityId: id }));
@@ -27,7 +27,7 @@ export function getPlayer() {
 
       onLoad: ({ id }) => {
         dispatch(actions.onLoadSuccess({ entityId: id }));
-      }
+      },
     });
   }
 
@@ -42,7 +42,7 @@ export function* play({ payload }) {
     const player = getPlayer();
     player.play({
       audioUrl: audioUrl || '',
-      id: entityId
+      id: entityId,
     });
   } catch (error) {
     console.error(error);

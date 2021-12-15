@@ -34,7 +34,7 @@ export interface IUsmPlayerPlayArgs {
 
 const defaultLogger: ILogger = {
   info: console && console.info,
-  error: console && console.error
+  error: console && console.error,
 };
 
 export default class UsmPlayer {
@@ -68,7 +68,7 @@ export default class UsmPlayer {
       id: this.currentId,
       audioUrl: this.currentUrl,
       currentTime: this.currentTime,
-      isPlaying: this.isPlaying
+      isPlaying: this.isPlaying,
     });
     return audioSource;
   };
@@ -88,7 +88,7 @@ export default class UsmPlayer {
 
   play = async ({
     id = '',
-    audioUrl = ''
+    audioUrl = '',
   }: IUsmPlayerPlayArgs): Promise<void> => {
     if (!audioUrl) {
       this.logger.info('audioUrl must be provided');
@@ -116,7 +116,7 @@ export default class UsmPlayer {
       id: this.currentId,
       audioUrl: this.currentUrl,
       currentTime: this.currentTime,
-      isPlaying: this.isPlaying
+      isPlaying: this.isPlaying,
     });
   };
 
@@ -128,7 +128,7 @@ export default class UsmPlayer {
       id: this.currentId,
       audioUrl: this.currentUrl,
       currentTime: this.currentTime,
-      isPlaying: this.isPlaying
+      isPlaying: this.isPlaying,
     });
   }
 
@@ -140,7 +140,7 @@ export default class UsmPlayer {
       id: this.currentId,
       audioUrl: this.currentUrl,
       currentTime: this.currentTime,
-      isPlaying: this.isPlaying
+      isPlaying: this.isPlaying,
     });
   }
 }

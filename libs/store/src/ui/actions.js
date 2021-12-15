@@ -2,7 +2,7 @@ import * as ActionTypes from './actionTypes';
 
 export function updateAppUI() {
   return {
-    type: 'UPDATE_APP_UI'
+    type: 'UPDATE_APP_UI',
   };
 }
 
@@ -13,14 +13,14 @@ export function showModal({ title, body, ctaText }) {
       type: 'standard',
       title,
       body,
-      ctaText
-    }
+      ctaText,
+    },
   };
 }
 
 export function hideModal() {
   return {
-    type: ActionTypes.HIDE_MODAL
+    type: ActionTypes.HIDE_MODAL,
   };
 }
 
@@ -28,8 +28,8 @@ export function showInstallWalletModal() {
   return {
     type: ActionTypes.SHOW_MODAL,
     payload: {
-      type: 'install-wallet'
-    }
+      type: 'install-wallet',
+    },
   };
 }
 
@@ -37,8 +37,8 @@ export function showStartBandModal() {
   return {
     type: ActionTypes.SHOW_MODAL,
     payload: {
-      type: 'start-band'
-    }
+      type: 'start-band',
+    },
   };
 }
 
@@ -47,8 +47,8 @@ export function showJoinBandModal({ bandId }) {
     type: ActionTypes.SHOW_MODAL,
     payload: {
       type: 'join-band',
-      bandId
-    }
+      bandId,
+    },
   };
 }
 
@@ -57,8 +57,8 @@ export function showMintTrackModal({ bandId }) {
     type: ActionTypes.SHOW_MODAL,
     payload: {
       type: 'mint-track',
-      bandId
-    }
+      bandId,
+    },
   };
 }
 
@@ -68,13 +68,13 @@ export function showAppMessage({ title, message, timeout }) {
     payload: {
       title,
       message,
-      timeout
-    }
+      timeout,
+    },
   };
 }
 
 export function hideAppMessage() {
   return {
-    type: ActionTypes.HIDE_APP_MESSAGE
+    type: ActionTypes.HIDE_APP_MESSAGE,
   };
 }
