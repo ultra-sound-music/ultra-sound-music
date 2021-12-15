@@ -2,16 +2,16 @@ import { IWallet } from '@usm/wallets/types';
 import logger from '@usm/utils/logger';
 
 export interface ISolClientArgs {
-  solClient: IWallet;
+  wallet: IWallet;
   accountAddress: string;
 }
 
 export default class SolClient {
-  solClient: IWallet;
+  wallet: IWallet;
   accountAddress: string;
 
-  constructor({ solClient, accountAddress }: ISolClientArgs) {
-    this.solClient = solClient;
+  constructor({ wallet, accountAddress }: ISolClientArgs) {
+    this.wallet = wallet;
     this.accountAddress = accountAddress;
   }
 
