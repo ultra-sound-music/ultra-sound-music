@@ -1,14 +1,12 @@
 module.exports = {
   displayName: 'wallets-sol-wallet',
-  preset: '../../../../jest.preset.js',
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-    },
-  },
+  preset: '../../../jest.preset.js',
   transform: {
-    '^.+\\.[tj]sx?$': 'ts-jest',
+    '^.+\\.[tj]sx?$': ['babel-jest', { cwd: __dirname }],
   },
+  transformIgnorePatterns: [
+    "<rootDir>node_modules/"
+  ],  
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../../coverage/libs/wallets/sol-wallet',
+  coverageDirectory: '../../../coverage/libs/wallets/sol-wallet',
 };

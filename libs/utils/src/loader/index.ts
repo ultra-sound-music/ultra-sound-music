@@ -1,4 +1,4 @@
-export default function loadAudio(url: string): Promise<ArrayBuffer | void> {
+export function loadAudio(url: string): Promise<ArrayBuffer | void> {
   return new Promise(function (resolve, reject) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url);

@@ -1,10 +1,7 @@
 import { getWalletAdapter, detaultWalletName, IWalletName } from './wallets';
 import {
-  MessageSignerWalletAdapter,
-  SignerWalletAdapter,
-  WalletAdapter,
-  WalletAdapterEvents,
-  // WalletAdapterNetwork,
+  Adapter,
+  WalletAdapterEvents
 } from '@solana/wallet-adapter-base';
 import { PublicKey } from '@solana/web3.js';
 
@@ -19,12 +16,12 @@ export default class SolClient implements IWeb3Client {
   walletName: string;
   walletUrl: string;
   walletIcon: string;
-  wallet: MessageSignerWalletAdapter | SignerWalletAdapter | WalletAdapter;
+  wallet: Adapter;
 
   constructor(walletName: IWalletName = detaultWalletName) {
     const config = {};
     const walletAdapter = getWalletAdapter(walletName, config);
-    const wallet = walletAdapter.adapter();
+    const wallet = walletAdapter.adapter;
 
     this.isWeb3Available = !!wallet;
     this.walletName = walletName;

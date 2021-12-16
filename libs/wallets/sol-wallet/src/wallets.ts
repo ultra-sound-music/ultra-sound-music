@@ -1,8 +1,8 @@
-import { Wallet, WalletName } from '@solana/wallet-adapter-base';
+import { Wallet } from '@solana/wallet-adapter-base';
 
 import {
   getLedgerWallet,
-  getMathWallet,
+  getMathWallet,  
   getPhantomWallet,
   getSolflareWallet,
   getSolflareWebWallet,
@@ -11,20 +11,19 @@ import {
   getTorusWallet,
 } from '@solana/wallet-adapter-wallets';
 
-export type IWalletName = WalletName;
-
-export const detaultWalletName = 'Phantom' as IWalletName;
-
 export const walletsMap = {
-  ['Ledger' as IWalletName]: getLedgerWallet,
-  ['MathWallet' as IWalletName]: getMathWallet,
-  ['Phantom' as IWalletName]: getPhantomWallet,
-  ['Solflare' as IWalletName]: getSolflareWallet,
-  ['SolflareWeb' as IWalletName]: getSolflareWebWallet,
-  ['Sollet' as IWalletName]: getSolletWallet,
-  ['SolletExtension' as IWalletName]: getSolletExtensionWallet,
-  ['Torus' as IWalletName]: getTorusWallet,
+  Ledger: getLedgerWallet,
+  MathWallet: getMathWallet,
+  Phantom: getPhantomWallet,
+  Solflare: getSolflareWallet,
+  SolflareWeb: getSolflareWebWallet,
+  Sollet: getSolletWallet,
+  SolletExtension: getSolletExtensionWallet,
+  Torus: getTorusWallet,
 };
+
+export type IWalletName = keyof typeof walletsMap;
+export const detaultWalletName: IWalletName = 'Phantom';
 
 export const supportedWallets = Object.keys(walletsMap);
 

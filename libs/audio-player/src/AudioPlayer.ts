@@ -1,4 +1,4 @@
-import { loadAudio } from '@usm/utils';
+import { loadAudio } from '@usm/utils/loader';
 
 export const WHEN_TIME = 0;
 export const START_TIME = 0;
@@ -50,7 +50,10 @@ export default class UsmPlayer {
   onStop: (e: IUsmPlayerEvent) => void;
 
   constructor({ logger, onLoad, onPlay, onStop }: IUsmPlayerProps = {}) {
-    this.logger = logger;
+    if (logger) {
+      this.logger = logger;
+    }
+    
     this.audioContext = new AudioContext();
 
     this.onLoad = onLoad || noop;

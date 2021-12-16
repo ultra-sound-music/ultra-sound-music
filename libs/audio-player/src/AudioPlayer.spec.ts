@@ -1,7 +1,10 @@
-import { audioPlayer } from './AudioPlayer';
+import UsmPlayer from './AudioPlayer';
 
-describe('audioPlayer', () => {
-  it('should work', () => {
-    expect(audioPlayer()).toEqual('audio-player');
+describe('UsmPlayer', () => {
+  describe('UsmPlayer constructor', () => {
+    it('returns an instance of UsmPlayer', () => {
+      const usmPlayer = new UsmPlayer();
+      expect(usmPlayer).toBeInstanceOf(UsmPlayer);      
+    })
   });
 });
