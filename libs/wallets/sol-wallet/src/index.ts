@@ -5,13 +5,13 @@ import {
 } from '@solana/wallet-adapter-base';
 import { PublicKey } from '@solana/web3.js';
 
-import { IPubKeyString, INetworkId, IWeb3Client } from '@usm/wallets/types';
+import { IPubKeyString, INetworkId, IWallet } from '@usm/wallets/types';
 
 export function isValidSolanaAddress(address: string): boolean {
   return !!address;
 }
 
-export default class SolClient implements IWeb3Client {
+export default class SolClient implements IWallet {
   isWeb3Available = false;
   walletName: string;
   walletUrl: string;
