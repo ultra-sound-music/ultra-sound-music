@@ -1,0 +1,23 @@
+@use 'typo.scss' as *;
+
+.h1 {
+  @extend %font-h1;
+}
+.h2 {
+  @extend %font-h2;  
+}
+.h3 {
+  @extend %font-h3;  
+}
+.h4 {
+  @extend %font-h4;  
+}
+.subhead {
+  @extend %font-subhead;  
+}
+.body {
+  @extend %font-body;  
+}
+.small {
+  @extend %font-small;
+}

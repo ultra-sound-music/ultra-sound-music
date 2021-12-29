@@ -1,9 +1,9 @@
 import './Image.scss';
 
 /* eslint-disable-next-line */
-export interface ImageProps {}
+export interface IImageProps {}
 
-export function Image(props: ImageProps) {
+export function Image(props: IImageProps) {
   return (
     <div>
       <h1>Welcome to Image!</h1>
