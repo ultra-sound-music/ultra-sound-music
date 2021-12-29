@@ -1,0 +1,16 @@
+{
+  "root": "apps/docs",
+  "sourceRoot": "apps/docs/src",
+  "projectDir": "",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "./apps/docs",
+        "commands": ["docusaurus start"]
+      }
+    }
+  },
+  "tags": []
+}
