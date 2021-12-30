@@ -2406,7 +2406,7 @@
     semver "7.3.4"
     tslib "^2.3.0"
 
-"@nrwl/devkit@13.4.1":
+"@nrwl/devkit@13.4.1", "@nrwl/devkit@>=12.0.0":
   version "13.4.1"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-13.4.1.tgz#32395f506be9e2adabf95febf774609168b21449"
   integrity sha512-dk/moNFriAFnAFro9EQILJWkYQsgkRI1rIou2uCkbrhUHeFZ1nZECjBNdBj/hocz76O24xH7+A8HneacXlKZHg==
@@ -13482,6 +13482,14 @@ nwsapi@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"
   integrity sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==
+
+nx-stylelint@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/nx-stylelint/-/nx-stylelint-13.1.0.tgz#d9c67918c7dced43b49d3f46058e712cff046fcb"
+  integrity sha512-DP7V5e/59jerL1jEiLsLkSt8EV1H8XDfFJA9qxAge6XJbuquFpWcgdDocJoirWxf/UZ2DBPoW0nXDnDZ+6y8Wg==
+  dependencies:
+    "@nrwl/devkit" ">=12.0.0"
+    tslib "^2.3.1"
 
 nx@13.3.1:
   version "13.3.1"

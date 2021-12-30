@@ -43,6 +43,6 @@ $font-size-small: 1.6rem;
 }
 
 %font-small {
-  font: $font-weight-x-bold #{$font-size-small} / 1.5 $font-fam-body;
+  font: $font-weight-bold #{$font-size-small} / 1.5 $font-fam-body;
   letter-spacing: 0.025em;
 }

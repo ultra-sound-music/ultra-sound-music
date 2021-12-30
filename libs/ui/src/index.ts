@@ -1,3 +1,4 @@
+export * from './components/Spinner/Spinner';
 export * from './components/Input/Input';
 export * from './components/Image/Image';
 export * from './components/Link/Link';
