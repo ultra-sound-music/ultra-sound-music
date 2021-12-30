@@ -46,26 +46,19 @@
 }
 
 .primary {
-  background-color: $color-usm-yellow;
-  color: $color-night-sky;
+  box-sizing: border-box;
 }
 
 .secondary {
-  background-color: $color-dolpin-blue;
-  color: $color-polar-bear;
+  box-sizing: border-box;
 }
 
 .minimal {
-  background-color: transparent;
   box-sizing: border-box;
-  border: 2px solid $color-dolpin-blue;
-  color: $color-dolpin-blue;
 }
 
 .disabled {
   pointer-events: none;
-  background-color: $color-winter-swim;
-  color: $color-night-sky;
 }
 
 .content {

@@ -5,7 +5,7 @@ export interface ISpinnerProps {
   cover?: 'relative' | 'fixed';
 }
 
-export const Spinner = ({ cover }: ISpinnerProps): JSX.Element => {
+export function Spinner ({ cover }: ISpinnerProps): JSX.Element {
   const classNames = cn(styles.Spinner, { [styles[`cover_${cover}`]]: cover });
   return <div className={classNames}></div>;
 };
