@@ -1,3 +1,4 @@
+import cn from 'clsx';
 import styles from './Typography.scss';
 
 interface ITypographyProps {
@@ -10,8 +11,9 @@ export function Typography({ names }: ITypographyProps ) {
   return (
     <div>
       {names.map((name) => {
+        const className = cn(styles.item, styles[name]);
         return (
-          <div key={name} className={styles.item}>
+          <div key={name} className={className}>
             <div className={styles.name}>{name}</div>
             <div className={styles.text}>{text}</div>
           </div>

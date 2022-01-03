@@ -1,14 +1,11 @@
-import './Image.scss';
+import { ImgHTMLAttributes } from 'react';
 
-/* eslint-disable-next-line */
-export interface IImageProps {}
+import * as styles from './Image.scss';
 
-export function Image(props: IImageProps) {
-  return (
-    <div>
-      <h1>Welcome to Image!</h1>
-    </div>
-  );
-}
+export type IImageProps = ImgHTMLAttributes<HTMLImageElement>;
+
+export const Image = ({ alt = '', ...args }: IImageProps): JSX.Element => {
+  return <img alt={alt} className={styles.image} {...args} />;
+};
 
 export default Image;

@@ -13,7 +13,7 @@ const names = [
 
 export default {
   component: Typography,
-  title: 'Typography',
+  title: 'Styleguide/Typography',
 } as Meta;
 
 const Template: Story = () => <Typography names={names} />;

@@ -6,7 +6,7 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "deploy-storybook": "storybook-to-ghpages --packages libs/ui --source-branch feature/nx --out dist/libs/ui"
+    "deploy-storybook": "storybook-to-ghpages --packages=libs/ui --source-branch=feature/nx --out=dist/libs/ui"
   },
   "private": true,
   "dependencies": {

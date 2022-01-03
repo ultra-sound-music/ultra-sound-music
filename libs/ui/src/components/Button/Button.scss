@@ -1,16 +1,26 @@
 @use '../../styles' as *;
 
 .Button {
-  box-sizing: border-box;
-  border: 2px solid transparent;
+  background-color: $color-void;
+  border: none;
   border-radius: 15px;
-  cursor: pointer;
-  padding: 19px 55px;
+  color: $color-polar-bear;
+  padding: 14px 62px;
   text-decoration: none;
-  text-transform: uppercase;
-  line-height: 1;
   text-align: center;
-  @extend %font-body;
+  cursor: pointer;
+  position: relative;
+  @extend %font-button;
+
+  // Use this technique for the border in order to be consistent with the .secondary border radius styling
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: -3px;
+    border-radius: 18px;
+  }
 
   &:after:empty {
     content: '\200b';
@@ -19,11 +29,6 @@
 
 .wide {
   min-width: 300px;
-}
-
-.slim {
-  padding-top: 18px;
-  padding-bottom: 18px;
 }
 
 .fullWidth {
@@ -37,20 +42,41 @@
   justify-content: space-around;
   align-items: center;
   column-gap: 15px;
-  padding: 10px 25px;
+  padding: 10px 32px 10px 24px;
 
-  &.slim {
-    padding-top: 7px;
-    padding-bottom: 7px;
+  .image {
+    width: 30px;
+    height: 30px;
   }
 }
 
 .primary {
-  box-sizing: border-box;
+  background-image: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);
+  &:before {
+    background-image: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);    
+  }  
+
+  &:hover {
+    background: linear-gradient(to right, $gradient-brilliant-end, $gradient-brilliant-start);
+
+    &:before {
+      background: linear-gradient(to right, $gradient-brilliant-end, $gradient-brilliant-start);
+    }
+  }
 }
 
 .secondary {
-  box-sizing: border-box;
+  &:before {
+    background-image: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);    
+  }
+
+  &:hover {
+    background-image: linear-gradient(90deg, $gradient-brilliant-end, $gradient-brilliant-start);    
+
+    &:before {
+      background: linear-gradient(to right, $gradient-brilliant-end, $gradient-brilliant-start);
+    }
+  }
 }
 
 .minimal {
@@ -63,7 +89,6 @@
 
 .content {
   max-width: 100px;
-  text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

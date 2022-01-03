@@ -1,14 +1,18 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Story, Meta } from '@storybook/react';
 
-import Button from './Button';
+import Image from '../Image/Image';
+
+import Button, { IButtonProps } from './Button';
+
+import logo from '../../assets/logo.png';
 
 export default {
-  title: 'Component/Button',
+  title: 'Components/Button',
   component: Button
-} as Meta<typeof Button>;
+} as Meta;
 
-const Template: Story<typeof Button> = (args) => {
+const Template: Story<IButtonProps> = (args) => {
   return (
     <BrowserRouter>
       <Button {...args} />
@@ -16,8 +20,29 @@ const Template: Story<typeof Button> = (args) => {
   );
 };
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const PrimaryTemplate = Template.bind({});
+PrimaryTemplate.args = {
   type: 'primary',
-  children: 'Button'
+  children: 'Primary'
+};
+
+export const SecondaryTemplate = Template.bind({});
+SecondaryTemplate.args = {
+  type: 'secondary',
+  children: 'Secondary'
+};
+
+export const ImageTemplate = Template.bind({});
+ImageTemplate.args = {
+  type: 'primary',
+  image: <Image src={logo} />,
+  children: 'With Image'
+};
+
+export const FullWidthTemplate = Template.bind({});
+FullWidthTemplate.args = {
+  type: 'primary',
+  image: <Image src={logo} />,
+  isFullWidth: true,
+  children: 'Full width with image'
 };

@@ -1,4 +1,38 @@
+@use '../../../../../libs/styles/src/typo.scss' as *;
 @use '../../../../../libs/styles/src/colors.scss' as *;
+
+.colors {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 35px;
+  margin-bottom: 65px;
+}
+
+.title {
+  @extend %font-h4;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Color {
+  .swatch {
+    height: 90px;
+    width: 90px;
+  }
+}
+
+.Gradient {
+  .swatch {
+    height: 90px;
+    width: 270px;
+  }
+}
 
 .taffy {
   background-color: $color-taffy;
@@ -44,18 +78,14 @@
   background-color: $color-polar-bear;
 }
 
-.nothing {
+.c {
   background-color: $color-nothing;
 }
 
-.lights-out {
-  background-color: $color-lights-out;
+.void {
+  background-color: $color-void;
 }
 
-.gradiant-brilliant-start {
-  background-color: $gradient-brilliant-start;
-}
-
-.gradiant-brilliant-end {
-  background-color: $gradient-brillian-end;
+.gradient-brilliant {
+  background: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);
 }

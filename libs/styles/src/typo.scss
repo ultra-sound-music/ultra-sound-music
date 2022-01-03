@@ -23,18 +23,16 @@ $font-size-small: 1.6rem;
   letter-spacing: 0.05em;
 }
 
-%font-h3 {
+%font-h3, %font-button {
   font: $font-weight-bold #{$font-size-body} / 1.2 $font-fam-body;
-  text-transform: uppercase;
 }
 
 %font-h4 {
-  font: $font-weight-bold #{$font-size-body} / 1.6 $font-fam-body;
-  text-transform: uppercase;
+  font: $font-weight-bold #{$font-size-small} / 1.6 $font-fam-body;
 }
 
 %font-subhead {
-  font: $font-weight-bold #{$font-size-body} / 1.2 $font-fam-body;
+  font: $font-weight-bold #{$font-size-small} / 1.2 $font-fam-body;
   text-transform: uppercase;
 }
 

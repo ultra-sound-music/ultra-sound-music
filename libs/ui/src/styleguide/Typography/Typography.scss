@@ -1,11 +1,15 @@
 @use '../../../../../libs/styles/src/typo.scss' as *;
 
+.item {
+  margin-bottom: 60px;
+}
+
 .h1 {
   @extend %font-h1;
 }
 
 .h2 {
-  @extend %font-h2;  
+  @extend %font-h2;
 }
 
 .h3 {

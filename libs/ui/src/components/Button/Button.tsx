@@ -14,7 +14,6 @@ export interface IButtonProps {
   to?: typeof Link.prototype.to;
   isFullWidth?: boolean;
   isWide?: boolean;
-  isSlim?: boolean;
   isDisabled?: boolean;
   isProcessing?: boolean;
   isExternal?: boolean;
@@ -29,7 +28,6 @@ export const Button = ({
   isFullWidth = false,
   isDisabled = false,
   isWide = false,
-  isSlim = false,
   isProcessing = false,
   isExternal = false,
   onClick,
@@ -43,34 +41,33 @@ export const Button = ({
     { [styles.withImage]: !!image },
     { [styles.disabled]: disabled },
     { [styles.fullWidth]: isFullWidth },
-    { [styles.slim]: isSlim },
     { [styles.wide]: isWide }
+  );
+
+  const inside = (
+    <>
+      {image ? <span className={styles.image}>{image}</span> : null}
+      {children ? <span className={styles.content}>{children}</span> : ''}
+      {isProcessing && <Spinner cover='relative' />}    
+    </>
   );
 
   if (to && !disabled) {
     if (isExternal) {
-      return (
-        <a
-          href={to}
-          className={classNames}
-          target='_blank'
-          rel='noreferrer'
-          {...props}
-        >
-          {image ? <span className={styles.image}>{image}</span> : null}
-          {children ? <span className={styles.content}>{children}</span> : ''}
-          {isProcessing && <Spinner cover='relative' />}
-        </a>
-      );
+      return <a 
+        href = {to}
+        className = {classNames}
+        target = '_blank'
+        rel = 'noreferrer'
+        {...props}
+      >{inside}</a>
     }
 
-    return (
-      <Link to={to} className={classNames} {...props}>
-        {image ? <span className={styles.image}>{image}</span> : null}
-        {children ? <span className={styles.content}>{children}</span> : ''}
-        {isProcessing && <Spinner cover='relative' />}
-      </Link>
-    );
+    return <Link
+      to = {to}
+      className = {classNames}
+      {...props}
+    >{inside}</Link>
   }
 
   return (
@@ -80,11 +77,7 @@ export const Button = ({
       onClick={onClick}
       disabled={disabled}
       {...props}
-    >
-      {image ? <span className={styles.image}>{image}</span> : null}
-      {children ? <span className={styles.content}>{children}</span> : ''}
-      {isProcessing && <Spinner cover='relative' />}
-    </button>
+    >{inside}</button>
   );
 };
 

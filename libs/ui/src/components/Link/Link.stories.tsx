@@ -3,7 +3,7 @@ import { Link, LinkProps } from './Link';
 
 export default {
   component: Link,
-  title: 'Link',
+  title: 'Components/Link',
 } as Meta;
 
 const Template: Story<LinkProps> = (args) => <Link {...args} />;

@@ -1,2 +1,2 @@
-@use '../../../libs/styles/src/typo.scss' as *;
-@use '../../../libs/styles/src/colors.scss' as *;
+@forward '../../../libs/styles/src/typo.scss';
+@forward '../../../libs/styles/src/colors.scss';

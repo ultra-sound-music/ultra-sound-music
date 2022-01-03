@@ -14,16 +14,16 @@ const colors = [
   'empty-sky',
   'polar-bear',
   'nothing',
-  'lights-out'
+  'void'
 ];
 
 const gradients = [
-  'brillian'
+  'brilliant'
 ]
 
 export default {
   component: Colors,
-  title: 'Colors',
+  title: 'Styleguide/Colors',
 } as Meta;
 
 const Template: Story = () => <Colors  colors={colors} gradients={gradients} />;
