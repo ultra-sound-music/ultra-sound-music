@@ -5,7 +5,7 @@
   border: none;
   border-radius: 15px;
   color: $color-polar-bear;
-  padding: 14px 62px;
+  padding: 11px 62px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
@@ -42,7 +42,7 @@
   justify-content: space-around;
   align-items: center;
   column-gap: 15px;
-  padding: 10px 32px 10px 24px;
+  padding: 7px 32px 7px 24px;
 
   .image {
     width: 30px;
@@ -84,7 +84,14 @@
 }
 
 .disabled {
+  background-color: $color-old-towel;
+  background-image: none;
   pointer-events: none;
+
+  &:before {
+    background-color: $color-old-towel;
+    background-image: none;
+  }
 }
 
 .content {

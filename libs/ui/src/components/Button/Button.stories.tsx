@@ -20,27 +20,34 @@ const Template: Story<IButtonProps> = (args) => {
   );
 };
 
-export const PrimaryTemplate = Template.bind({});
-PrimaryTemplate.args = {
+export const Primary = Template.bind({});
+Primary.args = {
   type: 'primary',
   children: 'Primary'
 };
 
-export const SecondaryTemplate = Template.bind({});
-SecondaryTemplate.args = {
+export const Secondary = Template.bind({});
+Secondary.args = {
   type: 'secondary',
   children: 'Secondary'
 };
 
-export const ImageTemplate = Template.bind({});
-ImageTemplate.args = {
+export const WithImage = Template.bind({});
+WithImage.args = {
   type: 'primary',
   image: <Image src={logo} />,
   children: 'With Image'
 };
 
-export const FullWidthTemplate = Template.bind({});
-FullWidthTemplate.args = {
+export const Disabled = Template.bind({});
+Disabled.args = {
+  type: 'primary',
+  isDisabled: true,
+  children: 'Disabled'
+};
+
+export const FullWidth = Template.bind({});
+FullWidth.args = {
   type: 'primary',
   image: <Image src={logo} />,
   isFullWidth: true,
