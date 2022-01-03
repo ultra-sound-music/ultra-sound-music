@@ -70,6 +70,13 @@
           "quiet": true
         }
       }
+    },
+    "stylelint": {
+      "executor": "nx-stylelint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/ui/**/*.css", "libs/ui/**/*.scss"]
+      }
     }
   }
 }
