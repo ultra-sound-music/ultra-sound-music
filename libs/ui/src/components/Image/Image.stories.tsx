@@ -1,4 +1,7 @@
 import { Story, Meta } from '@storybook/react';
+
+import logo from '../../assets/logo.png';
+
 import Image, { IImageProps } from './Image';
 
 export default {
@@ -9,4 +12,10 @@ export default {
 const Template: Story<IImageProps> = (args) => <Image {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  style: {
+    height: '100px',
+    width: 'auto'
+  },
+  src: logo
+};

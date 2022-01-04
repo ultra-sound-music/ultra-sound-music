@@ -1,0 +1,23 @@
+@use '../../styles.scss' as *;
+
+.Nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 80px;
+  min-width: 620px;
+}
+
+.navItem {
+  color: $color-polar-bear;
+  text-decoration: none;
+  @extend %font-small;
+  &:hover,
+  &:active {
+    color: $color-lavish;
+  }
+}
+
+.active {
+  color: $color-lavish;
+}

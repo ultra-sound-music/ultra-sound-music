@@ -6,7 +6,7 @@ import Spinner from '../Spinner/Spinner';
 
 import styles from './Button.scss';
 
-export type TButtonType = 'primary' | 'secondary' | 'minimal';
+export type TButtonType = 'primary' | 'secondary';
 
 export interface IButtonProps {
   type?: TButtonType;
@@ -44,7 +44,7 @@ export const Button = ({
     { [styles.wide]: isWide }
   );
 
-  const inside = (
+  const content = (
     <>
       {image ? <span className={styles.image}>{image}</span> : null}
       {children ? <span className={styles.content}>{children}</span> : ''}
@@ -60,14 +60,14 @@ export const Button = ({
         target = '_blank'
         rel = 'noreferrer'
         {...props}
-      >{inside}</a>
+      >{content}</a>
     }
 
     return <Link
       to = {to}
       className = {classNames}
       {...props}
-    >{inside}</Link>
+    >{content}</Link>
   }
 
   return (
@@ -77,7 +77,7 @@ export const Button = ({
       onClick={onClick}
       disabled={disabled}
       {...props}
-    >{inside}</button>
+    >{content}</button>
   );
 };
 

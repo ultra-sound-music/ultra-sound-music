@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Link from './Link';
+import Nav from './Nav';
 
-describe('Link', () => {
+describe('Nav', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Link />);
+    const { baseElement } = render(<Nav items={[]}/>);
     expect(baseElement).toBeTruthy();
   });
 });

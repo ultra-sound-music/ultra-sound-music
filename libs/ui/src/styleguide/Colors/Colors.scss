@@ -1,5 +1,4 @@
-@use '../../../../../libs/styles/src/typo.scss' as *;
-@use '../../../../../libs/styles/src/colors.scss' as *;
+@use '../../styles.scss' as *;
 
 .colors {
   display: flex;
@@ -54,20 +53,8 @@
   background-color: $color-sassy;
 }
 
-.dawn {
-  background-color: $color-dawn;
-}
-
-.dusk {
-  background-color: $color-dusk;
-}
-
 .evening-sky {
   background-color: $color-evening-sky;
-}
-
-.night-sky {
-  background-color: $color-night-sky;
 }
 
 .empty-sky {
@@ -76,10 +63,6 @@
 
 .polar-bear {
   background-color: $color-polar-bear;
-}
-
-.c {
-  background-color: $color-nothing;
 }
 
 .void {

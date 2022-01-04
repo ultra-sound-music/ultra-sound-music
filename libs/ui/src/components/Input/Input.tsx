@@ -1,9 +1,13 @@
-/* eslint-disable-next-line */
-export interface IInputProps {}
+import styles from './Input.scss';
 
-export function Input(props: IInputProps) {
+export interface IInputProps {
+  label: React.ReactNode
+}
+
+export function Input({ label, ...props }: IInputProps) {
   return (
     <div>
+      {label && <div className={styles.label}>{label}</div>}
       <input {...props} />
     </div>
   );

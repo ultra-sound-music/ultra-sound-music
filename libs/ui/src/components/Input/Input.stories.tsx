@@ -9,4 +9,6 @@ export default {
 const Template: Story<IInputProps> = (args) => <Input {...args} />;
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  label: 'Da Label'
+};

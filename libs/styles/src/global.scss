@@ -1,11 +1,15 @@
+@use './colors.scss' as *;
+@use './typo.scss' as *;
+
 html {
   box-sizing: border-box;
+  color: $color-polar-bear;
   font-size: 62.5%;
   height: 100%;
 }
 
 body {
-  font-size: 1.8rem;
+  @extend %font-body;
 }
 
 *, *:before, *:after {

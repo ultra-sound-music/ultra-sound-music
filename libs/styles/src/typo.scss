@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
 @import url('https://use.typekit.net/yye2hat.css%22%3E');
 
+$font-lato: 'Lato', sans-serif;
 $font-good: ff-good-web-pro-wide, sans-serif;;
 $font-fam-body: $font-good;
 
@@ -37,10 +39,10 @@ $font-size-small: 1.6rem;
 }
 
 %font-body {
-  font: $font-weight-bold #{$font-size-body} / 1.8 $font-fam-body;
+  font: $font-weight-normal #{$font-size-body} / 1.8 $font-fam-body;
 }
 
 %font-small {
-  font: $font-weight-bold #{$font-size-small} / 1.5 $font-fam-body;
+  font: $font-weight-normal #{$font-size-small} / 1.5 $font-fam-body;
   letter-spacing: 0.025em;
 }

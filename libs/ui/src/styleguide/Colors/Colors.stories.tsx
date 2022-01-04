@@ -7,13 +7,9 @@ const colors = [
   'break-water',
   'old-towel',
   'sassy',
-  'dawn',
-  'dusk',
   'evening-sky',
-  'night-sky',
   'empty-sky',
   'polar-bear',
-  'nothing',
   'void'
 ];
 

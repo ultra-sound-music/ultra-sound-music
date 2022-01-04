@@ -3,7 +3,7 @@
 .Button {
   background-color: $color-void;
   border: none;
-  border-radius: 15px;
+  border-radius: 7px;
   color: $color-polar-bear;
   padding: 11px 62px;
   text-decoration: none;
@@ -19,7 +19,7 @@
     top: 0; right: 0; bottom: 0; left: 0;
     z-index: -1;
     margin: -3px;
-    border-radius: 18px;
+    border-radius: 10px;
   }
 
   &:after:empty {
@@ -77,10 +77,6 @@
       background: linear-gradient(to right, $gradient-brilliant-end, $gradient-brilliant-start);
     }
   }
-}
-
-.minimal {
-  box-sizing: border-box;
 }
 
 .disabled {

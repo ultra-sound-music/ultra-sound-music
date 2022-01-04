@@ -1,17 +1,14 @@
 $color-taffy: #cebfff;
 $color-lavish: #a286ff;
-$color-break-water: #f5f8fd;
+$color-break-water: #b5bbc6;
 $color-old-towel: #6B6989;
 $color-sassy: #e35698;
-$color-dawn: #413E65;
-$color-dusk: #41345d;
-$color-evening-sky: #191227;
-$color-night-sky: #1b1934;
+$color-evening-sky: #1b1934;
 $color-empty-sky: #0a0914;
 
-$color-polar-bear: #fff;
-$color-nothing: #dbdbdb;
-$color-void: #000;
-
-$gradient-brilliant-start: #e35698;
+// Gradients
+$gradient-brilliant-start: $color-sassy;
 $gradient-brilliant-end: #7b56e3;
+
+$color-polar-bear: #fff;
+$color-void: #000;

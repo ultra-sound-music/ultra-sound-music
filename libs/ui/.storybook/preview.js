@@ -6,4 +6,17 @@ export const parameters = {
       order: ['Styleguide', 'Components'],
     },    
   },
+  backgrounds: {
+    default: 'void',
+    values: [
+      {
+        name: 'polar-bear',
+        value: '#fff',
+      },
+      {
+        name: 'void',
+        value: '#000',
+      },
+    ],
+  },  
 };
