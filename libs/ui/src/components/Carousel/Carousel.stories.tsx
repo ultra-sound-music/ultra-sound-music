@@ -23,5 +23,3 @@ const children = (
 Primary.args = {
   children: children.props.children
 };
-
-export const Blank = Template.bind({});
