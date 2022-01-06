@@ -48,36 +48,44 @@ export const Button = ({
     <>
       {image ? <span className={styles.image}>{image}</span> : null}
       {children ? <span className={styles.content}>{children}</span> : ''}
-      {isProcessing && <Spinner cover='relative' />}    
+      {isProcessing && <Spinner cover="relative" />}
     </>
   );
 
   if (to && !disabled) {
     if (isExternal) {
-      return <a 
-        href = {to}
-        className = {classNames}
-        target = '_blank'
-        rel = 'noreferrer'
-        {...props}
-      >{content}</a>
+      return (
+        <a
+          href={to}
+          className={classNames}
+          target="_blank"
+          rel="noreferrer"
+          {...props}
+        >
+          {content}
+        </a>
+      );
     }
 
-    return <Link
-      to = {to}
-      className = {classNames}
-      {...props}
-    >{content}</Link>
+    return (
+      <Link to={to} className={classNames} {...props}>
+        {content}
+      </Link>
+    );
   }
+
+  console.log('Button: ', { classNames, disabled, onClick, props });
 
   return (
     <button
-      type='button'
+      type="button"
       className={classNames}
       onClick={onClick}
       disabled={disabled}
       {...props}
-    >{content}</button>
+    >
+      {content}
+    </button>
   );
 };
 

@@ -1,4 +1,5 @@
 export * from './components/Avatar/Avatar';
+export * from './components/BidBox/BidBox';
 export * from './components/Button/Button';
 export * from './components/Carousel/Carousel';
 export * from './components/Figure/Figure';
@@ -11,4 +12,3 @@ export * from './components/Selector/Selector';
 export * from './components/SiteHeader/SiteHeader';
 export * from './components/Spinner/Spinner';
 export * from './components/TextBlock/TextBlock';
-
