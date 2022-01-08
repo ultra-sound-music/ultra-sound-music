@@ -1,3 +1,4 @@
+import { Link, BrowserRouter } from 'react-router-dom';
 import { Story, Meta } from '@storybook/react';
 
 import xolotl from '../../assets/xolotl.png';
@@ -11,12 +12,19 @@ export default {
 } as Meta<typeof Figure>;
 
 const Template: Story<IFigureProps> = (args) => {
-  return <Figure {...args} />;
+  return <BrowserRouter><Figure {...args} /></BrowserRouter>;
 };
 
 export const Primary = Template.bind({});
 Primary.args = {
   image: <Avatar src={xolotl} />,
   title: 'Led Zep',
-  children: 'Led Zepellin was a band before its time'
+  caption: 'Led Zepellin was a band before its time'
+};
+
+export const WithLink = Template.bind({});
+WithLink.args = {
+  image: <Avatar src={xolotl} />,
+  title: <Link to={'test'}>Led Zep</Link>,
+  caption: 'Led Zepellin was a band before its time'
 };

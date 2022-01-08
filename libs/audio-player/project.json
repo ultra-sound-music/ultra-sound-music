@@ -6,24 +6,34 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/audio-player",
         "main": "libs/audio-player/src/index.ts",
         "tsConfig": "libs/audio-player/tsconfig.lib.json",
-        "assets": ["libs/audio-player/*.md"]
+        "assets": [
+          "libs/audio-player/*.md"
+        ]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/audio-player/**/*.ts"]
+        "lintFilePatterns": [
+          "libs/audio-player/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/audio-player"],
+      "outputs": [
+        "coverage/libs/audio-player"
+      ],
       "options": {
         "jestConfig": "libs/audio-player/jest.config.js",
         "passWithNoTests": true

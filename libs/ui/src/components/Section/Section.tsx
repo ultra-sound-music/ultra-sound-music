@@ -1,13 +1,18 @@
 import { ReactNode } from 'react';
+import cn from 'clsx';
+
+import styles from './Section.scss';
 
 export interface ISectionProps {
+  className?: string;
   children: ReactNode;
 }
 
-export function Section({ children }: ISectionProps) {
+export function Section({ className, children }: ISectionProps) {
+  const classNames = cn(styles.Section, className);
   return (
-    <div>
-      <h1>{children}</h1>
+    <div className={classNames}>
+      <div>{children}</div>
     </div>
   );
 }

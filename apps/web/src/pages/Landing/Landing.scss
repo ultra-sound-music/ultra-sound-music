@@ -1,3 +1,13 @@
 .Landing {
   display: block;
 }
+
+.heroSection {
+  background-image: url('./hero_jambot1.png');
+}
+
+.roadcrew {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 60px;
+}

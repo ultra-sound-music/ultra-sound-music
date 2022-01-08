@@ -1,3 +1,4 @@
+@use 'reset-css';
 @use './colors.scss' as *;
 @use './typo.scss' as *;
 @use './layout.scss' as *;
@@ -19,6 +20,10 @@ body {
   @extend %bg-grid;
 }
 
+a {
+  text-decoration: none;
+}
+
 h1 {
   @extend %font-h1;
 }
@@ -33,4 +38,8 @@ h3 {
 
 h4 {
   @extend %font-h4;
+}
+
+p {
+  margin-bottom: 3.5rem;
 }

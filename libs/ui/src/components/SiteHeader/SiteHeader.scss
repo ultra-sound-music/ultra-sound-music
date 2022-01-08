@@ -1,6 +1,7 @@
 @use '../../styles.scss' as *;
 
 .SiteHeader {
+  border-bottom: 2px solid $color-sassy;
   width: 100%;
 }
 
@@ -8,10 +9,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 auto;
-  padding-top: 40px;
-  padding-bottom: 55px;
-  width: $app-width-full;
+  margin: 40px auto 40px auto;
+  max-width: $app-width-full;
 }
 
 .logo {

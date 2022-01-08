@@ -1,11 +1,18 @@
 @use '../../styles.scss' as *;
 
-.image {
+.Figure {
+  width: 100%;
+}
 
+.image {
 }
 
 .title {
   color: $color-taffy;
+
+  a {
+    color: $color-taffy;
+  }
 }
 
 .figCaption {

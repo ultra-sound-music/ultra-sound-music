@@ -1,5 +1,5 @@
 import { useState, useCallback, ReactNode } from 'react';
-import cn from 'classnames';
+import cn from 'clsx';
 import styles from './Accordian.scss';
 
 export interface IAccordianProps {

@@ -1,10 +1,14 @@
 $app-width-full: 1210px;
 
-%full-layout {
+%container {
+  max-width: $app-width-full;
+  margin: 0 auto;
+}
+
+%grid-layout {
   display: grid;
   grid-template-columns: repeat(24, minmax(25px, 1fr));
   grid-gap: 18px 15px;
   grid-auto-flow: row;
-  max-width: $app-width-full;
-  margin: 0 auto;
+  @extend %container;
 }

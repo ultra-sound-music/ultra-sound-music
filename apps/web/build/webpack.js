@@ -48,11 +48,7 @@ module.exports = (config) => {
           return svgToMiniDataURI(content);
         }
       }      
-    },
-    {
-      test: /\.(jpg|jpeg|png|gif|mp3)$/,
-      type: 'asset/resource'
-    }    
+    }
   );
 
   return config;

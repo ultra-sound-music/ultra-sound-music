@@ -1,74 +1,109 @@
-import { Accordian, Callout, TextBlock, CollectionStamp, Section } from '@usm/ui';
+import { Link } from 'react-router-dom';
+import { Accordian, Container, Col, Figure, Grid, Image, TextBlock, CollectionStamp, Section } from '@usm/ui';
 import copy from '@usm/copy';
+import anonAvatar from '@usm/images/avatar_anon.png';
 
 import styles from './Landing.scss';
 
-/* eslint-disable-next-line */
-export interface HomeProps {}
-
-export function Home(props: HomeProps) {
+export function Landing() {
   return (
     <div className={styles.Landing}>
-      <Section>
-        <div>
-          <CollectionStamp />
-          <Callout />
-          <p>Nlab Nlab Nlab</p>
-        </div>
+      <Section className={styles.heroSection}>
+        <Grid>
+          <Col start={1} end={11}>
+            <CollectionStamp />
+            <p>{copy.lipsum_50w}</p>
+          </Col>
+        </Grid>
       </Section>
 
       <Section>
-        <div>
-          
-        </div>
-        <TextBlock 
-          subject={copy.genesisCollection}
-          title={copy.uniqueJambots}
-        >
-          {copy.describeJambots}
-        </TextBlock>
+        <Container>
+          <div>
+            
+          </div>
+          <TextBlock 
+            subject={copy.genesisCollection}
+            title={copy.uniqueJambots}
+          >
+            {copy.describeJambots}
+          </TextBlock>          
+        </Container>
       </Section>
 
       <Section>
-        <div>
-          
-        </div>
-        <TextBlock 
-          subject={copy.genesisCollection}
-          title={copy.uniqueJambots}
-        >
-          {copy.describeJambots}
-        </TextBlock>
+        <Container>
+          <div>
+            
+          </div>
+          <TextBlock 
+            subject={copy.genesisCollection}
+            title={copy.uniqueJambots}
+          >
+            {copy.describeJambots}
+          </TextBlock>          
+        </Container>
       </Section>
       
       <Section>
-        <div>
-          
-        </div>
-        <TextBlock 
-          subject={copy.genesisCollection}
-          title={copy.uniqueJambots}
-        >
-          {copy.describeJambots}
-        </TextBlock>
+        <Container>
+          <div>
+            
+          </div>
+          <TextBlock 
+            subject={copy.genesisCollection}
+            title={copy.uniqueJambots}
+          >
+            {copy.describeJambots}
+          </TextBlock>          
+        </Container>
       </Section>
 
       <Section>
-        <Accordian 
-          term={copy.what}
-          details={copy.what}
-        />
-        <Accordian 
-          term={copy.what}
-          details={copy.what}
-        />
-        <Accordian 
-          term={copy.what}
-          details={copy.what}
-        />
+        <Container>
+          <Accordian 
+            term={copy.what}
+            details={copy.what}
+          />
+          <Accordian 
+            term={copy.what}
+            details={copy.what}
+          />
+          <Accordian 
+            term={copy.what}
+            details={copy.what}
+          />
+        </Container>
       </Section> 
+      <Section>
+        <Container>
+          <h1>Road Crew</h1>
+          <div className={styles.roadcrew}>
+            <Figure
+              image={<Image src={anonAvatar} />}
+              title={<Link to={'test'}>Name</Link>}
+              caption={'Badass'}
+            />
+            <Figure
+              image={<Image src={anonAvatar} />}
+              title={<Link to={'test'}>Name</Link>}
+              caption={'Badass'}
+            />
+            <Figure
+              image={<Image src={anonAvatar} />}
+              title={<Link to={'test'}>Name</Link>}
+              caption={'Badass'}
+            />
+            <Figure
+              image={<Image src={anonAvatar} />}
+              title={<Link to={'test'}>Name</Link>}
+              caption={'Badass'}
+            />            
+          </div>   
+        </Container>
+      </Section>
     </div>
   );
 }
 
-export default Home;
+export default Landing;

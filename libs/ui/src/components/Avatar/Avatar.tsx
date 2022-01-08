@@ -18,10 +18,10 @@ export interface IAvatarProps {
 export const Avatar = ({
   image,
   src,
-  size = 'medium',
+  size,
   shape = 'round'
 }: IAvatarProps): JSX.Element => {
-  const rootclassNames = cn(styles.Avatar, styles[size], styles[shape]);
+  const rootclassNames = cn(styles.Avatar, size && styles[size], styles[shape]);
 
   let img: React.ReactNode;
   if (src) {

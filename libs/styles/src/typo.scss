@@ -7,7 +7,7 @@ $font-fam-body: ff-good-web-pro-wide, sans-serif;
 $font-weight-normal: 400;
 $font-weight-bold: 700;
 
-$font-size-xxl: 5.5rem;
+$font-size-xxl: 4.5rem;
 $font-size-xlrg: 3.5rem;
 $font-size-lrg: 2.5rem;
 $font-size-body: 1.8rem;
@@ -22,7 +22,7 @@ $font-size-small: 1.6rem;
 %font-stamp {
   font: $font-weight-bold #{$font-size-xxl} / 1.2 $font-fam-lato;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
 }
 
 %font-h1 {
