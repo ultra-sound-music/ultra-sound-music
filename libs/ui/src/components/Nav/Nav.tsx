@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import cn from 'clsx';
 
 import styles from './Nav.scss';
 
@@ -20,9 +21,7 @@ export const Nav = ({ items }: INavProps): JSX.Element => {
           <NavLink
             key={content?.toString()}
             to={to}
-            exact={isRoot}
-            className={styles.navItem}
-            activeClassName={styles.active}
+            className={({ isActive }) => cn(styles.navItem, isActive && styles.isActive)}
           >
             {content}
           </NavLink>

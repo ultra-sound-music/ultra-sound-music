@@ -1,6 +1,6 @@
 import { ImgHTMLAttributes } from 'react';
 
-import * as styles from './Image.scss';
+import styles from './Image.scss';
 
 export type IImageProps = ImgHTMLAttributes<HTMLImageElement>;
 

@@ -4,6 +4,10 @@
   margin-bottom: 60px;
 }
 
+.brand {
+  @extend %font-brand;
+}
+
 .h1 {
   @extend %font-h1;
 }

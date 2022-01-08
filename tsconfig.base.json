@@ -18,6 +18,7 @@
       "@usm/audio-player": ["libs/audio-player/src/index.ts"],
       "@usm/components": ["apps/web/src/components.ts"],
       "@usm/copy": ["libs/copy/src/index.ts"],
+      "@usm/images/*": ["libs/images/img/*"],
       "@usm/sol-client": ["libs/sol-client/src/index.ts"],
       "@usm/store/*": ["libs/store/src/*"],
       "@usm/styles/*": ["libs/styles/src/*"],

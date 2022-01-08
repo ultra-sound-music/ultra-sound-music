@@ -1,0 +1,7 @@
+@use '../../styles.scss' as *;
+
+.CollectionStamp {}
+.usm {
+  @extend %font-stamp;
+}
+.stamp {}

@@ -1,5 +1,11 @@
 @use './colors.scss' as *;
 @use './typo.scss' as *;
+@use './layout.scss' as *;
+@use './utils.scss' as *;
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
 html {
   box-sizing: border-box;
@@ -10,8 +16,21 @@ html {
 
 body {
   @extend %font-body;
+  @extend %bg-grid;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
+h1 {
+  @extend %font-h1;
+}
+
+h2 {
+  @extend %font-h2;
+}
+
+h3 {
+  @extend %font-h3;
+}
+
+h4 {
+  @extend %font-h4;
 }

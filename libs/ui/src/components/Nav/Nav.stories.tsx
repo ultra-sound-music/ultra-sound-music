@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Story, Meta } from '@storybook/react';
 
-import logo from '../../assets/logo.png';
+import logo from '@usm/images/logo.png';
 import Image from '../Image/Image';
 
 import Nav, { INavProps } from './Nav';

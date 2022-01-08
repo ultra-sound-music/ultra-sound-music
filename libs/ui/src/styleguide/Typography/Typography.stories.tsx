@@ -2,6 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import Typography from './Typography';
 
 const names = [
+  'brand',
   'h1',
   'h2',
   'h3',

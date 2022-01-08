@@ -25,7 +25,5 @@ Primary.args = {
   subject: 'Crypto Beats',
   title: 'ultra sound music ',
   children:
-    'Once minted you can use your artist to join a band or create your own band. Up to 6 artists can participate in a band.',
-  callout: 'minting is open',
-  ctaButton: <Button>mint an artist</Button>
+    'Once minted you can use your artist to join a band or create your own band. Up to 6 artists can participate in a band.'
 };

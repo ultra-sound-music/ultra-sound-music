@@ -1,11 +1,28 @@
+@use '../../styles.scss' as *;
+
 .SiteHeader {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 55px;
+  width: 100%;
 }
 
-.topNav {
-  margin-right: auto;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 55px;
+  width: $app-width-full;
+}
+
+.logo {
+  margin-right: 20px;
+  width: 35px;
+  object-fit: contain;
+  float: left;
+}
+
+.usm {
+  color: $color-polar-bear;
+  float: left;
+  @extend %font-brand;
 }
