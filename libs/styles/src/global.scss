@@ -8,11 +8,14 @@
   box-sizing: inherit;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
 html {
   box-sizing: border-box;
   color: $color-polar-bear;
   font-size: 62.5%;
-  height: 100%;
 }
 
 body {

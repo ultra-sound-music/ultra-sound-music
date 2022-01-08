@@ -23,7 +23,7 @@ module.exports = (config) => {
             esModule: true,
             modules: {
               mode: (resourcePath) => {
-                if (resourcePath.includes('/src/styles/')) {
+                if (resourcePath.includes('global')) {
                   return 'global';
                 }
 

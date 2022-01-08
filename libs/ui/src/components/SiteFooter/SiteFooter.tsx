@@ -1,10 +1,22 @@
-/* eslint-disable-next-line */
-export interface FooterProps {}
+import { ReactNode } from 'react';
+import { FaDiscord, FaTwitter } from 'react-icons/fa';
 
-export function SiteFooter(props: FooterProps) {
+import logo from '@usm/images/logo_white.svg';
+import copy from '@usm/copy';
+import { Image } from '../Image/Image';
+
+import styles from './SiteFooter.scss';
+
+export function SiteFooter() {
   return (
-    <div>
-      <h1>Welcome to Footer!</h1>
+    <div className={styles.SiteFooter}>
+      <Image src={logo} className={styles.logo}/>
+      <div className={styles.usm}>{copy.usm_long}</div>
+      <div className={styles.copyright}>{copy.copyright}</div>
+      <div className={styles.socials}>
+        <FaDiscord />
+        <FaTwitter />
+      </div>
     </div>
   );
 }

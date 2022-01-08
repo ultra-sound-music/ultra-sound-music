@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface IColProps {
-  'start': string | number;
-  'end': string | number;
+  start?: string | number;
+  end?: string | number;
   children: ReactNode;
 }
 

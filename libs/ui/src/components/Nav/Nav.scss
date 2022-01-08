@@ -4,13 +4,16 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  column-gap: 80px;
+  column-gap: 60px;
 }
 
 .navItem {
   color: $color-polar-bear;
+  padding: 0 10px;
+  line-height: 40px;
   text-decoration: none;
   @extend %font-small;
+  
   &:hover,
   &:active {
     color: $color-lavish;

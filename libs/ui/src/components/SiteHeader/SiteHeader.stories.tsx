@@ -3,14 +3,14 @@ import { Story, Meta } from '@storybook/react';
 
 import Nav from '../Nav/Nav';
 
-import SiteHeader from './SiteHeader';
+import SiteHeader, { ISiteHeaderProps } from './SiteHeader';
 
 export default {
   title: 'Components/SiteHeader',
   component: SiteHeader
-} as Meta<typeof SiteHeader>;
+} as Meta;
 
-const Template: Story<typeof SiteHeader> = (args) => {
+const Template: Story<ISiteHeaderProps> = (args) => {
   return (
     <BrowserRouter>
       <SiteHeader {...args} />

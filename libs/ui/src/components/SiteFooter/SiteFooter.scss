@@ -1,0 +1,9 @@
+@use '../../styles.scss' as *;
+
+.SiteFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 45px;
+  @extend %font-small;
+}

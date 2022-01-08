@@ -17,6 +17,7 @@
     "paths": {
       "@usm/audio-player": ["libs/audio-player/src/index.ts"],
       "@usm/components": ["apps/web/src/components.ts"],
+      "@usm/content": ["libs/content/src/index.ts"],      
       "@usm/copy": ["libs/copy/src/index.ts"],
       "@usm/images/*": ["libs/images/src/*"],
       "@usm/sol-client": ["libs/sol-client/src/index.ts"],

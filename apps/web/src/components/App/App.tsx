@@ -23,7 +23,9 @@ const App = () => (
     <Routes>
       <Route path="/" element={<Home />} />
     </Routes>
-    <SiteFooter />    
+    <div className={styles.footer}>
+      <SiteFooter />
+    </div>
   </div>
 );
 
