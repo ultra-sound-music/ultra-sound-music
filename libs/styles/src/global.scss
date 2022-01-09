@@ -19,28 +19,36 @@ html {
 }
 
 body {
+  background-color: $color-evening-sky;
   @extend %font-body;
-  @extend %bg-grid;
 }
 
 a {
+  color: $color-polar-bear;
   text-decoration: none;
-}
 
-h1 {
-  @extend %font-h1;
+  &:hover {
+    color: $color-lavish;
+  }
 }
 
 h2 {
   @extend %font-h2;
+  margin-bottom: 3rem;
 }
 
 h3 {
   @extend %font-h3;
+  margin-bottom: 2.5rem;
 }
 
 h4 {
   @extend %font-h4;
+  margin-bottom: .3rem;
+}
+
+h5 {
+  @extend %font-h5;
 }
 
 p {

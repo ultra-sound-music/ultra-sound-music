@@ -1,6 +1,9 @@
-import copy from '@usm/copy';
+import copy from './copy';
+export { copy };
 
-export const links = Object.freeze({
+export const urls = Object.freeze({
+  usmTwitter: 'https://twitter.com/usmproject',
+  usmDiscord: 'https://discord.gg/5KB6GvjEk7',
   twitter: 'https://twitter.com'
 });
 

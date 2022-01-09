@@ -14,6 +14,17 @@
   max-width: $app-width-full;
 }
 
+.logoLink {
+  color: $color-polar-bear;
+
+  &:hover {
+    color: $color-lavish  ;
+    path {
+      fill: $color-lavish;
+    }
+  }
+}
+
 .logo {
   margin-right: 20px;
   width: 35px;
@@ -22,7 +33,6 @@
 }
 
 .usm {
-  color: $color-polar-bear;
   float: left;
   @extend %font-brand;
 }

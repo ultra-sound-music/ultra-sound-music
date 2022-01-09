@@ -1,4 +1,3 @@
-const svgToMiniDataURI = require('mini-svg-data-uri');
 const getDefaultConfig = require('@nrwl/react/plugins/webpack');
 
 module.exports = (config) => {
@@ -7,7 +6,7 @@ module.exports = (config) => {
   config.module.rules = config.module.rules.filter((rule) => {
     // Find any default CSS & SCSS rules and remove them so 
     // we can use our own in order to support css modules
-    return !(rule.test.test('.css') || rule.test.test('.scss') || rule.test.test('.svg'));
+    return !(rule.test.test('.css') || rule.test.test('.scss'));
   });
     
   config.module.rules.push(
@@ -38,16 +37,6 @@ module.exports = (config) => {
         // Compiles Sass to CSS
         'sass-loader'
       ]
-    },
-    {
-      test: /\.svg/,
-      type: 'asset/inline',
-      generator: {
-        dataUrl: content => {
-          content = content.toString();
-          return svgToMiniDataURI(content);
-        }
-      }      
     }
   );
 

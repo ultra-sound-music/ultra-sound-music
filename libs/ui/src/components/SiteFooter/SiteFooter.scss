@@ -7,3 +7,14 @@
   column-gap: 45px;
   @extend %font-small;
 }
+
+.socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 15px;
+
+  a {
+    display: inline-flex;
+  }
+}

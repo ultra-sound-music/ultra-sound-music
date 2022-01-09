@@ -1,4 +1,4 @@
-import { loadAudio } from '@usm/utils/loader';
+import { loadAudio } from '@usm/util/loader';
 
 export const WHEN_TIME = 0;
 export const START_TIME = 0;

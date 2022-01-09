@@ -1,14 +1,14 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Story, Meta } from '@storybook/react';
 
-import SiteFooter, { ISiteFooterProps } from './SiteFooter';
+import SiteFooter from './SiteFooter';
 
 export default {
   title: 'Components/SiteFooter',
   component: SiteFooter
 } as Meta;
 
-const Template: Story<ISiteFooterProps> = (args) => {
+const Template: Story = (args) => {
   return (
     <BrowserRouter>
       <SiteFooter {...args} />

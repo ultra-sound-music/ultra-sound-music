@@ -1,50 +1,19 @@
 {
   "root": "libs/ui",
   "sourceRoot": "libs/ui/src",
-  "projectDir": "",
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "styles": [],
-      "options": {
-        "outputPath": "dist/libs/ui",
-        "tsConfig": "libs/ui/tsconfig.lib.json",
-        "project": "libs/ui/package.json",
-        "entryFile": "libs/ui/src/index.ts",
-        "external": [
-          "react/jsx-runtime"
-        ],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "assets": [
-          {
-            "glob": "libs/ui/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/ui/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/ui/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/ui"
-      ],
+      "outputs": ["coverage/libs/ui"],
       "options": {
         "jestConfig": "libs/ui/jest.config.js",
         "passWithNoTests": true
@@ -67,9 +36,7 @@
     },
     "build-storybook": {
       "executor": "@nrwl/storybook:build",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "uiFramework": "@storybook/react",
         "outputPath": "dist/storybook/ui",
@@ -85,14 +52,9 @@
     },
     "stylelint": {
       "executor": "nx-stylelint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/ui/**/*.css",
-          "libs/ui/**/*.scss"
-        ]
+        "lintFilePatterns": ["libs/ui/**/*.css", "libs/ui/**/*.scss"]
       }
     }
   }

@@ -19,8 +19,8 @@ export const TextBlock = ({
   return (
     <div className={classNames}>
       {subject && <div className={styles.subject}>{subject}</div>}
-      {title && <div className={styles.title}>{title}</div>}
-      {children && <div className={styles.content}>{children}</div>}
+      {title && <h2 className={styles.title}>{title}</h2>}
+      {children}
     </div>
   );
 };

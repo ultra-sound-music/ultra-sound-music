@@ -1,5 +1,5 @@
 import { IWallet } from '@usm/wallets/types';
-import logger from '@usm/utils/logger';
+import logger from 'libs/util/src/logger';
 
 export interface ISolClientArgs {
   wallet: IWallet;

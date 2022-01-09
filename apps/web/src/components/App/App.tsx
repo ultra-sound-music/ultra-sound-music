@@ -1,6 +1,6 @@
 import { Routes, Route, Link} from 'react-router-dom';
 import { SiteHeader, Nav, SiteFooter } from '@usm/ui';
-import copy from '@usm/copy';
+import { copy } from '@usm/content';
 
 import Home from '../../pages/Landing/Landing';
 
