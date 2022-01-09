@@ -5,7 +5,8 @@
   border: none;
   border-radius: 7px;
   color: $color-polar-bear;
-  padding: 11px 62px;
+  padding: 14px 62px;
+  height: 50px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
@@ -16,7 +17,10 @@
   &:before {
     content: '';
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: -1;
     margin: -3px;
     border-radius: 10px;
@@ -51,30 +55,58 @@
 }
 
 .primary {
-  background-image: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);
+  background-image: linear-gradient(
+    90deg,
+    $gradient-brilliant-start,
+    $gradient-brilliant-end
+  );
   &:before {
-    background-image: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);    
-  }  
+    background-image: linear-gradient(
+      90deg,
+      $gradient-brilliant-start,
+      $gradient-brilliant-end
+    );
+  }
 
   &:hover {
-    background: linear-gradient(to right, $gradient-brilliant-end, $gradient-brilliant-start);
+    background: linear-gradient(
+      to right,
+      $gradient-brilliant-end,
+      $gradient-brilliant-start
+    );
 
     &:before {
-      background: linear-gradient(to right, $gradient-brilliant-end, $gradient-brilliant-start);
+      background: linear-gradient(
+        to right,
+        $gradient-brilliant-end,
+        $gradient-brilliant-start
+      );
     }
   }
 }
 
 .secondary {
   &:before {
-    background-image: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);    
+    background-image: linear-gradient(
+      90deg,
+      $gradient-brilliant-start,
+      $gradient-brilliant-end
+    );
   }
 
   &:hover {
-    background-image: linear-gradient(90deg, $gradient-brilliant-end, $gradient-brilliant-start);    
+    background-image: linear-gradient(
+      90deg,
+      $gradient-brilliant-end,
+      $gradient-brilliant-start
+    );
 
     &:before {
-      background: linear-gradient(to right, $gradient-brilliant-end, $gradient-brilliant-start);
+      background: linear-gradient(
+        to right,
+        $gradient-brilliant-end,
+        $gradient-brilliant-start
+      );
     }
   }
 }
@@ -95,4 +127,5 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 22px;
 }
