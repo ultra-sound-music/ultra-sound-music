@@ -29,6 +29,14 @@ a {
   }
 }
 
+p {
+  margin-bottom: 3.5rem;
+}
+
+strong {
+  @extend %font-body-strong;
+}
+
 h2 {
   color: $color-taffy;
   margin-bottom: 3rem;
@@ -47,8 +55,4 @@ h4 {
 
 h5 {
   @extend %font-h5;
-}
-
-p {
-  margin-bottom: 3.5rem;
 }
