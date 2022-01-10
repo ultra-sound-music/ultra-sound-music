@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import cn from 'clsx';
 
+import Link from '../Link/Link';
 import Spinner from '../Spinner/Spinner';
 
 import styles from './Button.scss';

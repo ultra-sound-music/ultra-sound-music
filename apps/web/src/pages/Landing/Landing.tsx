@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { Accordian, Container, Col, Figure, Grid, Image, TextBlock, CollectionStamp, Section } from '@usm/ui';
+import { Accordian, Callout, CollectionStamp, Container, Col, Figure, Grid, Image, Link, TextBlock, Section } from '@usm/ui';
 import { copy } from '@usm/content';
 import logo from '@usm/images/logo.png';
 import { urls, team, faq } from '@usm/content';
@@ -16,7 +15,10 @@ export function Landing() {
             <div className={styles.heroContainer}>
               <div className={styles.heroBg} />
               <div className={styles.stamp}><CollectionStamp /></div>
-              <div>{copy.lipsum_50w}</div>
+              <Callout>
+                ** Coming Soon ** <br />
+                Join our <Link to={urls.usmDiscord}>Discord</Link> or follow us on <Link to={urls.usmTwitter}>Twitter</Link>
+              </Callout>
             </div>
           </Col>
         </Grid>
@@ -76,6 +78,22 @@ export function Landing() {
 
       <Section>
         <Container>
+          <h1>Road Crew</h1>
+          <div className={styles.roadcrew}>
+            {team.map((member) => (
+              <Figure
+                key={member.twitter}
+                image={<Image src={anonAvatar} />}
+                title={<Link to={`${urls.twitter}/${member.twitter}`}>@{member.twitter}</Link>}
+                caption={`${member.blurb}`}
+              />              
+            ))}        
+          </div>   
+        </Container>
+      </Section>      
+
+      <Section>
+        <Container>
           {faq.map((t, i) => (
             <div key={i} className={styles.faq}>
               <Accordian 
@@ -84,21 +102,6 @@ export function Landing() {
               />              
             </div>
           ))}
-        </Container>
-      </Section>
-      <Section>
-        <Container>
-          <h1>Road Crew</h1>
-          <div className={styles.roadcrew}>
-            {team.map((member) => (
-              <Figure
-                key={member.twitter}
-                image={<Image src={anonAvatar} />}
-                title={<Link to={`${urls.twitter}/${member.twitter}`}>{member.twitter}</Link>}
-                caption={`${member.blurb}`}
-              />              
-            ))}        
-          </div>   
         </Container>
       </Section>
     </div>

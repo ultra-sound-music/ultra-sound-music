@@ -1,9 +1,10 @@
-import { Link, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Story, Meta } from '@storybook/react';
 
 import xolotl from '../../assets/xolotl.png';
 
 import Avatar from '../Avatar/Avatar';
+import Link from '../Link/Link';
 import Figure, { IFigureProps } from './Figure';
 
 export default {

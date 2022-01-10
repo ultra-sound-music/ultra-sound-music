@@ -12,8 +12,8 @@ const nav = [
     to: urls.usmBlog,
   },
   {
-    content: copy.memplayer,
-    to: '/memplayer',
+    content: copy.docs,
+    to: urls.usmDocs,
   }
 ];
 

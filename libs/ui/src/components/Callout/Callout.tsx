@@ -1,10 +1,15 @@
-/* eslint-disable-next-line */
-export interface CalloutProps {}
+import { ReactNode } from 'react';
 
-export function Callout(props: CalloutProps) {
+import styles from './Callout.scss';
+
+export interface ICalloutProps {
+  children: ReactNode
+}
+
+export function Callout({ children }: ICalloutProps) {
   return (
-    <div>
-      <h1>Welcome to Callout!</h1>
+    <div className={styles.Callout}>
+      {children}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import copy from './copy';
 export { copy };
 
 export const urls = Object.freeze({
+  usmDocs: 'https://docs.ultrasoundmusic.xyz',
   usmBlog: 'https://mirror.xyz/ultrasoundmusic.eth',
   usmTwitter: 'https://twitter.com/usmproject',
   usmDiscord: 'https://discord.gg/5KB6GvjEk7',
@@ -16,26 +17,26 @@ export const routes = Object.freeze({
 export const team = Object.freeze([
   {
     name: 'Vijay Rudraraju',
-    twitter: '@vijatsu',
-    discord: '@vijay',
+    twitter: 'vijatsu',
+    discord: 'vijay',
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },
   {
     name: 'Cameron Morris',
-    twitter: '@0xGambas',
-    discord: '@0xGambas',
+    twitter: '0xGambas',
+    discord: '0xGambas',
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },
   {
     name: 'Andres Maldonado',
-    twitter: '@andres_mald',
-    discord: '@AGame',
+    twitter: 'andres_mald',
+    discord: 'AGame',
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },  
   {
     name: 'Gabriel Castillo',
-    twitter: '@grend3lxc',
-    discord: '@grend3lxc',
+    twitter: 'grend3lxc',
+    discord: 'grend3lxc',
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },
 ]);

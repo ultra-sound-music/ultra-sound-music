@@ -8,10 +8,6 @@
   box-sizing: inherit;
 }
 
-html, body, #root {
-  height: 100%;
-}
-
 html {
   box-sizing: border-box;
   color: $color-polar-bear;
@@ -19,6 +15,7 @@ html {
 }
 
 body {
+  min-height: 100%;
   @extend %font-body;
   @extend %bg-grid;
 }

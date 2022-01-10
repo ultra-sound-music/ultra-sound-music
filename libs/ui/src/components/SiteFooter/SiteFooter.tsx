@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { FaDiscord, FaTwitter } from 'react-icons/fa';
 
 import logo from '@usm/images/logo_white.svg';
@@ -6,6 +5,7 @@ import { interpolate } from '@usm/util/string';
 import { copy, urls } from '@usm/content';
 
 import Image from '../Image/Image';
+import Link from '../Link/Link';
 
 import styles from './SiteFooter.scss';
 
