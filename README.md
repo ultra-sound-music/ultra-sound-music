@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-1. Install MongoDB
+1. Install Mongo DB
 
 ```
 brew tap mongodb/brew
