@@ -2,15 +2,18 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as Logo } from '@usm/images/logo_white.svg';
 
 import NavLinks from '../Nav/Nav';
+import Button from '../Button/Button';
 
 import styles from './SiteHeader.scss';
 
 export interface ISiteHeaderProps {
   nav?: React.ReactElement<typeof NavLinks>;
+  ctaButton?: React.ReactElement<typeof Button>;
 }
 
 export const SiteHeader = ({
-  nav
+  nav,
+  ctaButton
 }: ISiteHeaderProps): JSX.Element => {
   return (
     <div className={styles.SiteHeader}>
@@ -23,6 +26,7 @@ export const SiteHeader = ({
           
         </div>
         {nav && <div className={styles.topNav}>{nav}</div>}
+        {ctaButton}
       </div>
     </div>
   );

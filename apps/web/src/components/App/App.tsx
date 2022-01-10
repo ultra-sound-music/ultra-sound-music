@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { FaDiscord, FaTwitter } from 'react-icons/fa';
 
-import { Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
+import { Button, Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
 import { copy, urls, routes } from '@usm/content';
 import { ReactComponent as Triangle1 } from '@usm/images/triangle1.svg';
 import { ReactComponent as Triangle3 } from '@usm/images/triangle3.svg';
@@ -29,13 +29,15 @@ export const nav = Object.freeze([
   }
 ])
 
+const params = new URLSearchParams(window.location.search);
+const weAreLive = params.get('wearelive') === 'true' || params.get('wearelive') === '1';
 
 const App = () => (
   <div className={styles.App}>
     <div className={styles.tri1}><Triangle1 /></div> 
     <div className={styles.tri3}><Triangle3 /></div> 
     <div className={styles.header}>
-      <SiteHeader nav={<Nav items={nav}/>} />
+      <SiteHeader nav={<Nav items={nav}/>} ctaButton={weAreLive ? <Button type='primary'>Connect</Button> : undefined }/>
     </div>
     <Routes>
       <Route path={routes.home} element={<Home />} />
