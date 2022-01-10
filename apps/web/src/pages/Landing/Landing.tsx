@@ -11,14 +11,16 @@ export function Landing() {
     <div className={styles.Landing}>
       <Section className={styles.heroSection}>
         <Grid>
-          <Col start={2} end={11}>  
+          <Col start={2} end={10}>  
             <div className={styles.heroContainer}>
               <div className={styles.heroBg} />
               <div className={styles.stamp}><CollectionStamp /></div>
-              <Callout>
-                ** Coming Soon ** <br />
-                Join our <Link to={urls.usmDiscord}>Discord</Link> or follow us on <Link to={urls.usmTwitter}>Twitter</Link>
-              </Callout>
+              <div className={styles.callout}>
+                <Callout>
+                  ** Coming Soon ** <br />
+                  Join the <Link to={urls.usmDiscord}>Discord</Link> or follow us on <Link to={urls.usmTwitter}>Twitter</Link>!
+                </Callout>
+              </div>
             </div>
           </Col>
         </Grid>
@@ -26,10 +28,8 @@ export function Landing() {
 
       <Section>
         <Grid>
+          <Col start={1} end={12} className={styles.hero2Bg} />
           <Col start={13} end='end'>
-            <div>
-              
-            </div>
             <TextBlock 
               subject={copy.genesisCollection}
               title={copy.uniqueJambots}
@@ -78,7 +78,7 @@ export function Landing() {
 
       <Section>
         <Container>
-          <h1>Road Crew</h1>
+          <h2>Road Crew</h2>
           <div className={styles.roadcrew}>
             {team.map((member) => (
               <Figure

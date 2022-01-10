@@ -4,7 +4,7 @@ $hero_height: 560px;
 $hero_width: 912px;
 
 .Landing {
-  background-image: linear-gradient(180deg, $color-dusk 100px, $color-evening-sky 500px, transparent 1000px);
+  background-image: linear-gradient(180deg, $color-dusk 50px, $color-evening-sky 400px, transparent 1000px);
   background-repeat: repeat;
   background-size: 100% 100%;
   background-position-x: 0, 0;  
@@ -13,6 +13,10 @@ $hero_width: 912px;
 
 .stamp {
   margin-bottom: 60px;
+}
+
+.callout {
+  margin-bottom: 25px;
 }
 
 .heroContainer {
@@ -25,13 +29,20 @@ $hero_width: 912px;
 .heroBg {
   position: absolute;
   top: 0;
-  right: -800px;
+  right: -850px;
   width: $hero_width;
-  height: $hero_height;
+  min-height: $hero_height;
   background-image: url(@usm/images/hero_jambot1.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-position-x: 0, 0;
+  background-position: 0 0;
+}
+
+.hero2Bg {
+  background-image: url(@usm/images/hero_jambot2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 0 -110px;  
 }
 
 .faq {
@@ -41,5 +52,6 @@ $hero_width: 912px;
 .roadcrew {
   display: flex;
   justify-content: space-between;
-  column-gap: 60px;
+  column-gap: 120px;
+  margin-top: 6rem;
 }

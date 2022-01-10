@@ -11,7 +11,7 @@ export interface INavItem {
 }
 
 export interface INavProps {
-  items: INavItem[];
+  items: readonly INavItem[];
 }
 
 export interface IActiveCheck {

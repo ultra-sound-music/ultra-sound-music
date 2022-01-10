@@ -43,19 +43,19 @@ export const team = Object.freeze([
 
 export const faq = Object.freeze([
   {
-    q: copy.lipsum_10w,
-    a: copy.lipsum_50w
+    q: 'What is USM?',
+    a: 'USM is a unique, collaborative platform for publishing fully generative music on the blockchain, and more.'
   },
   {
-    q: copy.lipsum_10w,
-    a: copy.lipsum_50w
+    q: 'Why USM?',
+    a: 'I mean, who doesn’t want to be a virtual rockstar?'
   },
   {
-    q: copy.lipsum_10w,
-    a: copy.lipsum_50w
-  },
+    q: `What's up with the name?`,
+    a: 'Ultra Sound Music is a play on the Ethereum Ultra Sound Money meme. If money can be ultra sound by providing the utmost in individual expression and freedom, then surely, music can do the same.'
+  },  
   {
-    q: copy.lipsum_10w,
-    a: copy.lipsum_50w
-  }  
+    q: `What's the Roadmap?`,
+    a: `We're currently working on launching unique NFT characters with generative visual and sound traits.  These characters will be the cornerstone on the USM platform.  Everything else is TBD.`
+  }
 ])

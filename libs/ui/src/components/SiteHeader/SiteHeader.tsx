@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as Logo } from '@usm/images/logo_white.svg';
 
 import NavLinks from '../Nav/Nav';
-import Image from '../Image/Image';
 
 import styles from './SiteHeader.scss';
 
@@ -23,7 +22,7 @@ export const SiteHeader = ({
           </NavLink>
           
         </div>
-        {nav && <div className={styles.topNav}>{nav}</div>}        
+        {nav && <div className={styles.topNav}>{nav}</div>}
       </div>
     </div>
   );

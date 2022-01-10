@@ -30,18 +30,19 @@ a {
 }
 
 h2 {
-  @extend %font-h2;
+  color: $color-taffy;
   margin-bottom: 3rem;
+  @extend %font-h2;
 }
 
 h3 {
-  @extend %font-h3;
   margin-bottom: 2.5rem;
+  @extend %font-h3;
 }
 
 h4 {
-  @extend %font-h4;
   margin-bottom: .3rem;
+  @extend %font-h4;
 }
 
 h5 {

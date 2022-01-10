@@ -8,10 +8,15 @@
 }
 
 .navItem {
+  display: inline-flex;
   padding: 0 10px;
   line-height: 40px;
   text-decoration: none;
   @extend %font-subhead;
+
+  svg {
+    font-size: $font-size-lrg;
+  }
   
   &:hover,
   &:active {
