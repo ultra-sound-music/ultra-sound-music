@@ -1,4 +1,4 @@
-const nargs = /\{([0-9a-zA-Z_]+)\}/g
+const nargs = /\{([0-9a-zA-Z_]+)\}/g;
 
 export type IParamsObject = Record<string | number, unknown>;
 export type IParam = string | number;
