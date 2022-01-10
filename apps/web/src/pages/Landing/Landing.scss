@@ -1,7 +1,7 @@
 @use '@usm/styles/colors.scss' as *;
 
 .Landing {
-  background-image: linear-gradient(180deg, $color-dusk 50px, $color-evening-sky 400px, transparent 1000px);
+  background-image: linear-gradient(180deg, $color-dusk 50px, $color-evening-sky 600px, transparent 1000px);
   background-repeat: repeat;
   background-size: 100% 100%;
   background-position-x: 0, 0;  
@@ -12,7 +12,8 @@
   background-image: url(@usm/images/hero_jambot2.png);
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: 0 -110px;  
+  background-position: 0 -110px;
+  transform: scaleX(-1);
 }
 
 .faq {
