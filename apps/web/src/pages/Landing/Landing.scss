@@ -1,41 +1,11 @@
 @use '@usm/styles/colors.scss' as *;
 
-$hero_height: 560px;
-$hero_width: 912px;
-
 .Landing {
   background-image: linear-gradient(180deg, $color-dusk 50px, $color-evening-sky 400px, transparent 1000px);
   background-repeat: repeat;
   background-size: 100% 100%;
   background-position-x: 0, 0;  
   padding-bottom: 220px;
-}
-
-.stamp {
-  margin-bottom: 60px;
-}
-
-.callout {
-  margin-bottom: 25px;
-}
-
-.heroContainer {
-  position: relative;
-  width: 100%;
-  height: $hero_height;
-  padding-top: 80px;
-}
-
-.heroBg {
-  position: absolute;
-  top: 0;
-  right: -850px;
-  width: $hero_width;
-  min-height: $hero_height;
-  background-image: url(@usm/images/hero_jambot1.png);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: 0 0;
 }
 
 .hero2Bg {

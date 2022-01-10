@@ -1,29 +1,22 @@
-import { Accordian, Callout, CollectionStamp, Container, Col, Figure, Grid, Image, Link, TextBlock, Section } from '@usm/ui';
+import { Accordian, Container, Col, Figure, Grid, Image, Link, TextBlock, Section } from '@usm/ui';
 import { copy } from '@usm/content';
 import logo from '@usm/images/logo.png';
 import { urls, team, faq } from '@usm/content';
 import anonAvatar from '@usm/images/avatar_anon.png';
 
+import ComingSoon from '../../components/ComingSoon/ComingSoon';
+import NewDrop from '../../components/NewDrop/NewDrop';
+
 import styles from './Landing.scss';
 
 export function Landing() {
+  const params = new URLSearchParams(window.location.search);
+  const weAreLive = params.get('wearelive') === 'true' || params.get('wearelive') === '1';
+
   return (
     <div className={styles.Landing}>
       <Section className={styles.heroSection}>
-        <Grid>
-          <Col start={2} end={10}>  
-            <div className={styles.heroContainer}>
-              <div className={styles.heroBg} />
-              <div className={styles.stamp}><CollectionStamp /></div>
-              <div className={styles.callout}>
-                <Callout>
-                  ** Coming Soon ** <br />
-                  Join the <Link to={urls.usmDiscord}>Discord</Link> or follow us on <Link to={urls.usmTwitter}>Twitter</Link>!
-                </Callout>
-              </div>
-            </div>
-          </Col>
-        </Grid>
+        {weAreLive ? <NewDrop /> : <ComingSoon /> }
       </Section>
 
       <Section>
