@@ -19,8 +19,8 @@ html {
 }
 
 body {
-  background-color: $color-evening-sky;
   @extend %font-body;
+  @extend %bg-grid;
 }
 
 a {
@@ -28,7 +28,7 @@ a {
   text-decoration: none;
 
   &:hover {
-    color: $color-lavish;
+    color: $color-sassy;
   }
 }
 

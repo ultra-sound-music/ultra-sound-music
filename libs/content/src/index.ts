@@ -2,10 +2,16 @@ import copy from './copy';
 export { copy };
 
 export const urls = Object.freeze({
+  usmBlog: 'https://mirror.xyz/ultrasoundmusic.eth',
   usmTwitter: 'https://twitter.com/usmproject',
   usmDiscord: 'https://discord.gg/5KB6GvjEk7',
   twitter: 'https://twitter.com'
 });
+
+export const routes = Object.freeze({
+  home: '/',
+  blog: '/blog'
+})
 
 export const team = Object.freeze([
   {

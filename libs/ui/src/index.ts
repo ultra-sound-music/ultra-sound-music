@@ -1,3 +1,4 @@
+export * from './components/Link/Link';
 export * from './components/Grid/Grid';
 export * from './components/Col/Col';
 export * from './components/Container/Container';

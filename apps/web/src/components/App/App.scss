@@ -1,5 +1,11 @@
+@use '../../styles/styles.scss' as *;
+
 .App {
   height: 100%;
+}
+
+.header {
+  background-color: $bg-color;
 }
 
 .footer {

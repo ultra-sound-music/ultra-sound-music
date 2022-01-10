@@ -11,9 +11,7 @@ export interface ISectionProps {
 export function Section({ className, children }: ISectionProps) {
   const classNames = cn(styles.Section, className);
   return (
-    <div className={classNames}>
-      <div>{children}</div>
-    </div>
+    <div className={classNames}>{children}</div>
   );
 }
 

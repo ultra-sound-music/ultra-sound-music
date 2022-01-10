@@ -2,6 +2,7 @@ export default Object.freeze({
   usm: 'usm',
   usm_long: 'Ultra Sound Music',
   memplayer: 'mempool player',
+  blog: 'blog',
   docs: 'docs',
   roadcrew: 'road crew',
   describeJambots: 'describeJambots describeJambots describeJambots',

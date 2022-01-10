@@ -1,13 +1,33 @@
+@use '@usm/styles/colors.scss' as *;
+
 .Landing {
-  display: block;
+  background-image: linear-gradient(180deg, $color-dusk, $color-evening-sky 400px, transparent 1000px);
+  background-repeat: repeat;
+  background-size: 100% 100%;
+  background-position-x: 0, 0;  
 }
 
 .stamp {
   margin-bottom: 40px;
 }
 
-.heroSection {
-  background: url('@usm/images/hero_jambot1.png');
+.heroContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 100px;
+}
+
+.heroBg {
+  position: absolute;
+  top: 0;
+  right: -800px;
+  width: 912px;
+  height: 560px;
+  background-image: url(@usm/images/hero_jambot1.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position-x: 0, 0;
 }
 
 .faq {

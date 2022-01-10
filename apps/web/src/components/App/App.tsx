@@ -1,6 +1,6 @@
-import { Routes, Route, Link} from 'react-router-dom';
-import { SiteHeader, Nav, SiteFooter } from '@usm/ui';
-import { copy } from '@usm/content';
+import { Routes, Route } from 'react-router-dom';
+import { Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
+import { copy, urls, routes } from '@usm/content';
 
 import Home from '../../pages/Landing/Landing';
 
@@ -8,8 +8,8 @@ import styles from './App.scss';
 
 const nav = [
   {
-    content: copy.docs,
-    to: '/docs',
+    content: copy.blog,
+    to: urls.usmBlog,
   },
   {
     content: copy.memplayer,
@@ -19,9 +19,12 @@ const nav = [
 
 const App = () => (
   <div className={styles.App}>
-    <SiteHeader nav={<Nav items={nav}/>} />
+    <div className={styles.header}>
+      <SiteHeader nav={<Nav items={nav}/>} />
+    </div>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path={routes.home} element={<Home />} />
+      <Route path={routes.blog} element={<Link to={urls.usmBlog} />} />
     </Routes>
     <div className={styles.footer}>
       <SiteFooter />

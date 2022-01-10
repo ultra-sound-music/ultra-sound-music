@@ -8,18 +8,17 @@
 }
 
 .navItem {
-  color: $color-polar-bear;
   padding: 0 10px;
   line-height: 40px;
   text-decoration: none;
-  @extend %font-small;
+  @extend %font-subhead;
   
   &:hover,
   &:active {
-    color: $color-lavish;
+    color: $color-sassy;
   }
 }
 
 .active {
-  color: $color-lavish;
+  color: $color-sassy;
 }

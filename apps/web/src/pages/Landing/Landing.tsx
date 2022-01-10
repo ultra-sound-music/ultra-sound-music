@@ -12,9 +12,12 @@ export function Landing() {
     <div className={styles.Landing}>
       <Section className={styles.heroSection}>
         <Grid>
-          <Col start={1} end={11}>
-            <div className={styles.stamp}><CollectionStamp /></div>
-            <div>{copy.lipsum_50w}</div>
+          <Col start={2} end={11}>  
+            <div className={styles.heroContainer}>
+              <div className={styles.heroBg} />
+              <div className={styles.stamp}><CollectionStamp /></div>
+              <div>{copy.lipsum_50w}</div>
+            </div>
           </Col>
         </Grid>
       </Section>

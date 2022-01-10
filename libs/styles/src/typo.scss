@@ -14,7 +14,7 @@ $font-size-body: 1.8rem;
 $font-size-small: 1.6rem;
 
 %font-brand {
-  font: $font-weight-normal #{$font-size-small} / 1.2 $font-fam-lato;
+  font: $font-weight-bold #{$font-size-small} / 1.2 $font-fam-lato;
   text-transform: uppercase;
   letter-spacing: 0.22em;
 }
