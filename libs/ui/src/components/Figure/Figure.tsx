@@ -15,7 +15,7 @@ export const Figure = ({
     <figure className={styles.Figure}>
       {image && <div className={styles.image}>{image}</div>}
       {title && <div className={styles.title}>{title}</div>}
-      <figcaption className={styles.figCaption}>{caption}</figcaption>
+      <figcaption>{caption}</figcaption>
     </figure>
   );
 };

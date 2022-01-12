@@ -7,7 +7,7 @@ export interface IInputProps {
 export function Input({ label, ...props }: IInputProps) {
   return (
     <div>
-      {label && <div className={styles.label}>{label}</div>}
+      {label && <div>{label}</div>}
       <input {...props} />
     </div>
   );
