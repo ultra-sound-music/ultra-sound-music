@@ -15,7 +15,7 @@
   @extend %font-button;
 
   // Use this technique for the border in order to be consistent with the .secondary border radius styling
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     top: 0;
@@ -27,7 +27,7 @@
     border-radius: 10px;
   }
 
-  &:after:empty {
+  &::after:empty {
     content: '\200b';
   }
 }
@@ -61,7 +61,7 @@
     $gradient-brilliant-start,
     $gradient-brilliant-end
   );
-  &:before {
+  &::before {
     background-image: linear-gradient(
       90deg,
       $gradient-brilliant-start,
@@ -76,7 +76,7 @@
       $gradient-brilliant-start
     );
 
-    &:before {
+    &::before {
       background: linear-gradient(
         to right,
         $gradient-brilliant-end,
@@ -87,7 +87,7 @@
 }
 
 .secondary {
-  &:before {
+  &::before {
     background-image: linear-gradient(
       90deg,
       $gradient-brilliant-start,
@@ -102,7 +102,7 @@
       $gradient-brilliant-start
     );
 
-    &:before {
+    &::before {
       background: linear-gradient(
         to right,
         $gradient-brilliant-end,
@@ -117,7 +117,7 @@
   background-image: none;
   pointer-events: none;
 
-  &:before {
+  &::before {
     background-color: $color-old-towel;
     background-image: none;
   }
