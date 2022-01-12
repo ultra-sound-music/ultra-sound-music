@@ -11,7 +11,6 @@ export function Input({ label, ...props }: IInputProps) {
       <input {...props} />
     </div>
   );
-}
+
 
 export default Input
-
