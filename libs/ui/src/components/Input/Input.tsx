@@ -13,4 +13,5 @@ export function Input({ label, ...props }: IInputProps) {
   );
 }
 
-export default Input;
+export default Input
+
