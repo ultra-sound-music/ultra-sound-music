@@ -1,10 +1,10 @@
-$hero_height: 560px;
-$hero_width: 912px;
+$hero-height: 560px;
+$hero-width: 912px;
 
 .ComingSoon {
   position: relative;
   width: 100%;
-  height: $hero_height;
+  height: $hero-height;
   padding-top: 80px;
 }
 
@@ -20,9 +20,9 @@ $hero_width: 912px;
   position: absolute;
   top: 0;
   right: -850px;
-  width: $hero_width;
-  min-height: $hero_height;
-  background-image: url(@usm/images/hero_jambot1.png);
+  width: $hero-width;
+  min-height: $hero-height;
+  background-image: url('@usm/images/hero_jambot1.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: 0 0;
