@@ -11,7 +11,7 @@ describe('SolClient', () => {
       expect(
         new SolClient({
           wallet,
-          accountAddress,
+          accountAddress
         })
       ).toBeInstanceOf(SolClient);
     });

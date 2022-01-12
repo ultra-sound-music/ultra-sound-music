@@ -4,7 +4,7 @@ import Nav from './Nav';
 
 describe('Nav', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Nav items={[]}/>);
+    const { baseElement } = render(<Nav items={[]} />);
     expect(baseElement).toBeTruthy();
   });
 });

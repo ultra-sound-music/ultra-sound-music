@@ -1,3 +1,3 @@
 module.exports = {
-  "presets": [["@nrwl/web/babel", { "useBuiltIns": "usage" }]]
-}
+  presets: [['@nrwl/web/babel', { useBuiltIns: 'usage' }]]
+};

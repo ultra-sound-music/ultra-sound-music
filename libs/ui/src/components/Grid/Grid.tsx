@@ -7,12 +7,8 @@ export interface IGridProps {
   children: ReactNode;
 }
 
-export function Grid({ className, children }: IGridProps ) {
-  return (
-    <div className={`${styles.Grid} ${className}`}>
-      {children}
-    </div>
-  );
+export function Grid({ className, children }: IGridProps) {
+  return <div className={`${styles.Grid} ${className}`}>{children}</div>;
 }
 
 export default Grid;

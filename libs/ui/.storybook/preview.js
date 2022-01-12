@@ -3,20 +3,20 @@ import '../../styles/src/global.scss';
 export const parameters = {
   options: {
     storySort: {
-      order: ['Styleguide', 'Components'],
-    },    
+      order: ['Styleguide', 'Components']
+    }
   },
   backgrounds: {
     default: 'void',
     values: [
       {
         name: 'polar-bear',
-        value: '#fff',
+        value: '#fff'
       },
       {
         name: 'void',
-        value: '#000',
-      },
-    ],
-  },  
+        value: '#000'
+      }
+    ]
+  }
 };

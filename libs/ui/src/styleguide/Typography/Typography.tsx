@@ -5,9 +5,10 @@ interface ITypographyProps {
   names: string[];
 }
 
-const text = 'It is true, what many of you have heard. The bots have gathered an army and as I speak, that army is drawing nearer to our home.';
+const text =
+  'It is true, what many of you have heard. The bots have gathered an army and as I speak, that army is drawing nearer to our home.';
 
-export function Typography({ names }: ITypographyProps ) {
+export function Typography({ names }: ITypographyProps) {
   return (
     <div>
       {names.map((name) => {

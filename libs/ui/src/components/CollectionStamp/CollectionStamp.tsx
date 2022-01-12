@@ -7,8 +7,14 @@ import styles from './CollectionStamp.scss';
 export function CollectionStamp() {
   return (
     <div className={styles.CollectionStamp}>
-      <div className={styles.usm}>Ultra<br />Sound<br />Music</div>
-      <Image src={stampUrl} className={styles.stamp}/>
+      <div className={styles.usm}>
+        Ultra
+        <br />
+        Sound
+        <br />
+        Music
+      </div>
+      <Image src={stampUrl} className={styles.stamp} />
     </div>
   );
 }

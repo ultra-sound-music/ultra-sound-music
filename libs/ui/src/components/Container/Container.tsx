@@ -7,11 +7,7 @@ export interface IContainerProps {
 }
 
 export function Container({ children }: IContainerProps) {
-  return (
-    <div className={styles.Container}>
-      {children}
-    </div>
-  );
+  return <div className={styles.Container}>{children}</div>;
 }
 
 export default Container;

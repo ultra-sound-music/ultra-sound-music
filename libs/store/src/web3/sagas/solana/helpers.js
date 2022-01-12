@@ -4,7 +4,7 @@ import * as solanaConstants from './constants';
 
 export const coreEventListeners = {
   [solanaConstants.CONNECT]: onAccountsChanged,
-  [solanaConstants.DISCONNECT]: onAccountsChanged,
+  [solanaConstants.DISCONNECT]: onAccountsChanged
 };
 
 export function onAccountsChanged(solClient) {

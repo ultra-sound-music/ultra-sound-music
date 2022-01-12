@@ -9,7 +9,7 @@ describe('wallet', () => {
         url: expect.any(String),
         icon: expect.any(String),
         adapter: expect.any(Object)
-      })
+      });
     });
   });
 });

@@ -13,16 +13,14 @@ const colors = [
   'void'
 ];
 
-const gradients = [
-  'brilliant'
-]
+const gradients = ['brilliant'];
 
 export default {
   component: Colors,
-  title: 'Styleguide/Colors',
+  title: 'Styleguide/Colors'
 } as Meta;
 
-const Template: Story = () => <Colors  colors={colors} gradients={gradients} />;
+const Template: Story = () => <Colors colors={colors} gradients={gradients} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

@@ -13,7 +13,7 @@ import * as ActionTypes from './actionTypes';
 const initialState = {
   isPlaying: false,
   activeSource: null, // entityId
-  sources: [],
+  sources: []
 };
 
 export function updateSource(sources, updates) {
@@ -42,7 +42,7 @@ export function playbackStarted(state, { payload }) {
   state.sources = updateSource(state.sources, {
     entityId,
     audioUrl,
-    isLoading: true,
+    isLoading: true
   });
 }
 
@@ -52,14 +52,14 @@ export function playbackStopped(state) {
   state.isPlaying = false;
   state.sources = updateSource(state.sources, {
     entityId: activeSource,
-    isLoading: false,
+    isLoading: false
   });
 }
 
 export function onLoadSuccess(state, { audioUrl }) {
   state.sources = updateSource(state.sources, {
     audioUrl,
-    isLoading: false,
+    isLoading: false
   });
 }
 

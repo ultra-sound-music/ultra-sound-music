@@ -7,5 +7,5 @@ export default {
   actions,
   actionTypes,
   constants,
-  selectors,
+  selectors
 };

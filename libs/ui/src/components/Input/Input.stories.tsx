@@ -3,7 +3,7 @@ import Input, { IInputProps } from './Input';
 
 export default {
   component: Input,
-  title: 'Forms/Input',
+  title: 'Forms/Input'
 } as Meta;
 
 const Template: Story<IInputProps> = (args) => <Input {...args} />;

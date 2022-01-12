@@ -5,34 +5,24 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/wallets/sol-wallet",
         "main": "libs/wallets/sol-wallet/src/index.ts",
         "tsConfig": "libs/wallets/sol-wallet/tsconfig.lib.json",
-        "assets": [
-          "libs/wallets/sol-wallet/*.md"
-        ]
+        "assets": ["libs/wallets/sol-wallet/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/wallets/sol-wallet/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/wallets/sol-wallet/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/wallets/sol-wallet"
-      ],
+      "outputs": ["coverage/libs/wallets/sol-wallet"],
       "options": {
         "jestConfig": "libs/wallets/sol-wallet/jest.config.js",
         "passWithNoTests": true

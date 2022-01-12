@@ -11,8 +11,8 @@ export function init(autoConnect) {
   return {
     type: ActionTypes.INIT_WEB3,
     payload: {
-      autoConnect,
-    },
+      autoConnect
+    }
   };
 }
 
@@ -20,20 +20,20 @@ export function initWeb3Success({ web3Client }) {
   return {
     type: ActionTypes.INIT_WEB3_SUCCESS,
     payload: {
-      web3Client,
-    },
+      web3Client
+    }
   };
 }
 
 export function installWallet() {
   return {
-    type: ActionTypes.INSTALL_WALLET,
+    type: ActionTypes.INSTALL_WALLET
   };
 }
 
 export function connectWallet() {
   return {
-    type: ActionTypes.CONNECT_WALLET,
+    type: ActionTypes.CONNECT_WALLET
   };
 }
 
@@ -42,8 +42,8 @@ export function processAccountUpdate({ status, account }) {
     type: ActionTypes.PROCESS_ACCOUNT_UPDATE,
     data: {
       status,
-      account,
-    },
+      account
+    }
   };
 }
 
@@ -51,11 +51,11 @@ export function onProcessAccountUpdate(account) {
   if (account) {
     return processAccountUpdate({
       status: web3Constants.networkStatus.CONNECTED,
-      account,
+      account
     });
   } else {
     return processAccountUpdate({
-      status: web3Constants.networkStatus.NOT_CONNECTED,
+      status: web3Constants.networkStatus.NOT_CONNECTED
     });
   }
 }
@@ -64,8 +64,8 @@ export function processNetworkUpdate({ networkId }) {
   return {
     type: ActionTypes.PROCESS_NETWORK_UPDATE,
     data: {
-      networkId,
-    },
+      networkId
+    }
   };
 }
 
@@ -75,7 +75,7 @@ export function updateNetworkStatus({ status, account, networkId }) {
     data: {
       status,
       account,
-      networkId,
-    },
+      networkId
+    }
   };
 }

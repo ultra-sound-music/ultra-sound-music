@@ -6,7 +6,7 @@ import Image, { IImageProps } from './Image';
 
 export default {
   component: Image,
-  title: 'Components/Image',
+  title: 'Components/Image'
 } as Meta;
 
 const Template: Story<IImageProps> = (args) => <Image {...args} />;

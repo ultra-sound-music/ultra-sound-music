@@ -12,7 +12,7 @@ export const urls = Object.freeze({
 export const routes = Object.freeze({
   home: '/',
   blog: '/blog'
-})
+});
 
 export const team = Object.freeze([
   {
@@ -32,13 +32,13 @@ export const team = Object.freeze([
     twitter: 'andres_mald',
     discord: 'AGame',
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-  },  
+  },
   {
     name: 'Gabriel Castillo',
     twitter: 'grend3lxc',
     discord: 'grend3lxc',
     blurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-  },
+  }
 ]);
 
 export const faq = Object.freeze([
@@ -53,9 +53,9 @@ export const faq = Object.freeze([
   {
     q: `What's up with the name?`,
     a: 'Ultra Sound Music is a play on the Ethereum Ultra Sound Money meme. If money can be ultra sound by providing the utmost in individual expression and freedom, then surely, music can do the same.'
-  },  
+  },
   {
     q: `What's the Roadmap?`,
     a: `We're currently working on launching unique NFT characters with generative visual and sound traits.  These characters will be the cornerstone on the USM platform.  Everything else is TBD.`
   }
-])
+]);

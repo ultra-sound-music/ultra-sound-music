@@ -10,7 +10,7 @@ const initialState = Object.freeze({
   isAppMessageOpen: false,
   appMessageTitle: '',
   appMessageMessage: '',
-  appMessageTimeout: null,
+  appMessageTimeout: null
 });
 
 export function getStandardModalState(state, payload) {
@@ -20,7 +20,7 @@ export function getStandardModalState(state, payload) {
     modalType: payload.type,
     modalTitle: payload.title,
     modalBody: payload.body,
-    modalCta: payload.ctaText,
+    modalCta: payload.ctaText
   };
 
   return newState;
@@ -30,7 +30,7 @@ export function getInstallWalletModalState(state, { type }) {
   return {
     ...state,
     shouldShowModal: true,
-    modalType: type,
+    modalType: type
   };
 }
 
@@ -38,7 +38,7 @@ export function getStartBandModalState(state, { type }) {
   return {
     ...state,
     shouldShowModal: true,
-    modalType: type,
+    modalType: type
   };
 }
 
@@ -47,7 +47,7 @@ export function getJoinBandModalState(state, { type, bandId }) {
     ...state,
     shouldShowModal: true,
     modalType: type,
-    modalProps: { bandId },
+    modalProps: { bandId }
   };
 }
 
@@ -56,7 +56,7 @@ export function getMintTrackModalState(state, { type, bandId }) {
     ...state,
     shouldShowModal: true,
     modalType: type,
-    modalProps: { bandId },
+    modalProps: { bandId }
   };
 }
 
@@ -65,7 +65,7 @@ export const modalMap = {
   'install-wallet': getInstallWalletModalState,
   'start-band': getStandardModalState,
   'join-band': getJoinBandModalState,
-  'mint-track': getMintTrackModalState,
+  'mint-track': getMintTrackModalState
 };
 
 export default function uiReducer(state = initialState, action) {
@@ -89,7 +89,7 @@ export default function uiReducer(state = initialState, action) {
         modalProps: initialState.modalProps,
         modalTitle: initialState.modalTitle,
         modalBody: initialState.modalBody,
-        modalCTA: initialState.modalCTA,
+        modalCTA: initialState.modalCTA
       };
 
       return newState;
@@ -98,7 +98,7 @@ export default function uiReducer(state = initialState, action) {
     case ActionTypes.HIDE_APP_MESSAGE: {
       const newState = {
         ...state,
-        isAppMessageOpen: initialState.isAppMessageOpen,
+        isAppMessageOpen: initialState.isAppMessageOpen
       };
 
       return newState;
@@ -112,7 +112,7 @@ export default function uiReducer(state = initialState, action) {
         isAppMessageOpen: true,
         appMessageTitle: title || initialState.appMessageTitle,
         appMessageMessage: message || initialState.appMessageMessage,
-        appMessageTimeout: timeout || initialState.timeout,
+        appMessageTimeout: timeout || initialState.timeout
       };
 
       return newState;

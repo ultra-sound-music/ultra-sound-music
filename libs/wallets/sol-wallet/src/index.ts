@@ -1,8 +1,5 @@
 import { getWalletAdapter, detaultWalletName, IWalletName } from './wallets';
-import {
-  Adapter,
-  WalletAdapterEvents
-} from '@solana/wallet-adapter-base';
+import { Adapter, WalletAdapterEvents } from '@solana/wallet-adapter-base';
 import { PublicKey } from '@solana/web3.js';
 
 import { IPubKeyString, INetworkId, IWallet } from '@usm/wallets/types';

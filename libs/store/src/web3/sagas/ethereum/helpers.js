@@ -5,7 +5,7 @@ import * as ethereumConstants from './constants';
 
 export const coreEventListeners = {
   [ethereumConstants.providerEventNames.ACCOUNTS_CHANGED]: onAccountsChanged,
-  [ethereumConstants.providerEventNames.CHAIN_CHANGED]: onChainChanged,
+  [ethereumConstants.providerEventNames.CHAIN_CHANGED]: onChainChanged
 };
 
 export function* startWatchingForEthereumEvents(ethClient) {

@@ -10,9 +10,9 @@ export interface IColProps {
 
 export function Col({ start, end, span, className, children }: IColProps) {
   const styles = {
-    'gridColumnStart': start,
-    'gridColumnEnd': end,
-    'gridColumnSpan': span,
+    gridColumnStart: start,
+    gridColumnEnd: end,
+    gridColumnSpan: span
   };
 
   return (

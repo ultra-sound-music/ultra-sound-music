@@ -21,9 +21,14 @@ export const SiteHeader = ({
         <div className={styles.brand}>
           <NavLink to='/' className={styles.logoLink}>
             <Logo className={styles.logo} />
-            <div className={styles.usm}>Ultra<br/>Sound<br/>Music</div>
+            <div className={styles.usm}>
+              Ultra
+              <br />
+              Sound
+              <br />
+              Music
+            </div>
           </NavLink>
-          
         </div>
         {nav && <div className={styles.topNav}>{nav}</div>}
         {ctaButton}

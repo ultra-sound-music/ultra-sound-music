@@ -1,7 +1,7 @@
 import styles from './Input.scss';
 
 export interface IInputProps {
-  label: React.ReactNode
+  label: React.ReactNode;
 }
 
 export function Input({ label, ...props }: IInputProps) {

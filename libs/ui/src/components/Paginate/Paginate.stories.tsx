@@ -20,4 +20,3 @@ Primary.args = {
     console.log('TEST');
   }
 };
-

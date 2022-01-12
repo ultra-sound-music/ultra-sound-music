@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/web:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/web",
@@ -17,9 +15,7 @@
         "main": "apps/web/src/index.tsx",
         "polyfills": "apps/web/src/polyfills.ts",
         "tsConfig": "apps/web/tsconfig.app.json",
-        "assets": [
-          "apps/web/src/assets"
-        ],
+        "assets": ["apps/web/src/assets"],
         "styles": [],
         "scripts": [],
         "webpackConfig": "apps/web/build/webpack.js"
@@ -56,20 +52,14 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/web/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["apps/web/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/web"
-      ],
+      "outputs": ["coverage/apps/web"],
       "options": {
         "jestConfig": "apps/web/jest.config.js",
         "passWithNoTests": true

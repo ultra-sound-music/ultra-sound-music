@@ -5,7 +5,7 @@ export const updateConfigs = createAction(
   ActionTypes.UPDATE_CONFIGS,
   (configs) => {
     return {
-      payload: configs,
+      payload: configs
     };
   }
 );

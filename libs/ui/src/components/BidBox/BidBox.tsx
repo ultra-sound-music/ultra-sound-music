@@ -46,7 +46,7 @@ export function BidBox(props: BidBoxProps): JSX.Element {
           <p>Connect a Wallet</p>
           <div className={styles.formInputBox}>
             <div className={styles.formInput}></div>
-            <Button isDisabled type="primary">
+            <Button isDisabled type='primary'>
               Connect
             </Button>
           </div>

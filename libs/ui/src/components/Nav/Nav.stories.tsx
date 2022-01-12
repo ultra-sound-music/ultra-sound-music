@@ -8,20 +8,20 @@ import Nav, { INavProps } from './Nav';
 
 export default {
   title: 'Components/Nav',
-  component: Nav,
+  component: Nav
 } as Meta;
 
 const Template: Story<INavProps> = (args) => {
   return (
     <BrowserRouter>
       <Nav {...args} />
-    </BrowserRouter>      
-  )
+    </BrowserRouter>
+  );
 };
 
 const items = [
   {
-    content: <Image src={logo} style={{width: '30px', height: '30px'}} />,
+    content: <Image src={logo} style={{ width: '30px', height: '30px' }} />,
     to: 'some/path'
   },
   {
@@ -35,7 +35,7 @@ const items = [
   {
     content: 'POW NFT',
     to: 'some/path'
-  }  
+  }
 ];
 
 export const Primary = Template.bind({});

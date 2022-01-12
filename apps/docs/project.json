@@ -8,9 +8,7 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "cwd": "./apps/docs",
-        "commands": [
-          "docusaurus start"
-        ]
+        "commands": ["docusaurus start"]
       }
     }
   },

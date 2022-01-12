@@ -6,34 +6,24 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/sol-client",
         "main": "libs/sol-client/src/SolClient.ts",
         "tsConfig": "libs/sol-client/tsconfig.lib.json",
-        "assets": [
-          "libs/sol-client/*.md"
-        ]
+        "assets": ["libs/sol-client/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/sol-client/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/sol-client/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/sol-client"
-      ],
+      "outputs": ["coverage/libs/sol-client"],
       "options": {
         "jestConfig": "libs/sol-client/jest.config.js",
         "passWithNoTests": true

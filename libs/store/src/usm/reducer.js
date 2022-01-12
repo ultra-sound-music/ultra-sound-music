@@ -9,7 +9,7 @@ const initialState = tokensAdapter.getInitialState({
   transactions: [],
   isFetchingTokens: false,
   isProcessingTransaction: false,
-  newMints: [],
+  newMints: []
 });
 
 export function initUsm(state) {
@@ -31,7 +31,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       name: 'Rodrigo',
       image:
         'https://storageapi.fleek.co/dongambas-team-bucket/tepeyollotl.png',
-      price: 2.5,
+      price: 2.5
     },
     {
       tokenType: 'artist',
@@ -40,7 +40,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       name: 'Minelirma',
       image:
         'https://storageapi.fleek.co/dongambas-team-bucket/quetzalcoatl.png',
-      price: 2.5,
+      price: 2.5
     },
     {
       tokenType: 'artist',
@@ -48,7 +48,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       id: '1235',
       name: 'Bondigano',
       image: 'https://storageapi.fleek.co/dongambas-team-bucket/patecatl.png',
-      price: 2.5,
+      price: 2.5
     },
     {
       tokenType: 'artist',
@@ -56,7 +56,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       id: '1236',
       name: 'Luciana',
       image: 'https://storageapi.fleek.co/dongambas-team-bucket/xolotl.png',
-      price: 2.5,
+      price: 2.5
     },
     {
       tokenType: 'artist',
@@ -65,7 +65,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       name: 'Samuela',
       image:
         'https://storageapi.fleek.co/dongambas-team-bucket/chalchiuhtlicue.png',
-      price: 2.5,
+      price: 2.5
     },
     {
       tokenType: 'artist',
@@ -74,8 +74,8 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       name: 'Timbaleo',
       image:
         'https://storageapi.fleek.co/dongambas-team-bucket/tezcatlipoca.png',
-      price: 2.5,
-    },
+      price: 2.5
+    }
   ];
 }
 
@@ -104,7 +104,7 @@ function addTransaction(state, { data }) {
     transactionId,
     status = constants.usm.transactionStatus.SUBMITTED,
     errorCode,
-    errorMessage,
+    errorMessage
   } = data;
 
   if (status === constants.usm.transactionStatus.SUBMITTED) {
@@ -117,7 +117,7 @@ function addTransaction(state, { data }) {
     transactionId,
     status,
     errorCode,
-    errorMessage,
+    errorMessage
   });
 }
 
@@ -127,7 +127,7 @@ function updateTransaction(state, { data }) {
     transactionId,
     status = constants.usm.transactionStatus.SUBMITTED,
     errorCode,
-    errorMessage,
+    errorMessage
   } = data;
 
   const updatedTransactions = state.transactions.map((tx) => {
@@ -136,7 +136,7 @@ function updateTransaction(state, { data }) {
         transactionId,
         status,
         errorCode,
-        errorMessage,
+        errorMessage
       });
       return tx;
     }

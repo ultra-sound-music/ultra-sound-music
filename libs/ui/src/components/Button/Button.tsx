@@ -48,7 +48,7 @@ export const Button = ({
     <>
       {image ? <span className={styles.image}>{image}</span> : null}
       {children ? <span className={styles.content}>{children}</span> : ''}
-      {isProcessing && <Spinner cover="relative" />}
+      {isProcessing && <Spinner cover='relative' />}
     </>
   );
 
@@ -58,8 +58,8 @@ export const Button = ({
         <a
           href={to}
           className={classNames}
-          target="_blank"
-          rel="noreferrer"
+          target='_blank'
+          rel='noreferrer'
           {...props}
         >
           {content}
@@ -78,7 +78,7 @@ export const Button = ({
 
   return (
     <button
-      type="button"
+      type='button'
       className={classNames}
       onClick={onClick}
       disabled={disabled}

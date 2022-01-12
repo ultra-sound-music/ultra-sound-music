@@ -30,8 +30,8 @@ const navItems = [
   {
     content: 'Item 3',
     to: 'some/path'
-  }  
-];  
+  }
+];
 
 export const Primary = Template.bind({});
 Primary.args = {

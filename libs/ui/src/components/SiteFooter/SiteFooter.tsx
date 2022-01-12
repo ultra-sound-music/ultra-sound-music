@@ -9,17 +9,23 @@ import Link from '../Link/Link';
 
 import styles from './SiteFooter.scss';
 
-const year = new Date().getFullYear()
+const year = new Date().getFullYear();
 
 export function SiteFooter() {
   return (
     <div className={styles.SiteFooter}>
-      <Image src={logo} className={styles.logo}/>
+      <Image src={logo} className={styles.logo} />
       <div className={styles.usm}>{copy.usm_long}</div>
-      <div className={styles.copyright}>{interpolate(copy.copyright, year)}</div>
+      <div className={styles.copyright}>
+        {interpolate(copy.copyright, year)}
+      </div>
       <div className={styles.socials}>
-        <Link to={urls.usmDiscord}><FaDiscord /></Link>
-        <Link to={urls.usmTwitter}><FaTwitter /></Link>
+        <Link to={urls.usmDiscord}>
+          <FaDiscord />
+        </Link>
+        <Link to={urls.usmTwitter}>
+          <FaTwitter />
+        </Link>
       </div>
     </div>
   );

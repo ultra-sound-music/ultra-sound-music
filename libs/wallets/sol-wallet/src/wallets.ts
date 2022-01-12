@@ -2,13 +2,13 @@ import { Wallet } from '@solana/wallet-adapter-base';
 
 import {
   getLedgerWallet,
-  getMathWallet,  
+  getMathWallet,
   getPhantomWallet,
   getSolflareWallet,
   getSolflareWebWallet,
   getSolletWallet,
   getSolletExtensionWallet,
-  getTorusWallet,
+  getTorusWallet
 } from '@solana/wallet-adapter-wallets';
 
 export const walletsMap = {
@@ -19,7 +19,7 @@ export const walletsMap = {
   SolflareWeb: getSolflareWebWallet,
   Sollet: getSolletWallet,
   SolletExtension: getSolletExtensionWallet,
-  Torus: getTorusWallet,
+  Torus: getTorusWallet
 };
 
 export type IWalletName = keyof typeof walletsMap;

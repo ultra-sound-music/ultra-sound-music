@@ -44,13 +44,13 @@ export function* fetchAllTokens({ data }) {
   if (type && metadataUri) {
     pendingTransaction = {
       type: data?.pendingTransactionType,
-      metadataUri: data?.pendingMetadataUri,
+      metadataUri: data?.pendingMetadataUri
     };
   }
 
   try {
     const response = yield call([usmClient, 'fetchAll'], {
-      pendingTransaction,
+      pendingTransaction
     });
     yield put(actions.fetchTokensComplete({ tokens: response?.data }));
   } catch (error) {
@@ -59,7 +59,7 @@ export function* fetchAllTokens({ data }) {
       mediator.actions.showAppMessage({
         title: copy.error,
         message: copy.problem_connecting,
-        timeout: 5000,
+        timeout: 5000
       })
     );
   }
@@ -84,7 +84,7 @@ export function* createArtist({ data }) {
   yield put(
     actions.addTransaction({
       method: 'createArtist',
-      key,
+      key
     })
   );
 
@@ -98,7 +98,7 @@ export function* createArtist({ data }) {
       actions.updateTransaction({
         key,
         transactionId: transaction.hash,
-        status: constants.usm.transactionStatus.AUTHORIZED,
+        status: constants.usm.transactionStatus.AUTHORIZED
       })
     );
   } catch (error) {
@@ -106,7 +106,7 @@ export function* createArtist({ data }) {
     yield put(
       mediator.actions.showModal({
         title: 'Error',
-        body: 'Unable to create an artist, please try again later.',
+        body: 'Unable to create an artist, please try again later.'
       })
     );
     yield put(
@@ -114,7 +114,7 @@ export function* createArtist({ data }) {
         key,
         status: constants.usm.transactionStatus.FAILED,
         errorCode: error.code,
-        errorMessage: error.message,
+        errorMessage: error.message
       })
     );
   }

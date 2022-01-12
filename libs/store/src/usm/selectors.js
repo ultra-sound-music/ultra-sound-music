@@ -11,7 +11,7 @@ export const {
   selectEntities: selectTokenEntities,
   selectAll: selectAllTokenEntities,
   selectTotal: selectTokenTotal,
-  selectById: selectTokenById,
+  selectById: selectTokenById
 } = tokenSelectors;
 
 export function getUsmState(state) {
@@ -182,7 +182,7 @@ export const selectCompletedTransactions = createSelector(
     transactions.filter((transaction) => {
       return [
         constants.usm.transactionStatus.MINED,
-        constants.usm.transactionStatus.FAILED,
+        constants.usm.transactionStatus.FAILED
       ].includes(transaction.status);
     })
 );
@@ -204,7 +204,7 @@ export const selectOpenTransactions = createSelector(
     transactions.filter((transaction) => {
       return ![
         constants.usm.transactionStatus.MINED,
-        constants.usm.transactionStatus.FAILED,
+        constants.usm.transactionStatus.FAILED
       ].includes(transaction.status);
     })
 );
@@ -311,7 +311,7 @@ export const getBandTraits = createSelector(getBand, () => ({
   warmth: 2,
   dissonance: 3,
   aggression: 1,
-  space: 4,
+  space: 4
 }));
 
 export const getTrackCreatorByTrackId = createSelector(

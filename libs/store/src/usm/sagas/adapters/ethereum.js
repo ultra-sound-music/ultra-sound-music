@@ -7,7 +7,7 @@ import mediator from '@usm/store/mediator';
 export function* createUsmClient({ web3Client: ethClient }) {
   // @todo optimize this loading to be async and not block the app
   const {
-    default: { artist: artistConfig, band: bandConfig, track: trackConfig },
+    default: { artist: artistConfig, band: bandConfig, track: trackConfig }
   } = yield call(() => import('../../../../deps/tokenConfigs'));
 
   return new EthUsmClient({
@@ -17,6 +17,6 @@ export function* createUsmClient({ web3Client: ethClient }) {
     accountAddress: yield select(mediator.selectors.getAccountAddress),
     apiHost: `//${document.location.host}`,
     provider: ethClient.provider,
-    logger: utils.logger,
+    logger: utils.logger
   });
 }

@@ -3,7 +3,7 @@ import * as ActionTypes from './actionTypes';
 
 const initialState = {
   lfg: true,
-  isArtistOnly: true,
+  isArtistOnly: true
 };
 
 export function updateConfig(state, { payload }) {

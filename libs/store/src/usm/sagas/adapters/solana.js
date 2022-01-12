@@ -8,6 +8,6 @@ export function* createUsmClient({ web3Client: solClient }) {
   return new SolUsmClient({
     solClient,
     accountAddress: yield select(mediator.selectors.getAccountAddress),
-    logger: utils.logger,
+    logger: utils.logger
   });
 }

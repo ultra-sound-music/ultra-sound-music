@@ -8,7 +8,7 @@ export function* initApp({ payload }) {
 export function* onInitWeb3Success({ payload }) {
   yield put(
     mediator.actions.initUsm({
-      web3Client: payload.web3Client,
+      web3Client: payload.web3Client
     })
   );
 }

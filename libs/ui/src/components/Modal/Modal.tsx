@@ -18,17 +18,29 @@ export interface IModalProps {
   children?: React.ReactNode;
 }
 
-export function renderButtons(ctaButton?: JSX.Element, withCloseButton?: boolean, onHide?: () => void) {
+export function renderButtons(
+  ctaButton?: JSX.Element,
+  withCloseButton?: boolean,
+  onHide?: () => void
+) {
   if (!ctaButton && !withCloseButton) {
     return;
   }
 
   return (
     <div className={styles.buttons}>
-      {withCloseButton && <Button onClick={onHide} isFullWidth={true} type={ctaButton ? 'secondary' : 'primary'}>Close</Button>}
+      {withCloseButton && (
+        <Button
+          onClick={onHide}
+          isFullWidth={true}
+          type={ctaButton ? 'secondary' : 'primary'}
+        >
+          Close
+        </Button>
+      )}
       {ctaButton}
-    </div>    
-  )
+    </div>
+  );
 }
 
 export const Modal = ({
@@ -57,7 +69,7 @@ export const Modal = ({
   return (
     <ReactModal {...props}>
       {subject && <div className={styles.subject}>{subject}</div>}
-      {title && <div className={styles.title}>{title}</div>}  
+      {title && <div className={styles.title}>{title}</div>}
       <div className={styles.body}>{children}</div>
       {renderButtons(ctaButton, withCloseButton, onHide)}
       {withCloseX && (

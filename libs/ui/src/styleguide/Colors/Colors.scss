@@ -70,5 +70,9 @@
 }
 
 .gradient-brilliant {
-  background: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);
+  background: linear-gradient(
+    90deg,
+    $gradient-brilliant-start,
+    $gradient-brilliant-end
+  );
 }

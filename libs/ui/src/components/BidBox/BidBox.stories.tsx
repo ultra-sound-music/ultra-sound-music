@@ -3,7 +3,7 @@ import { BidBox, BidBoxProps } from './BidBox';
 
 export default {
   component: BidBox,
-  title: 'Components/BidBox',
+  title: 'Components/BidBox'
 } as Meta;
 
 const Template: Story<BidBoxProps> = (args) => <BidBox {...args} />;

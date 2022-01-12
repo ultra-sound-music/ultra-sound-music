@@ -5,16 +5,16 @@ import { rgba2hex } from '../../utils';
 import styles from './Colors.scss';
 
 interface IColorProps {
-  color: string
+  color: string;
 }
 
 interface IGradientProps {
-  gradient: string
+  gradient: string;
 }
 
 interface IColorsProps {
-  colors: string[],
-  gradients: string[]
+  colors: string[];
+  gradients: string[];
 }
 
 function getBgColor(el: HTMLDivElement): string {
@@ -56,7 +56,7 @@ function Color({ color }: IColorProps) {
       <div className={styles.value}>{value}</div>
       <div className={styles.name}>{color}</div>
     </div>
-  )
+  );
 }
 
 function Gradient({ gradient }: IGradientProps) {
@@ -76,18 +76,26 @@ function Gradient({ gradient }: IGradientProps) {
       <div className={styles.value}>{value}</div>
       <div className={styles.name}>{gradient}</div>
     </div>
-  )
+  );
 }
 
 export function Colors({ colors, gradients }: IColorsProps) {
   return (
     <div>
       <div className={styles.title}>Colors</div>
-      <div className={styles.colors}>{colors.map((color) => <Color key={color} color={color} />)}</div>
+      <div className={styles.colors}>
+        {colors.map((color) => (
+          <Color key={color} color={color} />
+        ))}
+      </div>
       <div className={styles.title}>Gradients</div>
-      <div className={styles.colors}>{gradients.map((gradient) => <Gradient key={gradient} gradient={gradient} />)}</div>
+      <div className={styles.colors}>
+        {gradients.map((gradient) => (
+          <Gradient key={gradient} gradient={gradient} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
 export default Colors;

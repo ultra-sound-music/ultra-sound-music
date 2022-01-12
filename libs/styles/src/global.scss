@@ -4,7 +4,9 @@
 @use './layout.scss' as *;
 @use './utils.scss' as *;
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
@@ -49,7 +51,7 @@ h3 {
 }
 
 h4 {
-  margin-bottom: .3rem;
+  margin-bottom: 0.3rem;
   @extend %font-h4;
 }
 

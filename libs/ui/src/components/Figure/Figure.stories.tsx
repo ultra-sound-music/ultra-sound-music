@@ -13,7 +13,11 @@ export default {
 } as Meta<typeof Figure>;
 
 const Template: Story<IFigureProps> = (args) => {
-  return <BrowserRouter><Figure {...args} /></BrowserRouter>;
+  return (
+    <BrowserRouter>
+      <Figure {...args} />
+    </BrowserRouter>
+  );
 };
 
 export const Primary = Template.bind({});

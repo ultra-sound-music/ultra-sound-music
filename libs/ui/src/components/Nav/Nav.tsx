@@ -29,10 +29,19 @@ export const Nav = ({ items }: INavProps): JSX.Element => {
         };
 
         if (isExternalUrl) {
-          return <Link {...props} className={styles.navItem}>{content}</Link>
+          return (
+            <Link {...props} className={styles.navItem}>
+              {content}
+            </Link>
+          );
         } else {
-          const className = ({ isActive }: IActiveCheck) => cn(styles.navItem, isActive && styles.isActive);
-          return <NavLink className={className} {...props}>{content}</NavLink>
+          const className = ({ isActive }: IActiveCheck) =>
+            cn(styles.navItem, isActive && styles.isActive);
+          return (
+            <NavLink className={className} {...props}>
+              {content}
+            </NavLink>
+          );
         }
       })}
     </div>
