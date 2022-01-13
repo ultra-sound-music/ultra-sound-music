@@ -32,8 +32,8 @@ export function Landing() {
 
       <Section>
         <Grid>
-          <Col start={1} end={12} className={styles.hero2Bg} />
-          <Col start={13} end='end'>
+          <Col end={12} className={styles.hero2Bg} />
+          <Col start={13}>
             <TextBlock
               subject={copy.genesisCollection}
               title={copy.uniqueJambots}
@@ -45,16 +45,18 @@ export function Landing() {
       </Section>
 
       <Section>
-        <Container>
-          <div></div>
-          <TextBlock
-            subject={copy.genesisCollection}
-            title={copy.uniqueJambots}
-          >
-            <h4>{copy.lipsum_3w}</h4>
-            {copy.lipsum_1p}
-          </TextBlock>
-        </Container>
+        <Grid>
+          <Col>
+            <div></div>
+            <TextBlock
+              subject={copy.genesisCollection}
+              title={copy.uniqueJambots}
+            >
+              <h4>{copy.lipsum_3w}</h4>
+              {copy.lipsum_1p}
+            </TextBlock>          
+          </Col>
+        </Grid>
       </Section>
 
       <Section>
@@ -68,7 +70,7 @@ export function Landing() {
               {copy.lipsum_2p}
             </TextBlock>
           </Col>
-          <Col start={12} end='end'>
+          <Col start={12}>
             <div>
               <Image src={logo} className={styles.logo} />
             </div>
@@ -77,33 +79,37 @@ export function Landing() {
       </Section>
 
       <Section>
-        <Container>
-          <h2>Road Crew</h2>
-          <div className={styles.roadcrew}>
-            {team.map((member) => (
-              <Figure
-                key={member.twitter}
-                image={<Image src={anonAvatar} />}
-                title={
-                  <Link to={`${urls.twitter}/${member.twitter}`}>
-                    @{member.twitter}
-                  </Link>
-                }
-                caption={`${member.blurb}`}
-              />
-            ))}
-          </div>
-        </Container>
+        <Grid>
+          <Col>        
+            <h2>Road Crew</h2>
+            <div className={styles.roadcrew}>
+              {team.map((member) => (
+                <Figure
+                  key={member.twitter}
+                  image={<Image src={anonAvatar} />}
+                  title={
+                    <Link to={`${urls.twitter}/${member.twitter}`}>
+                      @{member.twitter}
+                    </Link>
+                  }
+                  caption={`${member.blurb}`}
+                />
+              ))}
+            </div>
+          </Col>
+        </Grid>
       </Section>
 
       <Section>
-        <Container>
-          {faq.map((t, i) => (
-            <div key={i} className={styles.faq}>
-              <Accordian term={t.q} details={t.a} />
-            </div>
-          ))}
-        </Container>
+        <Grid>
+          <Col>
+            {faq.map((t, i) => (
+              <div key={i} className={styles.faq}>
+                <Accordian term={t.q} details={t.a} />
+              </div>
+            ))}          
+          </Col>
+        </Grid>
       </Section>
     </div>
   );

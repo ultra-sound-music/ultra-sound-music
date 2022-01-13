@@ -4,10 +4,10 @@
   background-color: $color-evening-sky;
   background-image: linear-gradient(
       90deg,
-      rgba(110, 110, 110, 0.2) 1px,
+      $color-evening-sky 1px,
       transparent 1px
     ),
-    linear-gradient(0deg, rgba(110, 110, 110, 0.2) 1px, transparent 1px);
+    linear-gradient(0deg, $color-evening-sky 1px, transparent 1px);
   background-repeat: repeat, repeat;
   background-size: 30px 30px, 30px 30px;
   background-position: 0, 0;

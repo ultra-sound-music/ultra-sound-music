@@ -21,10 +21,10 @@ export interface IActiveCheck {
 export const Nav = ({ items }: INavProps): JSX.Element => {
   return (
     <div className={styles.Nav}>
-      {items?.map(({ content, to }): JSX.Element => {
+      {items?.map(({ content, to }, index): JSX.Element => {
         const isExternalUrl = typeof to === 'string' && to?.startsWith('http');
         const props = {
-          key: content?.toString(),
+          key: index,
           to: to
         };
 
