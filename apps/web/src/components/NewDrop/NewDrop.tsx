@@ -7,7 +7,7 @@ export function NewDrop() {
     <Grid className={styles.NewDrop}>
       <Col start={1} end={11} className={styles.hero} />
       <Col start={12} end='end' className={styles.bidBox}>
-        <BidBox />
+        {/* <BidBox /> */}
       </Col>
     </Grid>
   );

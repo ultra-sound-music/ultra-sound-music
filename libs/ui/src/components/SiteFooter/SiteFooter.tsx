@@ -14,8 +14,10 @@ const year = new Date().getFullYear();
 export function SiteFooter() {
   return (
     <div className={styles.SiteFooter}>
-      <Image src={logo} className={styles.logo} />
-      <div className={styles.usm}>{copy.usm_long}</div>
+      <div className={styles.brand}>
+        <Image src={logo} />
+        <div className={styles.usm}>{copy.usm_long}</div>
+      </div>
       <div className={styles.copyright}>
         {interpolate(copy.copyright, year)}
       </div>
