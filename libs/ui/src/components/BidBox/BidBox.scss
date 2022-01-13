@@ -98,6 +98,27 @@
           margin-top: 9px;
           border: 2px solid #6b6989;
           border-radius: 7px;
+          display: flex;
+
+          input {
+            @extend %font-body;
+
+            border: none;
+            background-color: transparent;
+            padding: 0 12px;
+            font-size: 16px;
+            color: $color-polar-bear;
+            line-height: 50px;
+            width: 300px;
+
+            &:focus {
+              outline: none;
+            }
+          }
+
+          span {
+            line-height: 46px;
+          }
         }
 
         button {
@@ -113,22 +134,23 @@
     .bidHistoryList {
       .bidHistoryItem {
         display: flex;
+        justify-content: space-between;
         .bidAmount {
-          flex-grow: 1;
+          width: 100px;
           p {
             @extend %font-body-strong;
           }
         }
         .bidTime {
-          flex-grow: 1;
+          width: 200px;
           p {
-            @extend %font-body-strong;
+            @extend %font-body;
           }
         }
         .bidWalletAddress {
-          flex-grow: 1;
+          width: 200px;
           p {
-            @extend %font-body-strong;
+            @extend %font-body;
           }
         }
       }
