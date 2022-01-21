@@ -1,16 +1,24 @@
 @use '@usm/styles/colors.scss' as *;
+@use '@usm/styles/utils.scss' as *;
 
 .Landing {
+  @extend %bg-grid;
+}
+
+.brandedDropJambots {
   background-image: linear-gradient(
     180deg,
-    $color-dusk 50px,
-    $color-evening-sky 600px,
-    transparent 1000px
+    $gradient-top 50px,
+    $color-empty-sky 500px,
+    transparent 800px
   );
   background-repeat: repeat;
   background-size: 100% 100%;
   background-position-x: 0, 0;
-  padding-bottom: 220px;
+  margin-bottom: 120px;
+  padding-bottom: 100px;
+  border-bottom: 2px solid $color-sassy;
+  color: $color-taffy;
 }
 
 .hero2Bg {
@@ -18,6 +26,13 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 -110px;
+}
+
+.traitsBg {
+  background-image: url('@usm/images/traits.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 0 0;
 }
 
 .faq {

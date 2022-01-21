@@ -26,43 +26,44 @@ export function Landing() {
 
   return (
     <div className={styles.Landing}>
-      <Section className={styles.heroSection}>
-        {weAreLive ? <NewDrop /> : <ComingSoon />}
-      </Section>
+      <div className={styles.brandedDropJambots}>
+        <Section className={styles.heroSection}>
+          {weAreLive ? <NewDrop /> : <ComingSoon />}
+        </Section>
 
-      <Section>
-        <Grid>
-          <Col end={12} className={styles.hero2Bg} />
-          <Col start={13}>
-            <TextBlock
-              subject={copy.genesisCollection}
-              title={copy.uniqueJambots}
-            >
-              {copy.lipsum_2p}
-            </TextBlock>
-          </Col>
-        </Grid>
-      </Section>
+        <Section>
+          <Grid>
+            <Col end={12} className={styles.hero2Bg} />
+            <Col start={14}>
+              <TextBlock
+                subject={copy.genesisCollection}
+                title={copy.uniqueJambots}
+              >
+                {copy.lipsum_2p}
+              </TextBlock>
+            </Col>
+          </Grid>
+        </Section>
 
-      <Section>
-        <Grid>
-          <Col>
-            <div></div>
-            <TextBlock
-              subject={copy.genesisCollection}
-              title={copy.uniqueJambots}
-            >
-              <h4>{copy.lipsum_3w}</h4>
-              {copy.lipsum_1p}
-            </TextBlock>          
-          </Col>
-        </Grid>
-      </Section>
+        <Section>
+          <Grid>
+            <Col end={11}>
+              <TextBlock
+                subject={copy.genesisCollection}
+                title={copy.uniqueJambots}
+              >
+                <h4>{copy.lipsum_3w}</h4>
+                {copy.lipsum_1p}
+              </TextBlock>
+            </Col>
+            <Col start={14} className={styles.traitsBg} />
+          </Grid>
+        </Section>
+      </div>
 
       <Section>
         <Grid>
           <Col start={1} end={11}>
-            <div></div>
             <TextBlock
               subject={copy.genesisCollection}
               title={copy.uniqueJambots}
@@ -71,16 +72,14 @@ export function Landing() {
             </TextBlock>
           </Col>
           <Col start={12}>
-            <div>
-              <Image src={logo} className={styles.logo} />
-            </div>
+            <Image src={logo} className={styles.logo} />
           </Col>
         </Grid>
       </Section>
 
       <Section>
         <Grid>
-          <Col>        
+          <Col>
             <h2>Road Crew</h2>
             <div className={styles.roadcrew}>
               {team.map((member) => (
@@ -107,7 +106,7 @@ export function Landing() {
               <div key={i} className={styles.faq}>
                 <Accordian term={t.q} details={t.a} />
               </div>
-            ))}          
+            ))}
           </Col>
         </Grid>
       </Section>

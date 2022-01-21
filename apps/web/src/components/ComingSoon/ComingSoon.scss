@@ -18,12 +18,13 @@ $hero-width: 912px;
 
 .heroBg {
   position: absolute;
-  top: 0;
-  right: -850px;
+  bottom: 0;
+  right: 0;
   width: $hero-width;
   min-height: $hero-height;
-  background-image: url('@usm/images/hero_jambot1.png');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: 0 0;
+  background-image: url('@usm/images/smoke.png'),
+    url('@usm/images/hero_jambot1.png');
+  background-repeat: no-repeat, no-repeat;
+  background-size: contain, contain;
+  background-position: bottom left, top right;
 }

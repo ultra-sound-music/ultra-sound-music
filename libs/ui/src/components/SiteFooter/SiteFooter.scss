@@ -6,14 +6,18 @@
   justify-content: center;
   column-gap: 45px;
   padding: 40px 0;
-  @extend %font-small;
 }
 
 .brand {
   display: flex;
   align-items: center;
   justify-content: center;
-  column-gap: 15px;  
+  column-gap: 15px;
+  @extend %font-subhead;
+}
+
+.copyright {
+  @extend %font-body;
 }
 
 .socials {
