@@ -83,16 +83,10 @@ export function Landing() {
             <h2>Road Crew</h2>
             <div className={styles.roadcrew}>
               {team.map((member) => (
-                <Figure
-                  key={member.twitter}
-                  image={<Image src={anonAvatar} />}
-                  title={
-                    <Link to={`${urls.twitter}/${member.twitter}`}>
-                      @{member.twitter}
-                    </Link>
-                  }
-                  caption={`${member.blurb}`}
-                />
+                <div>
+                  <div className={styles.crewLink}><Link to={`${urls.twitter}/${member.twitter}`}>@{member.twitter}</Link></div>
+                  <div>{member.blurb}</div>
+                </div>
               ))}
             </div>
           </Col>

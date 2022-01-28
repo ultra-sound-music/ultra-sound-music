@@ -37,10 +37,8 @@ $font-size-small: 1.6rem;
   letter-spacing: 0.05em;
 }
 
-%font-h4,
-%font-button {
-  font: $font-weight-bold #{$font-size-body} / 1.8 $font-fam-body;
-  text-transform: uppercase;
+%font-h4 {
+  font: $font-weight-bold #{$font-size-body} / 1.2 $font-fam-body;
 }
 
 %font-h5 {
@@ -64,4 +62,9 @@ $font-size-small: 1.6rem;
 %font-small {
   font: $font-weight-normal #{$font-size-small} / 1.5 $font-fam-body;
   letter-spacing: 0.025em;
+}
+
+%font-button {
+  font: $font-weight-bold #{$font-size-body} / 1.8 $font-fam-body;
+  text-transform: uppercase;
 }

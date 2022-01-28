@@ -1,20 +1,29 @@
 @use '@usm/styles/colors.scss' as *;
 @use '@usm/styles/utils.scss' as *;
+@use '@usm/styles/typo.scss' as *;
 
 .Landing {
-  @extend %bg-grid;
+  background-color: $color-empty-sky;
 }
 
 .brandedDropJambots {
-  background-image: linear-gradient(
-    180deg,
-    $gradient-top 50px,
-    $color-empty-sky 500px,
-    transparent 800px
-  );
-  background-repeat: repeat;
-  background-size: 100% 100%;
-  background-position-x: 0, 0;
+  background-color: $color-empty-sky;
+  background-image: 
+    linear-gradient(
+      180deg,
+      $gradient-top 50px,
+      $color-empty-sky 500px,
+      transparent 800px
+    ),
+    linear-gradient(
+      90deg,
+      $color-evening-sky 1px,
+      transparent 1px
+    ),
+    linear-gradient(0deg, $color-evening-sky 1px, transparent 1px);
+  background-repeat: repeat, repeat, repeat;
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  background-position-x: 0, 0, 0;
   margin-bottom: 120px;
   padding-bottom: 100px;
   border-bottom: 2px solid $color-sassy;
@@ -25,7 +34,7 @@
   background-image: url('@usm/images/hero_jambot2.png');
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: 0 -110px;
+  background-position: 0 0;
 }
 
 .traitsBg {
@@ -44,4 +53,8 @@
   justify-content: space-between;
   column-gap: 120px;
   margin-top: 6rem;
+}
+
+.crewLink {
+  @extend %font-h4;
 }

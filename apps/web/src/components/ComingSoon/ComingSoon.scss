@@ -20,11 +20,11 @@ $hero-width: 912px;
   position: absolute;
   bottom: 0;
   right: 0;
-  width: $hero-width;
+  width: 100%;
   min-height: $hero-height;
   background-image: url('@usm/images/smoke.png'),
     url('@usm/images/hero_jambot1.png');
   background-repeat: no-repeat, no-repeat;
   background-size: contain, contain;
-  background-position: bottom left, top right;
+  background-position: left bottom, right top;
 }

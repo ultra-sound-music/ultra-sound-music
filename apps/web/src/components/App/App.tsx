@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { FaDiscord, FaTwitter } from 'react-icons/fa';
+import { RiDiscordFill, RiTwitterFill } from 'react-icons/ri';
 
 import { Button, Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
 import { copy, urls, routes } from '@usm/content';
@@ -20,11 +20,11 @@ export const nav = Object.freeze([
     to: urls.usmDocs
   },
   {
-    content: <FaDiscord />,
+    content: <RiDiscordFill />,
     to: urls.usmDiscord
   },
   {
-    content: <FaTwitter />,
+    content: <RiTwitterFill />,
     to: urls.usmTwitter
   }
 ]);

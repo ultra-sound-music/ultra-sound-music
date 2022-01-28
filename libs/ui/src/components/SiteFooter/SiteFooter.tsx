@@ -1,4 +1,4 @@
-import { FaDiscord, FaTwitter } from 'react-icons/fa';
+import { RiDiscordFill, RiTwitterFill } from 'react-icons/ri';
 
 import logo from '@usm/images/logo_white.svg';
 import { interpolate } from '@usm/util/string';
@@ -23,10 +23,10 @@ export function SiteFooter() {
       </div>
       <div className={styles.socials}>
         <Link to={urls.usmDiscord}>
-          <FaDiscord />
+          <RiDiscordFill />
         </Link>
         <Link to={urls.usmTwitter}>
-          <FaTwitter />
+          <RiTwitterFill />
         </Link>
       </div>
     </div>

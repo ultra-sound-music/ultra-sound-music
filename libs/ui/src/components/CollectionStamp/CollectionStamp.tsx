@@ -1,4 +1,4 @@
-import stampUrl from '@usm/images/stamp_jambots.png';
+import stampUrl from '@usm/images/drop_stamp_jambots.png';
 
 import Image from '../Image/Image';
 
