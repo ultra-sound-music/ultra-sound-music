@@ -1,0 +1,29 @@
+@use '../../styles.scss' as *;
+
+.Nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 60px;
+}
+
+.navItem {
+  display: inline-flex;
+  padding: 0 10px;
+  line-height: 40px;
+  text-decoration: none;
+  @extend %font-subhead;
+
+  svg {
+    font-size: $font-size-xlrg;
+  }
+
+  &:hover,
+  &:active {
+    color: $color-sassy;
+  }
+}
+
+.active {
+  color: $color-sassy;
+}

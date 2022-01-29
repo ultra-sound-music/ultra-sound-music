@@ -1,0 +1,42 @@
+@use '../../../../../libs/styles/src/typo.scss' as *;
+
+.item {
+  margin-bottom: 60px;
+}
+
+.brand {
+  @extend %font-brand;
+}
+
+// @todo - we don't have an h1 font yet
+// .h1 {
+//   @extend %font-h1;
+// }
+
+.h2 {
+  @extend %font-h2;
+}
+
+.h3 {
+  @extend %font-h3;
+}
+
+.h4 {
+  @extend %font-h4;
+}
+
+.h5 {
+  @extend %font-h5;
+}
+
+.subhead {
+  @extend %font-subhead;
+}
+
+.body {
+  @extend %font-body;
+}
+
+.small {
+  @extend %font-small;
+}

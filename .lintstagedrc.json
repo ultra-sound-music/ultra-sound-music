@@ -1,5 +1,5 @@
 {
-  "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
-  "*.css": "stylelint --fix",
-  "*.{js,jsx,ts,tsx,css,md}": "prettier --write"
+  "*.{js,jsx,ts,tsx}": "nx affected:lint --fix",
+  "*.{css,scss}": "nx affected --target=stylelint --fix",
+  "*.{js,jsx,ts,tsx,css,scss,md}": "nx format:write --all --uncommitted"
 }

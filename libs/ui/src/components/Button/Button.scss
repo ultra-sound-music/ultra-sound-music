@@ -1,0 +1,132 @@
+@use '../../styles' as *;
+
+.Button {
+  background-color: $color-void;
+  border: none;
+  border-radius: 7px;
+  color: $color-polar-bear;
+  padding: 0 62px;
+  height: 50px;
+  line-height: 50px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  @extend %font-button;
+
+  // Use this technique for the border in order to be consistent with the .secondary border radius styling
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -3px;
+    border-radius: 10px;
+  }
+
+  &::after:empty {
+    content: '\200b';
+  }
+}
+
+.wide {
+  min-width: 300px;
+}
+
+.fullWidth {
+  padding-right: 0;
+  padding-left: 0;
+  width: 100%;
+}
+
+.withImage {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  column-gap: 15px;
+  padding: 7px 32px 7px 24px;
+
+  .image {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.primary {
+  background-image: linear-gradient(
+    90deg,
+    $gradient-brilliant-start,
+    $gradient-brilliant-end
+  );
+  &::before {
+    background-image: linear-gradient(
+      90deg,
+      $gradient-brilliant-start,
+      $gradient-brilliant-end
+    );
+  }
+
+  &:hover {
+    background: linear-gradient(
+      to right,
+      $gradient-brilliant-end,
+      $gradient-brilliant-start
+    );
+
+    &::before {
+      background: linear-gradient(
+        to right,
+        $gradient-brilliant-end,
+        $gradient-brilliant-start
+      );
+    }
+  }
+}
+
+.secondary {
+  &::before {
+    background-image: linear-gradient(
+      90deg,
+      $gradient-brilliant-start,
+      $gradient-brilliant-end
+    );
+  }
+
+  &:hover {
+    background-image: linear-gradient(
+      90deg,
+      $gradient-brilliant-end,
+      $gradient-brilliant-start
+    );
+
+    &::before {
+      background: linear-gradient(
+        to right,
+        $gradient-brilliant-end,
+        $gradient-brilliant-start
+      );
+    }
+  }
+}
+
+.disabled {
+  background-color: $color-old-towel;
+  background-image: none;
+  pointer-events: none;
+
+  &::before {
+    background-color: $color-old-towel;
+    background-image: none;
+  }
+}
+
+.content {
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 22px;
+}

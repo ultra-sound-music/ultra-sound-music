@@ -1,0 +1,25 @@
+@use '../../styles.scss' as *;
+
+.Callout {
+  border: 2px solid $color-sassy;
+  border-radius: 3px;
+  color: $color-sassy;
+  margin-top: 10px;
+  margin-bottom: 16px;
+  padding: 10px 20px;
+  @extend %font-small;
+
+  a {
+    color: $color-sassy;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  }
+
+  strong {
+    @extend %font-h4;
+  }
+}

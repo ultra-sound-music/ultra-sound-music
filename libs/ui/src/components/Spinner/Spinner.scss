@@ -1,0 +1,35 @@
+$button-size: 50px;
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 6px solid rgb(255 255 255 / 30%);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.cover_relative {
+  position: absolute;
+  top: calc(50% - #{$button-size} / 2);
+  left: calc(50% - #{$button-size} / 2);
+}
+
+.cover_fixed {
+  position: absolute;
+  top: calc(50% - #{$button-size} / 2);
+  left: calc(50% - #{$button-size} / 2);
+}

@@ -1,0 +1,8 @@
+{
+  "root": "libs/util/logger",
+  "sourceRoot": "libs/util/logger/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {},
+  "tags": []
+}

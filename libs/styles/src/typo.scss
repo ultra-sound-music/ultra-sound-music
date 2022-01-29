@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+@import url('https://use.typekit.net/yye2hat.css');
+
+$font-fam-lato: 'Lato', sans-serif;
+$font-fam-body: ff-good-web-pro-wide, sans-serif;
+
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+$font-size-xxl: 4.5rem;
+$font-size-xlrg: 3.5rem;
+$font-size-lrg: 2.5rem;
+$font-size-body: 1.8rem;
+$font-size-small: 1.6rem;
+
+%font-brand {
+  font: $font-weight-bold #{$font-size-small} / 1.2 $font-fam-lato;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+%font-stamp {
+  font: $font-weight-bold #{$font-size-xxl} / 1.2 $font-fam-lato;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+%font-h2 {
+  font: $font-weight-bold #{$font-size-xlrg} / 1.3 $font-fam-body;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+%font-h3 {
+  font: $font-weight-bold #{$font-size-lrg} / 1.4 $font-fam-body;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+%font-h4 {
+  font: $font-weight-bold #{$font-size-body} / 1.2 $font-fam-body;
+  text-transform: capitalize;
+}
+
+%font-h5 {
+  font: $font-weight-bold #{$font-size-small} / 1.6 $font-fam-body;
+}
+
+%font-subhead {
+  font: $font-weight-bold #{$font-size-small} / 1.2 $font-fam-body;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+%font-body {
+  font: $font-weight-normal #{$font-size-body} / 1.7 $font-fam-body;
+}
+
+%font-body-strong {
+  font: $font-weight-bold #{$font-size-body} / 1.8 $font-fam-body;
+}
+
+%font-small {
+  font: $font-weight-normal #{$font-size-small} / 1.5 $font-fam-body;
+  letter-spacing: 0.025em;
+}
+
+%font-button {
+  font: $font-weight-bold #{$font-size-body} / 1.8 $font-fam-body;
+  text-transform: uppercase;
+}

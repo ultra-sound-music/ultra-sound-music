@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "projects": {
+    "audio-player": "libs/audio-player",
+    "config": "libs/config",
+    "content": "libs/content",
+    "docs": "apps/docs",
+    "images": "libs/images",
+    "sol-client": "libs/sol-client",
+    "store": "libs/store",
+    "styles": "libs/styles",
+    "ui": "libs/ui",
+    "util-loader": "libs/util/loader",
+    "util-logger": "libs/util/logger",
+    "util-string": "libs/util/string",
+    "wallets-sol-wallet": "libs/wallets/sol-wallet",
+    "wallets-types": "libs/wallets/types",
+    "web": "apps/web",
+    "web-e2e": "apps/web-e2e"
+  }
+}

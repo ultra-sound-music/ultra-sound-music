@@ -1,0 +1,78 @@
+@use '../../styles.scss' as *;
+
+.colors {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 35px;
+  margin-bottom: 65px;
+}
+
+.title {
+  @extend %font-h4;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Color {
+  .swatch {
+    height: 90px;
+    width: 90px;
+  }
+}
+
+.Gradient {
+  .swatch {
+    height: 90px;
+    width: 270px;
+  }
+}
+
+.taffy {
+  background-color: $color-taffy;
+}
+
+.lavish {
+  background-color: $color-lavish;
+}
+
+.break-water {
+  background-color: $color-break-water;
+}
+
+.old-towel {
+  background-color: $color-old-towel;
+}
+
+.sassy {
+  background-color: $color-sassy;
+}
+
+.evening-sky {
+  background-color: $color-evening-sky;
+}
+
+.empty-sky {
+  background-color: $color-empty-sky;
+}
+
+.polar-bear {
+  background-color: $color-polar-bear;
+}
+
+.void {
+  background-color: $color-void;
+}
+
+.gradient-brilliant {
+  background: linear-gradient(
+    90deg,
+    $gradient-brilliant-start,
+    $gradient-brilliant-end
+  );
+}

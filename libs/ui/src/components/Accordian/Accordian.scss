@@ -1,0 +1,25 @@
+@use '../../styles.scss' as *;
+
+.Accordian {
+  border-radius: 3px;
+  border: 3px solid $color-taffy;
+  padding: 28px 42px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.closed {
+  .content {
+    display: none;
+  }
+}
+
+.title {
+  @extend %font-subhead;
+}
+
+.content {
+  margin-top: 20px;
+}

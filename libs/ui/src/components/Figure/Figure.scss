@@ -1,0 +1,13 @@
+@use '../../styles.scss' as *;
+
+.Figure {
+  width: 100%;
+}
+
+.title {
+  color: $color-taffy;
+
+  a {
+    color: $color-taffy;
+  }
+}

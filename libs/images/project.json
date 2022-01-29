@@ -1,0 +1,8 @@
+{
+  "root": "libs/images",
+  "sourceRoot": "libs/images/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {},
+  "tags": []
+}

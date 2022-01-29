@@ -1,0 +1,78 @@
+@use 'reset-css';
+@use './colors.scss' as *;
+@use './typo.scss' as *;
+@use './layout.scss' as *;
+@use './utils.scss' as *;
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  color: $color-polar-bear;
+  font-size: 62.5%;
+}
+
+body {
+  height: 100%;
+  @extend %font-body;
+}
+
+:global(#root) {
+  height: 100%;
+}
+
+a {
+  color: $color-polar-bear;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-sassy;
+  }
+}
+
+p {
+  margin-bottom: 3.5rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+}
+
+strong {
+  @extend %font-body-strong;
+}
+
+h2 {
+  margin-bottom: 3rem;
+  @extend %font-h2;
+}
+
+h3 {
+  margin-bottom: 2.5rem;
+  @extend %font-h3;
+}
+
+h4 {
+  margin-bottom: 0.6rem;
+  @extend %font-h4;
+}
+
+h5 {
+  @extend %font-h5;
+}

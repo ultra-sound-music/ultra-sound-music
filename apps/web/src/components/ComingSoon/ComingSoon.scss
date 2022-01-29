@@ -1,0 +1,29 @@
+$hero-height: 540px;
+
+.ComingSoon {
+  position: relative;
+  width: 100%;
+  padding-top: 80px;
+}
+
+.stamp {
+  margin-bottom: 40px;
+}
+
+.callout {
+  margin-right: 15px;
+  margin-bottom: 25px;
+}
+
+.heroBg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  min-height: $hero-height;
+  background-image: url('@usm/images/smoke.png'),
+    url('@usm/images/hero_jambot1.png');
+  background-repeat: no-repeat, no-repeat;
+  background-size: contain, contain;
+  background-position: left bottom, right top;
+}

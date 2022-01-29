@@ -1,0 +1,17 @@
+@use '../../styles.scss' as *;
+
+.CollectionStamp {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 60px;
+  margin-right: 85px;
+}
+.usm {
+  color: $color-lavish;
+  @extend %font-stamp;
+}
+.stamp {
+  position: absolute;
+  bottom: -85px;
+  right: -125px;
+}

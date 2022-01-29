@@ -1,0 +1,90 @@
+@use '@usm/styles/colors.scss' as *;
+@use '@usm/styles/utils.scss' as *;
+@use '@usm/styles/typo.scss' as *;
+
+.Landing {
+  background-color: $color-empty-sky;
+}
+
+.tri1 {
+  position: absolute;
+  right: 0;
+  top: 600px;
+
+  svg {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+.tri3 {
+  position: absolute;
+  left: 0;
+  top: 1350px;
+
+  svg {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+.brandedDropJambots {
+  background-color: $color-empty-sky;
+  background-image: linear-gradient(
+      180deg,
+      $gradient-top 50px,
+      $color-empty-sky 500px,
+      transparent 800px
+    ),
+    linear-gradient(90deg, $color-evening-sky 1px, transparent 1px),
+    linear-gradient(0deg, $color-evening-sky 1px, transparent 1px);
+  background-repeat: repeat, repeat, repeat;
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  background-position-x: 0, 0, 0;
+  margin-bottom: 120px;
+  padding-bottom: 100px;
+  border-bottom: 2px solid $color-sassy;
+  color: $color-taffy;
+}
+
+.hero2Bg {
+  background-image: url('@usm/images/hero_jambot2.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 0 0;
+  height: 440px;
+}
+
+.traitsBg {
+  background-image: url('@usm/images/traits.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 0 0;
+}
+
+.logo {
+  display: block;
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.faq {
+  margin-bottom: 40px;
+}
+
+.roadcrew {
+  display: grid;
+  column-gap: 120px;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  margin-top: 6rem;
+}
+
+.crewLink {
+  color: $color-lavish;
+
+  a {
+    color: inherit;
+  }
+}

@@ -1,0 +1,12 @@
+@use '../../styles.scss' as *;
+
+.TextBlock {
+  width: 100%;
+  height: 100%;
+}
+
+.subject {
+  color: $color-sassy;
+  margin-bottom: 6px;
+  @extend %font-subhead;
+}

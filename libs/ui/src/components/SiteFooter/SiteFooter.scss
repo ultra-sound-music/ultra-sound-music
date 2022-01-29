@@ -1,0 +1,33 @@
+@use '../../styles.scss' as *;
+
+.SiteFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 45px;
+  padding: 40px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 15px;
+  @extend %font-subhead;
+}
+
+.copyright {
+  @extend %font-body;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 15px;
+
+  a {
+    display: inline-flex;
+    font-size: $font-size-lrg;
+  }
+}

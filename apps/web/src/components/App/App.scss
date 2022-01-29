@@ -1,0 +1,21 @@
+@use '@usm/styles/colors.scss' as *;
+@use '../../styles/styles.scss' as *;
+
+.App {
+  height: 100%;
+  background-image: linear-gradient(180deg, transparent, $bg-color 70%);
+  background-repeat: no-repeat;
+  background-size: 100% 500px;
+  background-position: 0 100%;
+  position: relative;
+}
+
+.header {
+  background-color: $bg-color;
+}
+
+.footer {
+  background-color: $bg-color;
+  position: sticky;
+  top: 100vh;
+}

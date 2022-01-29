@@ -1,3 +1,5 @@
-.history
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage
 node_modules
-client/dist

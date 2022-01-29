@@ -1,0 +1,7 @@
+* + .Section {
+  margin-top: 65px;
+}
+
+.Section:not(:last-child) {
+  margin-bottom: 200px;
+}
