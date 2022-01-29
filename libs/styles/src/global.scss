@@ -32,6 +32,17 @@ a {
 
 p {
   margin-bottom: 3.5rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 }
 
 strong {
@@ -49,7 +60,7 @@ h3 {
 }
 
 h4 {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.6rem;
   @extend %font-h4;
 }
 

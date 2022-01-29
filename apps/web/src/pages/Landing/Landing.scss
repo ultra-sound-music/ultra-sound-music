@@ -35,6 +35,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 0;
+  height:  440px;
 }
 
 .traitsBg {
@@ -44,17 +45,28 @@
   background-position: 0 0;
 }
 
+.logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .faq {
   margin-bottom: 40px;
 }
 
 .roadcrew {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   column-gap: 120px;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   margin-top: 6rem;
 }
 
 .crewLink {
-  @extend %font-h4;
+  color: $color-lavish;
+
+  a {
+    color: inherit;
+  }
 }

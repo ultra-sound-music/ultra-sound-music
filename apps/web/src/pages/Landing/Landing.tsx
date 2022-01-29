@@ -12,7 +12,6 @@ import {
 import { copy } from '@usm/content';
 import logo from '@usm/images/logo.png';
 import { urls, team, faq } from '@usm/content';
-import anonAvatar from '@usm/images/avatar_anon.png';
 
 import ComingSoon from '../../components/ComingSoon/ComingSoon';
 import NewDrop from '../../components/NewDrop/NewDrop';
@@ -27,33 +26,38 @@ export function Landing() {
   return (
     <div className={styles.Landing}>
       <div className={styles.brandedDropJambots}>
+        {/* section #1 */}
         <Section className={styles.heroSection}>
           {weAreLive ? <NewDrop /> : <ComingSoon />}
         </Section>
 
+        {/* section #2 */}
         <Section>
           <Grid>
             <Col end={12} className={styles.hero2Bg} />
             <Col start={14}>
               <TextBlock
-                subject={copy.genesisCollection}
-                title={copy.uniqueJambots}
+                subject={copy.introducingTheJambots}
+                title={copy.blockchainMusicians}
               >
-                {copy.lipsum_2p}
+                <p>{copy.musicByMusicians}</p>
               </TextBlock>
             </Col>
           </Grid>
         </Section>
 
+        {/* section #3 */}
         <Section>
           <Grid>
-            <Col end={11}>
+            <Col end={10}>
               <TextBlock
-                subject={copy.genesisCollection}
-                title={copy.uniqueJambots}
+                subject={copy.uniqueAndIndividual}
+                title={copy.jambotTraits}
               >
-                <h4>{copy.lipsum_3w}</h4>
-                {copy.lipsum_1p}
+                <h4>{copy.personalTraits}</h4>
+                <p>{copy.jambotTraitsDescription}</p>
+                <h4>{copy.audioTraits}</h4>
+                <p>{copy.audioTraitsDescription}</p>
               </TextBlock>
             </Col>
             <Col start={14} className={styles.traitsBg} />
@@ -61,14 +65,16 @@ export function Landing() {
         </Section>
       </div>
 
+      {/* section #5 */}
       <Section>
         <Grid>
-          <Col start={1} end={11}>
+          <Col end={10}>
             <TextBlock
-              subject={copy.genesisCollection}
-              title={copy.uniqueJambots}
+              title={copy.whatsUSM}
             >
-              {copy.lipsum_2p}
+              <p>{copy.theUSMPlatform}</p>
+              <p>{copy.ourMission}</p>
+              <p>{copy.musicalDeconstruction}</p>
             </TextBlock>
           </Col>
           <Col start={12}>
@@ -80,11 +86,11 @@ export function Landing() {
       <Section>
         <Grid>
           <Col>
-            <h2>Road Crew</h2>
+            <h2>{copy.road_crew}</h2>
             <div className={styles.roadcrew}>
               {team.map((member) => (
                 <div>
-                  <div className={styles.crewLink}><Link to={`${urls.twitter}/${member.twitter}`}>@{member.twitter}</Link></div>
+                  <h4 className={styles.crewLink}><Link to={`${urls.twitter}/${member.twitter}`}>@{member.twitter}</Link></h4>
                   <div>{member.blurb}</div>
                 </div>
               ))}
@@ -96,6 +102,7 @@ export function Landing() {
       <Section>
         <Grid>
           <Col>
+            <h2>{copy.frequently_asked_questions}</h2>
             {faq.map((t, i) => (
               <div key={i} className={styles.faq}>
                 <Accordian term={t.q} details={t.a} />

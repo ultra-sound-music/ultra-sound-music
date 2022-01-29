@@ -39,6 +39,7 @@ $font-size-small: 1.6rem;
 
 %font-h4 {
   font: $font-weight-bold #{$font-size-body} / 1.2 $font-fam-body;
+  text-transform: capitalize;
 }
 
 %font-h5 {
@@ -52,7 +53,7 @@ $font-size-small: 1.6rem;
 }
 
 %font-body {
-  font: $font-weight-normal #{$font-size-body} / 1.8 $font-fam-body;
+  font: $font-weight-normal #{$font-size-body} / 1.7 $font-fam-body;
 }
 
 %font-body-strong {

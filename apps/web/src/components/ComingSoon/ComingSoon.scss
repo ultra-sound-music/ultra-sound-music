@@ -1,10 +1,9 @@
-$hero-height: 560px;
-$hero-width: 912px;
+$hero-height: 540px;
 
 .ComingSoon {
   position: relative;
   width: 100%;
-  height: $hero-height;
+  // height: $hero-height;
   padding-top: 80px;
 }
 
@@ -13,12 +12,13 @@ $hero-width: 912px;
 }
 
 .callout {
+  margin-right: 15px;
   margin-bottom: 25px;
 }
 
 .heroBg {
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 0;
   width: 100%;
   min-height: $hero-height;
