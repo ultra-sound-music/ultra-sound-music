@@ -18,10 +18,10 @@ export function ComingSoon() {
           </Callout>
           <div>
             <p>
-              Ultra Sound Music is dedicated to creating composable,
-              thematic music NFTs backed by real world musicians, and empowering
-              real world musicians. Our first drop are the Jam Bots. Get updates
-              and giveaways on <Link to={urls.usmTwitter}>Twitter</Link> and{' '}
+              Ultra Sound Music is dedicated to creating composable, thematic
+              music NFTs backed by real world musicians, and empowering real
+              world musicians. Our first drop are the Jam Bots. Get updates and
+              giveaways on <Link to={urls.usmTwitter}>Twitter</Link> and{' '}
               <Link to={urls.usmDiscord}>Discord</Link>.
             </p>
           </div>
