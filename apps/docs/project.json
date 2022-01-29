@@ -4,6 +4,13 @@
   "projectDir": "",
   "projectType": "application",
   "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "cwd": "./apps/docs",
+        "commands": ["docusaurus build"]
+      }
+    },    
     "serve": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
