@@ -16,6 +16,9 @@ Install all dependencies with `yarn install`
 
 ```
 nx serve web
+
+// or, you can specify a configuration:
+nx serve web --configuration=stage
 ```
 
 ### Run Unit Tests
@@ -28,4 +31,7 @@ nx test web
 
 ```
 nx build web
+
+// or, you can specify a configuration:
+nx build web --configuration=stage
 ```

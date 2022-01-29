@@ -22,16 +22,8 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
+          sidebarPath: require.resolve('./sidebars.js')
+          // @TODO set the editUrl
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css')
@@ -52,19 +44,9 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'index',
             position: 'left',
             label: 'Docs'
-          },
-          {
-            to: 'https://mirror.xyz/ultrasoundmusic.eth',
-            label: 'Blog',
-            position: 'left'
-          },
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right'
           }
         ]
       },
@@ -75,8 +57,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro'
+                label: 'Docusaurus',
+                to: 'https://docusaurus.io/docs'
               }
             ]
           },
@@ -98,20 +80,16 @@ const config = {
             ]
           },
           {
-            title: 'More',
+            title: 'Ultra Sound Music',
             items: [
               {
-                label: 'Blog',
-                to: '/blog'
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus'
+                label: 'Github',
+                href: 'https://github.com/ultra-sound-music/ultra-sound-music'
               }
             ]
           }
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`
+        copyright: `Copyright © ${new Date().getFullYear()} utrasoundmusix.xyz. Built with Docusaurus.`
       },
       prism: {
         theme: lightCodeTheme,
