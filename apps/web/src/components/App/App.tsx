@@ -19,11 +19,11 @@ export const nav = Object.freeze([
     to: urls.usmDocs
   },
   {
-    content: <RiDiscordFill />,
+    content: <RiDiscordFill style={{ color: '#5865f2' }} />,
     to: urls.usmDiscord
   },
   {
-    content: <RiTwitterFill />,
+    content: <RiTwitterFill style={{ color: '#1da1f2' }} />,
     to: urls.usmTwitter
   }
 ]);
