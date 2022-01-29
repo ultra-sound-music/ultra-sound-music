@@ -82,7 +82,7 @@ export function Landing() {
 
       <Section>
         <Grid>
-          <Col start={2} end={10}>
+          <Col>
             <h2>{copy.road_crew}</h2>
             <div className={styles.roadcrew}>
               {team.map((member) => (
