@@ -1,7 +1,14 @@
+// require('dotenv').config({ path: 'apps/web/.env' });
+
+// const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const getDefaultConfig = require('@nrwl/react/plugins/webpack');
 
-module.exports = (config) => {
-  config = getDefaultConfig(config);
+module.exports = (initialConfigs) => {
+  const config = getDefaultConfig(initialConfigs);
+  const inProductionMode = config.mode === 'production';
 
   config.module.rules = config.module.rules.filter((rule) => {
     // Find any default CSS & SCSS rules and remove them so
@@ -13,12 +20,23 @@ module.exports = (config) => {
     );
   });
 
+  // Exclude any plugins that conflict with our setup
+  config.plugins = config.plugins.filter((plugin) => {
+    return (
+      plugin?.constructor?.name !== 'HtmlWebpackPlugin' &&
+      plugin?.constructor?.name !== 'MiniCssExtractPlugin' &&
+      plugin?.constructor?.name !== 'IndexHtmlWebpackPlugin' &&
+      plugin?.constructor?.name !== 'DefinePlugin'
+    );
+  });
+
   config.module.rules.push(
     {
       test: /\.s[ac]ss$/i,
       use: [
         // Creates `style` nodes from JS strings
-        'style-loader',
+        inProductionMode ? MiniCssExtractPlugin.loader : 'style-loader',
+
         // Translates CSS into CommonJS
         {
           loader: 'css-loader',
@@ -38,6 +56,7 @@ module.exports = (config) => {
             }
           }
         },
+
         // Compiles Sass to CSS
         'sass-loader'
       ]
@@ -48,5 +67,22 @@ module.exports = (config) => {
     }
   );
 
+  // PLUGINS
+  const plugins = [
+    new Dotenv({
+      path: 'apps/web/.env',
+      systemvars: !!inProductionMode
+    }),
+    new HtmlWebpackPlugin({
+      template: 'public/index.html',
+      inject: true
+    })
+  ];
+
+  if (inProductionMode) {
+    plugins.push(new MiniCssExtractPlugin());
+  }
+
+  config.plugins = [...config.plugins, ...plugins];
   return config;
 };

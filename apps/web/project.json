@@ -10,7 +10,9 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/web",
+        "optimization": false,
         "index": "apps/web/public/index.html",
+        "generateIndexHtml": false,
         "baseHref": "/",
         "main": "apps/web/src/index.tsx",
         "polyfills": "apps/web/src/polyfills.ts",
@@ -20,18 +22,27 @@
         "webpackConfig": "apps/web/build/webpack.js"
       },
       "configurations": {
-        "development": {
-          "fileReplacements": [
-            {
-              "replace": "libs/config/src/environment.ts",
-              "with": "libs/config/src/environments.dev.ts"
-            }
-          ],
+        "local": {
           "assets": [
             {
               "input": "libs/images/src/favicons",
               "glob": "*.*",
               "output": "."
+            }
+          ]
+        },
+        "stage": {
+          "assets": [
+            {
+              "input": "libs/images/src/favicons",
+              "glob": "*.*",
+              "output": "."
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "libs/config/src/environment",
+              "with": "libs/config/src/environment.stage.ts"
             }
           ],
           "optimization": true,
@@ -42,12 +53,6 @@
           "vendorChunk": false
         },
         "production": {
-          "fileReplacements": [
-            {
-              "replace": "libs/config/src/environment.ts",
-              "with": "libs/config/src/environments.prod.ts"
-            }
-          ],
           "assets": [
             {
               "input": "apps/web/src/assets/prod",
@@ -58,6 +63,12 @@
               "input": "libs/images/src/favicons",
               "glob": "*.*",
               "output": "."
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "libs/config/src/environment",
+              "with": "libs/config/src/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -72,10 +83,14 @@
     "serve": {
       "executor": "@nrwl/web:dev-server",
       "options": {
-        "buildTarget": "web:build",
+        "buildTarget": "web:build:local",
         "hmr": true
       },
       "configurations": {
+        "stage": {
+          "buildTarget": "web:build:stage",
+          "hmr": false
+        },
         "production": {
           "buildTarget": "web:build:production",
           "hmr": false

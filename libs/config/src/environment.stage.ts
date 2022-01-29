@@ -1,9 +1,9 @@
 import defaults from './defaults';
 
 const configs = {
-  production: false,
-  build: 'development',
-  environment: 'dev'
+  production: true,
+  build: 'production',
+  environment: 'stage'
 };
 
 export default {
