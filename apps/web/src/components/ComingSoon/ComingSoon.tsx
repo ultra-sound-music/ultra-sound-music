@@ -12,10 +12,18 @@ export function ComingSoon() {
           <CollectionStamp />
         </div>
         <div className={styles.callout}>
-          <Callout>Ultra Sound Music Jambots<br /> <strong>Drop Coming Soon</strong></Callout>
+          <Callout>
+            Ultra Sound Music Jambots
+            <br /> <strong>Drop Coming Soon</strong>
+          </Callout>
           <div>
-            <p>Ultra Sound Music is a project dedicated to creating composable, thematic music NFTs, backed by real world musicians, empowering real world musicians. Our first drop are the Jam Bots
-            Get updates and giveaways on <Link to={urls.usmTwitter}>Twitter</Link> and <Link to={urls.usmDiscord}>Discord</Link>.</p>
+            <p>
+              Ultra Sound Music is a project dedicated to creating composable,
+              thematic music NFTs, backed by real world musicians, empowering
+              real world musicians. Our first drop are the Jam Bots Get updates
+              and giveaways on <Link to={urls.usmTwitter}>Twitter</Link> and{' '}
+              <Link to={urls.usmDiscord}>Discord</Link>.
+            </p>
           </div>
         </div>
       </Col>

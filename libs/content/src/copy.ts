@@ -14,17 +14,23 @@ export default Object.freeze({
   road_crew: 'road crew',
   frequently_asked_questions: 'frequently asked questions',
   what: 'what',
-  musicByMusicians: 'Music on the blockchain should be played by musicians, the Jam Bots are USM’s first series of Musician NFTs. Each Jam Bot has a unique character, appearance and sound. The Jam Bot series is inspired by iconic musicians from the 80s and 90s.',
+  musicByMusicians:
+    'Music on the blockchain should be played by musicians, the Jam Bots are USM’s first series of Musician NFTs. Each Jam Bot has a unique character, appearance and sound. The Jam Bot series is inspired by iconic musicians from the 80s and 90s.',
   uniqueAndIndividual: 'unique & individual',
   jambotTraits: 'jambot traits',
   personalTraits: 'personal traits',
   audioTraits: 'audio traits',
-  jambotTraitsDescription: 'Every Jam Bot is equally rare and carries a unique set of personal traits. The Jam Bots personal traits determine the character\'s look, their attitude, and future contexts yet to be discovered.',
-  audioTraitsDescription: 'Audio traits are custom generated for each character and dictate the style with which they play their sounds.',
-  theUSMPlatform: 'The USM Platform is a place where anyone can be a virtual musician.  All you need is a USM Artist NFT to serve as your avatar in this virtual world.',
-  ourMission: 'Our mission is to honor musical tradition in a variety of ways, including recording real musicians as we create a fun, online, virtual music experience. The platform will ultimately be inspired by the real world but it is also our hope for the platform itself to be inspiring.',
-  musicalDeconstruction: 'The USM platform will be a place where musical artists’ work can be deconstructed, reimagined and reconstructed in ways that were previously not possible.',
-  whatsUSM: 'what\'s usm',
+  jambotTraitsDescription:
+    "Every Jam Bot is equally rare and carries a unique set of personal traits. The Jam Bots personal traits determine the character's look, their attitude, and future contexts yet to be discovered.",
+  audioTraitsDescription:
+    'Audio traits are custom generated for each character and dictate the style with which they play their sounds.',
+  theUSMPlatform:
+    'The USM Platform is a place where anyone can be a virtual musician.  All you need is a USM Artist NFT to serve as your avatar in this virtual world.',
+  ourMission:
+    'Our mission is to honor musical tradition in a variety of ways, including recording real musicians as we create a fun, online, virtual music experience. The platform will ultimately be inspired by the real world but it is also our hope for the platform itself to be inspiring.',
+  musicalDeconstruction:
+    'The USM platform will be a place where musical artists’ work can be deconstructed, reimagined and reconstructed in ways that were previously not possible.',
+  whatsUSM: "what's usm",
   lipsum_3w: 'consectetur elit auctor',
   lipsum_10w:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor.',

@@ -33,14 +33,14 @@
               "glob": "*.*",
               "output": "."
             }
-          ],      
+          ],
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false,
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false
-        },        
+        },
         "production": {
           "fileReplacements": [
             {
@@ -59,7 +59,7 @@
               "glob": "*.*",
               "output": "."
             }
-          ],          
+          ],
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false,

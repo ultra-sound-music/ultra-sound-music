@@ -14,7 +14,7 @@
   svg {
     width: 250px;
     height: 250px;
-  }  
+  }
 }
 
 .tri3 {
@@ -30,18 +30,13 @@
 
 .brandedDropJambots {
   background-color: $color-empty-sky;
-  background-image: 
-    linear-gradient(
+  background-image: linear-gradient(
       180deg,
       $gradient-top 50px,
       $color-empty-sky 500px,
       transparent 800px
     ),
-    linear-gradient(
-      90deg,
-      $color-evening-sky 1px,
-      transparent 1px
-    ),
+    linear-gradient(90deg, $color-evening-sky 1px, transparent 1px),
     linear-gradient(0deg, $color-evening-sky 1px, transparent 1px);
   background-repeat: repeat, repeat, repeat;
   background-size: 100% 100%, 40px 40px, 40px 40px;
@@ -57,7 +52,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 0;
-  height:  440px;
+  height: 440px;
 }
 
 .traitsBg {

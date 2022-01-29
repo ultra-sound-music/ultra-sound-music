@@ -1,12 +1,4 @@
-import {
-  Accordian,
-  Col,
-  Grid,
-  Image,
-  Link,
-  TextBlock,
-  Section
-} from '@usm/ui';
+import { Accordian, Col, Grid, Image, Link, TextBlock, Section } from '@usm/ui';
 import { copy } from '@usm/content';
 import logo from '@usm/images/logo.png';
 import { urls, team, faq } from '@usm/content';
@@ -76,9 +68,7 @@ export function Landing() {
       <Section>
         <Grid>
           <Col end={10}>
-            <TextBlock
-              title={copy.whatsUSM}
-            >
+            <TextBlock title={copy.whatsUSM}>
               <p>{copy.theUSMPlatform}</p>
               <p>{copy.ourMission}</p>
               <p>{copy.musicalDeconstruction}</p>
@@ -97,7 +87,11 @@ export function Landing() {
             <div className={styles.roadcrew}>
               {team.map((member) => (
                 <div>
-                  <h4 className={styles.crewLink}><Link to={`${urls.twitter}/${member.twitter}`}>@{member.twitter}</Link></h4>
+                  <h4 className={styles.crewLink}>
+                    <Link to={`${urls.twitter}/${member.twitter}`}>
+                      @{member.twitter}
+                    </Link>
+                  </h4>
                   <div>{member.blurb}</div>
                 </div>
               ))}

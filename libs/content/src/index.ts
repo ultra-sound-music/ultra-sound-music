@@ -25,13 +25,15 @@ export const team = Object.freeze([
     name: 'Cameron Morris',
     twitter: '0xGambas',
     discord: '0xGambas',
-    blurb: 'Launched first NFT smart contract in 2018, 3x ETHGlobal hackathon winner, multichain enthusiast. Violinist.'
+    blurb:
+      'Launched first NFT smart contract in 2018, 3x ETHGlobal hackathon winner, multichain enthusiast. Violinist.'
   },
   {
     name: 'Andres Maldonado',
     twitter: 'andres_mald',
     discord: 'AGame',
-    blurb: 'A 90’s drummer turned designer, has designed and launched products for several Fortune 500 companies.'
+    blurb:
+      'A 90’s drummer turned designer, has designed and launched products for several Fortune 500 companies.'
   },
   {
     name: 'Gabriel Castillo',

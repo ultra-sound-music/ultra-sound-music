@@ -2,9 +2,9 @@
   "version": 2,
   "projects": {
     "audio-player": "libs/audio-player",
+    "config": "libs/config",
     "content": "libs/content",
     "docs": "apps/docs",
-    "config": "libs/config",
     "images": "libs/images",
     "sol-client": "libs/sol-client",
     "store": "libs/store",
