@@ -1,8 +1,6 @@
 import {
   Accordian,
-  Container,
   Col,
-  Figure,
   Grid,
   Image,
   Link,
@@ -12,6 +10,8 @@ import {
 import { copy } from '@usm/content';
 import logo from '@usm/images/logo.png';
 import { urls, team, faq } from '@usm/content';
+import { ReactComponent as Triangle1 } from '@usm/images/triangle1.svg';
+import { ReactComponent as Triangle3 } from '@usm/images/triangle3.svg';
 
 import ComingSoon from '../../components/ComingSoon/ComingSoon';
 import NewDrop from '../../components/NewDrop/NewDrop';
@@ -25,6 +25,13 @@ export function Landing() {
 
   return (
     <div className={styles.Landing}>
+      <div className={styles.tri1}>
+        <Triangle1 />
+      </div>
+      <div className={styles.tri3}>
+        <Triangle3 />
+      </div>
+
       <div className={styles.brandedDropJambots}>
         {/* section #1 */}
         <Section className={styles.heroSection}>

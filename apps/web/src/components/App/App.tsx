@@ -3,10 +3,9 @@ import { RiDiscordFill, RiTwitterFill } from 'react-icons/ri';
 
 import { Button, Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
 import { copy, urls, routes } from '@usm/content';
-import { ReactComponent as Triangle1 } from '@usm/images/triangle1.svg';
-import { ReactComponent as Triangle3 } from '@usm/images/triangle3.svg';
 
 import Home from '../../pages/Landing/Landing';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 import styles from './App.scss';
 
@@ -35,12 +34,6 @@ const weAreLive =
 
 const App = () => (
   <div className={styles.App}>
-    <div className={styles.tri1}>
-      <Triangle1 />
-    </div>
-    <div className={styles.tri3}>
-      <Triangle3 />
-    </div>
     <div className={styles.header}>
       <SiteHeader
         nav={<Nav items={nav} />}
@@ -52,6 +45,7 @@ const App = () => (
     <Routes>
       <Route path={routes.home} element={<Home />} />
       <Route path={routes.blog} element={<Link to={urls.usmBlog} />} />
+      <Route path='*' element={<PageNotFound />} />
     </Routes>
     <div className={styles.footer}>
       <SiteFooter />

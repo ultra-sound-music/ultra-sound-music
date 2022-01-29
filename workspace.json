@@ -4,6 +4,7 @@
     "audio-player": "libs/audio-player",
     "content": "libs/content",
     "docs": "apps/docs",
+    "config": "libs/config",
     "images": "libs/images",
     "sol-client": "libs/sol-client",
     "store": "libs/store",
