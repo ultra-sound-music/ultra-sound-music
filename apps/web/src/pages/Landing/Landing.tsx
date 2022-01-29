@@ -48,7 +48,7 @@ export function Landing() {
         {/* section #3 */}
         <Section>
           <Grid>
-            <Col end={10}>
+            <Col start={2} end={10}>
               <TextBlock
                 subject={copy.uniqueAndIndividual}
                 title={copy.jambotTraits}
@@ -67,7 +67,7 @@ export function Landing() {
       {/* section #5 */}
       <Section>
         <Grid>
-          <Col end={10}>
+          <Col start={2} end={10}>
             <TextBlock title={copy.whatsUSM}>
               <p>{copy.theUSMPlatform}</p>
               <p>{copy.ourMission}</p>
@@ -82,11 +82,11 @@ export function Landing() {
 
       <Section>
         <Grid>
-          <Col>
+          <Col start={2} end={10}>
             <h2>{copy.road_crew}</h2>
             <div className={styles.roadcrew}>
               {team.map((member) => (
-                <div>
+                <div key={member.twitter}>
                   <h4 className={styles.crewLink}>
                     <Link to={`${urls.twitter}/${member.twitter}`}>
                       @{member.twitter}
