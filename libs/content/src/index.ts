@@ -46,11 +46,11 @@ export const team = Object.freeze([
 export const faq = Object.freeze([
   {
     q: 'What can I do with my Jam Bot?',
-    a: 'Your Jam Bot is your entry point to the USM community and platform. Initially you can trade them, admire them, listen to their sounds and use them as your PFP. As the USM platform evolves you will be able to use your Jam Bot to form bands with other musicians and create NFT tracks.'
+    a: 'Your Jam Bot is your entry point to the USM community and platform. Initially you can trade them, admire them, listen to their sounds and use them as your PFP. As the USM platform evolves you will be able to use your Jam Bot to form bands with other musicians and publish NFT music.'
   },
   {
     q: 'What are the future plans for USM? ',
-    a: 'USM will continue to build out its platform and tools to enable the creation of composable music NFTs. The initial Jam Bot drop is just the beginning. In the future we will continue to drop more musicians, either via auction or larger, bulk drop and then start rolling out the ability to form a band with other musicians from which you will be able to create tracks. We envision a future ecosystem with many musicians, many bands and many tracks.'
+    a: 'USM will continue to build out its platform and tools to enable the creation of composable music NFTs. The initial Jam Bot drop is just the beginning. In the future we will continue to drop more musicians, either via auction or larger, bulk drop and then start rolling out the ability to form a band with other musicians and publish NFT music. We envision a future ecosystem with many musicians, many bands and many tracks.'
   },
   {
     q: 'How is USM Governed? ',
