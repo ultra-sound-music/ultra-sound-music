@@ -39,7 +39,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "uiFramework": "@storybook/react",
-        "outputPath": "dist/storybook/ui",
+        "outputPath": "dist/libs/ui",
         "config": {
           "configFolder": "libs/ui/.storybook"
         }
