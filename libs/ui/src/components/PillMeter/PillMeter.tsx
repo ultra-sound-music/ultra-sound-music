@@ -17,7 +17,7 @@ export function PillMeter({ label, total, value }: IPillMeterProps) {
     <div className={styles.PillMeter}>
       <Pill label={label} shrink={true}>
         <div className={styles.markers}>
-          {createArray(total).map((val: void, index: number) => {
+          {createArray(total).map((val: number, index: number) => {
             const active = !!(index < value);
             return (
               <div
