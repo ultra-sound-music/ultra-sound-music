@@ -13,6 +13,7 @@
     "util-loader": "libs/util/loader",
     "util-logger": "libs/util/logger",
     "util-string": "libs/util/string",
+    "util-utils": "libs/util/utils",
     "wallets-sol-wallet": "libs/wallets/sol-wallet",
     "wallets-types": "libs/wallets/types",
     "web": "apps/web",

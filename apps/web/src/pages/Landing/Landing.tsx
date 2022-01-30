@@ -64,7 +64,7 @@ export function Landing() {
         </Section>
       </div>
 
-      {/* section #5 */}
+      {/* section #4 */}
       <Section>
         <Grid>
           <Col start={2} end={10}>
@@ -80,6 +80,7 @@ export function Landing() {
         </Grid>
       </Section>
 
+      {/* section #5 */}
       <Section>
         <Grid>
           <Col>

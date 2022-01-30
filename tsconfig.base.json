@@ -25,10 +25,10 @@
       "@usm/store": ["libs/store/src/index.ts"],
       "@usm/styles/*": ["libs/styles/src/*"],
       "@usm/ui": ["libs/ui/src/index.ts"],
-      "@usm/util/*": ["libs/util/src/*"],
-      "@usm/util/loader": ["libs/util/loader/src/index.ts"],
-      "@usm/util/logger": ["libs/util/logger/src/index.ts"],
-      "@usm/util/string": ["libs/util/string/src/index.ts"],
+      "@usm/util-loader": ["libs/util/loader/src/index.ts"],
+      "@usm/util-logger": ["libs/util/logger/src/index.ts"],
+      "@usm/util-string": ["libs/util/string/src/index.ts"],
+      "@usm/util-utils": ["libs/util/utils/src/index.ts"],      
       "@usm/wallets/sol-wallet": ["libs/wallets/sol-wallet/src/index.ts"],
       "@usm/wallets/types": ["libs/wallets/types/src/index.ts"]
     }

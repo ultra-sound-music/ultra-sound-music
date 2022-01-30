@@ -17,6 +17,8 @@ export * from './components/SiteFooter/SiteFooter';
 export * from './components/Modal/Modal';
 export * from './components/Nav/Nav';
 export * from './components/Paginate/Paginate';
+export * from './components/Pill/Pill';
+export * from './components/PillMeter/PillMeter';
 export * from './components/Selector/Selector';
 export * from './components/SiteHeader/SiteHeader';
 export * from './components/Spinner/Spinner';
