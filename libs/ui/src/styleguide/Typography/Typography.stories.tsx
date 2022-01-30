@@ -1,7 +1,17 @@
 import { Story, Meta } from '@storybook/react';
 import Typography from './Typography';
 
-const names = ['brand', 'h1', 'h2', 'h3', 'h4', 'subhead', 'body', 'small', 'iconic'];
+const names = [
+  'brand',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'subhead',
+  'body',
+  'small',
+  'iconic'
+];
 
 export default {
   component: Typography,

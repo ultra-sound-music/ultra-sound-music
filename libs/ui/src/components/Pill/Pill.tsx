@@ -13,7 +13,9 @@ export function Pill({ label, shrink, children }: IPillProps) {
   return (
     <div className={styles.Pill}>
       {label && <div className={styles.label}>{label}</div>}
-      <div className={cn(styles.value, shrink && styles.shrink)}>{children}</div>
+      <div className={cn(styles.value, shrink && styles.shrink)}>
+        {children}
+      </div>
     </div>
   );
 }

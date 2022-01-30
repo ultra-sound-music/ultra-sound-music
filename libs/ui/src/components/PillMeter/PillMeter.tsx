@@ -18,8 +18,12 @@ export function PillMeter({ label, total, value }: IPillMeterProps) {
       <Pill label={label} shrink={true}>
         <div className={styles.markers}>
           {createArray(total).map((val: void, index: number) => {
-            const active = !!(index < value)
-            return <div className={cn(styles.marker, active && styles.activeMarker)}></div>
+            const active = !!(index < value);
+            return (
+              <div
+                className={cn(styles.marker, active && styles.activeMarker)}
+              ></div>
+            );
           })}
         </div>
       </Pill>
