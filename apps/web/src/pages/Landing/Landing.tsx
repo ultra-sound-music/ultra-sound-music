@@ -74,7 +74,7 @@ export function Landing() {
               <p>{copy.musicalDeconstruction}</p>
             </TextBlock>
           </Col>
-          <Col start={12} end={23}>
+          <Col start={14} end={23}>
             <Image src={logo} className={styles.logo} />
           </Col>
         </Grid>
