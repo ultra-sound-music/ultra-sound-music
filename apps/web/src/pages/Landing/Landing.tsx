@@ -34,7 +34,7 @@ export function Landing() {
         <Section>
           <Grid>
             <Col end={12} className={styles.hero2Bg} />
-            <Col start={14}>
+            <Col start={14} end={23}>
               <TextBlock
                 subject={copy.introducingTheJambots}
                 title={copy.blockchainMusicians}
@@ -59,7 +59,7 @@ export function Landing() {
                 <p>{copy.audioTraitsDescription}</p>
               </TextBlock>
             </Col>
-            <Col start={14} className={styles.traitsBg} />
+            <Col start={14} end={23} className={styles.traitsBg} />
           </Grid>
         </Section>
       </div>
@@ -74,7 +74,7 @@ export function Landing() {
               <p>{copy.musicalDeconstruction}</p>
             </TextBlock>
           </Col>
-          <Col start={12}>
+          <Col start={12} end={23}>
             <Image src={logo} className={styles.logo} />
           </Col>
         </Grid>
@@ -83,7 +83,7 @@ export function Landing() {
       {/* section #5 */}
       <Section>
         <Grid>
-          <Col start={2}>
+          <Col start={2} end={23}>
             <h2>{copy.road_crew}</h2>
             <div className={styles.roadcrew}>
               {team.map((member) => (
@@ -103,7 +103,7 @@ export function Landing() {
 
       <Section>
         <Grid>
-          <Col start={2}>
+          <Col start={2} end={23}>
             <h2>{copy.frequently_asked_questions}</h2>
             {faq.map((t, i) => (
               <div key={i} className={styles.faq}>
