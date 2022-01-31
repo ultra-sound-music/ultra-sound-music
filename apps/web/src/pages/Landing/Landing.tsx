@@ -83,7 +83,7 @@ export function Landing() {
       {/* section #5 */}
       <Section>
         <Grid>
-          <Col>
+          <Col start={2}>
             <h2>{copy.road_crew}</h2>
             <div className={styles.roadcrew}>
               {team.map((member) => (
@@ -103,7 +103,7 @@ export function Landing() {
 
       <Section>
         <Grid>
-          <Col>
+          <Col start={2}>
             <h2>{copy.frequently_asked_questions}</h2>
             {faq.map((t, i) => (
               <div key={i} className={styles.faq}>
