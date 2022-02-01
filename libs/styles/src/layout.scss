@@ -1,14 +1,66 @@
-$app-width-full: 1280px;
+$app-width-max: 1280px;
+$app-width-min: 360px;
+
+// Media Queries
+$media-laptop: 970px;
+$media-tablet: 769px;
+$media-mobile: 481px;
+
+$media_queries : (
+    monitor   : "only screen and (min-width: #{$media-laptop})",
+    laptop    : "only screen and (min-width: #{$media-tablet}) and (max-width: #{$media-laptop})",
+    tablet    : "only screen and (min-width: #{$media-mobile}) and (max-width: #{$media-tablet})",
+    mobile    : "only screen and (max-width: #{$media-mobile})",
+);
+
+@mixin media-query($breakpoints) {
+  $conditions : ();
+  @each $breakpoint in $breakpoints {
+      $conditions: append(
+          $conditions,
+          #{unquote(map-get($media_queries, $breakpoint))},
+          comma
+      );
+  }
+
+  @media #{$conditions} {
+      @content;
+  }
+}
 
 %container {
-  max-width: $app-width-full;
+  max-width: $app-width-max;
+  min-width: $app-width-min;
   margin: 0 auto;
 }
 
 %grid-layout {
   display: grid;
-  grid-template-columns: repeat(24, minmax(25px, 1fr));
-  grid-gap: 18px 15px;
+  grid-template-columns: repeat(24, 1fr);
+  grid-gap: 16px;
   grid-auto-flow: row;
   @extend %container;
+
+  @include media-query(laptop) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  @include media-query(tablet) {
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 15px;
+    padding-right: 20px;
+    padding-left: 20px;    
+  }
+
+  @include media-query(mobile) {
+    grid-gap: initial;
+    grid-template-columns: 1fr;
+    grid-auto-columns: 1fr $media-mobile;
+    padding-right: 10px;
+    padding-left: 10px;
+
+    > * {
+      grid-column: 1 / -1;      
+    }
+  }    
 }

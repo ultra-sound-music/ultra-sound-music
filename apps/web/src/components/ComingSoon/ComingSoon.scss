@@ -1,18 +1,30 @@
+@use '@usm/styles/layout.scss' as *;
+
 $hero-height: 540px;
 
 .ComingSoon {
   position: relative;
   width: 100%;
   padding-top: 80px;
+  z-index: 2;
+
+  @include media-query(tablet) {
+    padding-top: 10%;
+  }
+
+  @include media-query(mobile) {
+    padding-top: 10%;
+  }
 }
 
 .stamp {
-  margin-bottom: 40px;
-}
+  grid-column: 2 / -1;
+  margin-bottom: 16px;
 
-.callout {
-  margin-right: 15px;
-  margin-bottom: 25px;
+  @include media-query(mobile tablet) {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
 }
 
 .heroBg {
@@ -26,4 +38,47 @@ $hero-height: 540px;
   background-repeat: no-repeat, no-repeat;
   background-size: contain, contain;
   background-position: left bottom, right top;
+  z-index: -1;
+
+  @include media-query(laptop) {
+    background-size: contain, 100%;
+    background-position: left bottom, center top -30%;
+  }    
+
+  @include media-query(tablet) {
+    grid-column: 1 / -1;
+    position: static;
+    margin-top: -140px;
+    min-height: max(320px, 88vw);
+    background-size: contain, max(360px, 150%);
+    background-position: left bottom, center top -30%;
+  }  
+
+  @include media-query(mobile) {
+    position: static;
+    min-height: max(320px, 88vw);
+    background-size: contain, max(360px, 150%);
+    background-position: left bottom, center top -30%;
+  }
+}
+
+.description {
+  grid-column: 2 / span 8;
+
+  @include media-query(laptop) {
+    margin-top: 180px;
+    grid-column: 2 / -2;
+  }  
+
+  @include media-query(tablet) {
+    grid-column: 1 / -1;
+  }
+
+  @include media-query(mobile) {
+    grid-column: 1 / -1;
+  }
+}
+
+.callout {
+  margin-right: 15px;
 }

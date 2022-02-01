@@ -1,7 +1,17 @@
+@use '../../styles.scss' as *;
+
 * + .Section {
-  margin-top: 65px;
+  @include media-query(laptop monitor) {
+    margin-top: 65px;
+  }
 }
 
 .Section:not(:last-child) {
-  margin-bottom: 200px;
+  @include media-query(laptop monitor) {
+    margin-bottom: 200px;
+  }
+
+  @include media-query(mobile tablet) {
+    margin-bottom: 80px;
+  }
 }

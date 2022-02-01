@@ -1,6 +1,7 @@
 @use '@usm/styles/colors.scss' as *;
 @use '@usm/styles/utils.scss' as *;
 @use '@usm/styles/typo.scss' as *;
+@use '@usm/styles/layout.scss' as *;
 
 .Landing {
   background-color: $color-empty-sky;
@@ -45,26 +46,25 @@
   padding-bottom: 100px;
   border-bottom: 2px solid $color-sassy;
   color: $color-taffy;
+
+  @include media-query(mobile tablet) {
+    margin-bottom: 60px;
+    padding-bottom: 50px;
+  }  
 }
 
-.hero2Bg {
-  background-image: url('@usm/images/hero_jambot2.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: 0 0;
-  height: 440px;
-}
-
-.traitsBg {
-  background-image: url('@usm/images/traits.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: 0 0;
+.jambot2Image {
+  width: 105%;
+  margin-left: -10px;
 }
 
 .logo {
-  display: block;
-  margin-top: 80px;
+  align-self: center;
+  text-align: center;
+}
+
+.traitsImage {
+  width: 85%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -75,10 +75,15 @@
 
 .roadcrew {
   display: grid;
-  column-gap: 120px;
+  column-gap: 80px;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
   margin-top: 6rem;
+
+  @include media-query(tablet mobile) {
+    grid-auto-flow:dense;
+    row-gap: 40px;
+  }
 }
 
 .crewLink {
@@ -88,3 +93,39 @@
     color: inherit;
   }
 }
+
+.gridFull, .grid2 {
+  row-gap: 200px;
+
+  @include media-query(tablet mobile) {
+    row-gap: 80px;    
+  }
+}
+
+.gridFull > * {
+  grid-column: 2 / -2;
+
+  @include media-query(tablet mobile) {
+    grid-column: 1 / -1;
+  }
+}
+
+.grid2 {
+  z-index: 1;
+}
+
+.grid2 > :first-child {
+  grid-column: 2 / 10;
+
+  @include media-query(tablet mobile) {
+    grid-column: 1 / -1;
+  }
+}
+
+.grid2 > :last-child {
+  grid-column: 12 / 23;
+
+  @include media-query(tablet mobile) {
+    grid-column: 1 / -1;
+  }  
+} 

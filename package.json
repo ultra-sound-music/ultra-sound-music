@@ -87,7 +87,7 @@
     "nx-stylelint": "^13.1.0",
     "prettier": "^2.3.1",
     "react-test-renderer": "17.0.2",
-    "sass": "^1.45.0",
+    "sass": "^1.49.4",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "stylelint": "^14.2.0",

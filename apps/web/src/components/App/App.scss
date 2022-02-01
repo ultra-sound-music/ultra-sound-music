@@ -1,4 +1,5 @@
 @use '@usm/styles/colors.scss' as *;
+@use '@usm/styles/layout.scss' as *;
 @use '../../styles/styles.scss' as *;
 
 .App {
@@ -7,6 +8,7 @@
   background-repeat: no-repeat;
   background-size: 100% 500px;
   background-position: 0 100%;
+  min-width: $app-width-min;
   position: relative;
 }
 

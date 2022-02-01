@@ -1,4 +1,4 @@
-import { Callout, Col, CollectionStamp, Grid, Link } from '@usm/ui';
+import { Callout, CollectionStamp, Grid, Link } from '@usm/ui';
 import { urls } from '@usm/content';
 
 import styles from './ComingSoon.scss';
@@ -6,11 +6,11 @@ import styles from './ComingSoon.scss';
 export function ComingSoon() {
   return (
     <Grid className={styles.ComingSoon}>
-      <div className={styles.heroBg} />
-      <Col start={2} end={10}>
-        <div className={styles.stamp}>
-          <CollectionStamp />
-        </div>
+      <div className={styles.stamp}>
+        <CollectionStamp />
+      </div>
+      <div className={styles.heroBg} />      
+      <div className={styles.description}>
         <div className={styles.callout}>
           <Callout>
             Ultra Sound Music Jambots
@@ -26,7 +26,7 @@ export function ComingSoon() {
             </p>
           </div>
         </div>
-      </Col>
+      </div>
     </Grid>
   );
 }

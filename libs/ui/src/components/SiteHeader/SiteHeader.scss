@@ -11,7 +11,12 @@
   justify-content: space-between;
   margin: 0 auto;
   padding: 40px 0;
-  max-width: $app-width-full;
+  max-width: $app-width-max;
+
+  @include media-query(mobile tablet) {
+    width: 100%;
+    padding: 20px;
+  }
 }
 
 .logoLink {

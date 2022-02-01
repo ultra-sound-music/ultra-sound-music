@@ -6,6 +6,12 @@
   justify-content: center;
   column-gap: 45px;
   padding: 40px 0;
+
+  @include media-query(mobile tablet) {
+    padding-bottom: 80px;
+    flex-direction: column;
+    row-gap: 10px;
+  }
 }
 
 .brand {
@@ -14,9 +20,15 @@
   justify-content: center;
   column-gap: 15px;
   @extend %font-subhead;
+
+  @include media-query(mobile tablet) {
+    flex-direction: column;
+    row-gap: 35px;
+  }  
 }
 
 .copyright {
+  color: $color-taffy;
   @extend %font-body;
 }
 
@@ -29,5 +41,14 @@
   a {
     display: inline-flex;
     font-size: $font-size-lrg;
+  }
+
+  @include media-query(mobile tablet) {
+    padding-top: 15px;
+    column-gap: 35px;
+
+    a {
+      font-size: $font-size-xlrg;
+    }    
   }
 }

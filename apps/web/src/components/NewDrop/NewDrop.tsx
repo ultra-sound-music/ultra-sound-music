@@ -1,14 +1,14 @@
-import { BidBox, Col, Grid } from '@usm/ui';
+import { BidBox, Grid } from '@usm/ui';
 
 import styles from './NewDrop.scss';
 
 export function NewDrop() {
   return (
     <Grid className={styles.NewDrop}>
-      <Col start={1} end={11} className={styles.hero} />
-      <Col start={12} end='end' className={styles.bidBox}>
+      <div className={styles.hero} />
+      <div className={styles.bidBox}>
         {/* <BidBox /> */}
-      </Col>
+      </div>
     </Grid>
   );
 }

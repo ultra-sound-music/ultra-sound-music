@@ -1,6 +1,8 @@
-import { Accordian, Col, Grid, Image, Link, TextBlock, Section } from '@usm/ui';
+import { Accordian, Grid, Image, Link, TextBlock, Section } from '@usm/ui';
 import { copy } from '@usm/content';
 import logo from '@usm/images/logo.png';
+import jambot2 from '@usm/images/hero_jambot2.png';
+import traitsImg from '@usm/images/traits.png';
 import { urls, team, faq } from '@usm/content';
 import { ReactComponent as Triangle1 } from '@usm/images/triangle1.svg';
 import { ReactComponent as Triangle3 } from '@usm/images/triangle3.svg';
@@ -32,23 +34,25 @@ export function Landing() {
 
         {/* section #2 */}
         <Section>
-          <Grid>
-            <Col end={12} className={styles.hero2Bg} />
-            <Col start={14} end={23}>
+          <Grid className={styles.grid2}>
+            <div className={styles.jambot2}>
+              <Image src={jambot2} className={styles.jambot2Image} />
+            </div>
+            <div>
               <TextBlock
                 subject={copy.introducingTheJambots}
                 title={copy.blockchainMusicians}
               >
                 <p>{copy.musicByMusicians}</p>
               </TextBlock>
-            </Col>
+            </div>
           </Grid>
         </Section>
 
         {/* section #3 */}
         <Section>
-          <Grid>
-            <Col start={2} end={10}>
+          <Grid className={styles.grid2}>
+            <div>
               <TextBlock
                 subject={copy.uniqueAndIndividual}
                 title={copy.jambotTraits}
@@ -58,32 +62,34 @@ export function Landing() {
                 <h4>{copy.audioTraits}</h4>
                 <p>{copy.audioTraitsDescription}</p>
               </TextBlock>
-            </Col>
-            <Col start={14} end={23} className={styles.traitsBg} />
+            </div>
+            <div className={styles.logo}>
+              <Image src={traitsImg} className={styles.traitsImage}/>
+            </div>
           </Grid>
         </Section>
       </div>
 
       {/* section #4 */}
       <Section>
-        <Grid>
-          <Col start={2} end={10}>
+        <Grid className={styles.grid2}>
+          <div>
             <TextBlock title={copy.whatsUSM}>
               <p>{copy.theUSMPlatform}</p>
               <p>{copy.ourMission}</p>
               <p>{copy.musicalDeconstruction}</p>
             </TextBlock>
-          </Col>
-          <Col start={14} end={23}>
-            <Image src={logo} className={styles.logo} />
-          </Col>
+          </div>
+          <div className={styles.logo}>
+            <Image src={logo} className={styles.logoImg} />
+          </div>
         </Grid>
       </Section>
 
       {/* section #5 */}
       <Section>
-        <Grid>
-          <Col start={2} end={23}>
+        <Grid className={styles.gridFull}>
+          <div>
             <h2>{copy.road_crew}</h2>
             <div className={styles.roadcrew}>
               {team.map((member) => (
@@ -97,20 +103,20 @@ export function Landing() {
                 </div>
               ))}
             </div>
-          </Col>
+          </div>
         </Grid>
       </Section>
 
       <Section>
-        <Grid>
-          <Col start={2} end={23}>
+        <Grid className={styles.gridFull}>
+          <div>
             <h2>{copy.frequently_asked_questions}</h2>
             {faq.map((t, i) => (
               <div key={i} className={styles.faq}>
                 <Accordian term={t.q} details={t.a} />
               </div>
             ))}
-          </Col>
+          </div>
         </Grid>
       </Section>
     </div>
