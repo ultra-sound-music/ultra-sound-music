@@ -120,7 +120,7 @@
 
   @include media-query(laptop) {
     grid-column: 2 / 6;
-  }  
+  }
 
   @include media-query(tablet mobile) {
     grid-column: 1 / -1;
