@@ -1,19 +1,23 @@
 @use '@usm/styles/layout.scss' as *;
 
-$hero-height: 540px;
+$hero-height: 650px;
 
 .ComingSoon {
   position: relative;
   width: 100%;
   padding-top: 80px;
-  z-index: 2;
+  z-index: 1;
+
+  @include media-query(laptop) {
+    padding-top: 5%;
+  }
 
   @include media-query(tablet) {
-    padding-top: 10%;
+    padding-top: 5%;
   }
 
   @include media-query(mobile) {
-    padding-top: 10%;
+    padding-top: 5%;
   }
 }
 
@@ -29,7 +33,7 @@ $hero-height: 540px;
 
 .heroBg {
   position: absolute;
-  top: 0;
+  bottom: 60px;
   right: 0;
   width: 100%;
   min-height: $hero-height;
@@ -37,28 +41,37 @@ $hero-height: 540px;
     url('@usm/images/hero_jambot1.png');
   background-repeat: no-repeat, no-repeat;
   background-size: contain, contain;
-  background-position: left bottom, right top;
+  background-position: left bottom, right bottom;
   z-index: -1;
+
+  @media only screen and (max-width: 1130px) {
+    top: -150px;
+    right: -220px;
+    background-position: left bottom, center top;
+  }
 
   @include media-query(laptop) {
     background-size: contain, 100%;
-    background-position: left bottom, center top -30%;
+    top: -140px;
+    right: -220px;
+    background-position: left bottom, center top;
   }
 
   @include media-query(tablet) {
     grid-column: 1 / -1;
     position: static;
-    margin-top: -140px;
-    min-height: max(320px, 88vw);
+    margin-top: -180px;
+    min-height: max(320px, 98vw);
     background-size: contain, max(360px, 150%);
-    background-position: left bottom, center top -30%;
+    background-position: left bottom, center top;
   }
 
   @include media-query(mobile) {
     position: static;
-    min-height: max(320px, 88vw);
+    margin-top: -100px;
+    min-height: max(380px, 110vw);
     background-size: contain, max(360px, 150%);
-    background-position: left bottom, center top -30%;
+    background-position: left bottom, center top;
   }
 }
 
@@ -66,8 +79,8 @@ $hero-height: 540px;
   grid-column: 2 / span 8;
 
   @include media-query(laptop) {
-    margin-top: 180px;
-    grid-column: 2 / -2;
+    margin-top: 20px;
+    grid-column: 2 / span 5;
   }
 
   @include media-query(tablet) {

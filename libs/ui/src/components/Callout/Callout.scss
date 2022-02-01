@@ -1,16 +1,16 @@
 @use '../../styles.scss' as *;
 
 .Callout {
-  border: 2px solid $color-sassy;
+  border: 2px solid currentColor;
   border-radius: 3px;
-  color: $color-sassy;
+  color: $color-taffy;
   margin-top: 10px;
   margin-bottom: 16px;
   padding: 10px 20px;
   @extend %font-small;
 
   a {
-    color: $color-sassy;
+    color: currentColor;
     font-weight: bold;
 
     &:hover {
@@ -22,4 +22,8 @@
   strong {
     @extend %font-h4;
   }
+}
+
+.shout {
+  color: $color-sassy;
 }

@@ -12,7 +12,7 @@ export function ComingSoon() {
       <div className={styles.heroBg} />
       <div className={styles.description}>
         <div className={styles.callout}>
-          <Callout>
+          <Callout shout={false}>
             Ultra Sound Music Jambots
             <br /> <strong>Drop Coming Soon</strong>
           </Callout>

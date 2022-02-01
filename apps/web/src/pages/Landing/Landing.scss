@@ -9,7 +9,7 @@
 
 .tri1 {
   position: absolute;
-  right: 0;
+  right: -30px;
   top: 600px;
 
   svg {
@@ -118,13 +118,21 @@
 .grid2 > :first-child {
   grid-column: 2 / 10;
 
+  @include media-query(laptop) {
+    grid-column: 2 / 6;
+  }  
+
   @include media-query(tablet mobile) {
     grid-column: 1 / -1;
   }
 }
 
 .grid2 > :last-child {
-  grid-column: 12 / 23;
+  grid-column: 12 / -2;
+
+  @include media-query(laptop) {
+    grid-column: 7 / -2;
+  }
 
   @include media-query(tablet mobile) {
     grid-column: 1 / -1;
