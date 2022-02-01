@@ -6,10 +6,12 @@
   color: $color-taffy;
   margin-top: 10px;
   margin-bottom: 16px;
-  padding: 10px 20px;
+  padding: 18px 25px;
   @extend %font-small;
 
   a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
     color: currentColor;
     font-weight: bold;
 
