@@ -24,7 +24,7 @@
   @include media-query(mobile tablet) {
     flex-direction: column;
     row-gap: 35px;
-  }  
+  }
 }
 
 .copyright {
@@ -49,6 +49,6 @@
 
     a {
       font-size: $font-size-xlrg;
-    }    
+    }
   }
 }

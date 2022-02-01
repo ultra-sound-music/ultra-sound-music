@@ -50,7 +50,7 @@
   @include media-query(mobile tablet) {
     margin-bottom: 60px;
     padding-bottom: 50px;
-  }  
+  }
 }
 
 .jambot2Image {
@@ -81,7 +81,7 @@
   margin-top: 6rem;
 
   @include media-query(tablet mobile) {
-    grid-auto-flow:dense;
+    grid-auto-flow: dense;
     row-gap: 40px;
   }
 }
@@ -94,11 +94,12 @@
   }
 }
 
-.gridFull, .grid2 {
+.gridFull,
+.grid2 {
   row-gap: 200px;
 
   @include media-query(tablet mobile) {
-    row-gap: 80px;    
+    row-gap: 80px;
   }
 }
 
@@ -127,5 +128,5 @@
 
   @include media-query(tablet mobile) {
     grid-column: 1 / -1;
-  }  
-} 
+  }
+}

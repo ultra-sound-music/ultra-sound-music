@@ -9,7 +9,7 @@ export function ComingSoon() {
       <div className={styles.stamp}>
         <CollectionStamp />
       </div>
-      <div className={styles.heroBg} />      
+      <div className={styles.heroBg} />
       <div className={styles.description}>
         <div className={styles.callout}>
           <Callout>

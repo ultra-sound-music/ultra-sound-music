@@ -6,25 +6,27 @@ $media-laptop: 970px;
 $media-tablet: 769px;
 $media-mobile: 481px;
 
-$media_queries : (
-    monitor   : "only screen and (min-width: #{$media-laptop})",
-    laptop    : "only screen and (min-width: #{$media-tablet}) and (max-width: #{$media-laptop})",
-    tablet    : "only screen and (min-width: #{$media-mobile}) and (max-width: #{$media-tablet})",
-    mobile    : "only screen and (max-width: #{$media-mobile})",
+$media_queries: (
+  monitor: 'only screen and (min-width: #{$media-laptop})',
+  laptop:
+    'only screen and (min-width: #{$media-tablet}) and (max-width: #{$media-laptop})',
+  tablet:
+    'only screen and (min-width: #{$media-mobile}) and (max-width: #{$media-tablet})',
+  mobile: 'only screen and (max-width: #{$media-mobile})'
 );
 
 @mixin media-query($breakpoints) {
-  $conditions : ();
+  $conditions: ();
   @each $breakpoint in $breakpoints {
-      $conditions: append(
-          $conditions,
-          #{unquote(map-get($media_queries, $breakpoint))},
-          comma
-      );
+    $conditions: append(
+      $conditions,
+      #{unquote(map-get($media_queries, $breakpoint))},
+      comma
+    );
   }
 
   @media #{$conditions} {
-      @content;
+    @content;
   }
 }
 
@@ -49,7 +51,7 @@ $media_queries : (
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 15px;
     padding-right: 20px;
-    padding-left: 20px;    
+    padding-left: 20px;
   }
 
   @include media-query(mobile) {
@@ -60,7 +62,7 @@ $media_queries : (
     padding-left: 10px;
 
     > * {
-      grid-column: 1 / -1;      
+      grid-column: 1 / -1;
     }
-  }    
+  }
 }

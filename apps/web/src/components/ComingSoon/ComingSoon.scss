@@ -43,7 +43,7 @@ $hero-height: 540px;
   @include media-query(laptop) {
     background-size: contain, 100%;
     background-position: left bottom, center top -30%;
-  }    
+  }
 
   @include media-query(tablet) {
     grid-column: 1 / -1;
@@ -52,7 +52,7 @@ $hero-height: 540px;
     min-height: max(320px, 88vw);
     background-size: contain, max(360px, 150%);
     background-position: left bottom, center top -30%;
-  }  
+  }
 
   @include media-query(mobile) {
     position: static;
@@ -68,7 +68,7 @@ $hero-height: 540px;
   @include media-query(laptop) {
     margin-top: 180px;
     grid-column: 2 / -2;
-  }  
+  }
 
   @include media-query(tablet) {
     grid-column: 1 / -1;

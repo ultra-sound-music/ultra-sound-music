@@ -6,9 +6,7 @@ export function NewDrop() {
   return (
     <Grid className={styles.NewDrop}>
       <div className={styles.hero} />
-      <div className={styles.bidBox}>
-        {/* <BidBox /> */}
-      </div>
+      <div className={styles.bidBox}>{/* <BidBox /> */}</div>
     </Grid>
   );
 }

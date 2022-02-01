@@ -64,7 +64,7 @@ export function Landing() {
               </TextBlock>
             </div>
             <div className={styles.logo}>
-              <Image src={traitsImg} className={styles.traitsImage}/>
+              <Image src={traitsImg} className={styles.traitsImage} />
             </div>
           </Grid>
         </Section>

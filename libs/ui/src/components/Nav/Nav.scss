@@ -7,10 +7,10 @@
   column-gap: 60px;
 
   @include media-query(mobile tablet) {
-    > :nth-child(-n+2) {
+    > :nth-child(-n + 2) {
       display: none;
     }
-  }    
+  }
 }
 
 .navItem {
