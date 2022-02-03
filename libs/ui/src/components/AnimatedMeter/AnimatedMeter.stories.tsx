@@ -19,6 +19,5 @@ Primary.args = {
 
 export const NoLabel = Template.bind({});
 NoLabel.args = {
-  total: 6,
   value: [13, 7]
 };
