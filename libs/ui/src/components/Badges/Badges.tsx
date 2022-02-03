@@ -20,7 +20,7 @@ export function Badges({ names }: IBadgesProps) {
   return (
     <div className={styles.Badges}>
       {names.map((name: string) => {
-        return <div className={styles.badge}><Image src={badgesMap[name]} /></div>
+        return <div key={name} className={styles.badge}><Image src={badgesMap[name]} /></div>
       })}
     </div>
   );
