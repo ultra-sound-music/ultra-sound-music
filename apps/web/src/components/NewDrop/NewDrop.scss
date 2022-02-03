@@ -1,16 +1,14 @@
-.NewDrop {
-  padding-top: 60px;
-  position: relative;
-}
+.Grid {
+  .Avatar {
+    grid-column: 2 / 12;
+    background-image: url('@usm/images/hero_jambot3.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 0 0;
+  }
 
-.hero {
-  position: absolute;
-  top: -55px;
-  left: -100px;
-  width: 800px;
-  min-height: 700px;
-  background-image: url('@usm/images/hero_jambot3.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: 0 0;
+  .BidBox {
+    padding-top: 60px;
+    grid-column: 12 / 24;
+  }
 }
