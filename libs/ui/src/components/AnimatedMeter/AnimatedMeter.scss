@@ -1,0 +1,24 @@
+@use '../../styles.scss' as *;
+
+.AnimatedMeter {
+  color: $color-lavish;
+}
+
+.label {
+  line-height: 2.4rem;
+  height: 2.4rem;
+  margin-bottom: 3px;
+  text-align: left;
+  text-transform: capitalize;
+  @extend %font-iconic;  
+}
+
+.lottie {
+  line-height: 0;
+  display: inline-block;
+  width: 12rem;
+
+  &:last-child {
+    transform: rotate(180deg);
+  }
+}

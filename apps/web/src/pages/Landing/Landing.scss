@@ -29,6 +29,28 @@
   }
 }
 
+* + .section {
+  @include media-query(laptop monitor) {
+    margin-top: 65px;
+  }
+}
+
+.section:not(:last-child) {
+  @include media-query(laptop monitor) {
+    margin-bottom: 200px;
+  }
+
+  @include media-query(mobile tablet) {
+    margin-bottom: 80px;
+  }
+}
+
+.section {
+  .grid2 {
+    row-gap: 60px;
+  }
+}
+
 .brandedDropJambots {
   background-color: $color-empty-sky;
   background-image: linear-gradient(
@@ -42,20 +64,20 @@
   background-repeat: repeat, repeat, repeat;
   background-size: 100% 100%, 40px 40px, 40px 40px;
   background-position-x: 0, 0, 0;
-  margin-bottom: 120px;
-  padding-bottom: 100px;
+  margin-bottom: 220px;
+  padding-bottom: 220px;
   border-bottom: 2px solid $color-sassy;
   color: $color-taffy;
 
   @include media-query(mobile tablet) {
     margin-bottom: 60px;
-    padding-bottom: 50px;
+    padding-bottom: max(60px, 16%);
   }
 }
 
 .jambot2Image {
   width: 105%;
-  margin-left: -10px;
+  margin-left: -20px;
 }
 
 .logo {
@@ -94,6 +116,21 @@
   }
 }
 
+.audioTraits, .characterTraits {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 250px;
+}
+
+.characterTraits {
+  row-gap: 6px;
+}
+
+.audioTraits {
+  row-gap: 10px;
+}
+
 .gridFull,
 .grid2 {
   row-gap: 200px;
@@ -112,10 +149,11 @@
 }
 
 .grid2 {
+  grid-auto-flow: row;
   z-index: 1;
 }
 
-.grid2 > :first-child {
+.grid2 > :nth-child(odd) {
   grid-column: 2 / 10;
 
   @include media-query(laptop) {
@@ -127,7 +165,7 @@
   }
 }
 
-.grid2 > :last-child {
+.grid2 > :nth-child(even) {
   grid-column: 12 / -2;
 
   @include media-query(laptop) {

@@ -23,3 +23,11 @@
   position: sticky;
   top: 100vh;
 }
+
+.tooltips {
+  background-color: $color-void;
+  border: 2px solid $color-lavish !important;
+  text-transform: capitalize !important;
+  border-bottom: none !important;
+  opacity: 100% !important;  
+}

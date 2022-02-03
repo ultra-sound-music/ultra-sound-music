@@ -1,0 +1,71 @@
+@use '../../styles.scss' as *;
+
+/* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+:global(.bm-menu-wrap) {
+  position: fixed;
+  right: 0;
+  top: 0
+}
+
+:global(.bm-burger-bars-hover) {
+  background: $color-sassy !important;
+  opacity: 100% !important;
+}
+
+/* Position and sizing of burger button */
+.burgerButton {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  top: 36px;
+  right: 36px;
+}
+
+/* Color/shape of burger icon bars */
+.burgerBars {
+  background: $color-polar-bear;
+}
+
+.crossButton {
+  height: 24px;
+  width: 24px;
+  top: 15px !important;
+  left: 15px !important;
+}
+
+.cross {
+  background: #bdc3c7;
+}
+
+.menuWrap {
+  top: 0;
+}
+
+.menu {
+  position: relative;
+  background: $color-dusk;
+  padding: 3em 1.5em 0 2.5em;
+}
+
+.itemList {
+  padding: 0.8em;
+
+  .item {
+    padding-bottom: 10px;
+  
+    &:nth-child(n + 3) {
+      margin-top: 40px;
+      display: inline-block !important;
+    }
+
+    &:last-child {
+      margin-left: 15px;
+    }
+  }  
+}
+
+.overlay {
+  background: rgba(0 0 0 / 50%) !important;
+  top: 0;
+  right: 0;
+}

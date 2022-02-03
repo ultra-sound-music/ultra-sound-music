@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Section from './Section';
+import Badges from './Badges';
 
-describe('Section', () => {
+describe('Badges', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Section />);
+    const { baseElement } = render(<Badges />);
     expect(baseElement).toBeTruthy();
   });
 });

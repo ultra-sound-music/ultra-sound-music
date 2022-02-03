@@ -14,10 +14,10 @@ const Template: Story<IPillProps> = (args) => {
 export const Primary = Template.bind({});
 Primary.args = {
   label: 'Crypto Beats',
-  children: 'ultra sound music'
+  children: 'ultra sounds'
 };
 
 export const NoLabel = Template.bind({});
 NoLabel.args = {
-  children: 'ultra sound music'
+  children: 'ultra sounds'
 };
