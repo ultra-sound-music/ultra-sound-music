@@ -1,0 +1,33 @@
+{
+  "root": "libs/util/script-loader",
+  "sourceRoot": "libs/util/script-loader/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/util/script-loader",
+        "main": "libs/util/script-loader/src/index.ts",
+        "tsConfig": "libs/util/script-loader/tsconfig.lib.json",
+        "assets": ["libs/util/script-loader/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/util/script-loader/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/util/script-loader"],
+      "options": {
+        "jestConfig": "libs/util/script-loader/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

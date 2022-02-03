@@ -1,6 +1,6 @@
 import { RiDiscordFill, RiTwitterFill } from 'react-icons/ri';
 
-import logo from '@usm/images/logo_white.svg';
+import logo from '@usm/assets/img/logo_white.svg';
 import { interpolate } from '@usm/util-string';
 import { copy, urls } from '@usm/content';
 

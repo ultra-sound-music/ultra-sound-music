@@ -1,11 +1,14 @@
+import { useState, useEffect } from 'react';
+import Lottie from 'react-lottie-player';
+
 import { Accordian, Grid, Image, Link, TextBlock, Section } from '@usm/ui';
 import { copy } from '@usm/content';
-import logo from '@usm/images/logo.png';
-import jambot2 from '@usm/images/hero_jambot2.png';
-import traitsImg from '@usm/images/traits.png';
+import logo from '@usm/assets/img/logo.png';
+import jambot2 from '@usm/assets/img/hero_jambot2.png';
+import traitsImg from '@usm/assets/img/traits.png';
 import { urls, team, faq } from '@usm/content';
-import { ReactComponent as Triangle1 } from '@usm/images/triangle1.svg';
-import { ReactComponent as Triangle3 } from '@usm/images/triangle3.svg';
+import { ReactComponent as Triangle1 } from '@usm/assets/img/triangle1.svg';
+import { ReactComponent as Triangle3 } from '@usm/assets/img/triangle3.svg';
 
 import ComingSoon from '../../components/ComingSoon/ComingSoon';
 import NewDrop from '../../components/NewDrop/NewDrop';
@@ -17,8 +20,24 @@ export function Landing() {
   const weAreLive =
     params.get('wearelive') === 'true' || params.get('wearelive') === '1';
 
+  const [animationData, setAnimationData] = useState<Record<string, unknown>>();
+  const [animationData1, setAnimationData1] = useState<Record<string, unknown>>();
+  const [animationData2, setAnimationData2] = useState<Record<string, unknown>>();
+  const [animationData3, setAnimationData3] = useState<Record<string, unknown>>();
+
+  useEffect(() => {
+    import('@usm/assets/lottie/bar.json').then(setAnimationData);
+    import('@usm/assets/lottie/1_b.json').then(setAnimationData1);
+    import('@usm/assets/lottie/2_a.json').then(setAnimationData2);
+    import('@usm/assets/lottie/3_b.json').then(setAnimationData3);
+  }, []);    
+
   return (
     <div className={styles.Landing}>
+      {/* {!!animationData && <Lottie animationData={animationData} play={true} style={{ width: 150, height: 150 }}/> }
+      {!!animationData1 && <Lottie animationData={animationData1} play={true} style={{ width: 150, height: 150 }}/> }
+      {!!animationData2 && <Lottie animationData={animationData2} play={true} style={{ width: 150, height: 150 }}/> }
+      {!!animationData3 && <Lottie animationData={animationData3} play={true} style={{ width: 150, height: 150 }}/> } */}
       <div className={styles.tri1}>
         <Triangle1 />
       </div>

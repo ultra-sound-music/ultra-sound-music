@@ -25,7 +25,7 @@
         "local": {
           "assets": [
             {
-              "input": "libs/images/src/favicons",
+              "input": "libs/assets/src/img/favicons",
               "glob": "*.*",
               "output": "."
             }
@@ -34,7 +34,7 @@
         "stage": {
           "assets": [
             {
-              "input": "libs/images/src/favicons",
+              "input": "libs/assets/src/img/favicons",
               "glob": "*.*",
               "output": "."
             }
@@ -60,7 +60,7 @@
               "output": "."
             },
             {
-              "input": "libs/images/src/favicons",
+              "input": "libs/assets/src/img/favicons",
               "glob": "*.*",
               "output": "."
             }

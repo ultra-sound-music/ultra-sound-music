@@ -5,7 +5,7 @@ import Image from '../Image/Image';
 
 import Button, { IButtonProps } from './Button';
 
-import logo from '@usm/images/logo.png';
+import logo from '@usm/assets/img/logo.png';
 
 export default {
   title: 'Components/Button',

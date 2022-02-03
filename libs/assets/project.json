@@ -1,6 +1,6 @@
 {
-  "root": "libs/images",
-  "sourceRoot": "libs/images/src",
+  "root": "libs/assets",
+  "sourceRoot": "libs/assets/src",
   "projectType": "library",
   "generators": {},
   "targets": {},

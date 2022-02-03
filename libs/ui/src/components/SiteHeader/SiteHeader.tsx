@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as Logo } from '@usm/images/logo_white.svg';
+import { ReactComponent as Logo } from '@usm/assets/img/logo_white.svg';
 
 import NavLinks from '../Nav/Nav';
 import Button from '../Button/Button';

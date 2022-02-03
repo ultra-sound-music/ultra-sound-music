@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 
-import logo from '@usm/images/logo.png';
+import logo from '@usm/assets/img/logo.png';
 
 import Image, { IImageProps } from './Image';
 
