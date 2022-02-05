@@ -1,5 +1,6 @@
 @use '@usm/styles/colors.scss' as *;
 @use '@usm/styles/layout.scss' as *;
+@use '@usm/styles/typo.scss' as *;
 @use '../../styles/styles.scss' as *;
 
 .App {
@@ -25,9 +26,17 @@
 }
 
 .tooltips {
-  background-color: $color-void;
-  border: 2px solid $color-lavish !important;
-  text-transform: capitalize !important;
-  border-bottom: none !important;
-  opacity: 100% !important;  
+  background-color: transparent !important;
+  background-image: url('@usm/assets/img/tooltip.svg') !important;
+  background-repeat: no-repeat !important;  
+  border: none !important;
+  padding: 4px 0 17px !important;
+  width: 117px !important;
+  font-size: $font-size-iconic !important;
+  text-transform: capitalize !important;  
+  text-align: center !important;
+
+  &::before, &::after {
+    all: initial !important;
+  }
 }

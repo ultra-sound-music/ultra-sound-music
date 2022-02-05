@@ -3,20 +3,27 @@
 // const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const svgToMiniDataURI = require('mini-svg-data-uri');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const getDefaultConfig = require('@nrwl/react/plugins/webpack');
+const { forEach } = require('lodash');
 
 module.exports = (initialConfigs) => {
   const config = getDefaultConfig(initialConfigs);
   const inProductionMode = config.mode === 'production';
 
   config.module.rules = config.module.rules.filter((rule) => {
-    // Find any default CSS & SCSS rules and remove them so
-    // we can use our own in order to support css modules
     return !(
-      rule.test.test('.css') ||
-      rule.test.test('.scss') ||
-      rule.test.test('.png')
+      // Find any default CSS & SCSS rules and remove them so
+      // we can use our own in order to support css modules
+      (
+        rule.test.test('.css') ||
+        rule.test.test('.scss') ||
+        rule.test.test('.png') ||
+        // We remove the default svg loader so that we could support
+        //  inline svg in addition to react svg via svgr as well as svg optimization + minification
+        rule.test.test('.svg')
+      )
     );
   });
 
@@ -63,6 +70,35 @@ module.exports = (initialConfigs) => {
     },
     {
       test: /\.(jpg|jpeg|png|gif|mp3)$/,
+      type: 'asset/resource'
+    },
+    {
+      test: /\.svg$/i,
+      oneOf: [
+        {
+          issuer: /\.[jt]sx?$/,
+          use: [
+            {
+              loader: '@svgr/webpack',
+              options: { ref: true, title: true }
+            },
+            'url-loader'
+          ]
+        },
+        {
+          issuer: /\.s[ac]ss$/i,
+          type: 'asset/inline',
+          generator: {
+            dataUrl: (content) => {
+              content = content.toString();
+              return svgToMiniDataURI(content);
+            }
+          }
+        }
+      ]
+    },
+    {
+      test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
       type: 'asset/resource'
     }
   );
