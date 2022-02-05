@@ -70,13 +70,13 @@ export function Landing() {
             <div className={styles.characterTraits}>
               <Badges names={['debut', 'hometown', 'version']} />
               <div data-tip='almost insane'>
-                <AnimatedMeter label='sanity' value={[13, 5]} />
+                <AnimatedMeter meter={1} label='sanity' value={[30, 30]} />
               </div>
               <div data-tip='low key'>
-                <AnimatedMeter label='fame' value={[30, 9]} />
+                <AnimatedMeter meter={2} label='fame' value={[30, 30]} />
               </div>
               <div data-tip='in the clouds'>
-                <AnimatedMeter label='swagger' value={[5, 9]} />
+                <AnimatedMeter meter={3} label='swagger' value={[30, 30]} />
               </div>
             </div>
             <TextBlock>
