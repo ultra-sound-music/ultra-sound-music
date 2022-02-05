@@ -30,11 +30,13 @@
   background-image: url('@usm/assets/img/tooltip.svg') !important;
   background-repeat: no-repeat !important;  
   border: none !important;
-  padding: 4px 0 17px !important;
+  padding: 5px 0 17px !important;
   width: 117px !important;
-  font-size: $font-size-iconic !important;
+  color: $color-taffy !important;
   text-transform: capitalize !important;  
   text-align: center !important;
+
+  @extend %font-mini-strong;
 
   &::before, &::after {
     all: initial !important;

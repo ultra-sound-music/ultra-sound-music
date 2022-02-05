@@ -13,6 +13,7 @@ $font-size-lrg: 2.5rem;
 $font-size-body: 1.8rem;
 $font-size-small: 1.6rem;
 $font-size-iconic: 1.4rem;
+$font-size-mini: 1.2rem;
 
 %font-brand {
   font: $font-weight-bold #{$font-size-small} / 1.2 $font-fam-lato;
@@ -74,6 +75,15 @@ $font-size-iconic: 1.4rem;
   font: $font-weight-bold #{$font-size-iconic} / 1.5 $font-fam-body;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+
+%font-mini {
+  font: $font-weight-normal #{$font-size-mini} / 1.5 $font-fam-body;
+  letter-spacing: 0.2em;
+}
+
+%font-mini-strong {
+  font: $font-weight-bold #{$font-size-mini} / 1.5 $font-fam-body;
 }
 
 %font-button {
