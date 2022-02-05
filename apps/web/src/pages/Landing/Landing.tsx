@@ -1,4 +1,13 @@
-import { Accordian, AnimatedMeter, Badges, Grid, Image, Link, Pill, TextBlock } from '@usm/ui';
+import {
+  Accordian,
+  AnimatedMeter,
+  Badges,
+  Grid,
+  Image,
+  Link,
+  Pill,
+  TextBlock
+} from '@usm/ui';
 import { copy } from '@usm/content';
 import logo from '@usm/assets/img/logo.png';
 import jambot2 from '@usm/assets/img/hero_jambot2.png';
@@ -59,10 +68,16 @@ export function Landing() {
               <p>{copy.jambotTraitsDescription}</p>
             </TextBlock>
             <div className={styles.characterTraits}>
-              <Badges names={[ 'debut', 'hometown', 'version' ]} />
-              <div data-tip="almost insane"><AnimatedMeter label='sanity' value={[13, 5]}/></div>
-              <div data-tip="low key"><AnimatedMeter label='fame' value={[30, 9]}/></div>
-              <div data-tip="in the clouds"><AnimatedMeter label='swagger' value={[5, 9]}/></div>
+              <Badges names={['debut', 'hometown', 'version']} />
+              <div data-tip='almost insane'>
+                <AnimatedMeter label='sanity' value={[13, 5]} />
+              </div>
+              <div data-tip='low key'>
+                <AnimatedMeter label='fame' value={[30, 9]} />
+              </div>
+              <div data-tip='in the clouds'>
+                <AnimatedMeter label='swagger' value={[5, 9]} />
+              </div>
             </div>
             <TextBlock>
               <h4>{copy.audioTraits}</h4>
@@ -72,7 +87,7 @@ export function Landing() {
               <Pill label='energy'>aggressive</Pill>
               <Pill label='texture'>wide</Pill>
               <Pill label='space'>smooth</Pill>
-            </div>            
+            </div>
           </Grid>
         </div>
       </div>

@@ -13,8 +13,13 @@ export function ComingSoon() {
       <div className={styles.description}>
         <div className={styles.callout}>
           <Callout shout={false}>
-            <strong>NFT Drop Coming Soon<br /></strong>
-            Get updates and giveaways on <Link to={urls.usmTwitter}>Twitter</Link> and{' '} <Link to={urls.usmDiscord}>Discord</Link>
+            <strong>
+              NFT Drop Coming Soon
+              <br />
+            </strong>
+            Get updates and giveaways on{' '}
+            <Link to={urls.usmTwitter}>Twitter</Link> and{' '}
+            <Link to={urls.usmDiscord}>Discord</Link>
           </Callout>
           <div>
             <p>

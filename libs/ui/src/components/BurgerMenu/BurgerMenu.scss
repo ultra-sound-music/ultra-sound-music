@@ -4,7 +4,7 @@
 :global(.bm-menu-wrap) {
   position: fixed;
   right: 0;
-  top: 0
+  top: 0;
 }
 
 :global(.bm-burger-bars-hover) {
@@ -52,7 +52,7 @@
 
   .item {
     padding-bottom: 10px;
-  
+
     &:nth-child(n + 3) {
       margin-top: 40px;
       display: inline-block !important;
@@ -61,7 +61,7 @@
     &:last-child {
       margin-left: 15px;
     }
-  }  
+  }
 }
 
 .overlay {

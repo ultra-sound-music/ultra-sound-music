@@ -11,9 +11,7 @@ export function Pill({ label, children }: IPillProps) {
   return (
     <div className={styles.Pill}>
       {label && <div className={styles.label}>{label}</div>}
-      <div className={styles.value}>
-        {children}
-      </div>
+      <div className={styles.value}>{children}</div>
     </div>
   );
 }

@@ -11,11 +11,11 @@ export type ILottieJson = Record<string, object> | undefined;
 const badgesMap: Record<string, object> = {
   debut,
   hometown,
-  version,
-}
+  version
+};
 
 export interface IBadgesProps {
-  names: ('debut' | 'hometown' | 'version')[]
+  names: ('debut' | 'hometown' | 'version')[];
 }
 
 export function Badges({ names }: IBadgesProps) {
@@ -24,9 +24,16 @@ export function Badges({ names }: IBadgesProps) {
       {names?.map((name, i) => {
         return (
           <div key={i} className={styles.badge}>
-            <Lottie animationData={badgesMap[name]} direction={1} speed={0.5} play={true} loop={false} className={styles.lottie} />
+            <Lottie
+              animationData={badgesMap[name]}
+              direction={1}
+              speed={0.5}
+              play={true}
+              loop={false}
+              className={styles.lottie}
+            />
           </div>
-        )
+        );
       })}
     </div>
   );

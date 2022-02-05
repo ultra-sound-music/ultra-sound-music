@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
-import { RiCloseLine } from 'react-icons/ri'
-import { slide as Menu } from 'react-burger-menu'
+import { RiCloseLine } from 'react-icons/ri';
+import { slide as Menu } from 'react-burger-menu';
 
 import styles from './BurgerMenu.scss';
 
 export interface BurgerMenuProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function BurgerMenu({ children }: BurgerMenuProps) {

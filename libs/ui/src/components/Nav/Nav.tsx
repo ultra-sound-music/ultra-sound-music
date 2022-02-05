@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import cn from 'clsx';
 
@@ -47,36 +47,36 @@ export function renderItems(items: readonly INavItem[]) {
 }
 
 export const Nav = ({ items }: INavProps): JSX.Element => {
-  const [ showBurgerMenu, setShowBurgerMenu ] = useState<boolean | undefined>();
-  
+  const [showBurgerMenu, setShowBurgerMenu] = useState<boolean | undefined>();
+
   useEffect(() => {
-      const mediaQuery = window.matchMedia('(max-width: 768px)')
-      if (!mediaQuery || !mediaQuery.addEventListener) {
-        return;        
-      }
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    if (!mediaQuery || !mediaQuery.addEventListener) {
+      return;
+    }
 
-      setShowBurgerMenu(mediaQuery.matches);
+    setShowBurgerMenu(mediaQuery.matches);
 
-      function eventHandler(event: MediaQueryListEvent): void {
-        event.matches ? setShowBurgerMenu(true) : setShowBurgerMenu(false);
-      };
+    function eventHandler(event: MediaQueryListEvent): void {
+      event.matches ? setShowBurgerMenu(true) : setShowBurgerMenu(false);
+    }
 
-      mediaQuery.addEventListener('change', eventHandler);
+    mediaQuery.addEventListener('change', eventHandler);
 
-      return () => {
-        mediaQuery.removeEventListener('change', eventHandler);
-      };
-    }, []);
+    return () => {
+      mediaQuery.removeEventListener('change', eventHandler);
+    };
+  }, []);
 
   return (
     <div className={styles.Nav}>
       {(() => {
         if (showBurgerMenu === true) {
-          return <BurgerMenu>{renderItems(items)}</BurgerMenu>
+          return <BurgerMenu>{renderItems(items)}</BurgerMenu>;
         } else if (showBurgerMenu === false) {
           return renderItems(items);
         }
-        
+
         return;
       })()}
     </div>
