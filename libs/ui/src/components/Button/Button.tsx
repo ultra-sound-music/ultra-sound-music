@@ -74,8 +74,6 @@ export const Button = ({
     );
   }
 
-  console.log('Button: ', { classNames, disabled, onClick, props });
-
   return (
     <button
       type='button'

@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const svgToMiniDataURI = require('mini-svg-data-uri');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const getDefaultConfig = require('@nrwl/react/plugins/webpack');
-const { forEach } = require('lodash');
 
 module.exports = (initialConfigs) => {
   const config = getDefaultConfig(initialConfigs);
@@ -24,16 +23,6 @@ module.exports = (initialConfigs) => {
         //  inline svg in addition to react svg via svgr as well as svg optimization + minification
         rule.test.test('.svg')
       )
-    );
-  });
-
-  // Exclude any plugins that conflict with our setup
-  config.plugins = config.plugins.filter((plugin) => {
-    return (
-      plugin?.constructor?.name !== 'HtmlWebpackPlugin' &&
-      plugin?.constructor?.name !== 'MiniCssExtractPlugin' &&
-      plugin?.constructor?.name !== 'IndexHtmlWebpackPlugin' &&
-      plugin?.constructor?.name !== 'DefinePlugin'
     );
   });
 
@@ -104,6 +93,16 @@ module.exports = (initialConfigs) => {
   );
 
   // PLUGINS
+  // Exclude any plugins that conflict with our setup
+  config.plugins = config.plugins.filter((plugin) => {
+    return (
+      plugin?.constructor?.name !== 'HtmlWebpackPlugin' &&
+      plugin?.constructor?.name !== 'MiniCssExtractPlugin' &&
+      plugin?.constructor?.name !== 'IndexHtmlWebpackPlugin' &&
+      plugin?.constructor?.name !== 'DefinePlugin'
+    );
+  });
+
   const plugins = [
     new Dotenv({
       path: 'apps/web/.env',
@@ -118,7 +117,16 @@ module.exports = (initialConfigs) => {
   if (inProductionMode) {
     plugins.push(new MiniCssExtractPlugin());
   }
-
   config.plugins = [...config.plugins, ...plugins];
+
+  // Some 3rd party libs depend on a "global" object
+  config.node = {
+    global: true
+  };
+
+  config.resolve.fallback = {
+    stream: false
+  };
+
   return config;
 };

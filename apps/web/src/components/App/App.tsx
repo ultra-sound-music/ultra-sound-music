@@ -5,7 +5,8 @@ import ReactTooltip from 'react-tooltip';
 import { Button, Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
 import { copy, urls, routes } from '@usm/content';
 
-import Home from '../../pages/Landing/Landing';
+import Home from '../Landing/Landing';
+import ConnectButton from '../Buttons/ConnectButton/ConnectButton';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
 import styles from './App.scss';
@@ -39,7 +40,7 @@ const App = () => (
       <SiteHeader
         nav={<Nav items={nav} />}
         ctaButton={
-          weAreLive ? <Button type='primary'>Connect</Button> : undefined
+          weAreLive ? <ConnectButton /> : undefined
         }
       />
     </div>

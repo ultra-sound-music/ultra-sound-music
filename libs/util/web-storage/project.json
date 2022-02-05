@@ -1,0 +1,33 @@
+{
+  "root": "libs/util/web-storage",
+  "sourceRoot": "libs/util/web-storage/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/util/web-storage",
+        "main": "libs/util/web-storage/src/index.ts",
+        "tsConfig": "libs/util/web-storage/tsconfig.lib.json",
+        "assets": ["libs/util/web-storage/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/util/web-storage/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/util/web-storage"],
+      "options": {
+        "jestConfig": "libs/util/web-storage/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

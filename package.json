@@ -20,6 +20,7 @@
     "@solana/web3.js": "^1.31.0",
     "clsx": "^1.1.1",
     "core-js": "^3.6.5",
+    "idb-keyval": "^6.1.0",
     "lodash": "^4.17.21",
     "prism-react-renderer": "^1.2.1",
     "react": "17.0.2",
@@ -31,9 +32,11 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "6.1.1",
     "react-tooltip": "^4.2.21",
+    "recoil": "^0.6.1",
     "regenerator-runtime": "0.13.7",
     "reset-css": "^5.0.1",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@babel/core": "7.12.13",

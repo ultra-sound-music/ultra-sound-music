@@ -32,10 +32,3 @@ export function* processAccountUpdate(action) {
 export function* processNetworkUpdate(action) {
   yield call([web3Helpers, web3Helpers.processNetworkUpdate], action);
 }
-
-export function* onUpdateNetworkStatus(action) {
-  yield call([web3Helpers, web3Helpers.onUpdateNetworkStatus], action, {
-    isValidProductionNetworkId: () => {},
-    isValidTestNetworkId: () => {}
-  });
-}

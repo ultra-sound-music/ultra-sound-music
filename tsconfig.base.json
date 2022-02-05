@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@usm/app-state": ["libs/app-state/src/index.ts"],
       "@usm/assets/*": ["libs/assets/src/*"],
       "@usm/audio-player": ["libs/audio-player/src/index.ts"],
       "@usm/components": ["apps/web/src/components.ts"],
@@ -31,8 +32,8 @@
       "@usm/util-script-loader": ["libs/util/script-loader/src/index.ts"],
       "@usm/util-string": ["libs/util/string/src/index.ts"],
       "@usm/util-utils": ["libs/util/utils/src/index.ts"],
-      "@usm/wallets/sol-wallet": ["libs/wallets/sol-wallet/src/index.ts"],
-      "@usm/wallets/types": ["libs/wallets/types/src/index.ts"]
+      "@usm/util-web": ["libs/util/web/src/index.ts"],
+      "@usm/util-web-storage": ["libs/util/web-storage/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

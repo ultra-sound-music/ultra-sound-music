@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "app-state": "libs/app-state",
     "assets": "libs/assets",
     "audio-player": "libs/audio-player",
     "config": "libs/config",
@@ -15,8 +16,8 @@
     "util-script-loader": "libs/util/script-loader",
     "util-string": "libs/util/string",
     "util-utils": "libs/util/utils",
-    "wallets-sol-wallet": "libs/wallets/sol-wallet",
-    "wallets-types": "libs/wallets/types",
+    "util-web": "libs/util/web",
+    "util-web-storage": "libs/util/web-storage",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }

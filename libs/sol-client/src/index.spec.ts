@@ -1,4 +1,4 @@
-import { IWallet } from '@usm/wallets/types';
+import { IWallet } from '@usm/wallets-types';
 import { mock } from 'jest-mock-extended';
 
 import SolClient from './index';
