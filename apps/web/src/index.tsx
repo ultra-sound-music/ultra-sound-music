@@ -9,7 +9,7 @@ import logger from '@usm/util-logger';
 import { Spinner } from '@usm/ui';
 import { reportWebVitals } from '@usm/util-web';
 
-import DebugObserver from './tools/Debug/Debug'
+import DebugObserver from './tools/Debug/Debug';
 import App from './components/App/App';
 import Borked from './components/Borked/Borked';
 

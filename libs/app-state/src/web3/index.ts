@@ -2,7 +2,7 @@ import {
   atom,
   useSetRecoilState,
   useRecoilValue,
-  useRecoilCallback,
+  useRecoilCallback
 } from 'recoil';
 
 import SolClient from '@usm/sol-client';
@@ -57,77 +57,88 @@ export function useGetNetworkStatus() {
 }
 
 export function useGetNetworkId() {
-  return useRecoilValue(networkIdState)
+  return useRecoilValue(networkIdState);
 }
 
 export function useIsConnected() {
-  return !!useRecoilValue(isConnectedState)
+  return !!useRecoilValue(isConnectedState);
 }
 
 export function useUpdateNetworkStatus() {
   const setAccountAddress = useSetRecoilState(accountAddressState);
   const setNetworkStatus = useSetRecoilState(networkStatusState);
   const setNetworkId = useSetRecoilState(networkIdState);
-  const setIsConnected = useSetRecoilState(isConnectedState);  
-  
+  const setIsConnected = useSetRecoilState(isConnectedState);
+
   return function (props: IUpdateNetworkStateProps) {
     if (accountAddressState) setAccountAddress(props.accountAddress as string);
     if (networkStatusState) setNetworkStatus(props.networkStatus as string);
     if (networkIdState) setNetworkId(props.networkId as string);
     if (isConnectedState) setIsConnected(props.isConnected as boolean);
-  }
+  };
 }
 
 export function useConnect() {
   const showModal = ui.useShowModal();
   const updateNetworkStatus = useUpdateNetworkStatus();
 
-  return useRecoilCallback(({ snapshot }) => async () => {  
-    try {
-      updateNetworkStatus({ networkStatus: constants.networkStatus.CONNECTING });
-      const accountAddress = await solClient.connectWallet();
-      updateNetworkStatus({
-        accountAddress,
-        networkStatus: constants.networkStatus.CONNECTED,
-        networkId: '',
-        isConnected: true
-      });
-    } catch (error) {
-      updateNetworkStatus({ networkStatus: constants.networkStatus.NOT_CONNECTED });
-  
-      const modalBody = 'there was an errror';
-      const modalProps = {
-        title: 'Failed to connect',
-        body: modalBody
-      };  
-    
-      showModal(modalProps);    
-    }
-  }, []);  
+  return useRecoilCallback(
+    ({ snapshot }) =>
+      async () => {
+        try {
+          updateNetworkStatus({
+            networkStatus: constants.networkStatus.CONNECTING
+          });
+          const accountAddress = await solClient.connectWallet();
+          updateNetworkStatus({
+            accountAddress,
+            networkStatus: constants.networkStatus.CONNECTED,
+            networkId: '',
+            isConnected: true
+          });
+        } catch (error) {
+          updateNetworkStatus({
+            networkStatus: constants.networkStatus.NOT_CONNECTED
+          });
+
+          const modalBody = 'there was an errror';
+          const modalProps = {
+            title: 'Failed to connect',
+            body: modalBody
+          };
+
+          showModal(modalProps);
+        }
+      },
+    []
+  );
 }
 
 export function useDisconnect() {
   const showModal = ui.useShowModal();
   const updateNetworkStatus = useUpdateNetworkStatus();
 
-  return useRecoilCallback(({ snapshot }) => async () => {  
-    try {
-      await solClient.disconnectWallet();
-      updateNetworkStatus({
-        accountAddress: '',
-        networkStatus: constants.networkStatus.NOT_CONNECTED,
-        networkId: '',
-        isConnected: false
-      });
-    } catch (error) {
-      const modalBody = 'there was an errror';
-      const modalProps = {
-        title: 'Failed disconnecting',
-        body: modalBody
-      };
-    
-      showModal(modalProps);    
-    }
-  }, []);  
-}
+  return useRecoilCallback(
+    ({ snapshot }) =>
+      async () => {
+        try {
+          await solClient.disconnectWallet();
+          updateNetworkStatus({
+            accountAddress: '',
+            networkStatus: constants.networkStatus.NOT_CONNECTED,
+            networkId: '',
+            isConnected: false
+          });
+        } catch (error) {
+          const modalBody = 'there was an errror';
+          const modalProps = {
+            title: 'Failed disconnecting',
+            body: modalBody
+          };
 
+          showModal(modalProps);
+        }
+      },
+    []
+  );
+}

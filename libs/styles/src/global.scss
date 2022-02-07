@@ -4,9 +4,7 @@
 @use './layout.scss' as *;
 @use './utils.scss' as *;
 
-*,
-*:before,
-*:after {
+*, *: before, *: after {
   box-sizing: inherit;
 }
 

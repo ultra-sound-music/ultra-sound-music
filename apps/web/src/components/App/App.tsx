@@ -39,9 +39,7 @@ const App = () => (
     <div className={styles.header}>
       <SiteHeader
         nav={<Nav items={nav} />}
-        ctaButton={
-          weAreLive ? <ConnectButton /> : undefined
-        }
+        ctaButton={weAreLive ? <ConnectButton /> : undefined}
       />
     </div>
     <Routes>

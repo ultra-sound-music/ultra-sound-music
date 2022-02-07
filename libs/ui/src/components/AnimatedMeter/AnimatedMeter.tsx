@@ -12,8 +12,12 @@ export interface IAnimatedMeterProps {
   value: [number, number];
 }
 
-const meters = [ meter1, meter2, meter3 ];
-export function AnimatedMeter({ meter = 1, label, value }: IAnimatedMeterProps) {
+const meters = [meter1, meter2, meter3];
+export function AnimatedMeter({
+  meter = 1,
+  label,
+  value
+}: IAnimatedMeterProps) {
   const meterId = Math.min(Math.max(meter - 1, 0), meters.length - 1);
   const data = meters[meterId];
 
