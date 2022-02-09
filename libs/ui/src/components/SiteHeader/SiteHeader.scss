@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 40px 0;
+  padding: 40px;
   max-width: $app-width-max;
 
   @include media-query(mobile tablet) {

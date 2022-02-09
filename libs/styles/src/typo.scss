@@ -88,5 +88,8 @@ $font-size-mini: 1.2rem;
 
 %font-button {
   font: $font-weight-bold #{$font-size-body} / 1.8 $font-fam-body;
-  text-transform: uppercase;
+}
+
+%font-button-small {
+  font: $font-weight-bold #{$font-size-small} / 1.6 $font-fam-body;
 }

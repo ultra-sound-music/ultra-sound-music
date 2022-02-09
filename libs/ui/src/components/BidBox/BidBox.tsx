@@ -36,18 +36,22 @@ export const BidBox = (props: BidBoxProps): JSX.Element => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
-        <h1>Jam Bot #1</h1>
-        <div className={styles.arrowContainer}>
-          <Paginate></Paginate>
-        </div>
+        <h3 className={styles.nftName}>Jam Bot #1</h3>
+        <Button type='primary' isSmall={true}>
+          Auction
+        </Button>
+        <Button type='primary' isSmall={true}>
+          Traits
+        </Button>
+        <Paginate></Paginate>
       </div>
       <div className={styles.timerContainer}>
         <p>
-          Auction ends in {props.timeUntilAuctionEnd.days}
-          <strong>days</strong> {props.timeUntilAuctionEnd.hours}
-          <strong>hours</strong> {props.timeUntilAuctionEnd.minutes}
-          <strong>minutes</strong> {props.timeUntilAuctionEnd.seconds}
-          <strong>seconds</strong>
+          Auction ends {props.timeUntilAuctionEnd.days}
+          <strong> days</strong> {props.timeUntilAuctionEnd.hours}
+          <strong> hours</strong> {props.timeUntilAuctionEnd.minutes}
+          <strong> minutes</strong> {props.timeUntilAuctionEnd.seconds}
+          <strong> seconds</strong>
         </p>
       </div>
       <div className={styles.bidBoxContainer}>
@@ -55,7 +59,7 @@ export const BidBox = (props: BidBoxProps): JSX.Element => {
           <div className={styles.currentBid}>
             <p>Current Bid</p>
             <div className={styles.currentBidValue}>
-              <h2>{props.currentHighBidSol} SOL</h2>
+              <h3>{props.currentHighBidSol} SOL</h3>
             </div>
           </div>
           {!props.isWalletConnected && !props.isAuctionFinished && (
@@ -70,7 +74,7 @@ export const BidBox = (props: BidBoxProps): JSX.Element => {
             <div className={styles.walletBalance}>
               <p>In your wallet</p>
               <div className={styles.walletBalanceValue}>
-                <h2>{props.walletBalanceSol} SOL</h2>
+                <h3>{props.walletBalanceSol} SOL</h3>
               </div>
             </div>
           )}
@@ -106,7 +110,11 @@ export const BidBox = (props: BidBoxProps): JSX.Element => {
             <p>Your Bid</p>
             <div className={styles.formInputBox}>
               <div className={styles.formInput}>
-                <input type='number' placeholder='Bid more than 0.0 SOL' />
+                <input
+                  type='number'
+                  placeholder='Bid more than 0.0 SOL'
+                  min='0.01'
+                />
                 <span>SOL</span>
               </div>
               <Button type='primary'>Bid now</Button>

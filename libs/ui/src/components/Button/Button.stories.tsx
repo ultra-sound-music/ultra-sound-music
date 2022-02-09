@@ -53,3 +53,10 @@ FullWidth.args = {
   isFullWidth: true,
   children: 'Full width with image'
 };
+
+export const Small = Template.bind({});
+Small.args = {
+  type: 'primary',
+  isSmall: true,
+  children: 'Small'
+};

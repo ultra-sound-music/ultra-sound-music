@@ -17,6 +17,7 @@ export interface IButtonProps {
   isDisabled?: boolean;
   isProcessing?: boolean;
   isExternal?: boolean;
+  isSmall?: boolean;
   children?: React.ReactNode;
   onClick?: () => void;
 }
@@ -30,6 +31,7 @@ export const Button = ({
   isWide = false,
   isProcessing = false,
   isExternal = false,
+  isSmall = false,
   onClick,
   children,
   ...props
@@ -41,7 +43,8 @@ export const Button = ({
     { [styles.withImage]: !!image },
     { [styles.disabled]: disabled },
     { [styles.fullWidth]: isFullWidth },
-    { [styles.wide]: isWide }
+    { [styles.wide]: isWide },
+    { [styles.small]: isSmall }
   );
 
   const content = (

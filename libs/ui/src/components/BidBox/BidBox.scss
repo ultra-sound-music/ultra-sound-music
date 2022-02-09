@@ -1,14 +1,17 @@
 @use '../../styles' as *;
 
 .mainContainer {
-  width: 100%;
+  width: 550px;
 
   .headerContainer {
+    height: 44px;
     display: flex;
+    justify-content: space-between;
 
-    h1 {
-      line-height: 47px;
-      margin-bottom: 14px;
+    .nftName {
+      margin: 0;
+      display: inline-block;
+      line-height: 25px;
     }
 
     .arrowContainer {
@@ -118,6 +121,7 @@
 
           span {
             line-height: 46px;
+            padding-right: 10px;
           }
         }
 

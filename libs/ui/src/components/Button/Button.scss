@@ -5,8 +5,8 @@
   border: none;
   border-radius: 7px;
   color: $color-polar-bear;
-  padding: 0 62px;
   height: 50px;
+  width: 192px;
   line-height: 50px;
   text-decoration: none;
   text-align: center;
@@ -40,6 +40,13 @@
   padding-right: 0;
   padding-left: 0;
   width: 100%;
+}
+
+.small {
+  height: 32px;
+  width: 112px;
+  line-height: 32px;
+  @extend %font-button-small;
 }
 
 .withImage {
