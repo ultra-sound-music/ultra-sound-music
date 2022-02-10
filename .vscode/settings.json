@@ -1,10 +1,11 @@
 {
+  "typescript.tsdk": "node_modules/typescript/lib",
   "css.validate": false,
   "less.validate": false,
-  "scss.validate": false,  
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "scss.validate": false,
   "stylelint.enable": true,
-  "stylelint.validate": ["css", "less", "postcss", "scss"],
+  "stylelint.validate": ["css", "postcss", "scss"],
+  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "stylelint.snippet": ["css", "postcss", "scss"]
 }
