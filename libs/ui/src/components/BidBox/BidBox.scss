@@ -4,9 +4,10 @@
   width: 550px;
 
   .headerContainer {
-    height: 44px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     .nftName {
       margin: 0;
@@ -25,7 +26,7 @@
     border-radius: 9px;
     background-color: $color-evening-sky;
     margin-bottom: -50px;
-    padding: 18px 28px;
+    padding: 16px 24px;
 
     p {
       line-height: 21px;
@@ -133,12 +134,14 @@
   }
 
   .bidHistoryContainer {
-    padding: 26px;
+    padding: 24px;
 
     .bidHistoryList {
       .bidHistoryItem {
         display: flex;
         justify-content: space-between;
+        border-bottom: 2px solid $color-dusk;
+
         .bidAmount {
           width: 100px;
           p {
