@@ -9,7 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/sol-client",
-        "main": "libs/sol-client/src/SolClient.ts",
+        "main": "libs/sol-client/src/index.ts",
         "tsConfig": "libs/sol-client/tsconfig.lib.json",
         "assets": ["libs/sol-client/*.md"]
       }

@@ -7,5 +7,6 @@
   "stylelint.validate": ["css", "postcss", "scss"],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "stylelint.snippet": ["css", "postcss", "scss"]
+  "stylelint.snippet": ["css", "postcss", "scss"],
+  "local-history.path": "~/.config/vscode-history"
 }

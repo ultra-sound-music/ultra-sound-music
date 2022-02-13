@@ -5,23 +5,13 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/app-state",
+        "main": "libs/app-state/src/index.ts",
         "tsConfig": "libs/app-state/tsconfig.lib.json",
-        "project": "libs/app-state/package.json",
-        "entryFile": "libs/app-state/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/app-state/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "assets": ["libs/app-state/*.md"]
       }
     },
     "lint": {
