@@ -1,18 +1,31 @@
 @use '../../styles' as *;
 
+@mixin gradient1 {
+  background-image: linear-gradient(
+    90deg,
+    $gradient-brilliant-start,
+    $gradient-brilliant-end
+  );
+}
+
+@mixin gradient2 {
+  background: linear-gradient(
+    to right,
+    $gradient-brilliant-end,
+    $gradient-brilliant-start
+  );
+}
+
 .Button {
   background-color: $color-void;
   border: none;
   border-radius: 7px;
   color: $color-polar-bear;
-  height: 50px;
-  width: 192px;
   line-height: 50px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
   position: relative;
-  @extend %font-button;
 
   // Use this technique for the border in order to be consistent with the .secondary border radius styling
   &::before {
@@ -63,58 +76,70 @@
 }
 
 .primary {
-  background-image: linear-gradient(
-    90deg,
-    $gradient-brilliant-start,
-    $gradient-brilliant-end
-  );
+  @include gradient1;
+
   &::before {
-    background-image: linear-gradient(
-      90deg,
-      $gradient-brilliant-start,
-      $gradient-brilliant-end
-    );
+    @include gradient1;
   }
 
   &:hover {
-    background: linear-gradient(
-      to right,
-      $gradient-brilliant-end,
-      $gradient-brilliant-start
-    );
+    @include gradient2;
 
     &::before {
-      background: linear-gradient(
-        to right,
-        $gradient-brilliant-end,
-        $gradient-brilliant-start
-      );
+      @include gradient2;
     }
   }
 }
 
 .secondary {
   &::before {
-    background-image: linear-gradient(
-      90deg,
-      $gradient-brilliant-start,
-      $gradient-brilliant-end
-    );
+    @include gradient1;
   }
 
   &:hover {
-    background-image: linear-gradient(
-      90deg,
-      $gradient-brilliant-end,
-      $gradient-brilliant-start
-    );
+    @include gradient1;
 
     &::before {
-      background: linear-gradient(
-        to right,
-        $gradient-brilliant-end,
-        $gradient-brilliant-start
-      );
+      @include gradient1;
+    }
+  }
+}
+
+.pill {
+  height: 50px;
+  width: 192px;
+
+  &::before {
+    content: '';
+    border-radius: 10px;
+  }
+}
+
+.tile {
+  background-image: none;
+  display: flex;
+  flex-direction: column;
+
+  &.withImage {
+    padding: 18px 40px;
+
+    .image {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    &:hover {
+      @include gradient1;
+
+      &::before {
+        @include gradient1;
+      }
     }
   }
 }
@@ -136,4 +161,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 22px;
+  @extend %font-button;
+}
+
+.subtext {
+  @extend %font-body;
 }

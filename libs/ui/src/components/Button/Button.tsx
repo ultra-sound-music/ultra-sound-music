@@ -11,6 +11,7 @@ export type TButtonType = 'primary' | 'secondary';
 export interface IButtonProps {
   type?: TButtonType;
   image?: JSX.Element;
+  shape?: 'pill' | 'tile';
   to?: typeof Link.prototype.to;
   isFullWidth?: boolean;
   isWide?: boolean;
@@ -18,6 +19,7 @@ export interface IButtonProps {
   isProcessing?: boolean;
   isExternal?: boolean;
   isSmall?: boolean;
+  subtext?: React.ReactNode;
   children?: React.ReactNode;
   onClick?: () => void;
 }
@@ -25,6 +27,7 @@ export interface IButtonProps {
 export const Button = ({
   type = 'secondary',
   image,
+  shape = 'pill',
   to,
   isFullWidth = false,
   isDisabled = false,
@@ -33,6 +36,7 @@ export const Button = ({
   isExternal = false,
   isSmall = false,
   onClick,
+  subtext,
   children,
   ...props
 }: IButtonProps): JSX.Element => {
@@ -40,17 +44,18 @@ export const Button = ({
   const classNames = cn(
     styles.Button,
     styles[type],
+    styles[shape],
     { [styles.withImage]: !!image },
     { [styles.disabled]: disabled },
     { [styles.fullWidth]: isFullWidth },
-    { [styles.wide]: isWide },
-    { [styles.small]: isSmall }
+    { [styles.wide]: isWide }
   );
 
   const content = (
     <>
       {image ? <span className={styles.image}>{image}</span> : null}
       {children ? <span className={styles.content}>{children}</span> : ''}
+      {subtext ? <span className={styles.subtext}>{subtext}</span> : ''}
       {isProcessing && <Spinner cover='relative' />}
     </>
   );

@@ -6,6 +6,7 @@ import Image from '../Image/Image';
 import Button, { IButtonProps } from './Button';
 
 import logo from '@usm/assets/img/logo.png';
+import phantomLogo from '@usm/assets/img/phantom_purple.svg';
 
 export default {
   title: 'Components/Button',
@@ -37,6 +38,16 @@ WithImage.args = {
   type: 'primary',
   image: <Image src={logo} />,
   children: 'With Image'
+};
+
+export const Tile = Template.bind({});
+Tile.args = {
+  type: 'primary',
+  isSmall: true,
+  shape: 'tile',
+  image: <Image src={phantomLogo} />,
+  subtext: 'Connect with a browser extension',
+  children: 'Phantom'
 };
 
 export const Disabled = Template.bind({});
