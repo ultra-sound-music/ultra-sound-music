@@ -8,6 +8,7 @@ import {
 } from './wallets';
 import { Adapter, WalletAdapterEvents } from '@solana/wallet-adapter-base';
 import { PublicKey } from '@solana/web3.js';
+export { USMClient } from './auction';
 
 export function isValidSolanaAddress(address: string): boolean {
   return !!address;
