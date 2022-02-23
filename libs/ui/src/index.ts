@@ -17,6 +17,7 @@ export * from './components/Input/Input';
 export * from './components/SiteFooter/SiteFooter';
 export * from './components/Modal/Modal';
 export * from './components/Nav/Nav';
+export * from './components/Notification/Notification';
 export * from './components/Paginate/Paginate';
 export * from './components/Pill/Pill';
 export * from './components/AnimatedMeter/AnimatedMeter';

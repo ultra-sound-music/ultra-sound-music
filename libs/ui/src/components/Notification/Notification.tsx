@@ -3,8 +3,7 @@ import cn from 'classnames';
 import styles from './Notification.scss';
 
 export interface INotificationProps {
-  type: 'success' | 'error';
-  title: React.ReactNode;
+  type?: 'info' | 'warn' | 'success' | 'error';
   message: React.ReactNode;
   timeout?: number;
   isOpen: boolean;
@@ -12,26 +11,29 @@ export interface INotificationProps {
 }
 
 export const Notification = ({
-  title,
+  type = 'info',
   message,
   timeout = 0,
   isOpen,
   onHide
 }: INotificationProps): JSX.Element => {
+  function onHideHandler() {
+    onHide?.();
+  }
+
   if (timeout) {
     setTimeout(() => {
-      onHide();
+      onHideHandler();
     }, timeout);
   }
 
   const state = isOpen ? 'open' : 'closed';
-  const classNames = cn(styles.Notification, styles[state]);
+  const classNames = cn(styles.Notification, styles[state], styles[type]);
 
   return (
     <div className={classNames}>
-      <div className={styles.title}>{title}</div>
-      <div className={styles.content}>{message}</div>
-      <div className={styles.close} onClick={onHide}>
+      <div className={styles.message}>{message}</div>
+      <div className={styles.close} onClick={onHideHandler}>
         X
       </div>
     </div>

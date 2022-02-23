@@ -13,29 +13,22 @@
   z-index: 90;
 }
 
-.title {
-  text-transform: capitalize;
-  height: 1em;
-  margin-bottom: 10px;
-}
-
-.content {
-  color: white;
-}
-
 .close {
-  height: 1em;
-  position: absolute;
-  cursor: pointer;
-  padding: 3px;
-  top: 20px;
-  right: 20px;
+  display: block;
 }
 
-.closed {
-  opacity: 0%;
+.info {
+  display: block;
 }
 
-.open {
-  opacity: 100%;
+.success {
+  display: block;
+}
+
+.warn {
+  display: block;
+}
+
+.error {
+  display: block;
 }

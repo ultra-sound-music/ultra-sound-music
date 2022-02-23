@@ -13,13 +13,13 @@ export interface IModalProps {
   withCloseX?: boolean;
   withCloseButton?: boolean;
   isOpen: boolean;
-  ctaButton?: JSX.Element;
+  ctaButton?: React.ReactNode;
   onHide?: () => void;
   children?: React.ReactNode;
 }
 
 export function renderButtons(
-  ctaButton?: JSX.Element,
+  ctaButton?: React.ReactNode,
   withCloseButton?: boolean,
   onHide?: () => void
 ) {

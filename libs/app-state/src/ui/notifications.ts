@@ -11,6 +11,7 @@ import {
 export interface INotificationState {
   isVisible?: boolean;
   message?: React.ReactNode;
+  timeout?: number;
   type?: 'info' | 'success' | 'error' | 'warn';
 }
 
@@ -29,35 +30,43 @@ export const notificationTypeState = atom<INotificationState['type']>({
   default: 'info'
 });
 
+export const notificationTimeoutState = atom<INotificationState['timeout']>({
+  key: 'notificationTimeoutState',
+  default: undefined
+});
+
 export const notification = selector<INotificationState>({
   key: 'notification',
   get: ({ get }) => ({
     isVisible: get(isNotificationVisibleState),
     message: get(notificationMessageState),
-    type: get(notificationTypeState)
+    type: get(notificationTypeState),
+    timeout: get(notificationTimeoutState)
   }),
   set: ({ set, reset }, newState) => {
     if (newState instanceof DefaultValue) {
       reset(isNotificationVisibleState);
       reset(notificationMessageState);
       reset(notificationTypeState);
+      reset(notificationTimeoutState);
       return;
     }
 
     set(isNotificationVisibleState, true);
     set(notificationMessageState, newState?.message);
     set(notificationTypeState, newState?.type);
+    set(notificationTimeoutState, newState?.timeout);
   }
 });
 
 export function useNotification() {
-  const isModalVisible = useRecoilState(isNotificationVisibleState);
-  const showModal = useSetRecoilState(notification);
-  const hideModal = useResetRecoilState(notification);
+  const isNotificationVisible = useRecoilState(isNotificationVisibleState);
+  const showNotification = useSetRecoilState(notification);
+  const hideNotification = useResetRecoilState(notification);
 
   return {
-    showModal,
-    hideModal,
-    isModalVisible
+    showNotification,
+    hideNotification,
+    isNotificationVisible
   };
 }

@@ -2,11 +2,12 @@ import { Routes, Route } from 'react-router-dom';
 import { RiDiscordFill, RiTwitterFill } from 'react-icons/ri';
 import ReactTooltip from 'react-tooltip';
 
-import { Button, Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
+import { Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
 import { copy, urls, routes } from '@usm/content';
 
 import Home from '../Landing/Landing';
 import ConnectButton from '../Buttons/ConnectButton/ConnectButton';
+import Modal from '../Modal/Modal';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
 import styles from './App.scss';
@@ -51,6 +52,7 @@ const App = () => (
       <SiteFooter />
     </div>
     <ReactTooltip className={styles.tooltips} />
+    <Modal />
   </div>
 );
 
