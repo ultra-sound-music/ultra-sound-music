@@ -6,9 +6,22 @@ import { RedeemBid } from '@metaplex-foundation/mpl-metaplex';
 import { Connection, Wallet } from '@metaplex/js';
 import { PublicKey } from '@solana/web3.js';
 import { actions } from '@metaplex/js';
+import { web3, Provider, BN } from '@project-serum/anchor';
 import { placeBid, cancelBid } from './utils';
-import BN from 'bn.js';
 const { claimBid, redeemFullRightsTransferBid } = actions;
+
+export const AUCTION_PUBKEY = new PublicKey(
+  '2Uv4eWokSke21VcDVbjBysPZpxpQAr4vrwUob9viiS82'
+);
+export const STORE_PUBKEY = new PublicKey(
+  '34tUCCgN7fnqxFQDtxC99huw5XRTnXTsSPBeJu2iGaKy'
+);
+export const TOKEN_MINT_PUBKEY = new PublicKey(
+  'GkAGjiMmDVERhvZQLxm2ricSLkRBe3FPwTnXfD5aPxL9'
+);
+export const NFT_PUBKEY = new PublicKey(
+  'GkAGjiMmDVERhvZQLxm2ricSLkRBe3FPwTnXfD5aPxL9'
+);
 
 export class USMClient {
   connection;
@@ -26,6 +39,7 @@ export class USMClient {
   }
 
   async placeBid(amount: BN, auction: PublicKey) {
+    console.log('DEBUG', 'placeBid', amount, auction);
     return placeBid({
       connection: this.connection,
       wallet: this.wallet,

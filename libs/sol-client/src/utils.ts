@@ -9,7 +9,6 @@ import {
 } from '@solana/web3.js';
 import { AccountLayout, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { Connection } from '@metaplex/js';
-
 import { Wallet } from '@metaplex/js';
 
 import {
@@ -124,6 +123,7 @@ export const placeBid = async ({
   auction
 }: PlaceBidParams): Promise<PlaceBidResponse> => {
   const bidder = wallet.publicKey;
+  console.log('DEBUG', 'utils', 'placeBid(A)', { bidder, amount, auction });
   const accountRentExempt = await connection.getMinimumBalanceForRentExemption(
     AccountLayout.span
   );
@@ -152,6 +152,11 @@ export const placeBid = async ({
     bidder,
     amount.toNumber() + accountRentExempt * 2
   );
+  console.log('DEBUG', 'utils', 'placeBid(B)', {
+    payingAccount,
+    createTokenAccountTx,
+    closeTokenAccountTx
+  });
   txBatch.addTransaction(createTokenAccountTx);
   txBatch.addSigner(payingAccount);
   ////
@@ -191,6 +196,8 @@ export const placeBid = async ({
   );
   txBatch.addTransaction(placeBidTransaction);
   ////
+
+  console.log('DEBUG', 'utils', 'placeBid(C)', { bidder, amount, auction });
 
   const txId = await sendTransaction({
     connection,

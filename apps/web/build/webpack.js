@@ -1,6 +1,6 @@
 // require('dotenv').config({ path: 'apps/web/.env' });
 
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const svgToMiniDataURI = require('mini-svg-data-uri');
@@ -111,6 +111,9 @@ module.exports = (initialConfigs) => {
     new HtmlWebpackPlugin({
       template: 'public/index.html',
       inject: true
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer']
     })
   ];
 
@@ -125,7 +128,8 @@ module.exports = (initialConfigs) => {
   };
 
   config.resolve.fallback = {
-    stream: false
+    stream: false,
+    buffer: require.resolve('buffer/')
   };
 
   return config;

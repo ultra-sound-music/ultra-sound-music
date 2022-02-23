@@ -6,11 +6,17 @@ import {
 } from 'recoil';
 
 import SolClient from '@usm/sol-client';
+import { USMClient, AUCTION_PUBKEY } from '@usm/sol-client';
 
 import * as ui from '../ui';
 import { localStorageEffect } from '../utils';
 
 import * as constants from './constants';
+import { BN, Provider } from '@project-serum/anchor';
+import { clusterApiUrl, Connection } from '@solana/web3.js';
+import { Wallet } from '@metaplex/js';
+
+console.log('DEBUG', 'app-state', 'web3', SolClient, USMClient);
 
 export interface IWeb3State {
   accountAddress: string;
@@ -22,6 +28,8 @@ export interface IWeb3State {
 export type IUpdateNetworkStateProps = Partial<IWeb3State>;
 
 const solClient = new SolClient();
+const connection = new Connection(clusterApiUrl('devnet'));
+let USM: USMClient;
 
 export const accountAddressState = atom<IWeb3State['accountAddress']>({
   key: 'accountAddressState',
@@ -78,6 +86,22 @@ export function useUpdateNetworkStatus() {
   };
 }
 
+export function usePlaceBid() {
+  return useRecoilCallback(({ snapshot }) => async () => {
+    const auction = await USM.getAuction(AUCTION_PUBKEY);
+    console.log('DEBUG', 'app-state', 'web3', {
+      solClient,
+      USM,
+      auction
+    });
+    const bidAmount = new BN(7 * 10 ** 8);
+    const { txId } = await USM.placeBid(bidAmount, AUCTION_PUBKEY);
+    console.log('DEBUG', 'app-state', 'web3', {
+      txId
+    });
+  });
+}
+
 export function useConnect() {
   const showModal = ui.useShowModal();
   const updateNetworkStatus = useUpdateNetworkStatus();
@@ -90,6 +114,15 @@ export function useConnect() {
             networkStatus: constants.networkStatus.CONNECTING
           });
           const accountAddress = await solClient.connectWallet();
+          console.log(
+            'DEBUG',
+            'app-state',
+            'web3',
+            'accountAddress',
+            accountAddress
+          );
+
+          USM = new USMClient(connection, solClient.wallet as Wallet);
           updateNetworkStatus({
             accountAddress,
             networkStatus: constants.networkStatus.CONNECTED,
