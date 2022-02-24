@@ -15,8 +15,8 @@ import Borked from './components/Borked/Borked';
 
 import '@usm/styles/global.scss';
 
-if (process.env.USM_SENTRY_ENABLED) {
-  const sentryDsn = process.env.USM_NX_SENTRY_DNS;
+if (config.sentryIsEnabled) {
+  const sentryDsn = config.sentryDNS;
   Sentry.init({
     environment: config.environment,
     dsn: sentryDsn,
