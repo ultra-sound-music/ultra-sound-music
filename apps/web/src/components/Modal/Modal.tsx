@@ -14,7 +14,12 @@ export function Modal(props: ModalProps) {
   const isOpen = modalState.isVisible;
 
   return (
-    <ModalComponent {...modalState} isOpen={!!isOpen} ctaButton={modalState.cta} onHide={hideModal}>
+    <ModalComponent
+      {...modalState}
+      isOpen={!!isOpen}
+      ctaButton={modalState.cta}
+      onHide={hideModal}
+    >
       {modalState.body}
     </ModalComponent>
   );

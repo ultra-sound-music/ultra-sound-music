@@ -76,5 +76,5 @@ export function useModal() {
     showModal,
     hideModal,
     isModalVisible
-  }
+  };
 }
