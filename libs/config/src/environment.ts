@@ -7,7 +7,8 @@ const env = {
   googleAnalyticsId: process.env.USM_GOOGLE_ANALYTICS_ID,
   sentryIsEnabled: process.env.USM_SENTRY_ENABLED,
   sentryDNS: process.env.USM_SENTRY_DNS,
-  solanaFMApiKey: process.env.USM_SOLANA_FM_API_KEY
+  solanaFMApiKey: process.env.USM_SOLANA_FM_API_KEY,
+  solanaFMUri: process.env.USM_SOLANA_FM_URI
 };
 
 const configs = {

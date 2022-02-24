@@ -1,0 +1,43 @@
+{
+  "root": "libs/services/solanafm",
+  "sourceRoot": "libs/services/solanafm/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/services/solanafm",
+        "tsConfig": "libs/services/solanafm/tsconfig.lib.json",
+        "project": "libs/services/solanafm/package.json",
+        "entryFile": "libs/services/solanafm/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/services/solanafm/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/services/solanafm/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/services/solanafm"],
+      "options": {
+        "jestConfig": "libs/services/solanafm/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

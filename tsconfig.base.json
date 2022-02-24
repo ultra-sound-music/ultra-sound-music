@@ -23,6 +23,7 @@
       "@usm/config": ["libs/config/src/index.ts"],
       "@usm/content": ["libs/content/src/index.ts"],
       "@usm/copy": ["libs/copy/src/index.ts"],
+      "@usm/services-solanafm": ["libs/services/solanafm/src/index.ts"],
       "@usm/sol-client": ["libs/sol-client/src/index.ts"],
       "@usm/store": ["libs/store/src/index.ts"],
       "@usm/styles/*": ["libs/styles/src/*"],

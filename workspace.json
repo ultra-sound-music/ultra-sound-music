@@ -7,6 +7,7 @@
     "config": "libs/config",
     "content": "libs/content",
     "docs": "apps/docs",
+    "services-solanafm": "libs/services/solanafm",
     "sol-client": "libs/sol-client",
     "store": "libs/store",
     "styles": "libs/styles",
