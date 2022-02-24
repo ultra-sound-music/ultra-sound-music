@@ -1,11 +1,13 @@
 @use '../../styles.scss' as *;
 
 .Callout {
-  border: 2px solid currentColor;
-  border-radius: 3px;
-  color: $color-taffy;
+  background-color: $color-evening-sky;
+  border: 2px solid $color-dusk;
+  border-radius: 6px;
+  color: $color-lavish;
   margin-top: 10px;
   margin-bottom: 16px;
+  margin-left: -5px;
   padding: 18px 25px;
   @extend %font-small;
 

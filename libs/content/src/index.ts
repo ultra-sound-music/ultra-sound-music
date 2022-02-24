@@ -30,7 +30,7 @@ export const team = Object.freeze([
   },
   {
     name: 'Andres Maldonado',
-    twitter: 'andres_mald',
+    twitter: '0xChillDirector',
     discord: 'AGame',
     blurb:
       'A 90’s drummer turned designer, has designed and launched products for several Fortune 500 companies.'

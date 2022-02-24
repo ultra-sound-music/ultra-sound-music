@@ -48,7 +48,7 @@ export function Landing() {
             </div>
             <div>
               <TextBlock
-                subject={copy.introducingTheJambots}
+                subject={copy.whatAreJambots}
                 title={copy.blockchainMusicians}
               >
                 <p>{copy.musicByMusicians}</p>
@@ -64,11 +64,16 @@ export function Landing() {
               subject={copy.uniqueAndIndividual}
               title={copy.jambotTraits}
             >
-              <h4>{copy.personalTraits}</h4>
               <p>{copy.jambotTraitsDescription}</p>
             </TextBlock>
-            <div className={styles.characterTraits}>
+            <div className={styles.badges}>
               <Badges names={['debut', 'hometown', 'version']} />
+            </div>
+            <TextBlock>
+              <h4>{copy.characterTraits}</h4>
+              <p>{copy.characterTraitsDescription}</p>
+            </TextBlock>
+            <div className={styles.characterTraits}>
               <div data-tip='almost insane'>
                 <AnimatedMeter meter={1} label='sanity' value={[30, 30]} />
               </div>
