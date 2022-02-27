@@ -8,6 +8,12 @@ import { PublicKey } from '@solana/web3.js';
 import { actions } from '@metaplex/js';
 import { web3, Provider, BN } from '@project-serum/anchor';
 import { placeBid, cancelBid } from './utils';
+
+
+export interface IHackRedeemBidResponse {
+  txId: string;
+}
+
 const { claimBid, redeemFullRightsTransferBid } = actions;
 
 export const AUCTION_PUBKEY = new PublicKey(
@@ -74,7 +80,7 @@ export class USMClient {
 
   async refundBid() {}
 
-  async redeemBid(store: PublicKey, auction: PublicKey) {
+  async redeemBid(store: PublicKey, auction: PublicKey): Promise<IHackRedeemBidResponse> {
     return redeemFullRightsTransferBid({
       connection: this.connection,
       wallet: this.wallet,
