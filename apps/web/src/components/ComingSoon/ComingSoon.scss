@@ -34,7 +34,7 @@ $hero-height: 650px;
 
 .heroBg {
   position: absolute;
-  bottom: 60px;
+  bottom: -32px;
   right: 0;
   width: 100%;
   min-height: $hero-height;
@@ -69,10 +69,10 @@ $hero-height: 650px;
 
   @include media-query(mobile) {
     position: static;
-    margin-top: -100px;
+    margin-top: clamp(-28%, 125px, -22%);
     min-height: max(380px, 110vw);
-    background-size: contain, max(360px, 150%);
-    background-position: left bottom, center top;
+    background-size: contain, max(700px, 170%);
+    background-position: left bottom, center bottom;
   }
 }
 
