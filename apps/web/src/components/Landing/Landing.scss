@@ -5,6 +5,10 @@
 
 .Landing {
   background-color: $color-empty-sky;
+
+  @include media-query(mobile tablet) {
+    text-align: center;
+  }
 }
 
 .tri1 {

@@ -29,6 +29,7 @@ $hero-height: 650px;
   @include media-query(mobile tablet) {
     grid-column: 1 / -1;
     margin-bottom: 0;
+    text-align: left;
   }
 }
 
@@ -103,5 +104,10 @@ $hero-height: 650px;
 }
 
 .callout {
-  margin-right: 15px;
+  margin-right: 10px;
+  margin-left: -5px;
+
+  @include media-query(mobile tablet) {
+    margin-right: 0;
+  }
 }
