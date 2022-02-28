@@ -7,9 +7,12 @@
 }
 
 .label {
+  color: $color-taffy;
   line-height: 2.4rem;
   height: 2.4rem;
+  margin-left: 10px;
   margin-bottom: 3px;
+  text-align: left;
   text-transform: capitalize;
   @extend %font-iconic;
 }

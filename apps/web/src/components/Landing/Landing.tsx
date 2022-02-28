@@ -1,3 +1,5 @@
+import { useInView } from 'react-intersection-observer';
+
 import {
   Accordian,
   AnimatedMeter,
@@ -21,6 +23,16 @@ import NewDrop from '../NewDrop/NewDrop';
 import styles from './Landing.scss';
 
 export function Landing() {
+  const { ref: characterTraitsRef, inView: characterTraitsInView } = useInView({
+    triggerOnce: true,
+    rootMargin: '-150px 0px'
+  });
+
+  const { ref: badgesRef, inView: badgesInView } = useInView({
+    triggerOnce: true,
+    rootMargin: '-100px 0px'
+  });
+
   const params = new URLSearchParams(window.location.search);
   const weAreLive =
     params.get('wearelive') === 'true' || params.get('wearelive') === '1';
@@ -66,26 +78,44 @@ export function Landing() {
             >
               <p>{copy.jambotTraitsDescription}</p>
             </TextBlock>
-            <div className={styles.badges}>
-              <Badges names={['debut', 'hometown', 'version']} />
+            <div className={styles.badges} ref={badgesRef}>
+              <Badges
+                play={badgesInView}
+                names={['debut', 'hometown', 'version']}
+              />
             </div>
             <TextBlock>
-              <h4>{copy.characterTraits}</h4>
+              <div className={styles.subhead}>{copy.characterTraits}</div>
               <p>{copy.characterTraitsDescription}</p>
             </TextBlock>
-            <div className={styles.characterTraits}>
+            <div className={styles.characterTraits} ref={characterTraitsRef}>
               <div data-tip='almost insane'>
-                <AnimatedMeter meter={1} label='sanity' value={[30, 30]} />
+                <AnimatedMeter
+                  play={characterTraitsInView}
+                  meter={1}
+                  label='sanity'
+                  value={[5, 7]}
+                />
               </div>
               <div data-tip='low key'>
-                <AnimatedMeter meter={2} label='fame' value={[30, 30]} />
+                <AnimatedMeter
+                  play={characterTraitsInView}
+                  meter={2}
+                  label='fame'
+                  value={[10, 12]}
+                />
               </div>
               <div data-tip='in the clouds'>
-                <AnimatedMeter meter={3} label='swagger' value={[30, 30]} />
+                <AnimatedMeter
+                  play={characterTraitsInView}
+                  meter={3}
+                  label='swagger'
+                  value={[6, 10]}
+                />
               </div>
             </div>
             <TextBlock>
-              <h4>{copy.audioTraits}</h4>
+              <div className={styles.subhead}>{copy.audioTraits}</div>
               <p>{copy.audioTraitsDescription}</p>
             </TextBlock>
             <div className={styles.audioTraits}>

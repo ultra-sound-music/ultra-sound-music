@@ -15,10 +15,11 @@ const badgesMap: Record<string, object> = {
 };
 
 export interface IBadgesProps {
+  play?: boolean;
   names: ('debut' | 'hometown' | 'version')[];
 }
 
-export function Badges({ names }: IBadgesProps) {
+export function Badges({ play = true, names }: IBadgesProps) {
   return (
     <div className={styles.Badges}>
       {names?.map((name, i) => {
@@ -28,7 +29,7 @@ export function Badges({ names }: IBadgesProps) {
               animationData={badgesMap[name]}
               direction={1}
               speed={0.5}
-              play={true}
+              play={play}
               loop={false}
               className={styles.lottie}
             />

@@ -21400,6 +21400,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-intersection-observer@npm:^8.33.1":
+  version: 8.33.1
+  resolution: "react-intersection-observer@npm:8.33.1"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0|| ^18.0.0
+  checksum: 5feb0df01dd64f1fa0b8300fb4fc12db95350c1ae2514f66f0652371f65e5501758a662746000dc2584d24dcce07139590e5375d6c9920a60b282af83468d0c4
+  languageName: node
+  linkType: hard
+
 "react-is@npm:17.0.2, react-is@npm:^16.12.0 || ^17.0.0, react-is@npm:^17.0.1, react-is@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
@@ -25290,6 +25299,7 @@ __metadata:
     react-burger-menu: ^3.0.6
     react-dom: 17.0.2
     react-icons: ^4.3.1
+    react-intersection-observer: ^8.33.1
     react-lottie-player: ^1.4.1
     react-modal: ^3.14.4
     react-redux: ^7.2.6

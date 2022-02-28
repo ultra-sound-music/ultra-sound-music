@@ -7,6 +7,7 @@ import meter3 from '@usm/assets/lottie/animated_meters/meter_3.json';
 import styles from './AnimatedMeter.scss';
 
 export interface IAnimatedMeterProps {
+  play?: boolean;
   meter?: number;
   label?: string;
   value: [number, number];
@@ -14,6 +15,7 @@ export interface IAnimatedMeterProps {
 
 const meters = [meter1, meter2, meter3];
 export function AnimatedMeter({
+  play = true,
   meter = 1,
   label,
   value
@@ -29,7 +31,7 @@ export function AnimatedMeter({
           animationData={data}
           direction={1}
           speed={0.5}
-          play={true}
+          play={play}
           segments={[0, value[0]]}
           loop={false}
           className={styles.lottie}
@@ -38,7 +40,7 @@ export function AnimatedMeter({
           animationData={data}
           direction={1}
           speed={0.5}
-          play={true}
+          play={play}
           segments={[0, value[1]]}
           loop={false}
           className={styles.lottie}
