@@ -62,15 +62,15 @@ $hero-height: 650px;
   @include media-query(tablet) {
     grid-column: 1 / -1;
     position: static;
-    margin-top: -180px;
+    margin-top: clamp(-38%, -140px, -34%);
     min-height: max(320px, 98vw);
     background-size: contain, max(360px, 150%);
-    background-position: left bottom, center top;
+    background-position: left bottom, center bottom;
   }
 
   @include media-query(mobile) {
     position: static;
-    margin-top: clamp(-28%, 125px, -22%);
+    margin-top: clamp(-28%, -125px, -22%);
     min-height: max(380px, 110vw);
     background-size: contain, max(700px, 170%);
     background-position: left bottom, center bottom;
@@ -85,11 +85,9 @@ $hero-height: 650px;
     grid-column: 2 / span 5;
   }
 
-  @include media-query(tablet) {
-    grid-column: 1 / -1;
-  }
-
-  @include media-query(mobile) {
+  @include media-query(tablet mobile) {
+    margin-left: 15px;
+    margin-right: 15px;
     grid-column: 1 / -1;
   }
 }

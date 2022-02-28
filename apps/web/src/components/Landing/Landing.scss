@@ -50,6 +50,11 @@
 }
 
 .section {
+  @include media-query(mobile tablet) {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
   .grid2 {
     row-gap: 60px;
     align-items: center;
@@ -78,6 +83,13 @@
     margin-bottom: 60px;
     padding-bottom: max(60px, 16%);
   }
+
+  .section:first-child {
+    @include media-query(mobile tablet) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 }
 
 .jambot2Image {
@@ -92,6 +104,9 @@
 
 .logoImg {
   width: 420px;
+  @include media-query(mobile tablet) {
+    width: 100%;
+  }
 }
 
 .traitsImage {

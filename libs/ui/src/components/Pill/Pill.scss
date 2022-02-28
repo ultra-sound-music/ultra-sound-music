@@ -27,4 +27,8 @@
   @extend %font-iconic-strong;
 
   line-height: 3.7rem;
+
+  @include media-query(tablet mobile) {
+    padding-left: 0;
+  }
 }
