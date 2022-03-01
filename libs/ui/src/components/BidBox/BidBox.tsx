@@ -137,7 +137,10 @@ export const BidBox = (props: BidBoxProps): JSX.Element => {
         <div className={styles.bidHistoryList}>
           {props.recentBids.map(
             ({ amountSol, userWalletAddress, timeSinceBid }) => (
-              <div className={styles.bidHistoryItem}>
+              <div
+                className={styles.bidHistoryItem}
+                key={`${amountSol}${userWalletAddress}`}
+              >
                 <div className={styles.bidAmount}>
                   <p>{amountSol} SOL</p>
                 </div>
