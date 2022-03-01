@@ -6,7 +6,7 @@ $hero-height: 650px;
 .ComingSoon {
   position: relative;
   width: 100%;
-  padding-top: 80px;
+  padding-top: 72px;
   z-index: 1;
 
   @include media-query(laptop tablet mobile) {
