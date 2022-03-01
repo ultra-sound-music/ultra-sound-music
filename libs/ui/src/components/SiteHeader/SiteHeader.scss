@@ -15,7 +15,7 @@
 
   @include media-query(mobile tablet) {
     width: 100%;
-    padding: 20px;
+    padding: 11px;
   }
 }
 
@@ -31,12 +31,22 @@
 
 .logo {
   margin-right: 20px;
-  width: 35px;
+  width: 20px;
   object-fit: contain;
   float: left;
+
+  @include media-query(mobile tablet) {
+    margin-right: 12px;
+  }
 }
 
 .usm {
   float: left;
+
   @extend %font-brand;
+
+  @include media-query(mobile tablet) {
+    margin-top: -3px;
+    font-size: 1rem;
+  }
 }

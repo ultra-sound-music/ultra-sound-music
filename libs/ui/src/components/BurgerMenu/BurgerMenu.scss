@@ -19,11 +19,22 @@
   height: 30px;
   top: 36px;
   right: 36px;
+
+  @include media-query(mobile tablet) {
+    width: 24px;
+    height: 20px;
+    top: 19px;
+    right: 19px;
+  }
 }
 
 /* Color/shape of burger icon bars */
 .burgerBars {
   background: $color-polar-bear;
+
+  @include media-query(mobile tablet) {
+    height: 8% !important;
+  }
 }
 
 .crossButton {
