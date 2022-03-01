@@ -113,7 +113,8 @@ module.exports = (initialConfigs) => {
       inject: true
     }),
     new webpack.ProvidePlugin({
-      Buffer: ['buffer', 'Buffer']
+      Buffer: ['buffer', 'Buffer'],
+      Stream: ['stream', 'Stream']
     })
   ];
 
@@ -128,8 +129,8 @@ module.exports = (initialConfigs) => {
   };
 
   config.resolve.fallback = {
-    stream: false,
-    buffer: require.resolve('buffer/')
+    buffer: require.resolve('buffer/'),
+    stream: require.resolve('stream/')
   };
 
   return config;

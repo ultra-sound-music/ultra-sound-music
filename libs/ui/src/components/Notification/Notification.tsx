@@ -4,6 +4,7 @@ import styles from './Notification.scss';
 
 export interface INotificationProps {
   type?: 'info' | 'warn' | 'success' | 'error';
+  title: string;
   message: React.ReactNode;
   timeout?: number;
   isOpen: boolean;
