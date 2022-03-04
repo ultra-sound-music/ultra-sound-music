@@ -95,12 +95,14 @@ export function useUpdateNetworkStatus() {
 export function usePlaceBid(amountInSol: number) {
   return useRecoilCallback(({ snapshot }) => async () => {
     const auction = await USM.getAuction(AUCTION_PUBKEY);
+    const auctionData = await USM.getAuctionData(AUCTION_PUBKEY);
     console.log('DEBUG', 'app-state', 'web3', 'usePlaceBid()', 'a)', {
       AUCTION_PUBKEY,
       amountInSol,
       solClient,
       USM,
-      auction
+      auction,
+      auctionData
     });
     if (!amountInSol) {
       return;
