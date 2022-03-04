@@ -16,7 +16,7 @@ import { BN, Provider } from '@project-serum/anchor';
 import { clusterApiUrl, Connection } from '@solana/web3.js';
 import { Wallet } from '@metaplex/js';
 
-console.log('DEBUG', 'app-state', 'web3', SolClient, USMClient);
+console.log('DEBUG', 'STARTUP', 'app-state', 'web3', SolClient, USMClient);
 
 export interface IWeb3State {
   accountAddress: string;
@@ -57,7 +57,13 @@ export function useGetAccountAddress() {
 }
 
 export function useGetShortenedAccountAddress() {
-  return useGetAccountAddress();
+  const addr = useGetAccountAddress();
+  console.log('DEBUG', 'useGetShortenedAccountAddress()', { addr });
+  if (!addr) {
+    return addr;
+  } else {
+    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+  }
 }
 
 export function useGetNetworkStatus() {
@@ -86,18 +92,24 @@ export function useUpdateNetworkStatus() {
   };
 }
 
-export function usePlaceBid() {
+export function usePlaceBid(amountInSol: number) {
   return useRecoilCallback(({ snapshot }) => async () => {
     const auction = await USM.getAuction(AUCTION_PUBKEY);
-    console.log('DEBUG', 'app-state', 'web3', {
+    console.log('DEBUG', 'app-state', 'web3', 'usePlaceBid()', 'a)', {
+      AUCTION_PUBKEY,
+      amountInSol,
       solClient,
       USM,
       auction
     });
-    const bidAmount = new BN(7 * 10 ** 8);
-    const { txId } = await USM.placeBid(bidAmount, AUCTION_PUBKEY);
-    console.log('DEBUG', 'app-state', 'web3', {
-      txId
+    if (!amountInSol) {
+      return;
+    }
+    const resp = await USM.placeBid(amountInSol, AUCTION_PUBKEY);
+    console.log('DEBUG', 'app-state', 'web3', 'usePlaceBid()', 'b)', {
+      resp,
+      txId: resp?.txId,
+      amountInSol
     });
   });
 }
@@ -114,13 +126,9 @@ export function useConnect() {
             networkStatus: constants.networkStatus.CONNECTING
           });
           const accountAddress = await solClient.connectWallet();
-          console.log(
-            'DEBUG',
-            'app-state',
-            'web3',
-            'accountAddress',
+          console.log('DEBUG', 'app-state', 'web3', 'useConnect()', 'a)', {
             accountAddress
-          );
+          });
 
           USM = new USMClient(connection, solClient.wallet as Wallet);
           updateNetworkStatus({

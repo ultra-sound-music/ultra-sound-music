@@ -55,13 +55,6 @@
   width: 100%;
 }
 
-.small {
-  height: 32px;
-  width: 112px;
-  line-height: 32px;
-  @extend %font-button-small;
-}
-
 .withImage {
   display: flex;
   justify-content: space-around;
@@ -113,6 +106,13 @@
     content: '';
     border-radius: 10px;
   }
+}
+
+.small {
+  height: 32px;
+  width: 112px;
+  line-height: 32px;
+  @extend %font-button-small;
 }
 
 .tile {

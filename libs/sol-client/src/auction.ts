@@ -2,38 +2,18 @@ import { TOKEN_PROGRAM_ID, MintLayout, u64 } from '@solana/spl-token';
 import { Auction } from '@metaplex-foundation/mpl-auction';
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { Account } from '@metaplex-foundation/mpl-core';
-import { RedeemBid } from '@metaplex-foundation/mpl-metaplex';
 import { Connection, Wallet } from '@metaplex/js';
-import { PublicKey } from '@solana/web3.js';
+import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import { actions } from '@metaplex/js';
-import { web3, Provider, BN } from '@project-serum/anchor';
-import { placeBid, cancelBid } from './utils';
+import { cancelBid, transformAuctionData, placeBid } from './utils/utils';
+import BN from 'bn.js';
+const { redeemFullRightsTransferBid, redeemParticipationBidV3 } = actions;
 
-
-export interface IHackRedeemBidResponse {
-  txId: string;
-}
-
-const { claimBid, redeemFullRightsTransferBid } = actions;
-
-export const AUCTION_PUBKEY = new PublicKey(
-  '2Uv4eWokSke21VcDVbjBysPZpxpQAr4vrwUob9viiS82'
-);
-export const STORE_PUBKEY = new PublicKey(
-  '34tUCCgN7fnqxFQDtxC99huw5XRTnXTsSPBeJu2iGaKy'
-);
-export const TOKEN_MINT_PUBKEY = new PublicKey(
-  'GkAGjiMmDVERhvZQLxm2ricSLkRBe3FPwTnXfD5aPxL9'
-);
-export const NFT_PUBKEY = new PublicKey(
-  'GkAGjiMmDVERhvZQLxm2ricSLkRBe3FPwTnXfD5aPxL9'
-);
+export * from './consts';
 
 export class USMClient {
   connection;
   wallet;
-
-  //TODO: sweep funds to admin wallet
 
   constructor(connection: Connection, wallet: Wallet) {
     this.connection = connection;
@@ -44,27 +24,26 @@ export class USMClient {
     return Auction.load(this.connection, pubKey);
   }
 
-  async placeBid(amount: BN, auction: PublicKey) {
-    console.log('DEBUG', 'placeBid', amount, auction);
+  async getAuctionData(pubKey: PublicKey) {
+    const a = await Auction.load(this.connection, pubKey);
+    return transformAuctionData(a, this.connection);
+  }
+
+  async placeBid(amountInSol: number, auction: PublicKey) {
+    console.log('DEBUG', 'sol-client', 'placeBid()', 'a)', {
+      amountInSol,
+      auction
+    });
+    if (amountInSol <= 0) {
+      return;
+    }
+    const bidAmount = new BN(amountInSol * LAMPORTS_PER_SOL);
+    console.log('DEBUG', 'sol-client', 'placeBid()', 'b)', { bidAmount });
     return placeBid({
       connection: this.connection,
       wallet: this.wallet,
-      amount,
+      amount: bidAmount,
       auction
-    });
-  }
-
-  async claimBid(
-    store: PublicKey,
-    auction: PublicKey,
-    bidderPotToken: PublicKey
-  ): Promise<any> {
-    return claimBid({
-      connection: this.connection,
-      wallet: this.wallet,
-      store,
-      auction,
-      bidderPotToken: bidderPotToken
     });
   }
 
@@ -76,11 +55,16 @@ export class USMClient {
     });
   }
 
-  //TODO: implement
+  async redeemParticipationBid(store: PublicKey, auction: PublicKey) {
+    return redeemParticipationBidV3({
+      connection: this.connection,
+      wallet: this.wallet,
+      store,
+      auction
+    });
+  }
 
-  async refundBid() {}
-
-  async redeemBid(store: PublicKey, auction: PublicKey): Promise<IHackRedeemBidResponse> {
+  async redeemBid(store: PublicKey, auction: PublicKey) {
     return redeemFullRightsTransferBid({
       connection: this.connection,
       wallet: this.wallet,

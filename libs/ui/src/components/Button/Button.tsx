@@ -48,7 +48,8 @@ export const Button = ({
     { [styles.withImage]: !!image },
     { [styles.disabled]: disabled },
     { [styles.fullWidth]: isFullWidth },
-    { [styles.wide]: isWide }
+    { [styles.wide]: isWide },
+    { [styles.small]: isSmall }
   );
 
   const content = (

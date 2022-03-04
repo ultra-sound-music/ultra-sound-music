@@ -3,15 +3,15 @@ import {
   Commitment,
   Keypair,
   PublicKey,
-  SystemProgram,
   TransactionSignature,
-  sendAndConfirmTransaction
+  LAMPORTS_PER_SOL,
+  AccountInfo
 } from '@solana/web3.js';
-import { AccountLayout, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { Connection } from '@metaplex/js';
-import { Wallet } from '@metaplex/js';
+import { AccountLayout } from '@solana/spl-token';
+import { Connection, Wallet } from '@metaplex/js';
 
 import {
+  Auction,
   AuctionProgram,
   AuctionExtended,
   BidderMetadata,
@@ -31,7 +31,7 @@ const { CreateTokenAccount } = transactions;
 
 import { Transaction } from '@metaplex-foundation/mpl-core';
 
-const getBidderPotTokenPDA = async (bidderPotPubKey: any) => {
+const getBidderPotTokenPDA = async (bidderPotPubKey: PublicKey) => {
   return AuctionProgram.findProgramAddress([
     Buffer.from(AuctionProgram.PREFIX),
     bidderPotPubKey.toBuffer(),
@@ -123,11 +123,6 @@ export const placeBid = async ({
   auction
 }: PlaceBidParams): Promise<PlaceBidResponse> => {
   const bidder = wallet.publicKey;
-  console.log('DEBUG', 'utils', 'placeBid()', 'a)', {
-    bidder,
-    amount,
-    auction
-  });
   const accountRentExempt = await connection.getMinimumBalanceForRentExemption(
     AccountLayout.span
   );
@@ -141,11 +136,28 @@ export const placeBid = async ({
   const auctionExtended = await AuctionExtended.getPDA(vault);
   const bidderPot = await BidderPot.getPDA(auction, bidder);
   const bidderMeta = await BidderMetadata.getPDA(auction, bidder);
+
   const bidderPotToken = await getBidderPotTokenPDA(bidderPot);
 
+  const accountInfo = await connection.getAccountInfo(bidderPotToken);
+
   let txBatch = new TransactionsBatch({ transactions: [] });
-  // create a new account for bid
-  ////
+
+  //if the user has an existing biddder pot token acct cancel pending bid
+  if (accountInfo) {
+    txBatch = await getCancelBidTransactions({
+      bidder,
+      accountRentExempt,
+      bidderPot,
+      bidderPotToken,
+      bidderMeta,
+      auction,
+      auctionExtended,
+      auctionTokenMint,
+      vault
+    });
+  }
+
   // create paying account
   const {
     account: payingAccount,
@@ -156,11 +168,6 @@ export const placeBid = async ({
     bidder,
     amount.toNumber() + accountRentExempt * 2
   );
-  console.log('DEBUG', 'utils', 'placeBid()', 'b)', {
-    payingAccount,
-    createTokenAccountTx,
-    closeTokenAccountTx
-  });
   txBatch.addTransaction(createTokenAccountTx);
   txBatch.addSigner(payingAccount);
   ////
@@ -200,12 +207,6 @@ export const placeBid = async ({
   );
   txBatch.addTransaction(placeBidTransaction);
   ////
-
-  console.log('DEBUG', 'utils', 'placeBid()', 'c)', {
-    bidder,
-    amount,
-    auction
-  });
 
   const txId = await sendTransaction({
     connection,
@@ -281,4 +282,66 @@ export const cancelBid = async ({
   });
 
   return { txId };
+};
+
+type USMBidData = {
+  bidder: PublicKey;
+  bid: number;
+  timestamp: number;
+};
+
+type USMAuctionData = {
+  // auction identifier
+  pubkey: PublicKey;
+  //token that is used for bids
+  acceptedToken: PublicKey;
+  // returns unix timestamp
+  endedAt: number | null;
+  //returns unix timestamp
+  endAuctionAt: number | null;
+  //if the auction is currently live
+  isLive: boolean;
+  // array of processed bid
+  bids: USMBidData[];
+  //  if auction over returns winning bid else returns null
+  winner?: USMBidData;
+  participants: PublicKey[];
+};
+
+export const transformAuctionData = async (
+  auction: Auction,
+  connection: Connection
+) => {
+  let bids = await auction.getBidderMetadata(connection);
+  const usmBidData = bids
+    .filter((bid) => !bid.data.cancelled)
+    .map((bid) => {
+      const { data } = bid;
+      const bidData: USMBidData = {
+        bidder: new PublicKey(data.bidderPubkey),
+        bid: data.lastBid.toNumber() / LAMPORTS_PER_SOL,
+        timestamp: data.lastBidTimestamp.toNumber()
+      };
+      return bidData;
+    })
+    .sort((a, b) => b.bid - a.bid);
+
+  usmBidData.map((bid) => bid.bidder);
+
+  const AuctionData: USMAuctionData = {
+    pubkey: auction.pubkey,
+    acceptedToken: new PublicKey(auction.data.tokenMint),
+    endedAt: auction.data.endAuctionAt
+      ? auction.data.endedAt?.toNumber() || null
+      : null,
+    endAuctionAt: auction.data.endAuctionAt
+      ? auction.data.endAuctionAt.toNumber()
+      : null,
+    isLive: auction.data.state === 1,
+    bids: usmBidData,
+    winner: auction.data.state === 2 ? usmBidData[0] : undefined,
+    participants: usmBidData.map((bid) => bid.bidder)
+  };
+
+  return AuctionData;
 };

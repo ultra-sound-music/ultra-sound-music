@@ -1,5 +1,6 @@
 import { useIsConnected, usePlaceBid } from '@usm/app-state';
 import cn from 'clsx';
+import { useState } from 'react';
 import { Button } from '../Button/Button';
 import Paginate from '../Paginate/Paginate';
 
@@ -32,10 +33,14 @@ export interface BidBoxProps {
 }
 
 export const BidBox = (props: BidBoxProps): JSX.Element => {
-  const placeBid = usePlaceBid();
+  const [bidAmount, setBidAmount] = useState('');
+  const placeBid = usePlaceBid(
+    Number.isNaN(parseFloat(bidAmount)) ? 0 : parseFloat(bidAmount)
+  );
   const isConnected = useIsConnected();
 
   function onClick() {
+    console.log('onClick', { isConnected });
     if (isConnected) {
       placeBid();
     }
@@ -122,6 +127,7 @@ export const BidBox = (props: BidBoxProps): JSX.Element => {
                   type='number'
                   placeholder='Bid more than 0.0 SOL'
                   min='0.01'
+                  onChange={(e) => setBidAmount(e.target.value)}
                 />
                 <span>SOL</span>
               </div>
