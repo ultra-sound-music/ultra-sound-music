@@ -1,0 +1,25 @@
+@use '../../styles' as *;
+
+.mainContainer {
+  width: 550px;
+  color: $color-polar-bear;
+
+  .headerContainer {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+
+    .nftName {
+      margin: 0;
+      display: inline-block;
+      line-height: 25px;
+    }
+
+    .arrowContainer {
+      margin-top: 10px;
+      margin-left: 75px;
+    }
+  }
+}

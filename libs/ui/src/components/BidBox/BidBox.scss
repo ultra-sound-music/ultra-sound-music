@@ -1,165 +1,143 @@
 @use '../../styles' as *;
 
-.mainContainer {
-  width: 550px;
-  color: $color-polar-bear;
+.timerContainer {
+  height: 106px;
+  border-radius: 9px;
+  background-color: $color-evening-sky;
+  margin-bottom: -50px;
+  padding: 16px 24px;
 
-  .headerContainer {
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .nftName {
-      margin: 0;
-      display: inline-block;
-      line-height: 25px;
-    }
-
-    .arrowContainer {
-      margin-top: 10px;
-      margin-left: 75px;
-    }
+  p {
+    line-height: 21px;
   }
+}
 
-  .timerContainer {
-    height: 106px;
-    border-radius: 9px;
-    background-color: $color-evening-sky;
-    margin-bottom: -50px;
-    padding: 16px 24px;
+.bidFormContainer {
+  height: 244px;
+  background-color: $color-dusk;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 40%);
+  border-radius: 9px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
 
-    p {
-      line-height: 21px;
-    }
-  }
+  .info {
+    width: 100%;
+    height: 50%;
 
-  .bidBoxContainer {
-    height: 244px;
-    background-color: $color-dusk;
-    box-shadow: 0 4px 20px rgb(0 0 0 / 40%);
-    border-radius: 9px;
+    // border: 1px solid black;
     padding: 12px;
     display: flex;
-    flex-direction: column;
-
-    .info {
-      width: 100%;
-      height: 50%;
-
+    .currentBid {
       // border: 1px solid black;
-      padding: 12px;
-      display: flex;
-      .currentBid {
-        // border: 1px solid black;
-        height: 100%;
-        flex-grow: 1;
-
-        p {
-          line-height: 24px;
-          margin: 0;
-        }
-
-        .currentBidValue {
-          padding: 19px 0;
-        }
-      }
-      .walletBalance {
-        // border: 1px solid black;
-        height: 100%;
-        flex-grow: 1;
-        padding-left: 48px;
-
-        p {
-          line-height: 24px;
-          margin: 0;
-        }
-
-        .walletBalanceValue {
-          padding: 19px 0;
-        }
-      }
-    }
-
-    .form {
-      width: 100%;
-
-      // border: 1px solid black;
-      height: 50%;
-      padding: 12px;
+      height: 100%;
+      flex-grow: 1;
 
       p {
         line-height: 24px;
         margin: 0;
       }
 
-      .formInputBox {
-        display: flex;
+      .currentBidValue {
+        padding: 19px 0;
+      }
+    }
+    .walletBalance {
+      // border: 1px solid black;
+      height: 100%;
+      flex-grow: 1;
+      padding-left: 48px;
 
-        .formInput {
-          background-color: $color-evening-sky;
-          width: 366px;
-          height: 50px;
-          margin-top: 9px;
-          border: 2px solid #6b6989;
-          border-radius: 7px;
-          display: flex;
+      p {
+        line-height: 24px;
+        margin: 0;
+      }
 
-          input {
-            @extend %font-body;
-
-            border: none;
-            background-color: transparent;
-            padding: 0 12px;
-            font-size: 16px;
-            color: $color-polar-bear;
-            line-height: 50px;
-            width: 300px;
-
-            &:focus {
-              outline: none;
-            }
-          }
-
-          span {
-            line-height: 46px;
-            padding-right: 10px;
-          }
-        }
-
-        button {
-          margin: 9px 0 0 24px;
-        }
+      .walletBalanceValue {
+        padding: 19px 0;
       }
     }
   }
 
-  .bidHistoryContainer {
-    padding: 24px;
+  .form {
+    width: 100%;
 
-    .bidHistoryList {
-      .bidHistoryItem {
+    // border: 1px solid black;
+    height: 50%;
+    padding: 12px;
+
+    p {
+      line-height: 24px;
+      margin: 0;
+    }
+
+    .formInputBox {
+      display: flex;
+
+      .formInput {
+        background-color: $color-evening-sky;
+        width: 366px;
+        height: 50px;
+        margin-top: 9px;
+        border: 2px solid #6b6989;
+        border-radius: 7px;
         display: flex;
-        justify-content: space-between;
-        border-bottom: 2px solid $color-dusk;
 
-        .bidAmount {
-          width: 100px;
-          p {
-            @extend %font-body-strong;
+        input {
+          @extend %font-body;
+
+          border: none;
+          background-color: transparent;
+          padding: 0 12px;
+          font-size: 16px;
+          color: $color-polar-bear;
+          line-height: 50px;
+          width: 300px;
+
+          &:focus {
+            outline: none;
           }
         }
-        .bidTime {
-          width: 200px;
-          p {
-            @extend %font-body;
-          }
+
+        span {
+          line-height: 46px;
+          padding-right: 10px;
         }
-        .bidWalletAddress {
-          width: 200px;
-          p {
-            @extend %font-body;
-          }
+      }
+
+      button {
+        margin: 9px 0 0 24px;
+      }
+    }
+  }
+}
+
+.bidHistoryContainer {
+  padding: 24px 0 24px 24px;
+
+  .bidHistoryList {
+    .bidHistoryItem {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid $color-dusk;
+      padding: 8px 0 4px;
+
+      .bidAmount {
+        width: 100px;
+        p {
+          @extend %font-body-strong;
+        }
+      }
+      .bidTime {
+        width: 200px;
+        p {
+          @extend %font-body;
+        }
+      }
+      .bidWalletAddress {
+        width: 200px;
+        p {
+          @extend %font-body;
         }
       }
     }

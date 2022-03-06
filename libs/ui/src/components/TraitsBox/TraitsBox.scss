@@ -1,0 +1,20 @@
+@use '../../styles' as *;
+
+.mainContainer {
+  height: 484px;
+  background-color: $color-dusk;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 40%);
+  border-radius: 9px;
+  padding: 12px;
+  display: flex;
+
+  .left {
+    height: 100%;
+    flex-grow: 1;
+  }
+
+  .right {
+    height: 100%;
+    flex-grow: 1;
+  }
+}

@@ -1,4 +1,5 @@
 import { Story, Meta } from '@storybook/react';
+import { RecoilRoot } from 'recoil';
 import { BidBox, BidBoxProps } from './BidBox';
 
 export default {
@@ -28,5 +29,7 @@ Primary.args = {
   ],
   isAuctionFinished: false,
   traits: { name: 'Jam Bot #1' },
-  winningWalletAddress: '0x1ds...sdfsa'
+  winningWalletAddress: '0x1ds...sdfsa',
+  onClickBidNow: () => console.log('onClickBidNow()'),
+  onChangeBidAmount: (value) => console.log('onChangeBidAmount()', value)
 };
