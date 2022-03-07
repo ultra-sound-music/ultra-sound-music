@@ -35,9 +35,7 @@ export function Landing() {
 
   const params = new URLSearchParams(window.location.search);
   const weAreLive =
-    params.get('wearelive') === 'true' ||
-    params.get('wearelive') === '1' ||
-    true;
+    params.get('wearelive') === 'true' || params.get('wearelive') === '1';
 
   return (
     <div className={styles.Landing}>
