@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 
-import logo from '@usm/assets/img/logo.png';
+import xolopng from '../../assets/xolotl.png';
 
 import Image, { IImageProps } from './Image';
 
@@ -17,5 +17,5 @@ Primary.args = {
     height: '100px',
     width: 'auto'
   },
-  src: logo
+  src: xolopng
 };

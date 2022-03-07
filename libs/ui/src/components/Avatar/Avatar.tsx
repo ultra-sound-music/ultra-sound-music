@@ -1,38 +1,34 @@
-import React from 'react';
 import cn from 'clsx';
 
-import Image from '../Image/Image';
+import Image, { IImageProps } from '../Image/Image';
 
 import styles from './Avatar.scss';
 
-export type TAvatarSize = 'tiny' | 'small' | 'medium' | 'large';
-export type TAvatarShape = 'round' | 'square';
+export type IAvatarSize = 'tiny' | 'small' | 'medium' | 'large' | 'xlarge';
+export type IAvatarShape = 'circle' | 'square';
 
-export interface IAvatarProps {
-  image?: JSX.Element;
-  src?: string;
-  size?: TAvatarSize;
-  shape?: TAvatarShape;
+export interface IAvatarProps extends IImageProps {
+  size?: IAvatarSize;
+  shape?: IAvatarShape;
+  withPadding?: boolean;
+  isLoading?: boolean;
 }
 
 export const Avatar = ({
-  image,
-  src,
   size,
-  shape = 'round'
+  shape = 'circle',
+  withPadding = false,
+  isLoading = false,
+  ...props
 }: IAvatarProps): JSX.Element => {
-  const rootclassNames = cn(styles.Avatar, size && styles[size], styles[shape]);
+  const classNames = cn(
+    styles.Avatar,
+    size && styles[size],
+    styles[shape],
+    withPadding && styles.withPadding
+  );
 
-  let img: React.ReactNode;
-  if (src) {
-    img = <Image src={src} />;
-  } else if (image) {
-    img = image;
-  } else {
-    img = '@todo - placeholder image';
-  }
-
-  return <div className={rootclassNames}>{img}</div>;
+  return <Image {...props} fit='cover' className={classNames} />;
 };
 
 export default Avatar;

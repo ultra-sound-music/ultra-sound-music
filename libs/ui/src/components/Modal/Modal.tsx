@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'clsx';
 import ReactModal from 'react-modal';
+import { RiCloseLine } from 'react-icons/ri';
 
 import Button from '../Button/Button';
 
@@ -19,7 +20,7 @@ export interface IModalProps {
 }
 
 export function renderButtons(
-  ctaButton?: React.ReactNode,
+  ctaButton: React.ReactNode,
   withCloseButton?: boolean,
   onHide?: () => void
 ) {
@@ -30,11 +31,7 @@ export function renderButtons(
   return (
     <div className={styles.buttons}>
       {withCloseButton && (
-        <Button
-          onClick={onHide}
-          isFullWidth={true}
-          type={ctaButton ? 'secondary' : 'primary'}
-        >
+        <Button onClick={onHide} isFullWidth={true} type={ctaButton ? 'secondary' : 'primary'}>
           Close
         </Button>
       )}
@@ -69,14 +66,10 @@ export const Modal = ({
   return (
     <ReactModal {...props}>
       {subject && <div className={styles.subject}>{subject}</div>}
-      {title && <div className={styles.title}>{title}</div>}
+      {title && <h3 className={styles.title}>{title}</h3>}
       <div className={styles.body}>{children}</div>
       {renderButtons(ctaButton, withCloseButton, onHide)}
-      {withCloseX && (
-        <div className={styles.x} onClick={onHide}>
-          X
-        </div>
-      )}
+      {withCloseX && <RiCloseLine className={styles.x} onClick={onHide} />}
     </ReactModal>
   );
 };

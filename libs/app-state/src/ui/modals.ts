@@ -2,82 +2,73 @@ import React, { useMemo } from 'react';
 import {
   atom,
   selector,
-  DefaultValue,
   useResetRecoilState,
   useSetRecoilState,
-  useRecoilState
+  useRecoilValue,
+  DefaultValue
 } from 'recoil';
 
-export interface IModalState {
-  isVisible?: boolean;
+interface IModalProps {
+  subject?: React.ReactNode;
   title?: React.ReactNode;
-  body?: React.ReactNode;
-  cta?: React.ReactNode;
+  shouldCloseOnEscape?: boolean;
+  withCloseX?: boolean;
+  withCloseButton?: boolean;
+  isOpen: boolean;
+  ctaButton?: React.ReactNode;
+  onHide?: () => void;
+  children?: React.ReactNode;
 }
 
-export const isModalVisibleState = atom({
-  key: 'isModalVisibleState',
-  default: false
+export interface IModalState extends Omit<IModalProps, 'children' | 'isOpen'> {
+  body?: React.ReactNode;
+  isOpen?: boolean;
+}
+
+export const modalProps = atom<IModalState>({
+  key: 'modalState',
+  default: { isOpen: false }
 });
 
-export const modalTitleState = atom<IModalState['title']>({
-  key: 'modalTitleState',
-  default: ''
+export const isModalOpenState = selector({
+  key: 'isModalOpenState',
+  get: ({ get }) => get(modalProps)?.isOpen
 });
 
-export const modalBodyState = atom<IModalState['body']>({
-  key: 'modalBodyState',
-  default: ''
-});
-
-export const modalCtaState = atom<IModalState['cta']>({
-  key: 'modalCtaState',
-  default: ''
-});
-
-export const modal = selector<IModalState>({
+// The Selector allows us to wrap the modalProps object with a setter function
+export const modalState = selector<IModalState>({
   key: 'modal',
-  get: ({ get }) => ({
-    isVisible: get(isModalVisibleState),
-    title: get(modalTitleState),
-    body: get(modalBodyState),
-    cta: get(modalCtaState)
-  }),
+  get: ({ get }) => get(modalProps),
   set: ({ set, reset }, newState) => {
     if (newState instanceof DefaultValue) {
-      reset(isModalVisibleState);
-      reset(modalTitleState);
-      reset(modalBodyState);
-      reset(modalCtaState);
+      reset(modalProps);
       return;
     }
 
-    set(isModalVisibleState, true);
-    set(modalTitleState, newState?.title);
-    set(modalBodyState, newState?.body);
-    set(modalCtaState, newState?.cta);
+    newState.isOpen = true;
+    set(modalProps, newState);
   }
 });
 
 export function useHideModal() {
-  return useResetRecoilState(modal);
+  return useResetRecoilState(modalState);
 }
 
 export function useShowModal() {
-  return useSetRecoilState(modal);
+  return useSetRecoilState(modalState);
 }
 
 export function useModal() {
-  const isModalVisible = useRecoilState(isModalVisibleState);
-  const showModal = useSetRecoilState(modal);
-  const hideModal = useResetRecoilState(modal);
+  const showModal = useSetRecoilState(modalState);
+  const hideModal = useResetRecoilState(modalState);
+  const isModalOpen = useRecoilValue(isModalOpenState);
 
   return useMemo(
     () => ({
       showModal,
       hideModal,
-      isModalVisible
+      isModalOpen
     }),
-    [modal, isModalVisible]
+    [modalState, isModalOpenState]
   );
 }

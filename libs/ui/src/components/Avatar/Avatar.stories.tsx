@@ -10,12 +10,11 @@ export default {
   component: Avatar
 } as Meta<typeof Avatar>;
 
-const Template: Story<IAvatarProps> = (args) => {
-  return <Avatar {...args} />;
-};
+const Template: Story<IAvatarProps> = (args) => <Avatar {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
   image: <Image src={xolotl} />,
+  shape: 'circle',
   size: 'medium'
 };

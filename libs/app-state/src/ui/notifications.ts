@@ -12,7 +12,7 @@ export interface INotificationState {
   isVisible?: boolean;
   message?: React.ReactNode;
   timeout?: number;
-  type?: 'info' | 'success' | 'error' | 'warn';
+  type?: 'info' | 'success' | 'error' | 'warn' | 'processing';
 }
 
 export const isNotificationVisibleState = atom({

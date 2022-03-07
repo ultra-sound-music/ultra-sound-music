@@ -1,12 +1,12 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Story, Meta } from '@storybook/react';
 
-import Image from '../Image/Image';
-
-import Button, { IButtonProps } from './Button';
-
 import logo from '@usm/assets/img/logo.png';
 import phantomLogo from '@usm/assets/img/phantom_purple.svg';
+
+import xolopng from '../../assets/xolotl.png';
+import Image from '../Image/Image';
+import Button, { IButtonProps } from './Button';
 
 export default {
   title: 'Components/Button',
@@ -36,7 +36,7 @@ Secondary.args = {
 export const WithImage = Template.bind({});
 WithImage.args = {
   type: 'primary',
-  image: <Image src={logo} />,
+  image: <Image src={xolopng} />,
   children: 'With Image'
 };
 

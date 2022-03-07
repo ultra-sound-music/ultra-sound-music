@@ -1,18 +1,30 @@
 import cn from 'classnames';
+import { RiCloseCircleFill, RiCheckboxCircleFill } from 'react-icons/ri';
+
+import Spinner from '../Spinner/Spinner';
 
 import styles from './Notification.scss';
 
+const iconMap = {
+  info: RiCloseCircleFill,
+  warn: RiCloseCircleFill,
+  success: RiCheckboxCircleFill,
+  error: RiCloseCircleFill,
+  processing: () => <Spinner isFullSize={true} />
+};
+
 export interface INotificationProps {
-  type?: 'info' | 'warn' | 'success' | 'error';
+  type?: keyof typeof iconMap;
   title: string;
   message: React.ReactNode;
-  timeout?: number;
+  timeout?: 0 | 4000;
   isOpen: boolean;
   onHide: () => void;
 }
 
 export const Notification = ({
   type = 'info',
+  title,
   message,
   timeout = 0,
   isOpen,
@@ -28,13 +40,20 @@ export const Notification = ({
     }, timeout);
   }
 
+  const Icon = iconMap[type];
   const state = isOpen ? 'open' : 'closed';
   const classNames = cn(styles.Notification, styles[state], styles[type]);
 
   return (
     <div className={classNames}>
-      <div className={styles.message}>{message}</div>
-      <div className={styles.close} onClick={onHideHandler}>
+      <div className={styles.icon}>
+        <Icon />
+      </div>
+      <div className={styles.body}>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.message}>{message}</div>
+      </div>
+      <div className={styles.closex} onClick={onHideHandler}>
         X
       </div>
     </div>

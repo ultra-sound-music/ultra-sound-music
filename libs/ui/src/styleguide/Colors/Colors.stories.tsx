@@ -4,7 +4,7 @@ import Colors from './Colors';
 const colors = [
   'taffy',
   'lavish',
-  'break-water',
+  'breakwater',
   'old-towel',
   'sassy',
   'evening-sky',

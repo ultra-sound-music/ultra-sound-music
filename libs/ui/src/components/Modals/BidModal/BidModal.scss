@@ -1,0 +1,29 @@
+@use '@usm/styles/typo.scss' as *;
+@use '@usm/styles/colors.scss' as *;
+
+.title {
+  color: $color-sassy;
+  margin-bottom: 8px;
+
+  @extend %font-subhead;
+}
+
+.body {
+  color: $color-breakwater;
+  margin-bottom: 32px;
+  @extend %font-small;
+}
+
+.field {
+  background-color: $color-evening-sky;
+  border: 2px solid $color-dusk;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px 12px 12px;
+
+  @extend %font-h5;
+
+  line-height: 1;
+}

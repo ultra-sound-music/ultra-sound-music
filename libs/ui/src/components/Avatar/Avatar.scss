@@ -1,41 +1,39 @@
-.Avatar {
-  img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-}
+@use '../../styles.scss' as *;
 
 .tiny {
-  img {
-    width: 36px;
-    height: 36px;
-  }
+  width: 32px;
+  height: 32px;
 }
 
 .small {
-  img {
-    width: 45px;
-    height: 45px;
-  }
+  width: 40px;
+  height: 40px;
 }
 
 .medium {
-  img {
-    width: 65px;
-    height: 65px;
-  }
+  width: 64px;
+  height: 64px;
 }
 
 .large {
-  img {
-    width: 300px;
-    height: 300px;
-  }
+  width: 128px;
+  height: 128px;
 }
 
-.round {
-  img {
-    border-radius: 100%;
+.xlarge {
+  width: 256px;
+  height: 256px;
+}
+
+.circle {
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.withPadding {
+  background-color: $color-empty-sky;
+
+  &.small {
+    padding: 10px;
   }
 }

@@ -33,3 +33,9 @@ $button-size: 50px;
   top: calc(50% - #{$button-size} / 2);
   left: calc(50% - #{$button-size} / 2);
 }
+
+.fullSize {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
