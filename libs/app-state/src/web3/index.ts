@@ -12,17 +12,24 @@ import * as ui from '../ui';
 import { localStorageEffect } from '../utils';
 
 import * as constants from './constants';
-import { BN, Provider } from '@project-serum/anchor';
 import { clusterApiUrl, Connection } from '@solana/web3.js';
 import { Wallet } from '@metaplex/js';
+import { USMBidData } from '@usm/sol-client';
 
 console.log('DEBUG', 'STARTUP', 'app-state', 'web3', SolClient, USMClient);
+
+export interface AuctionData {
+  auctionData: { bids: USMBidData[]; winner?: USMBidData };
+  auction: object;
+  balance: number;
+}
 
 export interface IWeb3State {
   accountAddress: string;
   networkStatus: string;
   networkId: string;
   isConnected: boolean;
+  auctionData: object;
 }
 
 export type IUpdateNetworkStateProps = Partial<IWeb3State>;
@@ -52,6 +59,11 @@ export const isConnectedState = atom<IWeb3State['isConnected']>({
   default: false
 });
 
+export const auctionDataState = atom<IWeb3State['auctionData']>({
+  key: 'auctionDataState',
+  default: {}
+});
+
 export function useGetAccountAddress() {
   return useRecoilValue(accountAddressState);
 }
@@ -78,31 +90,35 @@ export function useIsConnected() {
   return !!useRecoilValue(isConnectedState);
 }
 
+export function useAuctionDataState(): AuctionData {
+  return useRecoilValue(auctionDataState) as AuctionData;
+}
+
 export function useUpdateNetworkStatus() {
   const setAccountAddress = useSetRecoilState(accountAddressState);
   const setNetworkStatus = useSetRecoilState(networkStatusState);
   const setNetworkId = useSetRecoilState(networkIdState);
   const setIsConnected = useSetRecoilState(isConnectedState);
+  const setAuctionData = useSetRecoilState(auctionDataState);
 
   return function (props: IUpdateNetworkStateProps) {
     if (accountAddressState) setAccountAddress(props.accountAddress as string);
     if (networkStatusState) setNetworkStatus(props.networkStatus as string);
     if (networkIdState) setNetworkId(props.networkId as string);
     if (isConnectedState) setIsConnected(props.isConnected as boolean);
+    if (auctionDataState) {
+      setAuctionData(props.auctionData as object);
+    }
   };
 }
 
 export function usePlaceBid(amountInSol: number) {
   return useRecoilCallback(({ snapshot }) => async () => {
-    const auction = await USM.getAuction(AUCTION_PUBKEY);
-    const auctionData = await USM.getAuctionData(AUCTION_PUBKEY);
     console.log('DEBUG', 'app-state', 'web3', 'usePlaceBid()', 'a)', {
       AUCTION_PUBKEY,
       amountInSol,
       solClient,
-      USM,
-      auction,
-      auctionData
+      USM
     });
     if (!amountInSol) {
       return;
@@ -133,11 +149,16 @@ export function useConnect() {
           });
 
           USM = new USMClient(connection, solClient.wallet as Wallet);
+          const balance = await USM.getWalletBalance();
+          const auction = await USM.getAuction(AUCTION_PUBKEY);
+          const auctionData = await USM.getAuctionData(AUCTION_PUBKEY);
+
           updateNetworkStatus({
             accountAddress,
             networkStatus: constants.networkStatus.CONNECTED,
             networkId: '',
-            isConnected: true
+            isConnected: true,
+            auctionData: { auction, auctionData, balance }
           });
         } catch (error) {
           updateNetworkStatus({

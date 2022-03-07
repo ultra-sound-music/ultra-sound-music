@@ -1,3 +1,4 @@
+import { USMBidData } from '@usm/sol-client';
 import { Button } from '../Button/Button';
 
 import styles from './BidBox.scss';
@@ -11,16 +12,7 @@ export interface BidBoxProps {
     seconds: number;
   };
   currentHighBidSol: number;
-  recentBids: {
-    amountSol: number;
-    userWalletAddress: string;
-    timeSinceBid: {
-      days?: number;
-      hours?: number;
-      minutes?: number;
-      seconds?: number;
-    };
-  }[];
+  recentBids: Partial<USMBidData>[];
   isWalletConnected: boolean;
   walletBalanceSol: number;
   isAuctionFinished: boolean;
@@ -115,35 +107,41 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
     <div className={styles.bidHistoryContainer}>
       <p>Bid history</p>
       <div className={styles.bidHistoryList}>
-        {props.recentBids.map(
-          ({ amountSol, userWalletAddress, timeSinceBid }) => (
-            <div
-              className={styles.bidHistoryItem}
-              key={`${amountSol}${userWalletAddress}`}
-            >
-              <div className={styles.bidAmount}>
-                <p>{amountSol} SOL</p>
-              </div>
+        {props.recentBids?.map(({ bid, bidderWalletAddress, timeSinceBid }) => (
+          <div
+            className={styles.bidHistoryItem}
+            key={`${bid}${bidderWalletAddress}`}
+          >
+            <div className={styles.bidAmount}>
+              <p>{bid} SOL</p>
+            </div>
+            {timeSinceBid && (
               <div className={styles.bidTime}>
-                {timeSinceBid.seconds && timeSinceBid.seconds > 0 && (
-                  <p>{timeSinceBid.seconds} seconds ago</p>
-                )}
-                {timeSinceBid.minutes && timeSinceBid.minutes > 0 && (
-                  <p>{timeSinceBid.minutes} minutes ago</p>
-                )}
-                {timeSinceBid.hours && timeSinceBid.hours > 0 && (
+                {timeSinceBid.days > 0 && <p>{timeSinceBid.days} days ago</p>}
+                {timeSinceBid.days === 0 && timeSinceBid.hours > 0 && (
                   <p>{timeSinceBid.hours} hours ago</p>
                 )}
-                {timeSinceBid.days && timeSinceBid.days > 0 && (
-                  <p>{timeSinceBid.days} days ago</p>
-                )}
+                {timeSinceBid.days === 0 &&
+                  timeSinceBid.hours === 0 &&
+                  timeSinceBid.minutes > 0 && (
+                    <p>{timeSinceBid.minutes} minutes ago</p>
+                  )}
+                {timeSinceBid.days === 0 &&
+                  timeSinceBid.hours === 0 &&
+                  timeSinceBid &&
+                  timeSinceBid.seconds > 0 && (
+                    <p>{timeSinceBid.seconds} seconds ago</p>
+                  )}
               </div>
-              <div className={styles.bidWalletAddress}>
-                <p>{userWalletAddress}</p>
-              </div>
+            )}
+            <div className={styles.bidWalletAddress}>
+              <p>{`${bidderWalletAddress?.slice(
+                0,
+                4
+              )}...${bidderWalletAddress?.slice(40)}`}</p>
             </div>
-          )
-        )}
+          </div>
+        ))}
       </div>
     </div>
   </>

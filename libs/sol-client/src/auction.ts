@@ -14,6 +14,7 @@ export * from './consts';
 export class USMClient {
   connection;
   wallet;
+  balance?: number;
 
   constructor(connection: Connection, wallet: Wallet) {
     this.connection = connection;
@@ -22,6 +23,12 @@ export class USMClient {
 
   async getAuction(pubKey: PublicKey) {
     return Auction.load(this.connection, pubKey);
+  }
+
+  async getWalletBalance() {
+    this.balance = await this.connection.getBalance(this.wallet.publicKey);
+    this.balance = this.balance / LAMPORTS_PER_SOL;
+    return this.balance;
   }
 
   async getAuctionData(pubKey: PublicKey) {

@@ -284,10 +284,17 @@ export const cancelBid = async ({
   return { txId };
 };
 
-type USMBidData = {
+export type USMBidData = {
   bidder: PublicKey;
+  bidderWalletAddress?: string;
   bid: number;
   timestamp: number;
+  timeSinceBid?: {
+    seconds: number;
+    minutes: number;
+    hours: number;
+    days: number;
+  };
 };
 
 type USMAuctionData = {
@@ -312,16 +319,25 @@ export const transformAuctionData = async (
   auction: Auction,
   connection: Connection
 ) => {
-  let bids = await auction.getBidderMetadata(connection);
+  const bids = await auction.getBidderMetadata(connection);
   const usmBidData = bids
     .filter((bid) => !bid.data.cancelled)
     .map((bid) => {
       const { data } = bid;
+
+      const timestamp = data.lastBidTimestamp.toNumber();
+      const seconds = Date.now() / 1000 - timestamp;
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+
       const bidData: USMBidData = {
         bidder: new PublicKey(data.bidderPubkey),
         bid: data.lastBid.toNumber() / LAMPORTS_PER_SOL,
-        timestamp: data.lastBidTimestamp.toNumber()
+        timeSinceBid: { seconds, minutes, hours, days },
+        timestamp
       };
+      bidData.bidderWalletAddress = bidData.bidder.toString();
       return bidData;
     })
     .sort((a, b) => b.bid - a.bid);

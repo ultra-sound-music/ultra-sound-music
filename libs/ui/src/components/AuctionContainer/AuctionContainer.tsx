@@ -1,4 +1,8 @@
-import { useIsConnected, usePlaceBid } from '@usm/app-state';
+import {
+  useAuctionDataState,
+  useIsConnected,
+  usePlaceBid
+} from '@usm/app-state';
 import { useState } from 'react';
 import { Button } from '../Button/Button';
 import Paginate from '../Paginate/Paginate';
@@ -25,6 +29,13 @@ export function AuctionContainer(props: AuctionContainerProps) {
   }
 
   const [page, setPage] = useState(0);
+
+  const auctionData = useAuctionDataState();
+  console.log('AuctionContainer', {
+    balance: auctionData?.balance,
+    bids: auctionData?.auctionData?.bids,
+    auctionData
+  });
 
   return (
     <div className={styles.mainContainer}>
@@ -54,22 +65,11 @@ export function AuctionContainer(props: AuctionContainerProps) {
             minutes: 46,
             seconds: 11
           }}
-          currentHighBidSol={173.5}
-          isWalletConnected={true}
-          walletBalanceSol={512.12}
-          recentBids={[
-            {
-              amountSol: 173.5,
-              userWalletAddress: '0x123',
-              timeSinceBid: { seconds: 19 }
-            },
-            {
-              amountSol: 101.0,
-              userWalletAddress: '0xvasd12asd3',
-              timeSinceBid: { minutes: 45 }
-            }
-          ]}
-          isAuctionFinished={false}
+          currentHighBidSol={auctionData?.auctionData?.bids[0]?.bid}
+          isWalletConnected={!!auctionData?.balance}
+          walletBalanceSol={auctionData?.balance}
+          recentBids={auctionData?.auctionData?.bids}
+          isAuctionFinished={!!auctionData?.auctionData?.winner}
           winningWalletAddress='0x1ds...sdfsa'
           traits={{ name: 'Jam Bot #1' }}
           onClickBidNow={onClickBidNow}
