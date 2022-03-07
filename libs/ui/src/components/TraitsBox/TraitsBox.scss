@@ -8,6 +8,10 @@
   padding: 12px;
   display: flex;
 
+  h1 {
+    font-weight: $font-weight-bold;
+  }
+
   .left {
     height: 100%;
     width: 50%;
@@ -24,6 +28,7 @@
           flex-grow: 1;
           p {
             font-size: $font-size-small;
+            margin-bottom: 0;
           }
         }
       }
@@ -32,6 +37,7 @@
       height: 176px;
       p {
         font-size: $font-size-mini;
+        padding-top: 10px;
       }
     }
   }
@@ -43,6 +49,19 @@
     flex-direction: column;
     .top {
       height: 308px;
+      .audioTraits {
+        padding-top: 20px;
+        height: 240px;
+        display: flex;
+        flex-direction: column;
+        div {
+          flex-grow: 1;
+          p {
+            font-size: $font-size-small;
+            margin-bottom: 0;
+          }
+        }
+      }
     }
     .bottom {
       height: 176px;

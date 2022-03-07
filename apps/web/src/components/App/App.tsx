@@ -33,7 +33,7 @@ export const nav = Object.freeze([
 
 const params = new URLSearchParams(window.location.search);
 const weAreLive =
-  params.get('wearelive') === 'true' || params.get('wearelive') === '1';
+  params.get('wearelive') === 'true' || params.get('wearelive') === '1' || true;
 
 const App = () => (
   <div className={styles.App}>

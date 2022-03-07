@@ -1,7 +1,16 @@
 import styles from './TraitsBox.scss';
 
 /* eslint-disable-next-line */
-export interface TraitsBoxProps {}
+export interface TraitsBoxProps {
+  sanityCategory: string;
+  fameCategory: string;
+  swaggerCategory: string;
+  melodicCategory: string;
+  texturalCategory: string;
+  energyCategory: string;
+  biographyContent: string;
+  badges: { key: string; value: string }[];
+}
 
 export function TraitsBox(props: TraitsBoxProps) {
   return (
@@ -11,29 +20,41 @@ export function TraitsBox(props: TraitsBoxProps) {
           <h1>Personal Traits</h1>
           <div className={styles.personalTraits}>
             <div>
-              <p>Sanity</p>
+              <p className={styles.category}>Sanity</p>
+              <p>{props.sanityCategory}</p>
             </div>
             <div>
-              <p>Fame</p>
+              <p className={styles.category}>Fame</p>
+              <p>{props.fameCategory}</p>
             </div>
             <div>
-              <p>Swagger</p>
+              <p className={styles.category}>Swagger</p>
+              <p>{props.swaggerCategory}</p>
             </div>
           </div>
         </div>
         <div className={styles.bottom}>
           <h1>Biography</h1>
-          <p>
-            Lorem ipsum dolor sit amet, conse ctetuer adipiscing elit. Aenean
-            comm odo ligula eget dolor. Aenean massa. Cum sociis natoque
-            penatibus et ma gnis dis parturient montes, nascetur ridiculus mus.
-            Cum sociis natoque penatibus.
-          </p>
+          <p>{props.biographyContent}</p>
         </div>
       </div>
       <div className={styles.right}>
         <div className={styles.top}>
           <h1>Audio Traits</h1>
+          <div className={styles.audioTraits}>
+            <div>
+              <p className={styles.category}>Melodic Style</p>
+              <p>{props.melodicCategory}</p>
+            </div>
+            <div>
+              <p className={styles.category}>Textural Style</p>
+              <p>{props.texturalCategory}</p>
+            </div>
+            <div>
+              <p className={styles.category}>Energy</p>
+              <p>{props.energyCategory}</p>
+            </div>
+          </div>
         </div>
         <div className={styles.bottom}>
           <h1>Badges</h1>
