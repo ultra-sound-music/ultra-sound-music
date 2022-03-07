@@ -22,7 +22,7 @@ export default function ConnectButton() {
 
   return (
     <Button type='primary' onClick={onClick}>
-      {isConnected ? shortenedAccountAddress : 'connect'}
+      {isConnected ? shortenedAccountAddress : 'Connect'}
     </Button>
   );
 }

@@ -30,8 +30,10 @@ export const SiteHeader = ({
             </div>
           </NavLink>
         </div>
-        {nav && <div className={styles.topNav}>{nav}</div>}
-        {ctaButton}
+        <div className={styles.actions}>
+          {nav}
+          {ctaButton}
+        </div>
       </div>
     </div>
   );

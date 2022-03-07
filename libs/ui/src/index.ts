@@ -1,3 +1,4 @@
+export * from './components/Modals/BidModal/BidModal';
 export * from './components/BurgerMenu/BurgerMenu';
 export * from './components/Badges/Badges';
 export * from './components/Link/Link';
