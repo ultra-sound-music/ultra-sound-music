@@ -15,7 +15,7 @@ export function SiteFooter() {
   return (
     <div className={styles.SiteFooter}>
       <div className={styles.brand}>
-        <Image src={logo} />
+        <Image src={logo} className={styles.logo} />
         <div className={styles.usm}>{copy.usm_long}</div>
       </div>
       <div className={styles.copyright}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   atom,
   selector,
@@ -72,9 +72,12 @@ export function useModal() {
   const showModal = useSetRecoilState(modal);
   const hideModal = useResetRecoilState(modal);
 
-  return {
-    showModal,
-    hideModal,
-    isModalVisible
-  };
+  return useMemo(
+    () => ({
+      showModal,
+      hideModal,
+      isModalVisible
+    }),
+    [modal, isModalVisible]
+  );
 }

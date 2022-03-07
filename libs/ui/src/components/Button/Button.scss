@@ -45,29 +45,6 @@
   }
 }
 
-.wide {
-  min-width: 300px;
-}
-
-.fullWidth {
-  padding-right: 0;
-  padding-left: 0;
-  width: 100%;
-}
-
-.withImage {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  column-gap: 15px;
-  padding: 7px 32px 7px 24px;
-
-  .image {
-    width: 30px;
-    height: 30px;
-  }
-}
-
 .primary {
   @include gradient1;
 
@@ -98,6 +75,19 @@
   }
 }
 
+.withImage {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  column-gap: 15px;
+  padding: 7px 32px 7px 24px;
+
+  .image {
+    width: 30px;
+    height: 30px;
+  }
+}
+
 .pill {
   height: 50px;
   width: 192px;
@@ -106,6 +96,16 @@
     content: '';
     border-radius: 10px;
   }
+}
+
+.wide {
+  min-width: 300px;
+}
+
+.fullWidth {
+  padding-right: 0;
+  padding-left: 0;
+  width: 100%;
 }
 
 .small {

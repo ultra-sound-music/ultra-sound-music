@@ -27,6 +27,11 @@
   }
 }
 
+.logo {
+  object-fit: cover;
+  width: 30px;
+}
+
 .copyright {
   color: $color-taffy;
   @extend %font-body;
