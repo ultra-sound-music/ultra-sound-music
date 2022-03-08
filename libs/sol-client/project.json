@@ -1,7 +1,6 @@
 {
   "root": "libs/sol-client",
   "sourceRoot": "libs/sol-client/src",
-  "projectDir": "",
   "projectType": "library",
   "targets": {
     "build": {
