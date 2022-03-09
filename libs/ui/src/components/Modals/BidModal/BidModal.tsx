@@ -7,11 +7,12 @@ import styles from './BidModal.scss';
 
 export interface IBidModalProps {
   isOpen: boolean;
-  title: string;
-  body: ReactNode;
-  fieldImage: string;
-  fieldValue: ReactNode;
-  fieldContext: ReactNode;
+  title?: React.ReactNode;
+  body?: ReactNode;
+  fieldImage?: string;
+  fieldValue?: ReactNode;
+  fieldContext?: ReactNode;
+  onHide?(): void;
 }
 
 export function BidModal({
@@ -20,10 +21,11 @@ export function BidModal({
   body,
   fieldImage,
   fieldValue,
-  fieldContext
+  fieldContext,
+  onHide
 }: IBidModalProps) {
   return (
-    <Modal isOpen={isOpen} withCloseX={false}>
+    <Modal isOpen={isOpen} onHide={onHide} withCloseX={false}>
       <div className={styles.title}>{title}</div>
       <div className={styles.body}>{body}</div>
       <div className={styles.field}>

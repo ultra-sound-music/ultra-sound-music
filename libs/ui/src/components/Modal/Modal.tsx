@@ -15,6 +15,7 @@ export interface IModalProps {
   withCloseButton?: boolean;
   isOpen: boolean;
   ctaButton?: React.ReactNode;
+  body?: React.ReactNode;
   onHide?: () => void;
   children?: React.ReactNode;
 }
@@ -48,6 +49,7 @@ export const Modal = ({
   isOpen,
   withCloseButton = true,
   ctaButton,
+  body,
   onHide,
   children
 }: IModalProps): JSX.Element => {
@@ -67,7 +69,7 @@ export const Modal = ({
     <ReactModal {...props}>
       {subject && <div className={styles.subject}>{subject}</div>}
       {title && <h3 className={styles.title}>{title}</h3>}
-      <div className={styles.body}>{children}</div>
+      <div className={styles.body}>{body || children}</div>
       {renderButtons(ctaButton, withCloseButton, onHide)}
       {withCloseX && <RiCloseLine className={styles.x} onClick={onHide} />}
     </ReactModal>

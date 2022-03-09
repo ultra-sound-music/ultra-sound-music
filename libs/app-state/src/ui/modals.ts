@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import {
   atom,
   selector,
@@ -8,7 +8,16 @@ import {
   DefaultValue
 } from 'recoil';
 
-interface IModalProps {
+// The circular dependency from ui -> app-state needs to be removed before we can use this
+// import { IModalProps, IBidModalProps } from '@usm/ui';
+
+type IModalType = 'base' | 'bidModal';
+
+interface IModalCoreProps {
+  type: IModalType;
+}
+
+interface IModalBaseProps {
   subject?: React.ReactNode;
   title?: React.ReactNode;
   shouldCloseOnEscape?: boolean;
@@ -16,18 +25,32 @@ interface IModalProps {
   withCloseButton?: boolean;
   isOpen: boolean;
   ctaButton?: React.ReactNode;
+  body?: React.ReactNode;
   onHide?: () => void;
   children?: React.ReactNode;
 }
 
-export interface IModalState extends Omit<IModalProps, 'children' | 'isOpen'> {
-  body?: React.ReactNode;
-  isOpen?: boolean;
+interface IBidModalProps {
+  isOpen: boolean;
+  title: React.ReactNode;
+  body: ReactNode;
+  fieldImage: string;
+  fieldValue: ReactNode;
+  fieldContext: ReactNode;
 }
+
+type IModalProps = Omit<
+  IModalCoreProps & (IModalBaseProps | IBidModalProps),
+  'children' | 'onHide'
+>;
+type IModalState = Partial<IModalProps>;
 
 export const modalProps = atom<IModalState>({
   key: 'modalState',
-  default: { isOpen: false }
+  default: {
+    type: 'base',
+    isOpen: false
+  }
 });
 
 export const isModalOpenState = selector({
@@ -58,17 +81,23 @@ export function useShowModal() {
   return useSetRecoilState(modalState);
 }
 
-export function useModal() {
+export function useModal(defaultType: IModalType = 'base') {
   const showModal = useSetRecoilState(modalState);
   const hideModal = useResetRecoilState(modalState);
   const isModalOpen = useRecoilValue(isModalOpenState);
 
   return useMemo(
     () => ({
-      showModal,
+      showModal(props: IModalState) {
+        return showModal({ ...props, type: defaultType });
+      },
       hideModal,
       isModalOpen
     }),
     [modalState, isModalOpenState]
   );
+}
+
+export function useBidModal() {
+  return useModal('bidModal');
 }
