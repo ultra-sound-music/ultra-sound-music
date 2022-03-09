@@ -117,18 +117,24 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
             </div>
             {timeSinceBid && (
               <div className={styles.bidTime}>
-                {timeSinceBid.days > 0 && <p>{timeSinceBid.days} days ago</p>}
-                {timeSinceBid.days === 0 && timeSinceBid.hours > 0 && (
-                  <p>{timeSinceBid.hours} hours ago</p>
+                {timeSinceBid.days && timeSinceBid.days > 0 && (
+                  <p>{timeSinceBid.days} days ago</p>
                 )}
+                {timeSinceBid &&
+                  timeSinceBid.days === 0 &&
+                  timeSinceBid.hours &&
+                  timeSinceBid.hours > 0 && (
+                    <p>{timeSinceBid.hours} hours ago</p>
+                  )}
                 {timeSinceBid.days === 0 &&
                   timeSinceBid.hours === 0 &&
+                  timeSinceBid.minutes &&
                   timeSinceBid.minutes > 0 && (
                     <p>{timeSinceBid.minutes} minutes ago</p>
                   )}
                 {timeSinceBid.days === 0 &&
                   timeSinceBid.hours === 0 &&
-                  timeSinceBid &&
+                  timeSinceBid.seconds &&
                   timeSinceBid.seconds > 0 && (
                     <p>{timeSinceBid.seconds} seconds ago</p>
                   )}

@@ -290,10 +290,10 @@ export type USMBidData = {
   bid: number;
   timestamp: number;
   timeSinceBid?: {
-    seconds: number;
-    minutes: number;
-    hours: number;
-    days: number;
+    seconds?: number;
+    minutes?: number;
+    hours?: number;
+    days?: number;
   };
 };
 

@@ -17,13 +17,13 @@ Primary.args = {
   walletBalanceSol: 513.21,
   recentBids: [
     {
-      amountSol: 173.5,
-      userWalletAddress: '0x123',
+      bid: 173.5,
+      bidderWalletAddress: '0x123',
       timeSinceBid: { seconds: 19 }
     },
     {
-      amountSol: 101.0,
-      userWalletAddress: '0xvasd12asd3',
+      bid: 101.0,
+      bidderWalletAddress: '0xvasd12asd3',
       timeSinceBid: { minutes: 45 }
     }
   ],
