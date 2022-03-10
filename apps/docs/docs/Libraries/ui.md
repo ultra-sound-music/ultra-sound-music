@@ -1,6 +1,6 @@
 # UI
 
-Storybook
+A component library built using [Storybook](https://storybook.js.org/).
 
 ### Serve
 

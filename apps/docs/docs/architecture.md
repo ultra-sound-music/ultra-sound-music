@@ -1,5 +1,7 @@
 # Architecture
 
+The Ultra Sound Music monorepo is built up of applications and libraries.
+
 ## Dependency Graph
 
-![Example banner](./../static/img/depgraph.png)
+![Dependency Graph](./../static/img/depgraph.png)

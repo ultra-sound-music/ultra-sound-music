@@ -1,5 +1,7 @@
 # Docs
 
+The Docs application is built using [Docusaurus](https://docusaurus.io/)
+
 ### Serve Docs Application
 
 ```
