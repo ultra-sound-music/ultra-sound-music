@@ -1,7 +1,7 @@
 import { useInView } from 'react-intersection-observer';
 
 import {
-  Accordian,
+  Accordion,
   AnimatedMeter,
   Badges,
   Grid,
@@ -170,7 +170,7 @@ export function Landing() {
             <h2>{copy.frequently_asked_questions}</h2>
             {faq.map((t, i) => (
               <div key={i} className={styles.faq}>
-                <Accordian term={t.q} details={t.a} />
+                <Accordion term={t.q} details={t.a} />
               </div>
             ))}
           </div>

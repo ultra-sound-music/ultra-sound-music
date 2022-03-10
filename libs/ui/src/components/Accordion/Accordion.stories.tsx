@@ -1,14 +1,14 @@
 import { Story, Meta } from '@storybook/react';
 
-import Accordian, { IAccordianProps } from './Accordian';
+import Accordion, { IAccordionProps } from './Accordion';
 
 export default {
-  title: 'Components/Accordian ',
-  component: Accordian
+  title: 'Components/Accordion ',
+  component: Accordion
 } as Meta;
 
-const Template: Story<IAccordianProps> = (args) => {
-  return <Accordian {...args} />;
+const Template: Story<IAccordionProps> = (args) => {
+  return <Accordion {...args} />;
 };
 
 export const Basic = Template.bind({});

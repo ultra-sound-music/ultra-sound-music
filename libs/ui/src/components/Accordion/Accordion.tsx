@@ -1,13 +1,13 @@
 import { useState, useCallback, ReactNode } from 'react';
 import cn from 'clsx';
-import styles from './Accordian.scss';
+import styles from './Accordion.scss';
 
-export interface IAccordianProps {
+export interface IAccordionProps {
   term: ReactNode;
   details: ReactNode;
 }
 
-export const Accordian = ({ term, details }: IAccordianProps): JSX.Element => {
+export const Accordion = ({ term, details }: IAccordionProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const state = isOpen ? 'open' : 'closed';
 
@@ -15,7 +15,7 @@ export const Accordian = ({ term, details }: IAccordianProps): JSX.Element => {
     setIsOpen(!isOpen);
   }, [isOpen, setIsOpen]);
 
-  const classNames = cn(styles.Accordian, styles[state]);
+  const classNames = cn(styles.Accordion, styles[state]);
 
   return (
     <div className={classNames} onClick={toggle}>
@@ -25,4 +25,4 @@ export const Accordian = ({ term, details }: IAccordianProps): JSX.Element => {
   );
 };
 
-export default Accordian;
+export default Accordion;

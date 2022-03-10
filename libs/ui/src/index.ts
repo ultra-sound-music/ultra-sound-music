@@ -5,7 +5,7 @@ export * from './components/Link/Link';
 export * from './components/Grid/Grid';
 export * from './components/Col/Col';
 export * from './components/Container/Container';
-export * from './components/Accordian/Accordian';
+export * from './components/Accordion/Accordion';
 export * from './components/Avatar/Avatar';
 export * from './components/BidBox/BidBox';
 export * from './components/Button/Button';
