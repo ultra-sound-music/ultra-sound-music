@@ -6,7 +6,11 @@ import {
 } from 'recoil';
 
 import SolClient from '@usm/sol-client';
-import { USMClient, AUCTION_PUBKEY } from '@usm/sol-client';
+import {
+  USMClient,
+  AUCTION_PUBKEY,
+  IN_PROGRESS_AUCTION_PUBKEY
+} from '@usm/sol-client';
 
 import * as ui from '../ui';
 import { localStorageEffect } from '../utils';
@@ -115,7 +119,7 @@ export function useUpdateNetworkStatus() {
 export function usePlaceBid(amountInSol: number) {
   return useRecoilCallback(({ snapshot }) => async () => {
     console.log('DEBUG', 'app-state', 'web3', 'usePlaceBid()', 'a)', {
-      AUCTION_PUBKEY,
+      IN_PROGRESS_PUBKEY: IN_PROGRESS_AUCTION_PUBKEY,
       amountInSol,
       solClient,
       USM
@@ -123,7 +127,7 @@ export function usePlaceBid(amountInSol: number) {
     if (!amountInSol) {
       return;
     }
-    const resp = await USM.placeBid(amountInSol, AUCTION_PUBKEY);
+    const resp = await USM.placeBid(amountInSol, IN_PROGRESS_AUCTION_PUBKEY);
     console.log('DEBUG', 'app-state', 'web3', 'usePlaceBid()', 'b)', {
       resp,
       txId: resp?.txId,
@@ -150,8 +154,10 @@ export function useConnect() {
 
           USM = new USMClient(connection, solClient.wallet as Wallet);
           const balance = await USM.getWalletBalance();
-          const auction = await USM.getAuction(AUCTION_PUBKEY);
-          const auctionData = await USM.getAuctionData(AUCTION_PUBKEY);
+          const auction = await USM.getAuction(IN_PROGRESS_AUCTION_PUBKEY);
+          const auctionData = await USM.getAuctionData(
+            IN_PROGRESS_AUCTION_PUBKEY
+          );
 
           updateNetworkStatus({
             accountAddress,

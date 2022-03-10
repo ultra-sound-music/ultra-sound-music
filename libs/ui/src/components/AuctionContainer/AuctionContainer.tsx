@@ -59,12 +59,7 @@ export function AuctionContainer(props: AuctionContainerProps) {
       </div>
       {page === 0 && (
         <BidBox
-          timeUntilAuctionEnd={{
-            days: 0,
-            hours: 21,
-            minutes: 46,
-            seconds: 11
-          }}
+          timeUntilAuctionEnd={{}}
           currentHighBidSol={auctionData?.auctionData?.bids[0]?.bid}
           isWalletConnected={!!auctionData?.balance}
           walletBalanceSol={auctionData?.balance}

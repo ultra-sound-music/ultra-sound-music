@@ -5,11 +5,11 @@ import styles from './BidBox.scss';
 
 /* eslint-disable-next-line */
 export interface BidBoxProps {
-  timeUntilAuctionEnd: {
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
+  timeUntilAuctionEnd?: {
+    days?: number;
+    hours?: number;
+    minutes?: number;
+    seconds?: number;
   };
   currentHighBidSol: number;
   recentBids: Partial<USMBidData>[];
@@ -25,13 +25,16 @@ export interface BidBoxProps {
 export const BidBox = (props: BidBoxProps): JSX.Element => (
   <>
     <div className={styles.timerContainer}>
-      <p>
-        Auction ends {props.timeUntilAuctionEnd.days}
-        <strong> days</strong> {props.timeUntilAuctionEnd.hours}
-        <strong> hours</strong> {props.timeUntilAuctionEnd.minutes}
-        <strong> minutes</strong> {props.timeUntilAuctionEnd.seconds}
-        <strong> seconds</strong>
-      </p>
+      {!!props.timeUntilAuctionEnd &&
+        !!Object.keys(props.timeUntilAuctionEnd).length && (
+          <p>
+            Auction ends {props.timeUntilAuctionEnd.days}
+            <strong> days</strong> {props.timeUntilAuctionEnd.hours}
+            <strong> hours</strong> {props.timeUntilAuctionEnd.minutes}
+            <strong> minutes</strong> {props.timeUntilAuctionEnd.seconds}
+            <strong> seconds</strong>
+          </p>
+        )}
     </div>
     <div className={styles.bidFormContainer}>
       <div className={styles.info}>
@@ -104,51 +107,55 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
         </div>
       )}
     </div>
-    <div className={styles.bidHistoryContainer}>
-      <p>Bid history</p>
-      <div className={styles.bidHistoryList}>
-        {props.recentBids?.map(({ bid, bidderWalletAddress, timeSinceBid }) => (
-          <div
-            className={styles.bidHistoryItem}
-            key={`${bid}${bidderWalletAddress}`}
-          >
-            <div className={styles.bidAmount}>
-              <p>{bid} SOL</p>
-            </div>
-            {timeSinceBid && (
-              <div className={styles.bidTime}>
-                {!!timeSinceBid.days && timeSinceBid.days > 0 && (
-                  <p>{timeSinceBid.days} days ago</p>
+    {props.recentBids && (
+      <div className={styles.bidHistoryContainer}>
+        <p>Bid history</p>
+        <div className={styles.bidHistoryList}>
+          {props.recentBids?.map(
+            ({ bid, bidderWalletAddress, timeSinceBid }) => (
+              <div
+                className={styles.bidHistoryItem}
+                key={`${bid}${bidderWalletAddress}`}
+              >
+                <div className={styles.bidAmount}>
+                  <p>{bid} SOL</p>
+                </div>
+                {timeSinceBid && (
+                  <div className={styles.bidTime}>
+                    {!!timeSinceBid.days && timeSinceBid.days > 0 && (
+                      <p>{timeSinceBid.days} days ago</p>
+                    )}
+                    {!timeSinceBid.days &&
+                      !!timeSinceBid.hours &&
+                      timeSinceBid.hours > 0 && (
+                        <p>{timeSinceBid.hours} hours ago</p>
+                      )}
+                    {!timeSinceBid.days &&
+                      !timeSinceBid.hours &&
+                      !!timeSinceBid.minutes &&
+                      timeSinceBid.minutes > 0 && (
+                        <p>{timeSinceBid.minutes} minutes ago</p>
+                      )}
+                    {!timeSinceBid.days &&
+                      !timeSinceBid.hours &&
+                      !!timeSinceBid.seconds &&
+                      timeSinceBid.seconds > 0 && (
+                        <p>{timeSinceBid.seconds} seconds ago</p>
+                      )}
+                  </div>
                 )}
-                {!timeSinceBid.days &&
-                  !!timeSinceBid.hours &&
-                  timeSinceBid.hours > 0 && (
-                    <p>{timeSinceBid.hours} hours ago</p>
-                  )}
-                {!timeSinceBid.days &&
-                  !timeSinceBid.hours &&
-                  !!timeSinceBid.minutes &&
-                  timeSinceBid.minutes > 0 && (
-                    <p>{timeSinceBid.minutes} minutes ago</p>
-                  )}
-                {!timeSinceBid.days &&
-                  !timeSinceBid.hours &&
-                  !!timeSinceBid.seconds &&
-                  timeSinceBid.seconds > 0 && (
-                    <p>{timeSinceBid.seconds} seconds ago</p>
-                  )}
+                <div className={styles.bidWalletAddress}>
+                  <p>{`${bidderWalletAddress?.slice(
+                    0,
+                    4
+                  )}...${bidderWalletAddress?.slice(40)}`}</p>
+                </div>
               </div>
-            )}
-            <div className={styles.bidWalletAddress}>
-              <p>{`${bidderWalletAddress?.slice(
-                0,
-                4
-              )}...${bidderWalletAddress?.slice(40)}`}</p>
-            </div>
-          </div>
-        ))}
+            )
+          )}
+        </div>
       </div>
-    </div>
+    )}
   </>
 );
 
