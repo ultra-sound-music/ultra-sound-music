@@ -44,6 +44,21 @@ to run a command locally you can use `npx ts-node src/usm-cli <command>`
 
 the commands in the list above are listed in order that they are needed to configure an auction. start with `init-store` and end with `start-auction`. to see specific args and options for a command use `npx ts-node src/usm-cli <command> -h`
 
+### Example: create metadata uri 
+
+```
+Usage: usm-cli create-metadata-uri [options]
+
+Options:
+  -ar, --arwallet <path>  ar wallet path (default: "--arwallet not provided")
+  -m, --metadata <path>   metadata json location (default: "--metadata-path
+                          not provided")
+  -h, --help              display help for command
+
+```
+
+
+
 ### Example: mint nft
 
 ```
