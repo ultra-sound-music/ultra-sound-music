@@ -81,23 +81,17 @@ export function useShowModal() {
   return useSetRecoilState(modalState);
 }
 
-export function useModal(defaultType: IModalType = 'base') {
+export function useModal() {
   const showModal = useSetRecoilState(modalState);
   const hideModal = useResetRecoilState(modalState);
   const isModalOpen = useRecoilValue(isModalOpenState);
 
   return useMemo(
     () => ({
-      showModal(props: IModalState) {
-        return showModal({ ...props, type: defaultType });
-      },
+      showModal,
       hideModal,
       isModalOpen
     }),
     [modalState, isModalOpenState]
   );
-}
-
-export function useBidModal() {
-  return useModal('bidModal');
 }
