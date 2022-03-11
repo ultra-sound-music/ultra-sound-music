@@ -1,17 +1,15 @@
+import { useEffect } from 'react';
+
 import { Button } from '@usm/ui';
 import {
-  useIsConnected,
   useGetShortenedAccountAddress,
   useConnect,
-  useDisconnect
+  useDisconnect,
+  useNetworkState,
+  web3Constants
 } from '@usm/app-state';
 
 export default function ConnectButton() {
-  const connect = useConnect();
-  const disconnect = useDisconnect();
-  const isConnected = useIsConnected();
-  const shortenedAccountAddress = useGetShortenedAccountAddress();
-
   function onClick() {
     if (isConnected) {
       disconnect();
@@ -20,8 +18,21 @@ export default function ConnectButton() {
     }
   }
 
+  const [{ isConnected, accountAddress, networkStatus }] = useNetworkState();
+  const shortenedAccountAddress = useGetShortenedAccountAddress();
+  const connect = useConnect();
+  const disconnect = useDisconnect();
+
+  const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
+
+  useEffect(() => {
+    if (!isConnected && accountAddress) {
+      connect();
+    }
+  }, []);
+
   return (
-    <Button type='primary' onClick={onClick}>
+    <Button type='primary' onClick={onClick} isProcessing={isConnecting}>
       {isConnected ? shortenedAccountAddress : 'Connect'}
     </Button>
   );

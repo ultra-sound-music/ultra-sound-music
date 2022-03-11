@@ -8,7 +8,8 @@ const env = {
   sentryIsEnabled: process.env.USM_SENTRY_ENABLED,
   sentryDNS: process.env.USM_SENTRY_DNS,
   solanaFMApiKey: process.env.USM_SOLANA_FM_API_KEY,
-  solanaFMUri: process.env.USM_SOLANA_FM_URI
+  solanaFMUri: process.env.USM_SOLANA_FM_URI,
+  weAreLive: process.env.WE_ARE_LIVE === 'true'
 };
 
 const configs = {

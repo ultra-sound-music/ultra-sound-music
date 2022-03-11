@@ -8,5 +8,6 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "stylelint.snippet": ["css", "postcss", "scss"],
-  "local-history.path": "~/.config/vscode-history"
+  "local-history.path": "~/.config/vscode-history",
+  "cSpell.words": ["solana"]
 }

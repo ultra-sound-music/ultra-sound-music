@@ -12,13 +12,8 @@ export const Paginate = ({
   onClickPrev,
   onClickNext
 }: IPaginateProps): JSX.Element => {
-  const prevClassnames = cn(styles.item, {
-    [styles.disabled]: !onClickPrev
-  });
-
-  const nextClassnames = cn(styles.item, {
-    [styles.disabled]: !onClickNext
-  });
+  const prevClassnames = cn(styles.item, styles[onClickPrev ? 'enabled' : 'disabled']);
+  const nextClassnames = cn(styles.item, styles[onClickNext ? 'enabled' : 'disabled']);;
 
   return (
     <div className={styles.Paginate}>

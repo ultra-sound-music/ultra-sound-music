@@ -1,5 +1,27 @@
 @use '../../styles' as *;
 
+.BidBox {
+  position: relative;
+}
+
+.processing {
+  opacity: 50%;
+}
+
+.bidInput {
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &::-moz-inner-spin-button,
+  &::-moz-outer-spin-button {
+    -moz-appearance: textfield;
+    margin: 0;
+  }
+}
+
 .timerContainer {
   height: 106px;
   border-radius: 9px;
@@ -28,37 +50,7 @@
     // border: 1px solid black;
     padding: 12px;
     display: flex;
-    .currentBid {
-      // border: 1px solid black;
-      height: 100%;
-      flex-grow: 1;
-
-      p {
-        line-height: 24px;
-        margin: 0;
-      }
-
-      .currentBidValue {
-        padding: 19px 0;
-      }
-    }
-    .walletBalance {
-      // border: 1px solid black;
-      height: 100%;
-      flex-grow: 1;
-      padding-left: 48px;
-
-      p {
-        line-height: 24px;
-        margin: 0;
-      }
-
-      .walletBalanceValue {
-        padding: 19px 0;
-      }
-    }
   }
-
   .form {
     width: 100%;
 
@@ -142,4 +134,33 @@
       }
     }
   }
+}
+
+.walletBalance {
+  height: 100%;
+  flex-grow: 1;
+  padding-left: 48px;
+
+  p {
+    line-height: 24px;
+    margin: 0;
+  }
+}
+
+.walletBalanceValue {
+  padding: 19px 0;
+}
+
+.currentBid {
+  height: 100%;
+  flex-grow: 1;
+
+  p {
+    line-height: 24px;
+    margin: 0;
+  }
+}
+
+.currentBidValue {
+  padding: 19px 0;
 }

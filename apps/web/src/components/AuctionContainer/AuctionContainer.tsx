@@ -1,41 +1,44 @@
+import { useEffect, useState } from 'react';
+
 import {
-  useAuctionDataState,
+  useLoadAuction,
   useIsConnected,
-  usePlaceBid
+  usePlaceBid,
+  useNetworkState,
+  web3Constants
 } from '@usm/app-state';
-import { useState } from 'react';
-import { Button } from '../Button/Button';
-import Paginate from '../Paginate/Paginate';
-import BidBox from '../BidBox/BidBox';
-import TraitsBox from '../TraitsBox/TraitsBox';
+
+import { Button, Paginate, BidBox, TraitsBox } from '@usm/ui';
+
+import ConnectButton from '../Buttons/ConnectButton/ConnectButton';
 
 import styles from './AuctionContainer.scss';
 
-/* eslint-disable-next-line */
-export interface AuctionContainerProps {}
-
-export function AuctionContainer(props: AuctionContainerProps) {
-  const [bidAmount, setBidAmount] = useState('');
-  const placeBid = usePlaceBid(
-    Number.isNaN(parseFloat(bidAmount)) ? 0 : parseFloat(bidAmount)
-  );
-  const isConnected = useIsConnected();
-
+export function AuctionContainer() {
   function onClickBidNow() {
-    console.log('onClickBidNow()', { isConnected });
     if (isConnected) {
       placeBid();
     }
   }
 
+  const [bidAmount, setBidAmount] = useState('');
+  const placeBid = usePlaceBid(
+    Number.isNaN(parseFloat(bidAmount)) ? 0 : parseFloat(bidAmount)
+  );
+  const isConnected = useIsConnected();
   const [page, setPage] = useState(0);
+  const [{ networkStatus }] = useNetworkState();
+  const { auction, loadAuction } = useLoadAuction();
+  
+  const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
+  const isLoadingAuction = auction.isLoading;
+  const isProcessing = isConnecting || isLoadingAuction;
 
-  const auctionData = useAuctionDataState();
-  console.log('AuctionContainer', {
-    balance: auctionData?.balance,
-    bids: auctionData?.auctionData?.bids,
-    auctionData
-  });
+  useEffect(() => {
+    if (isConnected) {
+      loadAuction();
+    }
+  }, [isConnected]);
 
   return (
     <div className={styles.mainContainer}>
@@ -55,18 +58,20 @@ export function AuctionContainer(props: AuctionContainerProps) {
         >
           Traits
         </Button>
-        <Paginate></Paginate>
+        <Paginate />
       </div>
       {page === 0 && (
         <BidBox
+          isProcessing={isProcessing}
           timeUntilAuctionEnd={{}}
-          currentHighBidSol={auctionData?.auctionData?.bids[0]?.bid}
-          isWalletConnected={!!auctionData?.balance}
-          walletBalanceSol={auctionData?.balance}
-          recentBids={auctionData?.auctionData?.bids}
-          isAuctionFinished={!!auctionData?.auctionData?.winner}
+          currentHighBidSol={auction?.bidData?.bids[0]?.bid}
+          isWalletConnected={isConnected}
+          walletBalanceSol={auction?.balance}
+          recentBids={auction?.bidData?.bids}
+          isAuctionFinished={!!auction?.bidData?.winner}
           winningWalletAddress='0x1ds...sdfsa'
           traits={{ name: 'Jam Bot #1' }}
+          connectButton={<ConnectButton />}
           onClickBidNow={onClickBidNow}
           onChangeBidAmount={(value) => setBidAmount(value)}
         />

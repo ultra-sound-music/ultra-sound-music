@@ -11,6 +11,7 @@ import {
   TextBlock
 } from '@usm/ui';
 import { copy } from '@usm/content';
+import config from '@usm/config';
 import logo from '@usm/assets/img/logo.png';
 import jambot2 from '@usm/assets/img/hero_jambot2.png';
 import { urls, team, faq } from '@usm/content';
@@ -33,10 +34,7 @@ export function Landing() {
     rootMargin: '-100px 0px'
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const weAreLive =
-    params.get('wearelive') === 'true' || params.get('wearelive') === '1';
-
+  const weAreLive = !!config.weAreLive
   return (
     <div className={styles.Landing}>
       <div className={styles.tri1}>

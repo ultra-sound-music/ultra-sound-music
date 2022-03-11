@@ -1,8 +1,9 @@
-import { Grid, AuctionContainer } from '@usm/ui';
+import { Grid } from '@usm/ui';
+
+import AuctionContainer from '../AuctionContainer/AuctionContainer';
 
 import styles from './NewDrop.scss';
 
-// VIJX
 export function NewDrop() {
   return (
     <Grid className={styles.Grid}>

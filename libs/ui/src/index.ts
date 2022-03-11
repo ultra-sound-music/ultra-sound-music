@@ -26,5 +26,4 @@ export * from './components/Selector/Selector';
 export * from './components/SiteHeader/SiteHeader';
 export * from './components/Spinner/Spinner';
 export * from './components/TextBlock/TextBlock';
-export * from './components/AuctionContainer/AuctionContainer';
 export * from './components/TraitsBox/TraitsBox';

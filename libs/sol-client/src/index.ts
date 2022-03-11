@@ -15,6 +15,24 @@ export function isValidSolanaAddress(address: string): boolean {
   return !!address;
 }
 
+function waitForWallet(wallet: Adapter): Promise<string> {
+  return new Promise((resolve) => {
+    const intervalId = setInterval(() => {
+      const key = wallet.publicKey as PublicKey;
+
+      if (key) {
+        clearInterval(intervalId);
+        resolve(key && key !== PublicKey.default ? key.toString() : '');
+      }
+    }, 30);  
+
+    setTimeout(() => {
+      resolve('');
+      clearInterval(intervalId)
+    }, 2000);
+  });    
+}
+
 export default class SolClient implements IWallet {
   isWeb3Available = false;
   walletName: string;
@@ -48,6 +66,9 @@ export default class SolClient implements IWallet {
     }
 
     await this.wallet.connect();
+    
+    // @TODO - there's a bug where the wallet address can be null for a second even after the wallet connects
+    await waitForWallet(this.wallet);
     return await this.getWalletAddress();
   }
 

@@ -3,13 +3,27 @@ import { Auction } from '@metaplex-foundation/mpl-auction';
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { Account } from '@metaplex-foundation/mpl-core';
 import { Connection, Wallet } from '@metaplex/js';
-import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import {
+  LAMPORTS_PER_SOL,
+  PublicKey,
+  TransactionSignature
+} from '@solana/web3.js';
 import { actions } from '@metaplex/js';
 import { cancelBid, transformAuctionData, placeBid } from './utils/utils';
 import BN from 'bn.js';
 const { redeemFullRightsTransferBid, redeemParticipationBidV3 } = actions;
 
 export * from './consts';
+
+export { Auction };
+
+interface IRedeemParticipationBidV3Response {
+  txIds: TransactionSignature[];
+}
+
+interface IRedeemBidResponse {
+  txId: string;
+}
 
 export class USMClient {
   connection;
@@ -36,16 +50,12 @@ export class USMClient {
     return transformAuctionData(a, this.connection);
   }
 
-  async placeBid(amountInSol: number, auction: PublicKey) {
-    console.log('DEBUG', 'sol-client', 'placeBid()', 'a)', {
-      amountInSol,
-      auction
-    });
-    if (amountInSol <= 0) {
+  async placeBid(amount: number, auction: PublicKey) {
+    if (amount <= 0) {
       return;
     }
-    const bidAmount = new BN(amountInSol * LAMPORTS_PER_SOL);
-    console.log('DEBUG', 'sol-client', 'placeBid()', 'b)', { bidAmount });
+
+    const bidAmount = new BN(amount * LAMPORTS_PER_SOL);
     return placeBid({
       connection: this.connection,
       wallet: this.wallet,
@@ -62,7 +72,10 @@ export class USMClient {
     });
   }
 
-  async redeemParticipationBid(store: PublicKey, auction: PublicKey) {
+  async redeemParticipationBid(
+    store: PublicKey,
+    auction: PublicKey
+  ): Promise<IRedeemParticipationBidV3Response> {
     return redeemParticipationBidV3({
       connection: this.connection,
       wallet: this.wallet,
@@ -71,7 +84,10 @@ export class USMClient {
     });
   }
 
-  async redeemBid(store: PublicKey, auction: PublicKey) {
+  async redeemBid(
+    store: PublicKey,
+    auction: PublicKey
+  ): Promise<IRedeemBidResponse> {
     return redeemFullRightsTransferBid({
       connection: this.connection,
       wallet: this.wallet,

@@ -1,9 +1,13 @@
+import { ReactNode } from 'react';
+import cn from 'clsx';
+
 import { USMBidData } from '@usm/sol-client';
+
 import { Button } from '../Button/Button';
+import { Spinner } from '../Spinner/Spinner';
 
 import styles from './BidBox.scss';
 
-/* eslint-disable-next-line */
 export interface BidBoxProps {
   timeUntilAuctionEnd?: {
     days?: number;
@@ -11,19 +15,21 @@ export interface BidBoxProps {
     minutes?: number;
     seconds?: number;
   };
-  currentHighBidSol: number;
-  recentBids: Partial<USMBidData>[];
+  currentHighBidSol?: number;
+  recentBids?: Partial<USMBidData>[];
   isWalletConnected: boolean;
-  walletBalanceSol: number;
+  walletBalanceSol?: number;
   isAuctionFinished: boolean;
   winningWalletAddress: string;
   traits: { [key: string]: string };
+  isProcessing?: boolean;
+  connectButton?: ReactNode;
   onClickBidNow: () => void;
   onChangeBidAmount: (value: string) => void;
 }
 
 export const BidBox = (props: BidBoxProps): JSX.Element => (
-  <>
+  <div className={cn(styles.BidBox, props.isProcessing && styles.processing)}>
     <div className={styles.timerContainer}>
       {!!props.timeUntilAuctionEnd &&
         !!Object.keys(props.timeUntilAuctionEnd).length && (
@@ -41,7 +47,9 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
         <div className={styles.currentBid}>
           <p>Current Bid</p>
           <div className={styles.currentBidValue}>
-            <h3>{props.currentHighBidSol} SOL</h3>
+            {!!props.currentHighBidSol && (
+              <h3>{props.currentHighBidSol} SOL</h3>
+            )}
           </div>
         </div>
         {!props.isWalletConnected && !props.isAuctionFinished && (
@@ -56,7 +64,9 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
           <div className={styles.walletBalance}>
             <p>In your wallet</p>
             <div className={styles.walletBalanceValue}>
-              <h3>{props.walletBalanceSol} SOL</h3>
+              {!!props.walletBalanceSol && (
+                <h3>{props.walletBalanceSol} SOL</h3>
+              )}
             </div>
           </div>
         )}
@@ -75,15 +85,14 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
           <div className={styles.formInputBox}>
             <div className={styles.formInput}>
               <input
+                className={styles.bidInput}
                 type='number'
                 placeholder='Bid more than 0.0 SOL'
                 disabled
               />
               <span>SOL</span>
             </div>
-            <Button isDisabled type='primary'>
-              Connect
-            </Button>
+            {props.connectButton}
           </div>
         </div>
       )}
@@ -93,15 +102,17 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
           <div className={styles.formInputBox}>
             <div className={styles.formInput}>
               <input
+                className={styles.bidInput}
                 type='number'
                 placeholder='Bid more than 0.0 SOL'
                 min='0.01'
                 onChange={(e) => props.onChangeBidAmount(e.target.value)}
+                disabled={props.isProcessing}
               />
               <span>SOL</span>
             </div>
-            <Button type='primary' onClick={props.onClickBidNow}>
-              Bid now
+            <Button type='primary' isDisabled={props.isProcessing} onClick={props.onClickBidNow}>
+              Place bid
             </Button>
           </div>
         </div>
@@ -138,9 +149,10 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
                       )}
                     {!timeSinceBid.days &&
                       !timeSinceBid.hours &&
+                      !timeSinceBid.minutes &&
                       !!timeSinceBid.seconds &&
                       timeSinceBid.seconds > 0 && (
-                        <p>{timeSinceBid.seconds} seconds ago</p>
+                        <p>{Math.floor(timeSinceBid.seconds)} seconds ago</p>
                       )}
                   </div>
                 )}
@@ -156,7 +168,7 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
         </div>
       </div>
     )}
-  </>
+  </div>
 );
 
 export default BidBox;

@@ -15,10 +15,10 @@ const iconMap = {
 
 export interface INotificationProps {
   type?: keyof typeof iconMap;
-  title: string;
-  message: React.ReactNode;
-  timeout?: 0 | 4000;
-  isOpen: boolean;
+  title?: string;
+  message?: React.ReactNode;
+  timeout?: number;
+  isVisible?: boolean;
   onHide: () => void;
 }
 
@@ -26,8 +26,8 @@ export const Notification = ({
   type = 'info',
   title,
   message,
-  timeout = 0,
-  isOpen,
+  timeout,
+  isVisible = false,
   onHide
 }: INotificationProps): JSX.Element => {
   function onHideHandler() {
@@ -41,8 +41,11 @@ export const Notification = ({
   }
 
   const Icon = iconMap[type];
-  const state = isOpen ? 'open' : 'closed';
-  const classNames = cn(styles.Notification, styles[state], styles[type]);
+  const classNames = cn(
+    styles.Notification,
+    isVisible && styles.visible,
+    styles[type]
+  );
 
   return (
     <div className={classNames}>
