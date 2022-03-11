@@ -1,5 +1,19 @@
 @use '../../styles.scss' as *;
 
+:global(.ReactModal__Overlay) {
+  background-color: rebeccapurple;
+  opacity: 0%;
+}
+
+:global(.ReactModal__Overlay--after-open) {
+  opacity: 100%;
+  transition: opacity 300ms ease-in-out;
+}
+
+:global(.ReactModal__Overlay--before-close) {
+  opacity: 0%;
+}
+
 .Modal {
   background-color: $color-empty-sky;
   border: 2px solid $color-taffy;
@@ -10,6 +24,12 @@
   transform: translate(-50%, -50%);
   padding: 20px;
   width: 480px;
+  opacity: 0%;
+}
+
+.open {
+  opacity: 100%;
+  transition: opacity ease 5s;
 }
 
 .title {
@@ -22,7 +42,7 @@
   @extend %font-h4;
 }
 
-.body {
+.body:not(:last-child) {
   margin-bottom: 25px;
 }
 

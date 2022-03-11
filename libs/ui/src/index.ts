@@ -1,3 +1,5 @@
+export * from './components/Icons/SolanaIcon/SolanaIcon';
+export * from './components/Modals/ConnectModal/ConnectModal';
 export * from './components/Modals/BidModal/BidModal';
 export * from './components/BurgerMenu/BurgerMenu';
 export * from './components/Badges/Badges';

@@ -4,13 +4,14 @@ import {
   useLoadAuction,
   useIsConnected,
   usePlaceBid,
-  useNetworkState,
+  useNetwork,
+  useAccountBalance,
   web3Constants
 } from '@usm/app-state';
 
 import { Button, Paginate, BidBox, TraitsBox } from '@usm/ui';
 
-import ConnectButton from '../Buttons/ConnectButton/ConnectButton';
+import ConnectButton from '../Buttons/NetworkButton/NetworkButton';
 
 import styles from './AuctionContainer.scss';
 
@@ -27,15 +28,17 @@ export function AuctionContainer() {
   );
   const isConnected = useIsConnected();
   const [page, setPage] = useState(0);
-  const [{ networkStatus }] = useNetworkState();
+  const [{ networkStatus }] = useNetwork();
+  const [balance] = useAccountBalance();
   const { auction, loadAuction } = useLoadAuction();
-  
+
   const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
   const isLoadingAuction = auction.isLoading;
   const isProcessing = isConnecting || isLoadingAuction;
 
   useEffect(() => {
-    if (isConnected) {
+    const isDisconnecting = auction.auctionData && !isConnected;
+    if (!isDisconnecting) {
       loadAuction();
     }
   }, [isConnected]);
@@ -66,7 +69,7 @@ export function AuctionContainer() {
           timeUntilAuctionEnd={{}}
           currentHighBidSol={auction?.bidData?.bids[0]?.bid}
           isWalletConnected={isConnected}
-          walletBalanceSol={auction?.balance}
+          walletBalanceSol={balance && Math.round(balance * 10000) / 10000}
           recentBids={auction?.bidData?.bids}
           isAuctionFinished={!!auction?.bidData?.winner}
           winningWalletAddress='0x1ds...sdfsa'

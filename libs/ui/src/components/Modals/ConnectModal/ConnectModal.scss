@@ -1,0 +1,15 @@
+@use '../../../styles.scss' as *;
+
+.walletLink {
+  display: block;
+  color: $color-lavish;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 10px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: $color-lavish;
+  }
+}

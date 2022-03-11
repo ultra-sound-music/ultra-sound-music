@@ -2,7 +2,6 @@ import { Story, Meta } from '@storybook/react';
 
 import solLogo from '@usm/assets/img/solana_logo_s.svg';
 
-import Image from '../../Image/Image';
 import BidModal, { IBidModalProps } from './BidModal';
 
 export default {

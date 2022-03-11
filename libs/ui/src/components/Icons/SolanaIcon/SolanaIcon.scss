@@ -1,0 +1,26 @@
+@use '../../../styles.scss' as *;
+
+.SolanaIcon {
+  object-fit: contain;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: $color-empty-sky;
+  line-height: 0;
+}
+
+.tiny {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+}
+
+.small {
+  width: 40px;
+  height: 40px;
+  padding: 7px;
+}
+
+.medium {
+  width: 64px;
+  height: 64px;
+}

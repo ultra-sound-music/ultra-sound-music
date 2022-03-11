@@ -1,12 +1,21 @@
 import { ReactNode } from 'react';
 import cn from 'clsx';
 
-import { USMBidData } from '@usm/sol-client';
-
-import { Button } from '../Button/Button';
-import { Spinner } from '../Spinner/Spinner';
+import Button from '../Button/Button';
+import SolanaIcon from '../Icons/SolanaIcon/SolanaIcon';
 
 import styles from './BidBox.scss';
+
+export interface IBidBoxBid {
+  bidderWalletAddress?: string;
+  bid: number;
+  timeSinceBid?: {
+    seconds?: number;
+    minutes?: number;
+    hours?: number;
+    days?: number;
+  };
+}
 
 export interface BidBoxProps {
   timeUntilAuctionEnd?: {
@@ -16,7 +25,7 @@ export interface BidBoxProps {
     seconds?: number;
   };
   currentHighBidSol?: number;
-  recentBids?: Partial<USMBidData>[];
+  recentBids?: IBidBoxBid[];
   isWalletConnected: boolean;
   walletBalanceSol?: number;
   isAuctionFinished: boolean;
@@ -63,11 +72,14 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
         {props.isWalletConnected && !props.isAuctionFinished && (
           <div className={styles.walletBalance}>
             <p>In your wallet</p>
-            <div className={styles.walletBalanceValue}>
-              {!!props.walletBalanceSol && (
-                <h3>{props.walletBalanceSol} SOL</h3>
-              )}
-            </div>
+            {!!props.walletBalanceSol && (
+              <div className={styles.walletBalanceValue}>
+                <SolanaIcon size='small' />
+                <div className={styles.balanceAmount}>
+                  {props.walletBalanceSol} SOL
+                </div>
+              </div>
+            )}
           </div>
         )}
         {props.isAuctionFinished && (
@@ -111,7 +123,11 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
               />
               <span>SOL</span>
             </div>
-            <Button type='primary' isDisabled={props.isProcessing} onClick={props.onClickBidNow}>
+            <Button
+              type='primary'
+              isDisabled={props.isProcessing}
+              onClick={props.onClickBidNow}
+            >
               Place bid
             </Button>
           </div>
@@ -128,31 +144,34 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
                 className={styles.bidHistoryItem}
                 key={`${bid}${bidderWalletAddress}`}
               >
+                <SolanaIcon size='tiny' />
                 <div className={styles.bidAmount}>
-                  <p>{bid} SOL</p>
+                  <div>{bid} SOL</div>
                 </div>
                 {timeSinceBid && (
                   <div className={styles.bidTime}>
                     {!!timeSinceBid.days && timeSinceBid.days > 0 && (
-                      <p>{timeSinceBid.days} days ago</p>
+                      <div>{timeSinceBid.days} days ago</div>
                     )}
                     {!timeSinceBid.days &&
                       !!timeSinceBid.hours &&
                       timeSinceBid.hours > 0 && (
-                        <p>{timeSinceBid.hours} hours ago</p>
+                        <div>{timeSinceBid.hours} hours ago</div>
                       )}
                     {!timeSinceBid.days &&
                       !timeSinceBid.hours &&
                       !!timeSinceBid.minutes &&
                       timeSinceBid.minutes > 0 && (
-                        <p>{timeSinceBid.minutes} minutes ago</p>
+                        <div>{timeSinceBid.minutes} minutes ago</div>
                       )}
                     {!timeSinceBid.days &&
                       !timeSinceBid.hours &&
                       !timeSinceBid.minutes &&
                       !!timeSinceBid.seconds &&
                       timeSinceBid.seconds > 0 && (
-                        <p>{Math.floor(timeSinceBid.seconds)} seconds ago</p>
+                        <div>
+                          {Math.floor(timeSinceBid.seconds)} seconds ago
+                        </div>
                       )}
                   </div>
                 )}

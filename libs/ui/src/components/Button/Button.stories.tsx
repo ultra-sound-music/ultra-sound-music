@@ -43,7 +43,7 @@ WithImage.args = {
 export const Tile = Template.bind({});
 Tile.args = {
   type: 'primary',
-  isSmall: true,
+  isSmall: false,
   shape: 'tile',
   image: <Image src={phantomLogo} />,
   subtext: 'Connect with a browser extension',

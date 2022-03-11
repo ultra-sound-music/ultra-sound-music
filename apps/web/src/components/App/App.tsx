@@ -7,7 +7,7 @@ import { copy, urls, routes } from '@usm/content';
 import config from '@usm/config';
 
 import Home from '../Landing/Landing';
-import ConnectButton from '../Buttons/ConnectButton/ConnectButton';
+import NetworkButton from '../Buttons/NetworkButton/NetworkButton';
 import Modal from '../Modal/Modal';
 import Notification from '../Notification/Notification';
 import PageNotFound from '../PageNotFound/PageNotFound';
@@ -45,7 +45,7 @@ const App = () => (
     <div className={styles.header}>
       <SiteHeader
         nav={<Nav items={nav} />}
-        ctaButton={weAreLive ? <ConnectButton /> : undefined}
+        ctaButton={weAreLive ? <NetworkButton /> : undefined}
       />
     </div>
     <Routes>

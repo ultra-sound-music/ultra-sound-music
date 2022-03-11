@@ -8,10 +8,10 @@ import {
   DefaultValue
 } from 'recoil';
 
-// The circular dependency from ui -> app-state needs to be removed before we can use this
+// Resolve buildable not being able to import from buildable
 // import { IModalProps, IBidModalProps } from '@usm/ui';
 
-type IModalType = 'base' | 'bidModal';
+type IModalType = 'base' | 'bidModal' | 'connectModal';
 
 interface IModalCoreProps {
   type: IModalType;
@@ -39,10 +39,17 @@ interface IBidModalProps {
   fieldContext: ReactNode;
 }
 
+interface IConnectModalProps {
+  isOpen: boolean;
+  onConnect(): void;
+}
+
 type IModalProps = Omit<
-  IModalCoreProps & (IModalBaseProps | IBidModalProps),
+  IModalCoreProps & IModalBaseProps,
   'children' | 'onHide'
->;
+> &
+  IBidModalProps &
+  IConnectModalProps;
 type IModalState = Partial<IModalProps>;
 
 export const modalProps = atom<IModalState>({

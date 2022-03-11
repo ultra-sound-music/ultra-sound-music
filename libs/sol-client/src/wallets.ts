@@ -18,7 +18,7 @@ export interface IWallet {
   connectWallet(): Promise<string>;
   getWalletAddress(): Promise<IPubKeyString | null>;
   getNetworkId(): Promise<INetworkId>;
-  isConnected(): Promise<boolean>;
+  isConnected(): boolean;
   mint(): Promise<string>;
   on(eventName: string, eventHandler: () => void): void;
   off(eventName: string, eventHandler: () => void): void;
@@ -36,7 +36,7 @@ export const walletsMap = {
 };
 
 export type IWalletName = keyof typeof walletsMap;
-export const detaultWalletName: IWalletName = 'Phantom';
+export const defaultWalletName: IWalletName = 'Phantom';
 
 export const supportedWallets = Object.keys(walletsMap);
 

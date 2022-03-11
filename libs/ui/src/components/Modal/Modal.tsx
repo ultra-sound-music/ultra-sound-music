@@ -32,7 +32,11 @@ export function renderButtons(
   return (
     <div className={styles.buttons}>
       {withCloseButton && (
-        <Button onClick={onHide} isFullWidth={true} type={ctaButton ? 'secondary' : 'primary'}>
+        <Button
+          onClick={onHide}
+          isFullWidth={true}
+          type={ctaButton ? 'secondary' : 'primary'}
+        >
           Close
         </Button>
       )}
@@ -53,7 +57,7 @@ export const Modal = ({
   onHide,
   children
 }: IModalProps): JSX.Element => {
-  const classNames = cn(styles.Modal);
+  const classNames = cn(styles.Modal, isOpen && styles.open);
   const overlayClassNames = cn(styles.overlay);
 
   const props = {
@@ -62,6 +66,7 @@ export const Modal = ({
     isOpen,
     shouldCloseOnEscape,
     appElement: document?.getElementById('root') || undefined,
+    closeTimeoutMS: 340, // This number matches the MS of the transition in the CSS file
     onRequestClose: onHide
   };
 

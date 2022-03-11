@@ -1,6 +1,6 @@
 import {
   getWalletAdapter,
-  detaultWalletName,
+  defaultWalletName,
   IWalletName,
   IPubKeyString,
   INetworkId,
@@ -11,9 +11,7 @@ import { PublicKey } from '@solana/web3.js';
 export * from './auction';
 export * from './utils/utils';
 
-export function isValidSolanaAddress(address: string): boolean {
-  return !!address;
-}
+export type IWalletAdapterEvents = keyof WalletAdapterEvents;
 
 function waitForWallet(wallet: Adapter): Promise<string> {
   return new Promise((resolve) => {
@@ -24,13 +22,13 @@ function waitForWallet(wallet: Adapter): Promise<string> {
         clearInterval(intervalId);
         resolve(key && key !== PublicKey.default ? key.toString() : '');
       }
-    }, 30);  
+    }, 30);
 
     setTimeout(() => {
       resolve('');
-      clearInterval(intervalId)
+      clearInterval(intervalId);
     }, 2000);
-  });    
+  });
 }
 
 export default class SolClient implements IWallet {
@@ -40,7 +38,7 @@ export default class SolClient implements IWallet {
   walletIcon: string;
   wallet: Adapter;
 
-  constructor(walletName: IWalletName = detaultWalletName) {
+  constructor(walletName: IWalletName = defaultWalletName) {
     const config = {};
     const walletAdapter = getWalletAdapter(walletName, config);
     const wallet = walletAdapter.adapter;
@@ -66,10 +64,12 @@ export default class SolClient implements IWallet {
     }
 
     await this.wallet.connect();
-    
+
     // @TODO - there's a bug where the wallet address can be null for a second even after the wallet connects
     await waitForWallet(this.wallet);
-    return await this.getWalletAddress();
+
+    const newAddress = await this.getWalletAddress();
+    return newAddress;
   }
 
   async disconnectWallet(): Promise<void> {
@@ -89,7 +89,7 @@ export default class SolClient implements IWallet {
     return 0;
   }
 
-  async isConnected(): Promise<boolean> {
+  isConnected(): boolean {
     return !!this.wallet && !!this.wallet.connected;
   }
 
@@ -97,11 +97,11 @@ export default class SolClient implements IWallet {
     return '';
   }
 
-  on(eventName: keyof WalletAdapterEvents, eventHandler: () => void): void {
+  on(eventName: IWalletAdapterEvents, eventHandler: () => void): void {
     this.wallet.on(eventName, eventHandler);
   }
 
-  off(eventName: keyof WalletAdapterEvents, eventHandler: () => void): void {
+  off(eventName: IWalletAdapterEvents, eventHandler: () => void): void {
     this.wallet.off(eventName, eventHandler);
   }
 }

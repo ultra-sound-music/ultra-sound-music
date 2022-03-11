@@ -117,6 +117,7 @@
 
 .tile {
   background-image: none;
+  color: $color-breakwater;
   display: flex;
   flex-direction: column;
 
@@ -135,6 +136,7 @@
     }
 
     &:hover {
+      color: currentColor;
       @include gradient1;
 
       &::before {
