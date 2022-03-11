@@ -34,7 +34,7 @@ export function Landing() {
     rootMargin: '-100px 0px'
   });
 
-  const weAreLive = !!config.weAreLive
+  const weAreLive = config.weAreLive;
   return (
     <div className={styles.Landing}>
       <div className={styles.tri1}>

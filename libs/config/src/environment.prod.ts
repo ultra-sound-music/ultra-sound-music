@@ -1,12 +1,5 @@
-import defaults from './defaults';
-
-const configs = {
+export default {
   production: true,
   build: 'production',
   environment: 'prod'
-};
-
-export default {
-  ...defaults,
-  ...configs
 };
