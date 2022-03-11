@@ -4,6 +4,7 @@ import ReactTooltip from 'react-tooltip';
 
 import { INavItem, Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
 import { copy, urls, routes } from '@usm/content';
+import config from '@usm/config';
 
 import Home from '../Landing/Landing';
 import ConnectButton from '../Buttons/ConnectButton/ConnectButton';
@@ -24,9 +25,7 @@ export let nav: INavItem[] = [
   }
 ];
 
-const params = new URLSearchParams(window.location.search);
-const weAreLive =
-  params.get('wearelive') === 'true' || params.get('wearelive') === '1';
+const weAreLive = !!config.weAreLive;
 
 if (!weAreLive) {
   nav = nav.concat([
