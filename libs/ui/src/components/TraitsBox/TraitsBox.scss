@@ -8,10 +8,6 @@
   padding: 12px;
   display: flex;
 
-  h1 {
-    font-weight: $font-weight-bold;
-  }
-
   .left {
     height: 100%;
     width: 50%;
@@ -51,7 +47,7 @@
     padding: 12px;
     .top {
       height: 308px;
-      .audioTraits {
+      .musicalTraits {
         padding-top: 20px;
         height: 240px;
         display: flex;

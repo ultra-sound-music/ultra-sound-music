@@ -2,6 +2,7 @@
 
 .BidBox {
   position: relative;
+  transition: opacity 600ms linear;
 }
 
 .processing {
@@ -104,36 +105,22 @@
   }
 }
 
-.bidHistoryContainer {
-  padding: 24px 0 24px 24px;
+.currentBid {
+  height: 100%;
+  flex-basis: 40%;
+
+  p {
+    line-height: 24px;
+    margin: 0;
+  }
 }
 
-.bidHistoryItem {
-  display: flex;
-  column-gap: 3px;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 2px solid $color-dusk;
-  padding: 8px 0 4px;
-}
-
-.bidAmount {
-  width: 100px;
-  @extend %font-body-strong;
-}
-
-.bidTime {
-  width: 200px;
-  @extend %font-body;
-}
-
-.bidWalletAddress {
-  width: 200px;
+.currentBidValue {
+  padding: 19px 0;
 }
 
 .walletBalance {
   height: 100%;
-  flex-grow: 1;
   padding-left: 48px;
   border-left: 1px solid $color-old-towel;
 
@@ -154,18 +141,4 @@
 .balanceAmount {
   margin-bottom: 0;
   @extend %font-h3;
-}
-
-.currentBid {
-  height: 100%;
-  flex-grow: 1;
-
-  p {
-    line-height: 24px;
-    margin: 0;
-  }
-}
-
-.currentBidValue {
-  padding: 19px 0;
 }

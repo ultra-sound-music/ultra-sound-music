@@ -120,6 +120,7 @@
   color: $color-breakwater;
   display: flex;
   flex-direction: column;
+  transition: background-color 200ms ease-in-out;
 
   &.withImage {
     padding: 18px 40px;

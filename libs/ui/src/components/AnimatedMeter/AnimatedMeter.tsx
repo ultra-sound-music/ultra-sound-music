@@ -30,19 +30,19 @@ export function AnimatedMeter({
         <Lottie
           animationData={data}
           direction={1}
-          speed={0.5}
+          speed={0.3}
           play={play}
           segments={[0, value[0]]}
-          loop={false}
+          loop={1}
           className={styles.lottie}
         />
         <Lottie
           animationData={data}
           direction={1}
-          speed={0.5}
+          speed={0.3}
           play={play}
           segments={[0, value[1]]}
-          loop={false}
+          loop={1}
           className={styles.lottie}
         />
       </div>

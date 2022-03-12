@@ -7,6 +7,7 @@ import {
   Grid,
   Image,
   Link,
+  MusicalTrait,
   Pill,
   TextBlock
 } from '@usm/ui';
@@ -25,6 +26,11 @@ import styles from './Landing.scss';
 
 export function Landing() {
   const { ref: characterTraitsRef, inView: characterTraitsInView } = useInView({
+    triggerOnce: true,
+    rootMargin: '-150px 0px'
+  });
+
+  const { ref: musicalTraitsRef, inView: musicalTraitsInView } = useInView({
     triggerOnce: true,
     rootMargin: '-150px 0px'
   });
@@ -113,13 +119,25 @@ export function Landing() {
               </div>
             </div>
             <TextBlock>
-              <div className={styles.subhead}>{copy.audioTraits}</div>
-              <p>{copy.audioTraitsDescription}</p>
+              <div className={styles.subhead}>{copy.musicalTraits}</div>
+              <p>{copy.musicalTraitsDescription}</p>
             </TextBlock>
-            <div className={styles.audioTraits}>
-              <Pill label='energy'>aggressive</Pill>
-              <Pill label='texture'>wide</Pill>
-              <Pill label='space'>smooth</Pill>
+            <div className={styles.musicalTraits} ref={musicalTraitsRef}>
+              <MusicalTrait
+                name='energy'
+                value='upbeat'
+                play={musicalTraitsInView}
+              />
+              <MusicalTrait
+                name='melody'
+                value='complex'
+                play={musicalTraitsInView}
+              />
+              <MusicalTrait
+                name='texture'
+                value='harmonic'
+                play={musicalTraitsInView}
+              />
             </div>
           </Grid>
         </div>

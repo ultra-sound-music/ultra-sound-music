@@ -16,7 +16,7 @@ export const TraitsBox = (props: TraitsBoxProps): JSX.Element => (
   <div className={styles.mainContainer}>
     <div className={styles.left}>
       <div className={styles.top}>
-        <h1>Personal Traits</h1>
+        <h4>Personal Traits</h4>
         <div className={styles.personalTraits}>
           <div>
             <p className={styles.category}>Sanity</p>
@@ -33,14 +33,14 @@ export const TraitsBox = (props: TraitsBoxProps): JSX.Element => (
         </div>
       </div>
       <div className={styles.bottom}>
-        <h1>Biography</h1>
+        <h4>Biography</h4>
         <p>{props.biographyContent}</p>
       </div>
     </div>
     <div className={styles.right}>
       <div className={styles.top}>
-        <h1>Audio Traits</h1>
-        <div className={styles.audioTraits}>
+        <h4>Musical Traits</h4>
+        <div className={styles.musicalTraits}>
           <div>
             <p className={styles.category}>Melodic Style</p>
             <p>{props.melodicCategory}</p>
@@ -56,7 +56,7 @@ export const TraitsBox = (props: TraitsBoxProps): JSX.Element => (
         </div>
       </div>
       <div className={styles.bottom}>
-        <h1>Badges</h1>
+        <h4>Badges</h4>
       </div>
     </div>
   </div>

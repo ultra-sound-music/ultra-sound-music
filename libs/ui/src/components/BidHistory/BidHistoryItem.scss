@@ -1,0 +1,83 @@
+@use '../../styles.scss' as *;
+
+.bidHistoryItem {
+  display: flex;
+  column-gap: 3px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid $color-dusk;
+  padding: 8px 0 4px;
+  width: 100%;
+}
+
+.placeholder {
+  div {
+    box-shadow: 0 4px 10px 0 #888;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    background-color: #ccc;
+    width: 100%;
+    animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) 0s alternate infinite none
+      running;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: -150px;
+      top: 0;
+      height: 100%;
+      width: 150px;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        #e8e8e8 50%,
+        transparent 100%
+      );
+      animation: load 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  }
+}
+
+.bidAmount {
+  flex-basis: 20%;
+  @extend %font-body-strong;
+}
+
+.bidTime {
+  @extend %font-body;
+}
+
+.bidWalletAddress {
+  flex-basis: 30%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.copy {
+  cursor: pointer;
+
+  &:hover {
+    color: $color-sassy;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 20%;
+  }
+  100% {
+    opacity: 40%;
+  }
+}
+
+@keyframes load {
+  from {
+    left: -150px;
+  }
+  to {
+    left: 100%;
+  }
+}

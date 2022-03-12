@@ -58,6 +58,6 @@ export const faq = Object.freeze([
   },
   {
     q: 'How is USM Built?',
-    a: `All USM NFT visual and audio traits are bespoke, made by USM team members and artists in the community. The NFTs are minted on the Solana blockchain.`
+    a: `All USM NFT visual and musical traits are bespoke, made by USM team members and artists in the community. The NFTs are minted on the Solana blockchain.`
   }
 ]);

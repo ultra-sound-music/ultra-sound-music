@@ -5,17 +5,7 @@ import Button from '../Button/Button';
 import SolanaIcon from '../Icons/SolanaIcon/SolanaIcon';
 
 import styles from './BidBox.scss';
-
-export interface IBidBoxBid {
-  bidderWalletAddress?: string;
-  bid: number;
-  timeSinceBid?: {
-    seconds?: number;
-    minutes?: number;
-    hours?: number;
-    days?: number;
-  };
-}
+import BidHistory, { IBidHistoryItem } from '../BidHistory/BidHistory';
 
 export interface BidBoxProps {
   timeUntilAuctionEnd?: {
@@ -25,7 +15,7 @@ export interface BidBoxProps {
     seconds?: number;
   };
   currentHighBidSol?: number;
-  recentBids?: IBidBoxBid[];
+  recentBids?: IBidHistoryItem[];
   isWalletConnected: boolean;
   walletBalanceSol?: number;
   isAuctionFinished: boolean;
@@ -37,7 +27,7 @@ export interface BidBoxProps {
   onChangeBidAmount: (value: string) => void;
 }
 
-export const BidBox = (props: BidBoxProps): JSX.Element => (
+export const BidBox = (props: BidBoxProps) => (
   <div className={cn(styles.BidBox, props.isProcessing && styles.processing)}>
     <div className={styles.timerContainer}>
       {!!props.timeUntilAuctionEnd &&
@@ -134,59 +124,7 @@ export const BidBox = (props: BidBoxProps): JSX.Element => (
         </div>
       )}
     </div>
-    {props.recentBids && (
-      <div className={styles.bidHistoryContainer}>
-        <p>Bid history</p>
-        <div className={styles.bidHistoryList}>
-          {props.recentBids?.map(
-            ({ bid, bidderWalletAddress, timeSinceBid }) => (
-              <div
-                className={styles.bidHistoryItem}
-                key={`${bid}${bidderWalletAddress}`}
-              >
-                <SolanaIcon size='tiny' />
-                <div className={styles.bidAmount}>
-                  <div>{bid} SOL</div>
-                </div>
-                {timeSinceBid && (
-                  <div className={styles.bidTime}>
-                    {!!timeSinceBid.days && timeSinceBid.days > 0 && (
-                      <div>{timeSinceBid.days} days ago</div>
-                    )}
-                    {!timeSinceBid.days &&
-                      !!timeSinceBid.hours &&
-                      timeSinceBid.hours > 0 && (
-                        <div>{timeSinceBid.hours} hours ago</div>
-                      )}
-                    {!timeSinceBid.days &&
-                      !timeSinceBid.hours &&
-                      !!timeSinceBid.minutes &&
-                      timeSinceBid.minutes > 0 && (
-                        <div>{timeSinceBid.minutes} minutes ago</div>
-                      )}
-                    {!timeSinceBid.days &&
-                      !timeSinceBid.hours &&
-                      !timeSinceBid.minutes &&
-                      !!timeSinceBid.seconds &&
-                      timeSinceBid.seconds > 0 && (
-                        <div>
-                          {Math.floor(timeSinceBid.seconds)} seconds ago
-                        </div>
-                      )}
-                  </div>
-                )}
-                <div className={styles.bidWalletAddress}>
-                  <p>{`${bidderWalletAddress?.slice(
-                    0,
-                    4
-                  )}...${bidderWalletAddress?.slice(40)}`}</p>
-                </div>
-              </div>
-            )
-          )}
-        </div>
-      </div>
-    )}
+    <BidHistory bids={props.recentBids} isProcessing={!!props.isProcessing} />
   </div>
 );
 

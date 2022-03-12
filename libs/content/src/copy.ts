@@ -20,13 +20,13 @@ export default Object.freeze({
   uniqueAndIndividual: 'unique & individual',
   jambotTraits: 'jambot traits',
   characterTraits: 'character traits',
-  audioTraits: 'audio traits',
+  musicalTraits: 'musical traits',
   jambotTraitsDescription:
-    "Every Jam Bot is equally rare and carries a unique set of character traits that are encooded on the blockchain",
-  characterTraitsDescription: 
-  "Jam Bots character traits determine their look, and attitude. They may also come in handy as the platform expands.",
-  audioTraitsDescription:
-    'Audio traits are custom generated for each character. They dictate the style with which they play their sounds.',
+    'Every Jam Bot is equally rare and carries a unique set of character traits that are encooded on the blockchain',
+  characterTraitsDescription:
+    'Jam Bots character traits determine their look, and attitude. They may also come in handy as the platform expands.',
+  musicalTraitsDescription:
+    'Musical traits are custom generated for each character. They dictate the style with which they play their sounds.',
   theUSMPlatform:
     'The USM Platform is a place where anyone can be a virtual musician.  All you need is a USM Artist NFT to serve as your avatar in this virtual world.',
   ourMission:

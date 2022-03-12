@@ -1,3 +1,5 @@
+export * from './components/BidHistory/BidHistory';
+export * from './components/MusicalTrait/MusicalTrait';
 export * from './components/Icons/SolanaIcon/SolanaIcon';
 export * from './components/Modals/ConnectModal/ConnectModal';
 export * from './components/Modals/BidModal/BidModal';

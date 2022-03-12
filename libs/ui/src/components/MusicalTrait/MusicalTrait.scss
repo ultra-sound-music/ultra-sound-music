@@ -1,0 +1,42 @@
+@use '../../styles.scss' as *;
+
+.MusicTraits {
+  display: flex;
+}
+
+.label {
+  display: flex;
+  text-transform: capitalize;
+  justify-content: start;
+  align-items: center;
+  column-gap: 10px;
+  margin-bottom: 5px;
+
+  @extend %font-iconic-strong;
+}
+
+.bullet {
+  content: '\200b';
+  border-radius: 50%;
+  display: block;
+  height: 10px;
+  width: 10px;
+}
+
+.energy {
+  .bullet {
+    background-color: $color-pool;
+  }
+}
+
+.texture {
+  .bullet {
+    background-color: $color-sassy;
+  }
+}
+
+.melody {
+  .bullet {
+    background-color: $color-new-towel;
+  }
+}

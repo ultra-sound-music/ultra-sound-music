@@ -81,12 +81,12 @@ export function AuctionContainer() {
       )}
       {page === 1 && (
         <TraitsBox
-          sanityCategory={'insomniac'}
-          fameCategory={'festival-regular'}
-          swaggerCategory={'riot-starter'}
-          melodicCategory={'choral'}
-          texturalCategory={'jagged'}
-          energyCategory={'relaxed'}
+          sanityCategory='insomniac'
+          fameCategory='festival-regular'
+          swaggerCategory='riot-starter'
+          melodicCategory='choral'
+          texturalCategory='jagged'
+          energyCategory='relaxed'
           biographyContent={
             'Lorem ipsum dolor sit amet, conse ctetuer adipiscing elit. Aenean comm odo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma gnis dis parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus.'
           }
