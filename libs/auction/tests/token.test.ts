@@ -28,6 +28,6 @@ describe('token', () => {
 
   it('should return nft metadata', async () => {
     const metadata = await USM.getMetadata(NFT_PUBKEY);
-    expect(metadata.name).toEqual('Pato');
+    expect(metadata.data.name).toEqual('');
   });
 });

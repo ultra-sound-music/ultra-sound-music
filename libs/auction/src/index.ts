@@ -195,7 +195,7 @@ export class USMClient {
   async getMetadata(tokenMint: PublicKey) {
     const metadata = await Metadata.getPDA(tokenMint);
     const metadataInfo = await Account.getInfo(this.connection, metadata);
-    const { data } = new Metadata(metadata, metadataInfo).data;
+    const { data } = new Metadata(metadata, metadataInfo);
     return data;
   }
 }
