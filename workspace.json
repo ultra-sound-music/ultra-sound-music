@@ -3,6 +3,7 @@
   "projects": {
     "app-state": "libs/app-state",
     "assets": "libs/assets",
+    "auction": "libs/auction",
     "audio-player": "libs/audio-player",
     "config": "libs/config",
     "content": "libs/content",
