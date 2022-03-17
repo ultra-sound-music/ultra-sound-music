@@ -7,9 +7,8 @@ const { Keypair } = web3;
 
 describe('token', () => {
   let provider;
-  let connection;
   let wallet;
-  let USM;
+  let USM: USMClient;
 
   beforeAll(async () => {
     const walletKeypair = Keypair.generate();
@@ -18,8 +17,8 @@ describe('token', () => {
       new NodeWallet(walletKeypair),
       {}
     );
-    ({ connection, wallet } = provider);
-    USM = new USMClient(connection, wallet);
+    ({ wallet } = provider);
+    USM = new USMClient('devnet', wallet);
   });
 
   it('should return info on a token mint', async () => {
@@ -29,6 +28,6 @@ describe('token', () => {
 
   it('should return nft metadata', async () => {
     const metadata = await USM.getMetadata(NFT_PUBKEY);
-    expect(metadata.name).toEqual('Patos');
+    expect(metadata.name).toEqual('Pato');
   });
 });

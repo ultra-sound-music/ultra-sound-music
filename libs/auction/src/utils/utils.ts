@@ -1,5 +1,11 @@
 import BN from 'bn.js';
-import { Commitment, Keypair, PublicKey, TransactionSignature, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import {
+  Commitment,
+  Keypair,
+  PublicKey,
+  TransactionSignature,
+  LAMPORTS_PER_SOL
+} from '@solana/web3.js';
 import { AccountLayout } from '@solana/spl-token';
 import { Connection, Wallet, actions } from '@metaplex/js';
 
@@ -9,23 +15,26 @@ import {
   AuctionExtended,
   BidderMetadata,
   BidderPot,
-  PlaceBid,
+  PlaceBid
 } from '@metaplex-foundation/mpl-auction';
 
 import { AuctionManager } from '@metaplex-foundation/mpl-metaplex';
 import { Transaction } from '@metaplex-foundation/mpl-core';
 
-const { getCancelBidTransactions, createApproveTxs, createWrappedAccountTxs, sendTransaction} = actions;
+const {
+  getCancelBidTransactions,
+  createApproveTxs,
+  createWrappedAccountTxs,
+  sendTransaction
+} = actions;
 
-const getBidderPotTokenPDA = async (bidderPotPubKey: PublicKey) =>{
+const getBidderPotTokenPDA = async (bidderPotPubKey: PublicKey) => {
   return AuctionProgram.findProgramAddress([
     Buffer.from(AuctionProgram.PREFIX),
     bidderPotPubKey.toBuffer(),
-    Buffer.from('bidder_pot_token'),
+    Buffer.from('bidder_pot_token')
   ]);
-
-} 
-
+};
 
 interface TransactionsBatchParams {
   beforeTransactions?: Transaction[];
@@ -43,7 +52,7 @@ export class TransactionsBatch {
   constructor({
     beforeTransactions = [],
     transactions,
-    afterTransactions = [],
+    afterTransactions = []
   }: TransactionsBatchParams) {
     this.beforeTransactions = beforeTransactions;
     this.transactions = transactions;
@@ -67,14 +76,17 @@ export class TransactionsBatch {
   }
 
   toTransactions() {
-    return [...this.beforeTransactions, ...this.transactions, ...this.afterTransactions];
+    return [
+      ...this.beforeTransactions,
+      ...this.transactions,
+      ...this.afterTransactions
+    ];
   }
 
   toInstructions() {
     return this.toTransactions().flatMap((t) => t.instructions);
   }
 }
-
 
 /**
  * Parameters for {@link placeBid}s
@@ -105,23 +117,24 @@ export const placeBid = async ({
   connection,
   wallet,
   amount,
-  auction,
+  auction
 }: PlaceBidParams): Promise<PlaceBidResponse> => {
   const bidder = wallet.publicKey;
-  const accountRentExempt = await connection.getMinimumBalanceForRentExemption(AccountLayout.span);
+  const accountRentExempt = await connection.getMinimumBalanceForRentExemption(
+    AccountLayout.span
+  );
   const auctionManager = await AuctionManager.getPDA(auction);
   const manager = await AuctionManager.load(connection, auctionManager);
   const {
-    data: { tokenMint },
+    data: { tokenMint }
   } = await manager.getAuction(connection);
   const auctionTokenMint = new PublicKey(tokenMint);
   const vault = new PublicKey(manager.data.vault);
   const auctionExtended = await AuctionExtended.getPDA(vault);
   const bidderPot = await BidderPot.getPDA(auction, bidder);
   const bidderMeta = await BidderMetadata.getPDA(auction, bidder);
-  
-  
-  const bidderPotToken = await getBidderPotTokenPDA(bidderPot)
+
+  const bidderPotToken = await getBidderPotTokenPDA(bidderPot);
 
   const accountInfo = await connection.getAccountInfo(bidderPotToken);
 
@@ -129,9 +142,9 @@ export const placeBid = async ({
 
   //if the user has an existing biddder pot token acct cancel pending bid
 
-  if(accountInfo) {
+  if (accountInfo) {
     txBatch = await getCancelBidTransactions({
-      destAccount: null,
+      destAccount: undefined,
       bidder,
       accountRentExempt,
       bidderPot,
@@ -140,7 +153,7 @@ export const placeBid = async ({
       auction,
       auctionExtended,
       auctionTokenMint,
-      vault,
+      vault
     });
   }
 
@@ -148,8 +161,12 @@ export const placeBid = async ({
   const {
     account: payingAccount,
     createTokenAccountTx,
-    closeTokenAccountTx,
-  } = await createWrappedAccountTxs(connection, bidder, amount.toNumber() + accountRentExempt * 2);
+    closeTokenAccountTx
+  } = await createWrappedAccountTxs(
+    connection,
+    bidder,
+    amount.toNumber() + accountRentExempt * 2
+  );
   txBatch.addTransaction(createTokenAccountTx);
   txBatch.addSigner(payingAccount);
   ////
@@ -158,11 +175,11 @@ export const placeBid = async ({
   const {
     authority: transferAuthority,
     createApproveTx,
-    createRevokeTx,
+    createRevokeTx
   } = createApproveTxs({
     account: payingAccount.publicKey,
     owner: bidder,
-    amount: amount.toNumber(),
+    amount: amount.toNumber()
   });
   txBatch.addTransaction(createApproveTx);
   txBatch.addAfterTransaction(createRevokeTx);
@@ -184,8 +201,8 @@ export const placeBid = async ({
       tokenMint: auctionTokenMint,
       transferAuthority: transferAuthority.publicKey,
       amount,
-      resource: vault,
-    },
+      resource: vault
+    }
   );
   txBatch.addTransaction(placeBidTransaction);
   ////
@@ -194,17 +211,16 @@ export const placeBid = async ({
     connection,
     wallet,
     txs: txBatch.toTransactions(),
-    signers: txBatch.signers,
+    signers: txBatch.signers
   });
 
   return { txId, bidderPotToken, bidderMeta };
 };
 
-
 /**
  * Parameters for {@link cancelBid}
  */
- export interface CancelBidParams {
+export interface CancelBidParams {
   connection: Connection;
   /** Wallet of the original bidder **/
   wallet: Wallet;
@@ -225,13 +241,13 @@ export const cancelBid = async ({
   connection,
   wallet,
   auction,
-  destAccount,
+  destAccount
 }: CancelBidParams): Promise<CancelBidResponse> => {
   const bidder = wallet.publicKey;
   const auctionManager = await AuctionManager.getPDA(auction);
   const manager = await AuctionManager.load(connection, auctionManager);
   const {
-    data: { tokenMint },
+    data: { tokenMint }
   } = await manager.getAuction(connection);
 
   const auctionTokenMint = new PublicKey(tokenMint);
@@ -239,9 +255,11 @@ export const cancelBid = async ({
   const auctionExtended = await AuctionExtended.getPDA(vault);
   const bidderPot = await BidderPot.getPDA(auction, bidder);
   const bidderMeta = await BidderMetadata.getPDA(auction, bidder);
-  const bidderPotToken = await getBidderPotTokenPDA(bidderPot)
+  const bidderPotToken = await getBidderPotTokenPDA(bidderPot);
 
-  const accountRentExempt = await connection.getMinimumBalanceForRentExemption(AccountLayout.span);
+  const accountRentExempt = await connection.getMinimumBalanceForRentExemption(
+    AccountLayout.span
+  );
   const txBatch = await getCancelBidTransactions({
     destAccount,
     bidder,
@@ -252,74 +270,79 @@ export const cancelBid = async ({
     auction,
     auctionExtended,
     auctionTokenMint,
-    vault,
+    vault
   });
 
   const txId = await sendTransaction({
     connection,
     wallet,
     txs: txBatch.toTransactions(),
-    signers: txBatch.signers,
+    signers: txBatch.signers
   });
 
   return { txId };
 };
 
-
 export type USMBidData = {
-  bidder: PublicKey,
-  bid: number,
-  timestamp: number
-}
+  bidder: PublicKey;
+  bid: number;
+  timestamp: number;
+};
 
 export type USMAuctionData = {
   // auction identifier
-  pubkey: PublicKey,
-  //token that is used for bids 
-  acceptedToken: PublicKey,
+  pubkey: PublicKey;
+  //token that is used for bids
+  acceptedToken: PublicKey;
   // returns unix timestamp
-  endedAt: number | null,
+  endedAt: number | null;
   //returns unix timestamp
-  endAuctionAt: number | null,
+  endAuctionAt: number | null;
   //if the auction is currently live
-  isLive: boolean,
+  isLive: boolean;
   // array of processed bid
-  bids: USMBidData[],
+  bids: USMBidData[];
   //  if auction over returns winning bid else returns null
-  winner: USMBidData
-  participants: PublicKey[]
-}
+  winner: USMBidData | null;
+  participants: PublicKey[];
+};
 
-export const transformAuctionData = async(auction: Auction, connection:Connection) =>{
- 
-  let bids = await auction.getBidderMetadata(connection);
-  const usmBidData = bids.filter(bid => !bid.data.cancelled)
-             .map((bid)=>{
-                const {data} = bid;  
-                const bidData : USMBidData = {
-                  bidder: new PublicKey(data.bidderPubkey),
-                  bid: data.lastBid.toNumber() / LAMPORTS_PER_SOL,
-                  timestamp: data.lastBidTimestamp.toNumber() * 1000,
-                } 
-                return bidData
-              }).sort((a, b) => (b.bid) - (a.bid));
+export const transformAuctionData = async (
+  auction: Auction,
+  connection: Connection
+) => {
+  const bids = await auction.getBidderMetadata(connection);
+  const usmBidData = bids
+    .filter((bid) => !bid.data.cancelled)
+    .map((bid) => {
+      const { data } = bid;
+      const bidData: USMBidData = {
+        bidder: new PublicKey(data.bidderPubkey),
+        bid: data.lastBid.toNumber() / LAMPORTS_PER_SOL,
+        timestamp: data.lastBidTimestamp.toNumber() * 1000
+      };
+      return bidData;
+    })
+    .sort((a, b) => b.bid - a.bid);
 
-              usmBidData.map(bid=> bid.bidder);
-  
-  const AuctionData : USMAuctionData = {
+  usmBidData.map((bid) => bid.bidder);
+
+  const AuctionData: USMAuctionData = {
     pubkey: auction.pubkey,
     acceptedToken: new PublicKey(auction.data.tokenMint),
-    endedAt: auction.data.endedAt ? auction.data.endedAt.toNumber() * 1000: null, 
-    // @TODO endAuctionAt is actually auction duration, poorly named, in seconds 
+    endedAt: auction.data.endedAt
+      ? auction.data.endedAt.toNumber() * 1000
+      : null,
+    // @TODO endAuctionAt is actually auction duration, poorly named, in seconds
     // metaplex/js/packages/web/src/views/auctionCreate/index.tsx
-    endAuctionAt: auction.data.endAuctionAt ? auction.data.endAuctionAt.toNumber(): null, 
+    endAuctionAt: auction.data.endAuctionAt
+      ? auction.data.endAuctionAt.toNumber()
+      : null,
     isLive: auction.data.state === 1,
     bids: usmBidData,
     winner: auction.data.state === 2 ? usmBidData[0] : null,
-    participants: usmBidData.map(bid=> bid.bidder)
-  }
+    participants: usmBidData.map((bid) => bid.bidder)
+  };
 
-  return AuctionData
-}
-
-
+  return AuctionData;
+};

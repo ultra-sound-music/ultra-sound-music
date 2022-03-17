@@ -1,31 +1,19 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "module": "CommonJS",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "outDir": "./lib",
-    "typeRoots": ["./node_modules/@types"],
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "downlevelIteration": true,
-    "declaration": true,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2015",
-    "sourceMap": true,
-    "lib": ["es2020"]
-  },
-  "include": ["./src"],
   "files": [],
+  "include": ["**/*.ts"],
   "references": [
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "module": "esnext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true
+  }
 }

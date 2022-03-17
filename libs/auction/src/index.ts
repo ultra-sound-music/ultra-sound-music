@@ -1,17 +1,22 @@
-import { TOKEN_PROGRAM_ID, MintLayout, u64 } from "@solana/spl-token";
+import { TOKEN_PROGRAM_ID, MintLayout, u64 } from '@solana/spl-token';
 import { Auction } from '@metaplex-foundation/mpl-auction';
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { Account } from '@metaplex-foundation/mpl-core';
 import { Connection, Wallet } from '@metaplex/js';
-import { clusterApiUrl, LAMPORTS_PER_SOL, Cluster, PublicKey, TransactionSignature, Commitment } from "@solana/web3.js";
+import {
+  clusterApiUrl,
+  LAMPORTS_PER_SOL,
+  Cluster,
+  PublicKey,
+  TransactionSignature,
+  Commitment
+} from '@solana/web3.js';
 import { actions } from '@metaplex/js';
-import { cancelBid, transformAuctionData, placeBid, USMAuctionData } from "./utils/utils";
+import { cancelBid, transformAuctionData, placeBid } from './utils/utils';
 import BN from 'bn.js';
 
 export * from './utils/utils';
-export {
-  PublicKey
-}
+export { PublicKey };
 
 const { redeemFullRightsTransferBid, redeemParticipationBidV3 } = actions;
 
@@ -23,37 +28,43 @@ interface IRedeemBidResponse {
   txId: string;
 }
 
-export type IConfirmTransactionResult = Awaited<ReturnType<Connection['confirmTransaction']>>
+export type IConfirmTransactionResult = Awaited<
+  ReturnType<Connection['confirmTransaction']>
+>;
 
 export interface IBidMutationResponse {
-  result: IRedeemBidResponse | IRedeemParticipationBidV3Response,
-  confirmTransaction(): Promise<IConfirmTransactionResult> | Promise<PromiseSettledResult<IConfirmTransactionResult>[]>
+  result: IRedeemBidResponse | IRedeemParticipationBidV3Response;
+  confirmTransaction():
+    | Promise<IConfirmTransactionResult>
+    | Promise<PromiseSettledResult<IConfirmTransactionResult>[]>;
 }
 
 export type IRpcEndpoint = Cluster | string;
 export type IConnectionConfig = {
   rpcEndpoint: IRpcEndpoint;
-  commitment?: Commitment
-}
+  commitment?: Commitment;
+};
 
 export type IConnectionConfigOrEndpoint = IRpcEndpoint | IConnectionConfig;
 
-export function createRpcConnection(config: IConnectionConfigOrEndpoint): Connection {
-  const {
-    rpcEndpoint,
-    commitment = 'processed'
-  }: IConnectionConfig = typeof config === 'string' ? { rpcEndpoint: config } : config;
-  const endpoint = rpcEndpoint?.startsWith('http') ? rpcEndpoint : clusterApiUrl(rpcEndpoint as Cluster);
+export function createRpcConnection(
+  config: IConnectionConfigOrEndpoint
+): Connection {
+  const { rpcEndpoint, commitment = 'processed' }: IConnectionConfig =
+    typeof config === 'string' ? { rpcEndpoint: config } : config;
+  const endpoint = rpcEndpoint?.startsWith('http')
+    ? rpcEndpoint
+    : clusterApiUrl(rpcEndpoint as Cluster);
   return new Connection(endpoint, commitment);
 }
 
-export class USMClient{
+export class USMClient {
   connection: Connection;
   wallet: Wallet;
 
-  constructor(connectionConfig: IConnectionConfigOrEndpoint, wallet: Wallet){
+  constructor(connectionConfig: IConnectionConfigOrEndpoint, wallet: Wallet) {
     this.connection = createRpcConnection(connectionConfig);
-    this.wallet= wallet;
+    this.wallet = wallet;
   }
 
   async getWalletBalance() {
@@ -61,11 +72,11 @@ export class USMClient{
     return balance / LAMPORTS_PER_SOL;
   }
 
-  async getAuction(pubKey: PublicKey){
+  async getAuction(pubKey: PublicKey) {
     return Auction.load(this.connection, pubKey);
   }
 
-  async getAuctionData(pubKey: PublicKey){
+  async getAuctionData(pubKey: PublicKey) {
     const a = await Auction.load(this.connection, pubKey);
 
     // @TODO - Get Transaction ID for each bid
@@ -76,45 +87,49 @@ export class USMClient{
     return transformAuctionData(a, this.connection);
   }
 
-  async placeBid(amountInSol: number, auction: PublicKey){
+  async placeBid(amountInSol: number, auction: PublicKey) {
     // @TODO - validate the amount (take tick size, tick size during ending phase, and time gap into account)
     // throw error if invalid bid
 
     const amount = new BN(amountInSol * LAMPORTS_PER_SOL);
     const result = await placeBid({
-      connection: this.connection, 
-      wallet: this.wallet, 
-      amount, 
-      auction, 
-    })
+      connection: this.connection,
+      wallet: this.wallet,
+      amount,
+      auction
+    });
 
     return {
       result,
-      confirmTransaction: async (commitment: Commitment = 'finalized') => this.connection.confirmTransaction(result.txId, commitment)
+      confirmTransaction: async (commitment: Commitment = 'finalized') =>
+        this.connection.confirmTransaction(result.txId, commitment)
     };
   }
 
-  async cancelBid(auction: PublicKey){
+  async cancelBid(auction: PublicKey) {
     const result = await cancelBid({
       connection: this.connection,
       wallet: this.wallet,
       auction
-    })
+    });
 
-    return { 
+    return {
       result,
-      confirmTransaction: async (commitment: Commitment = 'finalized') => this.connection.confirmTransaction(result.txId, commitment)
-    }
-
+      confirmTransaction: async (commitment: Commitment = 'finalized') =>
+        this.connection.confirmTransaction(result.txId, commitment)
+    };
   }
 
-  async redeemParticipationBid(store: PublicKey, auction: PublicKey): Promise<IBidMutationResponse>{
+  async redeemParticipationBid(
+    store: PublicKey,
+    auction: PublicKey
+  ): Promise<IBidMutationResponse> {
     const result = await redeemParticipationBidV3({
       connection: this.connection,
       wallet: this.wallet,
       store,
       auction
-    })
+    });
 
     return {
       result,
@@ -124,24 +139,28 @@ export class USMClient{
           this.connection.confirmTransaction(result.txIds[1], commitment)
         ]);
       }
-    }
+    };
   }
 
-  async redeemBid(store: PublicKey, auction: PublicKey): Promise<IBidMutationResponse>{
+  async redeemBid(
+    store: PublicKey,
+    auction: PublicKey
+  ): Promise<IBidMutationResponse> {
     const result = await redeemFullRightsTransferBid({
       connection: this.connection,
       wallet: this.wallet,
       store,
       auction
-    })
+    });
 
     return {
       result,
-      confirmTransaction: async (commitment: Commitment = 'finalized') => this.connection.confirmTransaction(result.txId, commitment)
-    }
+      confirmTransaction: async (commitment: Commitment = 'finalized') =>
+        this.connection.confirmTransaction(result.txId, commitment)
+    };
   }
 
-  async getMint(tokenMint: PublicKey){
+  async getMint(tokenMint: PublicKey) {
     const info = await this.connection.getAccountInfo(tokenMint);
     if (info === null) {
       throw new Error('Failed to find mint account');
@@ -171,10 +190,9 @@ export class USMClient{
       mintInfo.freezeAuthority = new PublicKey(mintInfo.freezeAuthority);
     }
     return mintInfo;
-
   }
 
-  async getMetadata(tokenMint: PublicKey){
+  async getMetadata(tokenMint: PublicKey) {
     const metadata = await Metadata.getPDA(tokenMint);
     const metadataInfo = await Account.getInfo(this.connection, metadata);
     const { data } = new Metadata(metadata, metadataInfo).data;
