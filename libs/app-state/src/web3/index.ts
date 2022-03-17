@@ -10,15 +10,11 @@ import {
   useRecoilState,
   useResetRecoilState
 } from 'recoil';
+import Usm, { USMAuctionData, PublicKey } from '@usm/auction';
 
-import { clusterApiUrl, Connection } from '@solana/web3.js';
 import { Wallet } from '@metaplex/js';
-import SolClient, {
-  Auction,
-  USMClient,
-  USMBidData,
-  IN_PROGRESS_AUCTION_PUBKEY
-} from '@usm/sol-client';
+import SolClient from '@usm/sol-client';
+import config from '@usm/config';
 
 import * as ui from '../ui';
 import { localStorageEffect } from '../utils';
@@ -34,25 +30,17 @@ export interface IWeb3State {
   isConnected: boolean;
 }
 
-export interface IBidDataState {
-  bids: USMBidData[];
-  winner?: USMBidData;
-}
-
-export interface IAuctionState {
-  isLoading: boolean;
-  bidData?: IBidDataState;
-  auctionData?: Auction;
-}
-
 export interface IWalletState {
   balance?: number;
 }
 
+export type IAuctionIsLoading = boolean;
+
 export type IUpdateNetworkStateProps = Partial<IWeb3State>;
 
+const auctionPubkey = new PublicKey(config.auctionPubKey || '');
 let solClient: SolClient;
-let usmClient: USMClient;
+let usm: Usm;
 
 export const accountAddressState = atom<IWeb3State['accountAddress']>({
   key: 'accountAddressState',
@@ -104,49 +92,14 @@ export const networkState = selector<Partial<IWeb3State>>({
   }
 });
 
-export const auctionIsLoadingState = atom<IAuctionState['isLoading']>({
+export const auctionIsLoadingState = atom<IAuctionIsLoading>({
   key: 'auctionIsLoadingState',
   default: false
 });
 
-export const bidDataState = atom<IAuctionState['bidData']>({
-  key: 'bidDataState',
+export const auctionState = atom<USMAuctionData | undefined>({
+  key: 'usmAuctionState',
   default: undefined
-});
-
-export const auctionDataState = atom<IAuctionState['auctionData']>({
-  key: 'auctionDataState',
-  default: undefined
-});
-
-// @TODO - remove balance state from auction state
-export const auctionState = selector<Partial<IAuctionState>>({
-  key: 'auctionState',
-  get: ({ get }) => ({
-    isLoading: get(auctionIsLoadingState),
-    bidData: get(bidDataState),
-    auctionData: get(auctionDataState)
-  }),
-  set: ({ set, reset }, newState) => {
-    if (newState instanceof DefaultValue) {
-      reset(auctionIsLoadingState);
-      reset(bidDataState);
-      reset(auctionDataState);
-      return;
-    }
-
-    if (newState.isLoading !== undefined) {
-      set(auctionIsLoadingState, newState.isLoading);
-    }
-
-    if (newState.bidData) {
-      set(bidDataState, newState.bidData);
-    }
-
-    if (newState.auctionData) {
-      set(auctionDataState, newState.auctionData);
-    }
-  }
 });
 
 export function getSolClient() {
@@ -157,14 +110,13 @@ export function getSolClient() {
   return solClient;
 }
 
-export function getUSMClient() {
-  if (!usmClient) {
+export function getUsm() {
+  if (!usm) {
     const solClient = getSolClient();
-    const connection = new Connection(clusterApiUrl());
-    usmClient = new USMClient(connection, solClient.wallet as Wallet);
+    usm = new Usm(config.solanaCluster as string, solClient.wallet as Wallet);
   }
 
-  return usmClient;
+  return usm;
 }
 
 export function useAccountBalance() {
@@ -173,15 +125,6 @@ export function useAccountBalance() {
 
 export function useGetAccountAddress() {
   return useRecoilValue(accountAddressState);
-}
-
-export function useGetShortenedAccountAddress() {
-  const addr = useGetAccountAddress();
-  if (!addr) {
-    return addr;
-  } else {
-    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
-  }
 }
 
 export function useGetNetworkStatus() {
@@ -199,16 +142,23 @@ export function useIsConnected() {
 export function useLoadAuction() {
   const loadAuction = useAuctionLoader();
   const [networkState] = useNetwork();
-  const [auction, setAuction] = useRecoilState(auctionState);
+  const [auction, setAuction] = useAuctionState();
+  const [isLoading, setIsLoading] = useAuctionIsLoading();
 
   return useMemo(
     () => ({
       auction,
       setAuction,
+      isLoading,
+      setIsLoading,
       loadAuction
     }),
-    [networkState, auction]
+    [networkState, auction, isLoading]
   );
+}
+
+export function useAuctionIsLoading() {
+  return useRecoilState(auctionIsLoadingState);
 }
 
 export function useAuctionState() {
@@ -224,34 +174,25 @@ export function useNetwork() {
 }
 
 export function useAuctionLoader() {
-  const [prevAuctionData, setAuctionData] = useAuctionState();
+  const [prevAuction, setAuction] = useAuctionState();
+  const [, setIsLoading] = useAuctionIsLoading();
   const showNotification = ui.useShowNotification();
 
   return useRecoilCallback(
-    ({ snapshot }) =>
+    () =>
       async (forceRefresh = false) => {
-        if (prevAuctionData.auctionData && !forceRefresh) {
+        if (prevAuction && !forceRefresh) {
           return;
         }
 
         try {
-          setAuctionData({
-            isLoading: true
-          });
+          setIsLoading(true);
 
-          usmClient = getUSMClient();
-          const auctionData = await usmClient.getAuction(
-            IN_PROGRESS_AUCTION_PUBKEY
-          );
-          const bidData = await usmClient.getAuctionData(
-            IN_PROGRESS_AUCTION_PUBKEY
-          );
+          usm = getUsm();
+          const auction = await usm.getAuctionData(auctionPubkey);
 
-          return setAuctionData({
-            isLoading: false,
-            auctionData,
-            bidData
-          });
+          setIsLoading(false);
+          setAuction(auction);
         } catch (error) {
           console.error(error);
           showNotification({
@@ -265,18 +206,18 @@ export function useAuctionLoader() {
   );
 }
 
-export function usePlaceBid(amountInSol: number) {
-  const { auction, setAuction, loadAuction } = useLoadAuction();
+export function usePlaceBid() {
+  const { auction, setIsLoading, loadAuction } = useLoadAuction();
   const { showModal } = ui.useModal();
-  const { showNotification, hideNotification } = ui.useNotification();
+  const showNotification = ui.useShowNotification();
 
-  return useRecoilCallback(({ snapshot }) => async () => {
-    if (!auction.auctionData) {
-      console.error('Unable to place bid: action data not loaded');
+  return useRecoilCallback(() => async (amountInSol: number) => {
+    if (!auction) {
+      console.error('Unable to place bid: auction not loaded');
       return;
     }
 
-    const currentBid = auction?.bidData?.bids[0]?.bid || 0;
+    const currentBid = auction?.bids[0]?.bid || 0;
     if (amountInSol <= currentBid) {
       showModal({
         withCloseX: false,
@@ -290,20 +231,28 @@ export function usePlaceBid(amountInSol: number) {
       message: 'Your bid is being processed'
     });
 
-    usmClient = getUSMClient();
-
     try {
-      setAuction({
-        isLoading: true
-      });
+      setIsLoading(true);
 
-      await usmClient.placeBid(amountInSol, IN_PROGRESS_AUCTION_PUBKEY);
+      usm = getUsm();
+      const { confirmTransaction } = await usm.placeBid(
+        amountInSol,
+        auctionPubkey
+      );
+
       await loadAuction(true);
       showNotification({
-        title: 'Success!',
-        message: 'Your bid has been recorded.',
-        type: 'success',
-        timeout: 4000
+        title: 'Success',
+        message: 'Your bid has been placed. Waiting for final confirmation',
+        type: 'processing'
+      });
+
+      await confirmTransaction();
+      showNotification({
+        title: 'Success',
+        message: 'Your bid has been recorded',
+        type: 'success'
+        // timeout: 4000
       });
     } catch (error) {
       console.error(error);
@@ -313,9 +262,7 @@ export function usePlaceBid(amountInSol: number) {
         type: 'error'
       });
     } finally {
-      setAuction({
-        isLoading: false
-      });
+      setIsLoading(false);
     }
 
     loadAuction();
@@ -328,37 +275,36 @@ export function useConnect() {
   const updateNetworkStatus = useUpdateNetworkState();
 
   return useRecoilCallback(
-    ({ snapshot }) =>
-      async () => {
-        try {
-          updateNetworkStatus({
-            networkStatus: web3Constants.networkStatus.CONNECTING
-          });
+    () => async () => {
+      try {
+        updateNetworkStatus({
+          networkStatus: web3Constants.networkStatus.CONNECTING
+        });
 
-          const solClient = getSolClient();
-          const accountAddress = await solClient.connectWallet();
-          updateNetworkStatus({
-            accountAddress,
-            networkStatus: web3Constants.networkStatus.CONNECTED,
-            networkId: '',
-            isConnected: true
-          });
+        const solClient = getSolClient();
+        const accountAddress = await solClient.connectWallet();
+        updateNetworkStatus({
+          accountAddress,
+          networkStatus: web3Constants.networkStatus.CONNECTED,
+          networkId: '',
+          isConnected: true
+        });
 
-          const usmClient = getUSMClient();
-          const balance = await usmClient.getWalletBalance();
-          setBalance(balance);
-        } catch (error) {
-          updateNetworkStatus({
-            networkStatus: web3Constants.networkStatus.NOT_CONNECTED
-          });
+        const usm = getUsm();
+        const balance = await usm.getWalletBalance();
+        setBalance(balance);
+      } catch (error) {
+        updateNetworkStatus({
+          networkStatus: web3Constants.networkStatus.NOT_CONNECTED
+        });
 
-          showNotification({
-            title: 'Error',
-            message: 'Failed to connect',
-            type: 'error'
-          });
-        }
-      },
+        showNotification({
+          title: 'Error',
+          message: 'Failed to connect',
+          type: 'error'
+        });
+      }
+    },
     []
   );
 }
@@ -369,26 +315,25 @@ export function useDisconnect() {
   const updateNetworkState = useUpdateNetworkState();
 
   return useRecoilCallback(
-    ({ snapshot }) =>
-      async () => {
-        try {
-          const solClient = getSolClient();
-          await solClient.disconnectWallet();
+    () => async () => {
+      try {
+        const solClient = getSolClient();
+        await solClient.disconnectWallet();
 
-          resetAccountBalance();
-          updateNetworkState({
-            accountAddress: '',
-            networkStatus: web3Constants.networkStatus.NOT_CONNECTED,
-            networkId: '',
-            isConnected: false
-          });
-        } catch (error) {
-          showNotification({
-            title: 'Error',
-            type: 'error'
-          });
-        }
-      },
+        resetAccountBalance();
+        updateNetworkState({
+          accountAddress: '',
+          networkStatus: web3Constants.networkStatus.NOT_CONNECTED,
+          networkId: '',
+          isConnected: false
+        });
+      } catch (error) {
+        showNotification({
+          title: 'Error',
+          type: 'error'
+        });
+      }
+    },
     []
   );
 }

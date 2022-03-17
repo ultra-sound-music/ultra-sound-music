@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import ReactTooltip from 'react-tooltip';
 import cn from 'clsx';
 import Lottie from 'react-lottie-player';
 
@@ -42,14 +44,19 @@ export type IAllMusicalTraitProps =
   | ITextureTraitProps;
 
 export type IMusicalTraitProps = IAllMusicalTraitProps & {
-  play: boolean;
+  play?: boolean;
 };
 
 export function MusicalTrait({ name, value, play = true }: IMusicalTraitProps) {
   const data = meters[`${value}Meter`];
   const classNames = cn(styles.MusicMeter, styles[name]);
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  }, []);
+
   return (
-    <div className={classNames}>
+    <div className={classNames} data-tip={value}>
       <div className={styles.label}>
         <div className={styles.bullet} />
         {name}

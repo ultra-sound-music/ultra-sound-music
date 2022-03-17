@@ -24,3 +24,11 @@ export function interpolate(string: string, ...rest: IRest): string {
     }
   });
 }
+
+export function getShortenedAccountAddress(address?: string) {
+  if (!address) {
+    return '';
+  } else {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  }
+}

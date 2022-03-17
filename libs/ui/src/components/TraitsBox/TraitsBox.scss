@@ -1,68 +1,19 @@
 @use '../../styles' as *;
 
-.mainContainer {
-  height: 484px;
+.TraitsBox {
   background-color: $color-dusk;
-  box-shadow: 0 4px 20px rgb(0 0 0 / 40%);
   border-radius: 9px;
-  padding: 12px;
-  display: flex;
+  display: grid;
+  align-items: baseline;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 8px;
+  padding: 22px 18px;
+  row-gap: 36px;
+}
 
-  .left {
-    height: 100%;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    padding: 12px;
-    .top {
-      height: 308px;
-      .personalTraits {
-        padding-top: 20px;
-        height: 240px;
-        display: flex;
-        flex-direction: column;
-        div {
-          flex-grow: 1;
-          p {
-            font-size: $font-size-small;
-            margin-bottom: 0;
-          }
-        }
-      }
-    }
-    .bottom {
-      height: 176px;
-      p {
-        font-size: $font-size-mini;
-        padding-top: 10px;
-      }
-    }
-  }
+.traitHeader {
+  margin-bottom: 12px;
+  text-transform: capitalize;
 
-  .right {
-    height: 100%;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    padding: 12px;
-    .top {
-      height: 308px;
-      .musicalTraits {
-        padding-top: 20px;
-        height: 240px;
-        display: flex;
-        flex-direction: column;
-        div {
-          flex-grow: 1;
-          p {
-            font-size: $font-size-small;
-            margin-bottom: 0;
-          }
-        }
-      }
-    }
-    .bottom {
-      height: 176px;
-    }
-  }
+  @extend %font-h5;
 }

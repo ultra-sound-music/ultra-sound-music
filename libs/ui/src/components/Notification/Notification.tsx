@@ -1,16 +1,16 @@
 import cn from 'classnames';
-import { RiCloseCircleFill, RiCheckboxCircleFill } from 'react-icons/ri';
+import { RiCloseCircleFill, RiCheckboxCircleFill, RiErrorWarningLine, RiErrorWarningFill, RiInformationFill } from 'react-icons/ri';
 
 import Spinner from '../Spinner/Spinner';
 
 import styles from './Notification.scss';
 
 const iconMap = {
-  info: RiCloseCircleFill,
-  warn: RiCloseCircleFill,
+  info: RiInformationFill,
+  warn: RiErrorWarningFill,
   success: RiCheckboxCircleFill,
   error: RiCloseCircleFill,
-  processing: () => <Spinner isFullSize={true} />
+  processing: () => <div className={styles.spinner}><Spinner isFullSize={true} /></div>
 };
 
 export interface INotificationProps {

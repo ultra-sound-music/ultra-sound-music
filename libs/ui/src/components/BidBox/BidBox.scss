@@ -9,32 +9,6 @@
   opacity: 50%;
 }
 
-.bidInput {
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &::-moz-inner-spin-button,
-  &::-moz-outer-spin-button {
-    -moz-appearance: textfield;
-    margin: 0;
-  }
-}
-
-.timerContainer {
-  height: 106px;
-  border-radius: 9px;
-  background-color: $color-evening-sky;
-  margin-bottom: -50px;
-  padding: 16px 24px;
-
-  p {
-    line-height: 21px;
-  }
-}
-
 .bidFormContainer {
   height: 244px;
   background-color: $color-dusk;
@@ -43,102 +17,13 @@
   padding: 12px;
   display: flex;
   flex-direction: column;
-
-  .info {
-    width: 100%;
-    height: 50%;
-
-    // border: 1px solid black;
-    padding: 12px;
-    display: flex;
-  }
-  .form {
-    width: 100%;
-
-    // border: 1px solid black;
-    height: 50%;
-    padding: 12px;
-
-    p {
-      line-height: 24px;
-      margin: 0;
-    }
-
-    .formInputBox {
-      display: flex;
-
-      .formInput {
-        background-color: $color-evening-sky;
-        width: 366px;
-        height: 50px;
-        margin-top: 9px;
-        border: 2px solid #6b6989;
-        border-radius: 7px;
-        display: flex;
-
-        input {
-          @extend %font-body;
-
-          border: none;
-          background-color: transparent;
-          padding: 0 12px;
-          font-size: 16px;
-          color: $color-polar-bear;
-          line-height: 50px;
-          width: 300px;
-
-          &:focus {
-            outline: none;
-          }
-        }
-
-        span {
-          line-height: 46px;
-          padding-right: 10px;
-        }
-      }
-
-      button {
-        margin: 9px 0 0 24px;
-      }
-    }
-  }
 }
 
-.currentBid {
-  height: 100%;
-  flex-basis: 40%;
-
-  p {
-    line-height: 24px;
-    margin: 0;
-  }
-}
-
-.currentBidValue {
-  padding: 19px 0;
-}
-
-.walletBalance {
-  height: 100%;
-  padding-left: 48px;
-  border-left: 1px solid $color-old-towel;
-
-  p {
-    line-height: 24px;
-    margin: 0;
-  }
-}
-
-.walletBalanceValue {
+.info {
+  width: 100%;
+  height: 50%;
+  padding: 12px;
   display: flex;
-  align-items: center;
   justify-content: start;
-  column-gap: 6px;
-  padding: 19px 0;
-}
-
-.balanceAmount {
-  margin-bottom: 0;
-  @extend %font-h3;
+  align-items: baseline;
 }

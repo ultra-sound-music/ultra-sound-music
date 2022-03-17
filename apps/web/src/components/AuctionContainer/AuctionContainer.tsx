@@ -16,28 +16,25 @@ import ConnectButton from '../Buttons/NetworkButton/NetworkButton';
 import styles from './AuctionContainer.scss';
 
 export function AuctionContainer() {
-  function onClickBidNow() {
+  function onClickBidNow(bidAmount: string) {
     if (isConnected) {
-      placeBid();
+      placeBid(Number.isNaN(parseFloat(bidAmount)) ? 0 : parseFloat(bidAmount));
     }
   }
 
-  const [bidAmount, setBidAmount] = useState('');
-  const placeBid = usePlaceBid(
-    Number.isNaN(parseFloat(bidAmount)) ? 0 : parseFloat(bidAmount)
-  );
+  const placeBid = usePlaceBid();
+
   const isConnected = useIsConnected();
   const [page, setPage] = useState(0);
   const [{ networkStatus }] = useNetwork();
   const [balance] = useAccountBalance();
-  const { auction, loadAuction } = useLoadAuction();
+  const { auction, isLoading, loadAuction } = useLoadAuction();
 
   const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
-  const isLoadingAuction = auction.isLoading;
-  const isProcessing = isConnecting || isLoadingAuction;
+  const isProcessing = isConnecting || isLoading;
 
   useEffect(() => {
-    const isDisconnecting = auction.auctionData && !isConnected;
+    const isDisconnecting = auction && !isConnected;
     if (!isDisconnecting) {
       loadAuction();
     }
@@ -66,17 +63,16 @@ export function AuctionContainer() {
       {page === 0 && (
         <BidBox
           isProcessing={isProcessing}
-          timeUntilAuctionEnd={{}}
-          currentHighBidSol={auction?.bidData?.bids[0]?.bid}
+          endedAt={auction?.endedAt || undefined}
+          endsAt={auction?.endAuctionAt || undefined}
+          currentHighBidSol={auction?.bids[0]?.bid}
           isWalletConnected={isConnected}
           walletBalanceSol={balance && Math.round(balance * 10000) / 10000}
-          recentBids={auction?.bidData?.bids}
-          isAuctionFinished={!!auction?.bidData?.winner}
-          winningWalletAddress='0x1ds...sdfsa'
+          recentBids={auction?.bids}
+          winningWalletAddress={auction?.winner?.bidder?.toString()}
           traits={{ name: 'Jam Bot #1' }}
           connectButton={<ConnectButton />}
           onClickBidNow={onClickBidNow}
-          onChangeBidAmount={(value) => setBidAmount(value)}
         />
       )}
       {page === 1 && (

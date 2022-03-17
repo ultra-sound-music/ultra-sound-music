@@ -1,0 +1,9 @@
+@use '../../styles.scss' as *;
+
+.BidBoxStatus {
+  height: 106px;
+  border-radius: 9px;
+  background-color: $color-evening-sky;
+  margin-bottom: -50px;
+  padding: 16px 24px;
+}

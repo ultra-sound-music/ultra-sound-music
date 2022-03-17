@@ -1,6 +1,11 @@
+import { copy } from '@usm/content';
+
+import AnimatedMeter from '../AnimatedMeter/AnimatedMeter';
+import MusicalTrait from '../MusicalTrait/MusicalTrait';
+import Badges from '../Badges/Badges';
+
 import styles from './TraitsBox.scss';
 
-/* eslint-disable-next-line */
 export interface TraitsBoxProps {
   sanityCategory: string;
   fameCategory: string;
@@ -13,50 +18,41 @@ export interface TraitsBoxProps {
 }
 
 export const TraitsBox = (props: TraitsBoxProps): JSX.Element => (
-  <div className={styles.mainContainer}>
-    <div className={styles.left}>
-      <div className={styles.top}>
-        <h4>Personal Traits</h4>
-        <div className={styles.personalTraits}>
-          <div>
-            <p className={styles.category}>Sanity</p>
-            <p>{props.sanityCategory}</p>
-          </div>
-          <div>
-            <p className={styles.category}>Fame</p>
-            <p>{props.fameCategory}</p>
-          </div>
-          <div>
-            <p className={styles.category}>Swagger</p>
-            <p>{props.swaggerCategory}</p>
-          </div>
-        </div>
-      </div>
-      <div className={styles.bottom}>
-        <h4>Biography</h4>
-        <p>{props.biographyContent}</p>
+  <div className={styles.TraitsBox}>
+    <div className={styles.traitSection}>
+      <div className={styles.traitHeader}>{copy.characterTraits}</div>
+      <div className={styles.traits}>
+        <AnimatedMeter
+          meter={1}
+          label='sanity'
+          name='almost insane'
+          value={[5, 7]}
+        />
+        <AnimatedMeter meter={2} label='fame' name='low key' value={[10, 12]} />
+        <AnimatedMeter
+          meter={3}
+          label='swagger'
+          name='in the clouds'
+          value={[6, 10]}
+        />
       </div>
     </div>
-    <div className={styles.right}>
-      <div className={styles.top}>
-        <h4>Musical Traits</h4>
-        <div className={styles.musicalTraits}>
-          <div>
-            <p className={styles.category}>Melodic Style</p>
-            <p>{props.melodicCategory}</p>
-          </div>
-          <div>
-            <p className={styles.category}>Textural Style</p>
-            <p>{props.texturalCategory}</p>
-          </div>
-          <div>
-            <p className={styles.category}>Energy</p>
-            <p>{props.energyCategory}</p>
-          </div>
-        </div>
+    <div className={styles.traitSection}>
+      <div className={styles.traitHeader}>{copy.musicalTraits}</div>
+      <div className={styles.traits}>
+        <MusicalTrait name='energy' value='upbeat' />
+        <MusicalTrait name='melody' value='complex' />
+        <MusicalTrait name='texture' value='harmonic' />
       </div>
-      <div className={styles.bottom}>
-        <h4>Badges</h4>
+    </div>
+    <div className={styles.traitSection}>
+      <div className={styles.traitHeader}>{copy.biography}</div>
+      <p>{props.biographyContent}</p>
+    </div>
+    <div className={styles.traitSection}>
+      <div className={styles.traitHeader}>{copy.badges}</div>
+      <div className={styles.traits}>
+        <Badges play={true} names={['debut', 'hometown', 'version']} />
       </div>
     </div>
   </div>

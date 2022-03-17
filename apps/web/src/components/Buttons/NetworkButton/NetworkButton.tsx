@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 
 import { Button } from '@usm/ui';
 import {
-  useGetShortenedAccountAddress,
+  useGetAccountAddress,
   useConnect,
   useDisconnect,
   useNetwork,
   useModal,
   web3Constants
 } from '@usm/app-state';
+import { getShortenedAccountAddress } from '@usm/util-string';
 
 export default function ConnectButton() {
   const { showModal, hideModal } = useModal();
@@ -43,7 +44,7 @@ export default function ConnectButton() {
   }
 
   const [{ isConnected, accountAddress, networkStatus }] = useNetwork();
-  const shortenedAccountAddress = useGetShortenedAccountAddress();
+  const shortenedAccountAddress = getShortenedAccountAddress(accountAddress);
   const connect = useConnect();
   const disconnect = useDisconnect();
 

@@ -21,6 +21,8 @@ export default Object.freeze({
   jambotTraits: 'jambot traits',
   characterTraits: 'character traits',
   musicalTraits: 'musical traits',
+  badges: 'badges',
+  biography: 'biography',
   jambotTraitsDescription:
     'Every Jam Bot is equally rare and carries a unique set of character traits that are encooded on the blockchain',
   characterTraitsDescription:

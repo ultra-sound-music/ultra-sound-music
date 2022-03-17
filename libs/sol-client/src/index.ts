@@ -7,9 +7,7 @@ import {
   IWallet
 } from './wallets';
 import { Adapter, WalletAdapterEvents } from '@solana/wallet-adapter-base';
-import { PublicKey } from '@solana/web3.js';
-export * from './auction';
-export * from './utils/utils';
+import { PublicKey } from '@usm/auction';
 
 export type IWalletAdapterEvents = keyof WalletAdapterEvents;
 

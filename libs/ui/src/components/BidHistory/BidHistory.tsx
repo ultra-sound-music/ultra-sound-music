@@ -12,9 +12,9 @@ export interface IBidHistoryProps {
 export function BidHistory({ bids, isProcessing }: IBidHistoryProps) {
   bids = isProcessing
     ? ([
-        { bidderWalletAddress: 1 },
-        { bidderWalletAddress: 2 },
-        { bidderWalletAddress: 3 }
+        { timestamp: 1 },
+        { timestamp: 2 },
+        { timestamp: 3 }
       ] as unknown as IBidHistoryItem[])
     : bids;
 
@@ -23,7 +23,7 @@ export function BidHistory({ bids, isProcessing }: IBidHistoryProps) {
       <p>Bid history</p>
       <div className={styles.bidHistoryList}>
         {bids?.slice(0, 3).map((bid) => (
-          <BidHistoryItem key={bid.bidderWalletAddress} {...bid} />
+          <BidHistoryItem key={bid.timestamp} {...bid} />
         ))}
       </div>
     </div>

@@ -1,0 +1,54 @@
+@use '../../styles.scss' as *;
+
+.BidBoxInfo {
+  &:not(:last-child) {
+    border-right: 1px solid $color-old-towel;
+    flex-basis: 42%;
+    margin-right: 32px;
+    padding-right: 8px;
+  }
+}
+
+.currentBid {
+  height: 100%;
+  flex-basis: 40%;
+}
+
+.currentBidValue {
+  padding: 19px 0;
+}
+
+.walletBalance {
+  height: 100%;
+  border-left: 1px solid $color-old-towel;
+}
+
+.walletBalanceValue {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  column-gap: 6px;
+  padding: 19px 0;
+}
+
+.balanceAmount {
+  margin-bottom: 0;
+  @extend %font-h3;
+}
+
+.title {
+  @extend %font-small;
+}
+
+.body {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  column-gap: 8px;
+  line-height: 45px;
+  margin-top: 8px;
+
+  @extend %font-h3;
+}

@@ -93,30 +93,27 @@ export function Landing() {
               <p>{copy.characterTraitsDescription}</p>
             </TextBlock>
             <div className={styles.characterTraits} ref={characterTraitsRef}>
-              <div data-tip='almost insane'>
-                <AnimatedMeter
-                  play={characterTraitsInView}
-                  meter={1}
-                  label='sanity'
-                  value={[5, 7]}
-                />
-              </div>
-              <div data-tip='low key'>
-                <AnimatedMeter
-                  play={characterTraitsInView}
-                  meter={2}
-                  label='fame'
-                  value={[10, 12]}
-                />
-              </div>
-              <div data-tip='in the clouds'>
-                <AnimatedMeter
-                  play={characterTraitsInView}
-                  meter={3}
-                  label='swagger'
-                  value={[6, 10]}
-                />
-              </div>
+              <AnimatedMeter
+                play={characterTraitsInView}
+                meter={1}
+                label='sanity'
+                name='almost insane'
+                value={[5, 7]}
+              />
+              <AnimatedMeter
+                play={characterTraitsInView}
+                meter={2}
+                label='fame'
+                name='low key'
+                value={[10, 12]}
+              />
+              <AnimatedMeter
+                play={characterTraitsInView}
+                meter={3}
+                label='swagger'
+                name='in the clouds'
+                value={[6, 10]}
+              />
             </div>
             <TextBlock>
               <div className={styles.subhead}>{copy.musicalTraits}</div>

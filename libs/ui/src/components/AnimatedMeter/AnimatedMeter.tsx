@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import ReactTooltip from 'react-tooltip';
 import Lottie from 'react-lottie-player';
 
 import meter1 from '@usm/assets/lottie/animated_meters/meter_1.json';
@@ -10,6 +12,7 @@ export interface IAnimatedMeterProps {
   play?: boolean;
   meter?: number;
   label?: string;
+  name?: string;
   value: [number, number];
 }
 
@@ -18,13 +21,18 @@ export function AnimatedMeter({
   play = true,
   meter = 1,
   label,
+  name,
   value
 }: IAnimatedMeterProps) {
   const meterId = Math.min(Math.max(meter - 1, 0), meters.length - 1);
   const data = meters[meterId];
 
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  }, []);
+
   return (
-    <div className={styles.AnimatedMeter}>
+    <div data-tip={name}>
       {label && <div className={styles.label}>{label}</div>}
       <div className={styles.meter}>
         <Lottie
