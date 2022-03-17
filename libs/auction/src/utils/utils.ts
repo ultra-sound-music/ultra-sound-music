@@ -1,4 +1,5 @@
 import BN from 'bn.js';
+import fetch from 'cross-fetch';
 import {
   Commitment,
   Keypair,
@@ -294,7 +295,7 @@ export type USMBidData = {
 
 type nftData = {
   pubKey: PublicKey;
-  data: any;
+  metadata: any;
 };
 
 type USMAuctionData = {
@@ -333,9 +334,17 @@ export const transformAuctionData = async (
     boxes.length > 1 ? boxes[1].data.tokenMint : null;
 
   // get metadata
-  const nftMetadata = await getMetadata(new PublicKey(nftPubKey), connection);
-  const participationMetadata = participationNftPubKey
+  const nftData = await getMetadata(new PublicKey(nftPubKey), connection);
+  const participationData = participationNftPubKey
     ? await getMetadata(new PublicKey(participationNftPubKey), connection)
+    : null;
+
+  const nftMetadata = await fetch(nftData.uri).then((response) =>
+    response.json()
+  );
+
+  const participationMetadata = participationData
+    ? await fetch(participationData.uri).then((response) => response.json())
     : null;
 
   const bids = await auction.getBidderMetadata(connection);
@@ -358,12 +367,12 @@ export const transformAuctionData = async (
     pubkey: auction.pubkey,
     auctionNft: {
       pubKey: new PublicKey(nftPubKey),
-      data: nftMetadata
+      metadata: nftMetadata
     },
     participationNft: participationNftPubKey
       ? {
           pubKey: new PublicKey(participationNftPubKey),
-          data: participationMetadata
+          metadata: participationMetadata
         }
       : null,
     acceptedToken: new PublicKey(auction.data.tokenMint),
