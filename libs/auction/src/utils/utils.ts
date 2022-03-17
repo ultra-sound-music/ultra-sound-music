@@ -293,12 +293,12 @@ export type USMBidData = {
   timestamp: number;
 };
 
-type nftData = {
+export type nftData = {
   pubKey: PublicKey;
   metadata: any;
 };
 
-type USMAuctionData = {
+export type USMAuctionData = {
   // auction identifier
   pubkey: PublicKey;
   // public key of nft being auctioned off
