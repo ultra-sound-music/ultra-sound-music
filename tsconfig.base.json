@@ -16,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ultra-sound-music/auction": ["libs/auction/src/index.ts"],
+      "@usm/auction": ["libs/auction/src/index.ts"],
       "@usm/app-state": ["libs/app-state/src/index.ts"],
       "@usm/assets/*": ["libs/assets/src/*"],
       "@usm/audio-player": ["libs/audio-player/src/index.ts"],

@@ -1,19 +1,21 @@
 {
   "extends": "../../tsconfig.base.json",
-  "files": [],
-  "include": ["**/*.ts"],
-  "references": [
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ],
   "compilerOptions": {
     "module": "esnext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true
-  }
+    "noFallthroughCasesInSwitch": true
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }
