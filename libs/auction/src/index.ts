@@ -16,12 +16,13 @@ import {
   cancelBid,
   transformAuctionData,
   placeBid,
-  getMetadata
+  getMetadata,
+  USMAuctionData
 } from './utils/utils';
 import BN from 'bn.js';
 
 export * from './utils/utils';
-export { PublicKey };
+export { PublicKey, USMAuctionData };
 
 const { redeemFullRightsTransferBid, redeemParticipationBidV3 } = actions;
 
