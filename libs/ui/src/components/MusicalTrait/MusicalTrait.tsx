@@ -23,32 +23,18 @@ const meters = {
   smoothMeter
 };
 
-export interface IEnergyTraitProps {
-  name: 'energy';
-  value: 'aggressive' | 'relaxed' | 'upbeat';
-}
-
-export interface IMelodyTraitProps {
-  name: 'melody';
-  value: 'complex' | 'harmonic';
-}
-
-export interface ITextureTraitProps {
-  name: 'texture';
-  value: 'harmonic' | 'noisy' | 'smooth';
-}
-
-export type IAllMusicalTraitProps =
-  | IEnergyTraitProps
-  | IMelodyTraitProps
-  | ITextureTraitProps;
-
-export type IMusicalTraitProps = IAllMusicalTraitProps & {
+export type IMusicalTraitProps = {
+  name: string;
+  value: string;
   play?: boolean;
 };
 
+export function getMeter(value: keyof typeof meters) {
+  return meters[value];
+}
+
 export function MusicalTrait({ name, value, play = true }: IMusicalTraitProps) {
-  const data = meters[`${value}Meter`];
+  const data = getMeter(value as keyof typeof meters);
   const classNames = cn(styles.MusicMeter, styles[name]);
 
   useEffect(() => {

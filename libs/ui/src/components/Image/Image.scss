@@ -1,5 +1,29 @@
 @use '../../styles.scss' as *;
 
+@keyframes fade-in {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes fade-out {
+  100% {
+    opacity: 0%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 20%;
+  }
+  100% {
+    opacity: 40%;
+  }
+}
+
 .Image {
   display: inline-block;
   position: relative;
@@ -30,6 +54,10 @@
     object-fit: cover;
   }
 
+  &.contain {
+    object-fit: contain;
+  }
+
   img,
   svg {
     width: 100%;
@@ -48,4 +76,12 @@
     width: 24px;
     height: 24px;
   }
+}
+
+.placeholder {
+  background-color: #ccc;
+  border-radius: 4px;
+  opacity: 0%;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) 0s alternate infinite none
+    running;
 }

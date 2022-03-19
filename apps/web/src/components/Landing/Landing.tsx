@@ -1,4 +1,5 @@
 import { useInView } from 'react-intersection-observer';
+import cn from 'clsx';
 
 import {
   Accordion,
@@ -8,7 +9,6 @@ import {
   Image,
   Link,
   MusicalTrait,
-  Pill,
   TextBlock
 } from '@usm/ui';
 import { copy } from '@usm/content';
@@ -20,7 +20,7 @@ import { ReactComponent as Triangle1 } from '@usm/assets/img/triangle1.svg';
 import { ReactComponent as Triangle3 } from '@usm/assets/img/triangle3.svg';
 
 import ComingSoon from '../ComingSoon/ComingSoon';
-import NewDrop from '../NewDrop/NewDrop';
+import AuctionContainer from '../AuctionContainer/AuctionContainer';
 
 import styles from './Landing.scss';
 
@@ -52,8 +52,8 @@ export function Landing() {
 
       <div className={styles.brandedDropJambots}>
         {/* section #1 */}
-        <div className={styles.section}>
-          {weAreLive ? <NewDrop /> : <ComingSoon />}
+        <div className={cn(styles.section, weAreLive && styles.live)}>
+          {weAreLive ? <AuctionContainer /> : <ComingSoon />}
         </div>
 
         {/* section #2 */}

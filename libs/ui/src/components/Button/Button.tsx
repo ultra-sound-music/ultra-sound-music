@@ -6,7 +6,7 @@ import Spinner from '../Spinner/Spinner';
 
 import styles from './Button.scss';
 
-export type TButtonType = 'primary' | 'secondary';
+export type TButtonType = 'primary' | 'secondary' | 'inactive';
 
 export interface IButtonProps {
   type?: TButtonType;

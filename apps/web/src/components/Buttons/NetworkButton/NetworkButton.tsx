@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import { Button } from '@usm/ui';
 import {
-  useGetAccountAddress,
   useConnect,
   useDisconnect,
   useNetwork,
@@ -11,7 +10,7 @@ import {
 } from '@usm/app-state';
 import { getShortenedAccountAddress } from '@usm/util-string';
 
-export default function ConnectButton() {
+export default function NetworkButton() {
   const { showModal, hideModal } = useModal();
 
   function onDisconnectClick() {

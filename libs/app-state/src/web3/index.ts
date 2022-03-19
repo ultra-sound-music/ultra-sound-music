@@ -142,7 +142,7 @@ export function useIsConnected() {
 export function useLoadAuction() {
   const loadAuction = useAuctionLoader();
   const [networkState] = useNetwork();
-  const [auction, setAuction] = useAuctionState();
+  const [auction, setAuction] = useAuction();
   const [isLoading, setIsLoading] = useAuctionIsLoading();
 
   return useMemo(
@@ -161,7 +161,7 @@ export function useAuctionIsLoading() {
   return useRecoilState(auctionIsLoadingState);
 }
 
-export function useAuctionState() {
+export function useAuction() {
   return useRecoilState(auctionState);
 }
 
@@ -174,7 +174,7 @@ export function useNetwork() {
 }
 
 export function useAuctionLoader() {
-  const [prevAuction, setAuction] = useAuctionState();
+  const [prevAuction, setAuction] = useAuction();
   const [, setIsLoading] = useAuctionIsLoading();
   const showNotification = ui.useShowNotification();
 
@@ -235,10 +235,7 @@ export function usePlaceBid() {
       setIsLoading(true);
 
       usm = getUsm();
-      const { confirmTransaction } = await usm.placeBid(
-        amountInSol,
-        auctionPubkey
-      );
+      const { confirmTransaction } = await usm.placeBid(amountInSol, auctionPubkey);
 
       await loadAuction(true);
       showNotification({
@@ -266,6 +263,23 @@ export function usePlaceBid() {
     }
 
     loadAuction();
+  });
+}
+
+export function useRedeemNft() {
+  return useRecoilCallback(() => async () => {
+    const usm = getUsm();
+
+    // @TODO claim the nft (winner)
+  });
+}
+
+export function useRefund() {
+  return useRecoilCallback(() => async () => {
+    const usm = getUsm();
+
+    // @TODO - get the refund (loser)
+    // @TODO - if there is a participation nft get that too
   });
 }
 
