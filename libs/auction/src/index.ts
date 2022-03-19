@@ -12,11 +12,17 @@ import {
   Commitment
 } from '@solana/web3.js';
 import { actions } from '@metaplex/js';
-import { cancelBid, transformAuctionData, placeBid } from './utils/utils';
+import {
+  cancelBid,
+  transformAuctionData,
+  placeBid,
+  getMetadata,
+  USMAuctionData
+} from './utils/utils';
 import BN from 'bn.js';
 
 export * from './utils/utils';
-export { PublicKey };
+export { PublicKey, USMAuctionData };
 
 const { redeemFullRightsTransferBid, redeemParticipationBidV3 } = actions;
 
@@ -193,10 +199,7 @@ export class USMClient {
   }
 
   async getMetadata(tokenMint: PublicKey) {
-    const metadata = await Metadata.getPDA(tokenMint);
-    const metadataInfo = await Account.getInfo(this.connection, metadata);
-    const { data } = new Metadata(metadata, metadataInfo).data;
-    return data;
+    return getMetadata(tokenMint, this.connection);
   }
 }
 

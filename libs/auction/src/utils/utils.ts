@@ -1,4 +1,5 @@
 import BN from 'bn.js';
+import fetch from 'cross-fetch';
 import {
   Commitment,
   Keypair,
@@ -18,8 +19,11 @@ import {
   PlaceBid
 } from '@metaplex-foundation/mpl-auction';
 
+import { Vault } from '@metaplex-foundation/mpl-token-vault';
+
+import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { AuctionManager } from '@metaplex-foundation/mpl-metaplex';
-import { Transaction } from '@metaplex-foundation/mpl-core';
+import { Transaction, Account } from '@metaplex-foundation/mpl-core';
 
 const {
   getCancelBidTransactions,
@@ -289,9 +293,18 @@ export type USMBidData = {
   timestamp: number;
 };
 
+export type nftData = {
+  pubKey: PublicKey;
+  metadata: any;
+};
+
 export type USMAuctionData = {
   // auction identifier
   pubkey: PublicKey;
+  // public key of nft being auctioned off
+  auctionNft: nftData;
+  // public key of participation nft
+  participationNft: nftData | null;
   //token that is used for bids
   acceptedToken: PublicKey;
   // returns unix timestamp
@@ -311,6 +324,29 @@ export const transformAuctionData = async (
   auction: Auction,
   connection: Connection
 ) => {
+  //get NFT pubkeys
+  const auctionManager = await AuctionManager.getPDA(auction.pubkey);
+  const manager = await AuctionManager.load(connection, auctionManager);
+  const vault = await Vault.load(connection, new PublicKey(manager.data.vault));
+  const boxes = await vault.getSafetyDepositBoxes(connection);
+  const nftPubKey = boxes[0].data.tokenMint;
+  const participationNftPubKey =
+    boxes.length > 1 ? boxes[1].data.tokenMint : null;
+
+  // get metadata
+  const nftData = await getMetadata(new PublicKey(nftPubKey), connection);
+  const participationData = participationNftPubKey
+    ? await getMetadata(new PublicKey(participationNftPubKey), connection)
+    : null;
+
+  const nftMetadata = await fetch(nftData.uri).then((response) =>
+    response.json()
+  );
+
+  const participationMetadata = participationData
+    ? await fetch(participationData.uri).then((response) => response.json())
+    : null;
+
   const bids = await auction.getBidderMetadata(connection);
   const usmBidData = bids
     .filter((bid) => !bid.data.cancelled)
@@ -329,6 +365,16 @@ export const transformAuctionData = async (
 
   const AuctionData: USMAuctionData = {
     pubkey: auction.pubkey,
+    auctionNft: {
+      pubKey: new PublicKey(nftPubKey),
+      metadata: nftMetadata
+    },
+    participationNft: participationNftPubKey
+      ? {
+          pubKey: new PublicKey(participationNftPubKey),
+          metadata: participationMetadata
+        }
+      : null,
     acceptedToken: new PublicKey(auction.data.tokenMint),
     endedAt: auction.data.endedAt
       ? auction.data.endedAt.toNumber() * 1000
@@ -345,4 +391,14 @@ export const transformAuctionData = async (
   };
 
   return AuctionData;
+};
+
+export const getMetadata = async (
+  tokenMint: PublicKey,
+  connection: Connection
+) => {
+  const metadata = await Metadata.getPDA(tokenMint);
+  const metadataInfo = await Account.getInfo(connection, metadata);
+  const { data } = new Metadata(metadata, metadataInfo).data;
+  return data;
 };
