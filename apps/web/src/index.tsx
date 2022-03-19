@@ -12,7 +12,6 @@ import { reportWebVitals } from '@usm/util-web';
 import DebugObserver from './tools/Debug/Debug';
 import App from './components/App/App';
 import Borked from './components/Borked/Borked';
-import SolanaFMProvider from './components/SolanaFMProvider/SolanaFMProvider';
 
 import '@usm/styles/global.scss';
 
@@ -33,9 +32,7 @@ ReactDOM.render(
         <RecoilRoot>
           <DebugObserver />
           <Suspense fallback={<Spinner cover='fixed' />}>
-            <SolanaFMProvider>
-              <App />
-            </SolanaFMProvider>
+            <App />
           </Suspense>
         </RecoilRoot>
       </BrowserRouter>

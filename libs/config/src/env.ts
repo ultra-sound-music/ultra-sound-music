@@ -10,7 +10,7 @@ export default Object.freeze({
   solanaFMApiKey: process.env.USM_SOLANA_FM_API_KEY,
   solanaFMUri: process.env.USM_SOLANA_FM_URI,
 
-  weAreLive: process.env.WE_ARE_LIVE === TRUE,
+  weAreLive: (process.env.WE_ARE_LIVE === TRUE && process.env.SOLANA_CLUSTER && process.env.MPL_AUCTION_PUBKEY),
 
   solanaCluster: process.env.SOLANA_CLUSTER,
   auctionPubKey: process.env.MPL_AUCTION_PUBKEY
