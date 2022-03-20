@@ -6,6 +6,7 @@ https://github.com/solana-labs/governance-ui
 
 ### Docs
 
+https://governance-docs.vercel.app/multisig-DAO/create-multisig-DAO/DAO-wizard
 https://docs.realms.today/
 
 ### Tutorials

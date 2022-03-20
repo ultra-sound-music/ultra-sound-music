@@ -21,13 +21,16 @@ The account is [BJnj5DzcYhVEnib3UPFLBsXbnCfhUXsYEWfxEoV1gtnY](https://explorer.s
 | Council Token   | [CCkVCT9h7xAzzREDib2uKgxq5igHdcrSaieL2rcVEtQL](https://explorer.solana.com/address/CCkVCT9h7xAzzREDib2uKgxq5igHdcrSaieL2rcVEtQL/largest?cluster=devnet) |
 | Community Token | [EnEMDuYykVz8DC943GfQn2EDqFfUcb5WojxGEPXiUmZa](https://explorer.solana.com/address/EnEMDuYykVz8DC943GfQn2EDqFfUcb5WojxGEPXiUmZa/largest?cluster=devnet) |
 
-### Governance accounts
+### Governances
 
-| Token                        | Account                                                                                                                                                 |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Treasury                     | [6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz](https://explorer.solana.com/address/6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz/largest?cluster=devnet) |
-| Council Token Mint Authority | [6HaAke821jsaycJLFfG68rLmBWWV6fUuANfW2Lpu2Dss](https://explorer.solana.com/address/6HaAke821jsaycJLFfG68rLmBWWV6fUuANfW2Lpu2Dss/largest?cluster=devnet) |
-| Council Token Authority      | [EcfDJe1eMh3FFZZrknDfD2pDHjjU3XDDW4uG1dRA6yX4](https://explorer.solana.com/address/EcfDJe1eMh3FFZZrknDfD2pDHjjU3XDDW4uG1dRA6yX4/largest?cluster=devnet) |
+| Description                  | Account                                                                                                                                                 | Type              | tokens? |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------- |
+| Council Token Mint Authority | [6HaAke821jsaycJLFfG68rLmBWWV6fUuANfW2Lpu2Dss](https://explorer.solana.com/address/6HaAke821jsaycJLFfG68rLmBWWV6fUuANfW2Lpu2Dss/largest?cluster=devnet) | GovernanceV1      |         |
+| Council Token Authority      | [EcfDJe1eMh3FFZZrknDfD2pDHjjU3XDDW4uG1dRA6yX4](https://explorer.solana.com/address/EcfDJe1eMh3FFZZrknDfD2pDHjjU3XDDW4uG1dRA6yX4/largest?cluster=devnet) | GovernanceV1      |         |
+| Treasury                     | [6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz](https://explorer.solana.com/address/6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz/largest?cluster=devnet) | TokenGovernanceV1 | X       |
+| ??                           | [Cqx8tj2JtV38oaFAaZinA63TxTAzfzncCznwxERLSdNJ](https://explorer.solana.com/address/Cqx8tj2JtV38oaFAaZinA63TxTAzfzncCznwxERLSdNJ?cluster=devnet)         | TokenGovernanceV2 | X       |
+| General NFT Treasury         | [99TJMhx52USA6HLpYmYwCAaDWiYEjvAmccu5pwRfkcXr](https://explorer.solana.com/address/99TJMhx52USA6HLpYmYwCAaDWiYEjvAmccu5pwRfkcXr?cluster=devnet)         | TokenGovernanceV2 | X       |
+| NFT TEST                     | [6ckMb1fXrELfqNJxKUFATfE1LM5wJxUmcpmGWEj91fY2](https://explorer.solana.com/address/6ckMb1fXrELfqNJxKUFATfE1LM5wJxUmcpmGWEj91fY2?cluster=devnet)         |
 
 #### Some things to note about the governance tokens:
 
