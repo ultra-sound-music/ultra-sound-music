@@ -30,7 +30,7 @@ The account is [BJnj5DzcYhVEnib3UPFLBsXbnCfhUXsYEWfxEoV1gtnY](https://explorer.s
 | Treasury                     | [6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz](https://explorer.solana.com/address/6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz/largest?cluster=devnet) | TokenGovernanceV1 | X       |
 | ??                           | [Cqx8tj2JtV38oaFAaZinA63TxTAzfzncCznwxERLSdNJ](https://explorer.solana.com/address/Cqx8tj2JtV38oaFAaZinA63TxTAzfzncCznwxERLSdNJ?cluster=devnet)         | TokenGovernanceV2 | X       |
 | General NFT Treasury         | [99TJMhx52USA6HLpYmYwCAaDWiYEjvAmccu5pwRfkcXr](https://explorer.solana.com/address/99TJMhx52USA6HLpYmYwCAaDWiYEjvAmccu5pwRfkcXr?cluster=devnet)         | TokenGovernanceV2 | X       |
-| NFT TEST                     | [6ckMb1fXrELfqNJxKUFATfE1LM5wJxUmcpmGWEj91fY2](https://explorer.solana.com/address/6ckMb1fXrELfqNJxKUFATfE1LM5wJxUmcpmGWEj91fY2?cluster=devnet)         |
+| NFT Creator                  | [6ckMb1fXrELfqNJxKUFATfE1LM5wJxUmcpmGWEj91fY2](https://explorer.solana.com/address/6ckMb1fXrELfqNJxKUFATfE1LM5wJxUmcpmGWEj91fY2?cluster=devnet)         | TokenGovernanceV2 | X       |
 
 #### Some things to note about the governance tokens:
 

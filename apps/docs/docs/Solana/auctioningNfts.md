@@ -34,7 +34,11 @@ In order to be able to mint, your current wallet address must be one of the addr
 $ npx ts-node usm-cli mint-nft {metadata-uri} -k ~/path/to/solana-wallet.json
 ```
 
-## Section 2: Create The Auction
+## Phase 2: Sign NFT Metadata
+
+Before you can successfully launch an auction, every creator in the "creators array" in the NFT metadata needs to be "verified".
+
+## Section 3: Create The Auction
 
 ### 1: Store
 
