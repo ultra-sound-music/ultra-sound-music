@@ -1,28 +1,30 @@
 import { ChangeEvent, ReactElement, useState } from 'react';
 
-import Button from '../Button/Button';
+import Button from '../../Button/Button';
 
 import styles from './BidBoxForm.scss';
 
 export interface IBidFormBoxProps {
-  onSubmit: (bidAmount: string) => void;
+  minBid?: number;
   isWalletConnected?: boolean;
   connectButton?: ReactElement<typeof Button>;
   isProcessing?: boolean;
+  onBid: (bidAmount: string) => void;
 }
 
 export function BidBoxForm({
+  minBid = .1,
+  isWalletConnected,
   connectButton,
-  onSubmit,
-  isWalletConnected = false,
-  isProcessing
+  isProcessing,
+  onBid
 }: IBidFormBoxProps) {
-  function onClickSubmit() {
-    onSubmit(bidAmount);
-  }
-
   function onChangeBidAmount(event: ChangeEvent<HTMLInputElement>) {
     setBidAmount(event.target.value);
+  }
+
+  function onClickBid() {
+    onBid(bidAmount);
   }
 
   const [bidAmount, setBidAmount] = useState('');
@@ -31,8 +33,8 @@ export function BidBoxForm({
     <input
       className={styles.bidInput}
       type='number'
-      placeholder='Bid more than 0.0 SOL'
-      min='0.01'
+      placeholder={`Bid more than ${minBid} SOL`}
+      min={minBid}
       onChange={onChangeBidAmount}
       disabled={isProcessing}
     />
@@ -41,7 +43,7 @@ export function BidBoxForm({
   );
 
   const button = isWalletConnected ? (
-    <Button type='primary' isDisabled={isProcessing} onClick={onClickSubmit}>
+    <Button type='primary' isDisabled={isProcessing} onClick={onClickBid}>
       Place bid
     </Button>
   ) : (
@@ -61,3 +63,5 @@ export function BidBoxForm({
     </form>
   );
 }
+
+export default BidBoxForm;

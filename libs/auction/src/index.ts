@@ -31,9 +31,7 @@ interface IRedeemBidResponse {
   txId: string;
 }
 
-export type IConfirmTransactionResult = Awaited<
-  ReturnType<Connection['confirmTransaction']>
->;
+export type IConfirmTransactionResult = Awaited<ReturnType<Connection['confirmTransaction']>>;
 
 export interface IBidMutationResponse {
   result: IRedeemBidResponse | IRedeemParticipationBidV3Response;
@@ -50,9 +48,7 @@ export type IConnectionConfig = {
 
 export type IConnectionConfigOrEndpoint = IRpcEndpoint | IConnectionConfig;
 
-export function createRpcConnection(
-  config: IConnectionConfigOrEndpoint
-): Connection {
+export function createRpcConnection(config: IConnectionConfigOrEndpoint): Connection {
   const { rpcEndpoint, commitment = 'processed' }: IConnectionConfig =
     typeof config === 'string' ? { rpcEndpoint: config } : config;
   const endpoint = rpcEndpoint?.startsWith('http')
@@ -145,10 +141,7 @@ export class USMClient {
     };
   }
 
-  async redeemBid(
-    store: PublicKey,
-    auction: PublicKey
-  ): Promise<IBidMutationResponse> {
+  async redeemBid(store: PublicKey, auction: PublicKey): Promise<IBidMutationResponse> {
     const result = await redeemTokenOnlyBid({
       connection: this.connection,
       wallet: this.wallet,

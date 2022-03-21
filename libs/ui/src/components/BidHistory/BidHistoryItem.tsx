@@ -12,16 +12,20 @@ import SolanaIcon from '../Icons/SolanaIcon/SolanaIcon';
 
 import styles from './BidHistoryItem.scss';
 
-export type IBidHistoryItem = USMBidData;
+export interface IBidHistoryItem {
+  bidder: string;
+  bid: number;
+  timestamp: number;
+}
 
 export function getTimeSinceBid(timestamp: EpochTimeStamp) {
   dayjs.extend(relativeTime);
   return dayjs(timestamp).fromNow();
 }
 
-export function BidHistoryItem({ bidder, bid, timestamp }: USMBidData) {
+export function BidHistoryItem({ bidder, bid, timestamp }: IBidHistoryItem) {
   function onCopyClick() {
-    navigator.clipboard.writeText(bidderWalletAddress || '');
+    navigator.clipboard.writeText(bidder || '');
     showNotification({
       type: 'success',
       message: 'Address copied to clipboard',
@@ -41,7 +45,6 @@ export function BidHistoryItem({ bidder, bid, timestamp }: USMBidData) {
   }
 
   const timeSinceBid = getTimeSinceBid(timestamp);
-  const bidderWalletAddress = bidder.toString();
 
   return (
     <div className={styles.bidHistoryItem}>
@@ -52,9 +55,9 @@ export function BidHistoryItem({ bidder, bid, timestamp }: USMBidData) {
       {timeSinceBid && <div className={styles.bidTime}>{timeSinceBid}</div>}
       <div className={styles.bidWalletAddress}>
         <Link
-          to={`https://explorer.solana.com/address/${bidderWalletAddress}?cluster=${config.solanaCluster}`}
+          to={`https://explorer.solana.com/address/${bidder}?cluster=${config.solanaCluster}`}
         >
-          {bidderWalletAddress}
+          {bidder}
         </Link>
       </div>
       <div onClick={onCopyClick} className={styles.copy}>

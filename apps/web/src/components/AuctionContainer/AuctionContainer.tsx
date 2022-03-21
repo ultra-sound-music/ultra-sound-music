@@ -1,37 +1,46 @@
-import { useEffect, useState } from 'react';
-
-import {
-  useLoadAuction,
-  useIsConnected,
-  usePlaceBid,
-  useNetwork,
-  useAccountBalance,
-  web3Constants
-} from '@usm/app-state';
-
-import { Button, Paginate, BidBox, TraitsBox } from '@usm/ui';
-
-import ConnectButton from '../Buttons/NetworkButton/NetworkButton';
-
+import { useNetwork, web3Constants, useIsConnected, useLoadAuction, useAccountBalance,
+  useAuctionIsLoading,
+  useAuction,
+  usePlaceBid } from '@usm/app-state';
+import { NftAuction } from '@usm/ui';
+import { useEffect } from 'react';
+import { Grid, Image, TraitsBox } from '@usm/ui';
 import styles from './AuctionContainer.scss';
+import { getShortenedAccountAddress } from '@usm/util-string';
+import { BidBox, BidBoxStatus, BidBoxInfo, BidBoxForm, BidHistory, SolanaIcon } from '@usm/ui';
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
+
+import NetworkButton from '../Buttons/NetworkButton/NetworkButton';
+import EndedAuctionButton from '../Buttons/EndedAuctionButton/EndedAuctionButton';
 
 export function AuctionContainer() {
-  function onClickBidNow(bidAmount: string) {
+  function onBid(bidAmount: string) {
     if (isConnected) {
       placeBid(Number.isNaN(parseFloat(bidAmount)) ? 0 : parseFloat(bidAmount));
     }
   }
 
   const placeBid = usePlaceBid();
-
-  const isConnected = useIsConnected();
-  const [page, setPage] = useState(0);
-  const [{ networkStatus }] = useNetwork();
-  const [balance] = useAccountBalance();
-  const { auction, isLoading, loadAuction } = useLoadAuction();
+  const [balance = 0] = useAccountBalance();
+  const [{ accountAddress, isConnected, networkStatus }] = useNetwork();
+  const { auction, isLoading, loadAuction } = useLoadAuction()
 
   const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
   const isProcessing = isConnecting || isLoading;
+
+  const minBid = 0; // @TODO - (currentHighestBid + step) || minBid
+  const currentWallet = isConnected && accountAddress ? accountAddress : undefined;
+  const winningWallet = auction?.winner?.bidder?.toString();
+  const highestBid = auction?.bids[0]?.bid;
+  const isFinished = auction?.winner && !auction?.isLive;
+  const walletBalance = balance && Math.round(balance * 10000) / 10000;
+  const endedAt = auction?.endedAt || undefined;
+  const isLive = auction?.isLive;
+  const bids = auction?.bids.map((bid) => ({
+    ...bid,
+    bidder: bid.bidder.toString()
+  }));
+
 
   useEffect(() => {
     const isDisconnecting = auction && !isConnected;
@@ -40,56 +49,89 @@ export function AuctionContainer() {
     }
   }, [isConnected]);
 
+  const bidBoxStatusProps = {
+    endedAt,
+    isLive,
+    currentWallet,
+    winningWallet,
+    bids
+  };
+
+  const bidBoxInfo1Props = {
+    title: isLive ? 'Current Bid' : 'Winning Bid',
+    icon: <SolanaIcon size='small' />,
+    body: highestBid ? `${highestBid} SOL` : undefined
+  };
+
+  let bidBoxInfo2Props;
+  if (isFinished) {
+    bidBoxInfo2Props = {
+      title: 'winner',
+      body: getShortenedAccountAddress(winningWallet)
+    };
+  } else {
+    if (isConnected) {
+      bidBoxInfo2Props = {
+        title: 'In Your Wallet',
+        icon: <SolanaIcon size='small' />,
+        body: `${walletBalance} SOL`
+      };
+    } else {
+      bidBoxInfo2Props = {
+        title: 'Connect Wallet'
+      };
+    }
+  }
+
+  let cta;
+  if (isLive) {
+    cta = (
+      <BidBoxForm
+        minBid={minBid}
+        isWalletConnected={isConnected}
+        connectButton={<NetworkButton />}
+        isProcessing={isProcessing}
+        onBid={onBid}
+      />
+    );
+  } else {
+    cta = <EndedAuctionButton />;
+  }
+
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.headerContainer}>
-        <h3 className={styles.nftName}>Jam Bot #1</h3>
-        <Button
-          type={page === 0 ? 'primary' : 'secondary'}
-          isSmall={true}
-          onClick={() => setPage(0)}
-        >
-          Auction
-        </Button>
-        <Button
-          type={page === 1 ? 'primary' : 'secondary'}
-          isSmall={true}
-          onClick={() => setPage(1)}
-        >
-          Traits
-        </Button>
-        <Paginate />
+    <Grid className={styles.AuctionContainer}>
+      <div className={styles.nft}>
+        <Image
+          src={auction?.auctionNft?.metadata?.image}
+          fit='contain'
+          withPlaceholder={true}
+          className={styles.nftImage}
+        />
       </div>
-      {page === 0 && (
-        <BidBox
-          isProcessing={isProcessing}
-          endedAt={auction?.endedAt || undefined}
-          endsAt={auction?.endAuctionAt || undefined}
-          currentHighBidSol={auction?.bids[0]?.bid}
-          isWalletConnected={isConnected}
-          walletBalanceSol={balance && Math.round(balance * 10000) / 10000}
-          recentBids={auction?.bids}
-          winningWalletAddress={auction?.winner?.bidder?.toString()}
-          traits={{ name: 'Jam Bot #1' }}
-          connectButton={<ConnectButton />}
-          onClickBidNow={onClickBidNow}
-        />
-      )}
-      {page === 1 && (
-        <TraitsBox
-          sanityCategory='insomniac'
-          fameCategory='festival-regular'
-          swaggerCategory='riot-starter'
-          melodicCategory='choral'
-          texturalCategory='jagged'
-          energyCategory='relaxed'
-          biographyContent={
-            'Lorem ipsum dolor sit amet, conse ctetuer adipiscing elit. Aenean comm odo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma gnis dis parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus.'
+      <div className={styles.nftAuction}>
+        <NftAuction
+          title={auction?.auctionNft?.metadata?.name}
+          bidBox={
+            <BidBox
+              status={<BidBoxStatus {...bidBoxStatusProps} />}
+              info={[
+                <BidBoxInfo key={1} {...bidBoxInfo1Props} isLoading={isLoading} />,
+                <BidBoxInfo key={2} {...bidBoxInfo2Props} isLoading={isLoading} />
+              ]}
+              cta={cta}
+              history={<BidHistory bids={bids} isProcessing={isProcessing} />}
+              isLoading={isLoading}
+            />            
           }
-          badges={[]}
+          traitsBox={
+            <TraitsBox
+              description={auction?.auctionNft?.metadata?.description}
+              attributes={auction?.auctionNft?.metadata?.attributes}
+            />
+          }
         />
-      )}
-    </div>
+      </div>
+    </Grid>
   );
 }
 

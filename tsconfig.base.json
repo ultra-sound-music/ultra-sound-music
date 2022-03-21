@@ -16,9 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@usm/auction": ["libs/auction/src/index.ts"],
       "@usm/app-state": ["libs/app-state/src/index.ts"],
       "@usm/assets/*": ["libs/assets/src/*"],
+      "@usm/auction": ["libs/auction/src/index.ts"],
       "@usm/audio-player": ["libs/audio-player/src/index.ts"],
       "@usm/components": ["apps/web/src/components.ts"],
       "@usm/config": ["libs/config/src/index.ts"],

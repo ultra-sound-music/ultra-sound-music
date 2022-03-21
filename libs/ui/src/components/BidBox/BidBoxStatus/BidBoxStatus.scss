@@ -1,4 +1,4 @@
-@use '../../styles.scss' as *;
+@use '../../../styles.scss' as *;
 
 .BidBoxStatus {
   height: 106px;
@@ -6,4 +6,10 @@
   background-color: $color-evening-sky;
   margin-bottom: -50px;
   padding: 16px 24px;
+
+  @extend %font-small;
+
+  strong {
+    margin-left: 6px;
+  }
 }

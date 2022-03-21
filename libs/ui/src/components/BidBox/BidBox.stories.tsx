@@ -1,6 +1,5 @@
 import { Story, Meta } from '@storybook/react';
-import { RecoilRoot } from 'recoil';
-import { BidBox, BidBoxProps } from './BidBox';
+import { BidBox, BidBoxProps } from './BidBoxContainer/BidBoxContainer';
 
 export default {
   component: BidBox,
@@ -11,25 +10,23 @@ const Template: Story<BidBoxProps> = (args) => <BidBox {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  timeUntilAuctionEnd: { days: 0, hours: 21, minutes: 46, seconds: 11 },
+  endedAt: 1647633156892,
   currentHighBidSol: 173.5,
-  isWalletConnected: true,
+  currentWallet: '0x1ds12785',
   walletBalanceSol: 513.21,
-  recentBids: [
+  bids: [
     {
       bid: 173.5,
-      bidderWalletAddress: '0x123',
-      timeSinceBid: { seconds: 19 }
+      bidder: '0x123',
+      timestamp: 1647633256892
     },
     {
       bid: 101.0,
-      bidderWalletAddress: '0xvasd12asd3',
-      timeSinceBid: { minutes: 45 }
+      bidder: '0xvasd12asd3',
+      timestamp: 1647633156892
     }
   ],
-  isAuctionFinished: false,
-  traits: { name: 'Jam Bot #1' },
-  winningWalletAddress: '0x1ds...sdfsa',
-  onClickBidNow: () => console.log('onClickBidNow()'),
-  onChangeBidAmount: (value) => console.log('onChangeBidAmount()', value)
+  isLive: true,
+  winningWallet: '0x1ds12345',
+  onClickBidNow: () => console.log('onClickBidNow()')
 };

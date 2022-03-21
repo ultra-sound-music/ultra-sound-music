@@ -1,25 +1,26 @@
 @use '@usm/styles/colors.scss' as *;
 
-.mainContainer {
-  width: 550px;
+.AuctionContainer {
   color: $color-polar-bear;
+  grid-auto-rows: 1fr;
+}
 
-  .headerContainer {
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5px;
+.nft {
+  padding-top: 140px;
+  grid-column: 2 / 12;
+}
 
-    .nftName {
-      margin: 0;
-      display: inline-block;
-      line-height: 25px;
-    }
+.nftImage {
+  width: 400px;
 
-    .arrowContainer {
-      margin-top: 10px;
-      margin-left: 75px;
-    }
+  img {
+    box-shadow: 0 4px 20px $color-void;
+    height: auto;
   }
+}
+
+.nftAuction {
+  padding-top: 60px;
+  grid-column: 12 / 24;
+  z-index: 1;
 }

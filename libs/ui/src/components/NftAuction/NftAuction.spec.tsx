@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import BidBox from './BidBox';
+import NftAuction from './NftAuction';
 
-describe('BidBox', () => {
+describe('NftAuction', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<BidBox />);
+    const { baseElement } = render(<NftAuction />);
     expect(baseElement).toBeTruthy();
   });
 });

@@ -1,6 +1,6 @@
 @use '../../styles' as *;
 
-.BidBox {
+.BidBoxContainer {
   position: relative;
   transition: opacity 600ms linear;
 }
@@ -9,7 +9,7 @@
   opacity: 50%;
 }
 
-.bidFormContainer {
+.body {
   height: 244px;
   background-color: $color-dusk;
   box-shadow: 0 4px 20px rgb(0 0 0 / 40%);
@@ -17,6 +17,7 @@
   padding: 12px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .info {
@@ -26,4 +27,8 @@
   display: flex;
   justify-content: start;
   align-items: baseline;
+}
+
+.cta {
+  padding: 12px;
 }

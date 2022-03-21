@@ -1,4 +1,4 @@
-@use '../../styles.scss' as *;
+@use '../../../styles.scss' as *;
 
 .BidBoxInfo {
   &:not(:last-child) {
@@ -37,6 +37,8 @@
 }
 
 .title {
+  text-transform: capitalize;
+
   @extend %font-small;
 }
 
@@ -48,6 +50,7 @@
   align-items: center;
   column-gap: 8px;
   line-height: 45px;
+  height: 45px;
   margin-top: 8px;
 
   @extend %font-h3;

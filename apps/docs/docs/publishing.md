@@ -1,30 +1,38 @@
 # Publishing
 
-Prerequisite: - setup arweave wallet. Can this be done on a devnet? - get arweave airdrop via arweave faucet
+## Prerequisites
 
-Step 1
-Create wallet on devnet, this wallet is the admin wallet that will manage the auction
+- Create an [Arweave wallet](https://faucet.arweave.net/) and get free airdrop. This will be used to pay for uploading content to Arweave.
+- Create a [Solana Wallet](https://docs.solana.com/wallet-guide/file-system-wallet#generate-a-file-system-wallet-keypair). This wallet will be the [store owner](https://github.com/metaplex-foundation/metaplex/blob/master/ARCHITECTURE.md#store)
+- (optional) Save the keypair to your local solana config (~/.config/solana/{filename.json})
 
-Step 2
-Make sure the keypair is saved to your local solana config (~/.config/solana/)
+## Setup Metaplex Accounts
 
-Step 3
-Initialize / create store
-Each wallet can only have one store.
-Run this command and it will either created a store for the wallet or returning an existing store
-$ npx ts-node src/usm-cli init-store -k ~/.config/solana/test-keys.json
+#### Step 1: Initialize / create store
 
-Step 4
-Set a whitelisted creator on the store (TBD - what does this actually mean??)
+Each wallet can only have one store. Run this command and it will either created a store for the wallet or returning an existing store.
+
+```
+$ npx ts-node usm-cli init-store -k ~/.config/solana/{filename.json})
+```
+
+#### Step 2: Whitelist Creators
+
+Set a [whitelisted creator](https://github.com/metaplex-foundation/metaplex/blob/master/ARCHITECTURE.md#whitelistedcreator) on the store
+
+```
 $ npx ts-node src/usm-cli set-whitelist-creator 34tUCCgN7fnqxFQDtxC99huw5XRTnXTsSPBeJu2iGaKy -k ~/.config/solana/test-keys.json
+```
 
-Step 5
-Create a vault
-Everytime you call the command it will create a new vault for you. The vault is where all auction assets will go. This includes NFTs && Maybeee Bids(??)
-npx ts-node src/usm-cli create-vault -k ~/.config/solana/test-keys.json
+#### Step 3: Create Vault
 
-Step 6
-Upload Art
+Every time you run this command it will create a new vault for you. Think of the vault as the escrow account where all assets will go. This includes NFTs and Bids.
+
+```
+$ npx ts-node src/usm-cli create-vault -k ~/.config/solana/test-keys.json
+```
+
+#### Step 4: Upload Art
 
 Step 7
 Upload metadata to arweave, use your arweave wallet with arweave funds that you previously created
