@@ -1,0 +1,11 @@
+.UploadButtonFieldSet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}

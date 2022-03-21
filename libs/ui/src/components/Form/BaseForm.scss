@@ -1,0 +1,25 @@
+@use '../../styles.scss' as *;
+
+.formField {
+  margin-bottom: 2.5rem;
+}
+
+.buttons {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  column-gap: 8px;
+}
+
+.error {
+  color: $color-failure;
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  align-items: center;
+  margin-top: 38px;
+}

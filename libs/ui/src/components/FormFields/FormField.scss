@@ -1,0 +1,17 @@
+@use '../../styles.scss' as *;
+
+.clickable {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.tooltip {
+  background-color: $color-eeyore-800 !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+  padding: 5px 0 17px !important;
+  width: 180px !important;
+  color: theme($text) !important;
+  text-align: left !important;
+}

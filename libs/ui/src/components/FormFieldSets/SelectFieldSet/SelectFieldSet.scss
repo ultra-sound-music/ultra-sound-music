@@ -1,0 +1,61 @@
+@use '../../../styles.scss' as *;
+
+.Select {
+  position: relative;
+
+  :global .c8__control {
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    height: 5.6rem;
+    padding-left: 10px;
+
+    &::placeholder {
+      color: $color-breakwater;
+      font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
+    }
+
+    &:active,
+    &:hover,
+    &:focus {
+      border: 2px solid #ccc;
+      box-shadow: 0 0 4px #ccc;
+    }
+  }
+
+  .label {
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 24px;
+    text-transform: capitalize;
+
+    @extend %font-small;
+  }
+
+  :global .c8__dropdown-indicator {
+    cursor: pointer;
+  }
+
+  :global .c8__control--is-focused {
+    border: 2px solid #ccc;
+    box-shadow: 0 0 4px #ccc;
+  }
+
+  :global .c8__placeholder {
+    color: $color-breakwater;
+    font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
+    text-transform: capitalize;
+  }
+
+  &::placeholder {
+    color: $color-breakwater;
+    font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
+    text-transform: capitalize;
+  }
+
+  &:focus {
+    border: 2px solid #ccc;
+    box-shadow: 0 0 4px #ccc;
+    outline: 0;
+  }
+}

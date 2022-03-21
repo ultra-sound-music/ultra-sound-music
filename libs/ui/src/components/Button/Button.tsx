@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import cn from 'clsx';
 
 import Link from '../Link/Link';
@@ -10,7 +10,7 @@ export type TButtonType = 'primary' | 'secondary' | 'inactive';
 
 export interface IButtonProps {
   type?: TButtonType;
-  image?: JSX.Element;
+  image?: ReactNode;
   shape?: 'pill' | 'tile';
   to?: typeof Link.prototype.to;
   isFullWidth?: boolean;

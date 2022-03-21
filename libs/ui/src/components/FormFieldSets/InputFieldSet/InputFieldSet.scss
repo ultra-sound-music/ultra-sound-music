@@ -1,0 +1,103 @@
+@use '../../../styles.scss' as *;
+
+.InputFieldSet {
+  display: block;
+}
+
+.withLeadingIcon {
+  .input {
+    padding-left: 36px;
+  }
+}
+
+.hasValue {
+  input {
+    padding: 16px 16px 0 22px;
+  }
+}
+
+.title {
+  margin-bottom: 15px;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
+}
+
+.label {
+  display: block;
+  position: absolute;
+  top: 6px;
+  left: 24px;
+  text-transform: capitalize;
+
+  @extend %font-small;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.input {
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  height: 5.6rem;
+  padding: 0 16px 0 24px;
+  width: 100%;
+
+  &[type='password'] {
+    font-family: Verdana, sans-serif;
+    letter-spacing: 0.125em;
+  }
+
+  &::placeholder {
+    color: $color-breakwater;
+    font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
+    text-transform: capitalize;
+  }
+
+  &:focus {
+    border: 2px solid #ccc;
+    box-shadow: 0 0 4px #ccc;
+    outline: 0;
+  }
+}
+
+.leadingIcon {
+  position: absolute;
+  top: calc(50% - (2.6rem / 2));
+  left: 8px;
+
+  > svg {
+    color: currentcolor;
+    display: block;
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: calc(50% - (2.2rem / 2));
+  right: 20px;
+
+  > svg {
+    color: currentcolor;
+    display: block;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+}
+
+.context {
+  position: absolute;
+  top: calc(50% - (3.2rem / 2));
+  right: 20px;
+
+  // > svg {
+  //   color: currentcolor;
+  //   display: block;
+  //   width: 2.2rem;
+  //   height: 2.2rem;
+  // }
+}

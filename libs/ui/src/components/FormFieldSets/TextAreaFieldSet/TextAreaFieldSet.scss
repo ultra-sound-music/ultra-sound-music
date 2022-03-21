@@ -1,0 +1,49 @@
+@use '../../../styles.scss' as *;
+
+.title {
+  margin-bottom: 15px;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
+}
+
+.textAreaContainer {
+  position: relative;
+}
+
+.label {
+  display: block;
+  position: absolute;
+  top: 6px;
+  left: 24px;
+  line-height: 1.3;
+  text-transform: capitalize;
+
+  @extend %font-small;
+}
+
+.textarea {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  height: 8.6rem;
+  padding: 24px 16px 12px 22px;
+  width: 100%;
+
+  &[type='password'] {
+    font-family: Verdana, sans-serif;
+    letter-spacing: 0.125em;
+  }
+
+  &::placeholder {
+    color: $color-breakwater;
+    font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
+    text-transform: capitalize;
+  }
+
+  &:focus {
+    border: 2px solid #ccc;
+    box-shadow: 0 0 4px #ccc;
+    outline: 0;
+  }
+}
