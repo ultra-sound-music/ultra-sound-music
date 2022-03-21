@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
+import { AuctionState } from '@usm/auction';
 import styles from './BidBoxStatus.scss';
 
 export interface IBidBoxStatusBids {
@@ -10,20 +11,24 @@ export interface IBidBoxStatusBids {
 }
 
 export interface IBidBoxStatusProps {
-  endedAt?: number;
-  isLive?: boolean;
+  auctionEnd?: number;
+  state?: AuctionState;
   currentWallet?: string;
   winningWallet?: string;
   bids?: IBidBoxStatusBids[];
 }
 
-export function getLiveStatusMessage(endedAt?: number) {
-  if (!endedAt) {
+export function getPendingStatusMessage() {
+  return <strong>Coming Soon!</strong>
+}
+
+export function getLiveStatusMessage(auctionEnd?: number) {
+  if (!auctionEnd) {
     return '';
   }
 
   const today = dayjs();
-  const endDate = dayjs(endedAt);
+  const endDate = dayjs(auctionEnd);
   const dateDiff = dayjs.duration(endDate.diff(today));
 
   const days = dateDiff.days();
@@ -40,12 +45,12 @@ export function getLiveStatusMessage(endedAt?: number) {
 }
 
 export function getEndedStatusMessage(
-  endedAt?: number,
+  auctionEnd?: number,
   currentWallet?: string,
   winningWallet?: string,
   bids?: IBidBoxStatusBids[]
 ) {
-  const endDate = dayjs(endedAt);
+  const endDate = dayjs(auctionEnd);
   const isWinningWallet = currentWallet === winningWallet;
   const hasClaimedBid = false;
   const isBiddingWallet = false;
@@ -53,24 +58,29 @@ export function getEndedStatusMessage(
   if (isWinningWallet && !hasClaimedBid) {
     return <strong>Congratulations, you won!</strong>;
   } else if (isBiddingWallet) {
-    return <strong>You didn't win. Click refund to claim your bid.</strong>;
+    return <strong>You didn't win. Click to claim your bid.</strong>;
   } 
 
   return <strong>Auction ended {endDate.format('MMM M, YYYY h:m A')}</strong>;
 }
 
 export function BidBoxStatus({
-  endedAt,
-  isLive,
+  auctionEnd,
+  state,
   currentWallet,
   winningWallet,
   bids
 }: IBidBoxStatusProps) {
   dayjs.extend(duration);
 
-  const statusMessage = isLive
-    ? getLiveStatusMessage(endedAt)
-    : getEndedStatusMessage(endedAt, currentWallet, winningWallet, bids);
+  let statusMessage;
+  if (state === AuctionState.Created) {
+    statusMessage = getPendingStatusMessage();
+  } else if (state === AuctionState.Started) {
+    statusMessage = getLiveStatusMessage(auctionEnd);
+  } else if (state === AuctionState.Ended) {
+    statusMessage = getEndedStatusMessage(auctionEnd, currentWallet, winningWallet, bids);
+  }
 
   return <div className={styles.BidBoxStatus}>{statusMessage}</div>;
 }

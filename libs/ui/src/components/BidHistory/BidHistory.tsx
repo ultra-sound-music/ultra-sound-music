@@ -10,13 +10,11 @@ export interface IBidHistoryProps {
 }
 
 export function BidHistory({ bids, isProcessing }: IBidHistoryProps) {
-  bids = isProcessing
-    ? ([
-        { timestamp: 1 },
-        { timestamp: 2 },
-        { timestamp: 3 }
-      ] as unknown as IBidHistoryItem[])
-    : bids;
+  if (isProcessing) {
+    bids = [{ timestamp: 1 }, { timestamp: 2 }, { timestamp: 3 }] as unknown as IBidHistoryItem[];
+  } else if (!bids?.length) {
+    return null;
+  }
 
   return (
     <div className={styles.BidHistory}>

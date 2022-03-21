@@ -1,3 +1,5 @@
+@use '../../styles' as *;
+
 .header {
   height: 60px;
   display: flex;
@@ -14,6 +16,20 @@
   white-space: nowrap;
   overflow: hidden;
   width: 35%;
+}
+
+.body {
+  height: 1px;
+  min-height: 244px;
+}
+
+.loading {
+  opacity: 50%;
+  background-color: $color-dusk;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 40%);
+  border-radius: 9px;
+  height: 100%;
+  width: 100%;
 }
 
 .hidden {

@@ -1,5 +1,7 @@
-import { useState, ReactElement } from 'react';
+import { useState, ReactElement, useEffect } from 'react';
+import cn from 'clsx';
 
+import BidBoxStatus from '../BidBox/BidBoxStatus/BidBoxStatus';
 import Button from '../Button/Button';
 import Paginate from '../Paginate/Paginate';
 import BidBox from '../BidBox';
@@ -9,35 +11,62 @@ import styles from './NftAuction.scss';
 
 export interface NftAuctionProps {
   title: string;
+  status: ReactElement<typeof BidBoxStatus>;
   bidBox: ReactElement<typeof BidBox>;
   traitsBox: ReactElement<typeof TraitsBox>;
+  auctionIsPending?: boolean;
 }
 
-export function NftAuction({ title, bidBox, traitsBox }: NftAuctionProps) {
-  const [page, setPage] = useState(0);
+export function NftAuction({
+  title,
+  status,
+  bidBox,
+  traitsBox,
+  auctionIsPending
+}: NftAuctionProps) {
+  const [page, setPage] = useState<number>();
+  const isLoading = page === undefined;
+  const showStatus = page === 0 || auctionIsPending === true;
+  const showButtons = auctionIsPending === false;
+
+  useEffect(() => {
+    if (typeof auctionIsPending === 'boolean') {
+      setPage(+auctionIsPending);
+    }
+  }, [auctionIsPending]);
 
   return (
-    <div className={styles.NftAuction}>
+    <div className={cn(styles.NftAuction)}>
       <div className={styles.header}>
         <h3 className={styles.nftName}>{title}</h3>
-        <Button
-          type={page === 0 ? 'primary' : 'inactive'}
-          isSmall={true}
-          onClick={() => setPage(0)}
-        >
-          Auction
-        </Button>
-        <Button
-          type={page === 1 ? 'primary' : 'inactive'}
-          isSmall={true}
-          onClick={() => setPage(1)}
-        >
-          Traits
-        </Button>
+        {showButtons && (
+          <>
+            <Button
+              type={page === 0 ? 'primary' : 'inactive'}
+              isDisabled={isLoading || auctionIsPending}
+              isSmall={true}
+              onClick={() => setPage(0)}
+            >
+              Auction
+            </Button>
+            <Button
+              type={page === 1 ? 'primary' : 'inactive'}
+              isSmall={true}
+              isDisabled={isLoading}
+              onClick={() => setPage(1)}
+            >
+              Traits
+            </Button>
+          </>
+        )}
         <Paginate />
       </div>
-      <div className={page === 0 ? styles.visible : styles.hidden}>{bidBox}</div>
-      <div className={page === 1 ? styles.visible : styles.hidden}>{traitsBox}</div>
+      {showStatus && status}
+      <div className={styles.body}>
+        {isLoading && <div className={styles.loading}></div>}
+        <div className={page === 0 ? styles.visible : styles.hidden}>{bidBox}</div>
+        <div className={page === 1 ? styles.visible : styles.hidden}>{traitsBox}</div>
+      </div>
     </div>
   );
 }

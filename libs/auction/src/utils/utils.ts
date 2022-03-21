@@ -12,8 +12,9 @@ import { Connection, Wallet, actions } from '@metaplex/js';
 
 import {
   Auction,
-  AuctionProgram,
   AuctionExtended,
+  AuctionProgram,
+  AuctionState,
   BidderMetadata,
   BidderPot,
   PlaceBid
@@ -24,6 +25,8 @@ import { Vault } from '@metaplex-foundation/mpl-token-vault';
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { AuctionManager } from '@metaplex-foundation/mpl-metaplex';
 import { Transaction, Account } from '@metaplex-foundation/mpl-core';
+
+export { AuctionState }
 
 const {
   getCancelBidTransactions,
@@ -307,12 +310,10 @@ export type USMAuctionData = {
   participationNft: nftData | null;
   //token that is used for bids
   acceptedToken: PublicKey;
-  // returns unix timestamp
-  endedAt: number | null;
   //returns unix timestamp
   endAuctionAt: number | null;
   //if the auction is currently live
-  isLive: boolean;
+  state: AuctionState;
   // array of processed bid
   bids: USMBidData[];
   //  if auction over returns winning bid else returns null
@@ -363,7 +364,7 @@ export const transformAuctionData = async (
 
   usmBidData.map((bid) => bid.bidder);
 
-  const AuctionData: USMAuctionData = {
+  const auctionData: USMAuctionData = {
     pubkey: auction.pubkey,
     auctionNft: {
       pubKey: new PublicKey(nftPubKey),
@@ -376,21 +377,18 @@ export const transformAuctionData = async (
         }
       : null,
     acceptedToken: new PublicKey(auction.data.tokenMint),
-    endedAt: auction.data.endedAt
-      ? auction.data.endedAt.toNumber() * 1000
-      : null,
     // @TODO endAuctionAt is actually auction duration, poorly named, in seconds
     // metaplex/js/packages/web/src/views/auctionCreate/index.tsx
     endAuctionAt: auction.data.endAuctionAt
-      ? auction.data.endAuctionAt.toNumber()
+      ? auction.data.endAuctionAt.toNumber() * 1000
       : null,
-    isLive: auction.data.state === 1,
+    state: auction.data.state,
     bids: usmBidData,
     winner: auction.data.state === 2 ? usmBidData[0] : null,
     participants: usmBidData.map((bid) => bid.bidder)
   };
 
-  return AuctionData;
+  return auctionData;
 };
 
 export const getMetadata = async (

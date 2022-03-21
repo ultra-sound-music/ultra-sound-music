@@ -1,7 +1,5 @@
 import { TOKEN_PROGRAM_ID, MintLayout, u64 } from '@solana/spl-token';
 import { Auction } from '@metaplex-foundation/mpl-auction';
-import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
-import { Account } from '@metaplex-foundation/mpl-core';
 import { Connection, Wallet } from '@metaplex/js';
 import {
   clusterApiUrl,

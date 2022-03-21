@@ -1,14 +1,26 @@
-import { useNetwork, web3Constants, useIsConnected, useLoadAuction, useAccountBalance,
-  useAuctionIsLoading,
-  useAuction,
-  usePlaceBid } from '@usm/app-state';
+import {
+  useNetwork,
+  web3Constants,
+  useLoadAuction,
+  useAccountBalance,
+  usePlaceBid
+} from '@usm/app-state';
 import { NftAuction } from '@usm/ui';
 import { useEffect } from 'react';
-import { Grid, Image, TraitsBox } from '@usm/ui';
+import {
+  Grid,
+  Image,
+  TraitsBox,
+  BidBox,
+  BidBoxStatus,
+  BidBoxInfo,
+  BidBoxForm,
+  BidHistory,
+  SolanaIcon
+} from '@usm/ui';
 import styles from './AuctionContainer.scss';
 import { getShortenedAccountAddress } from '@usm/util-string';
-import { BidBox, BidBoxStatus, BidBoxInfo, BidBoxForm, BidHistory, SolanaIcon } from '@usm/ui';
-import { LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { AuctionState } from '@usm/auction';
 
 import NetworkButton from '../Buttons/NetworkButton/NetworkButton';
 import EndedAuctionButton from '../Buttons/EndedAuctionButton/EndedAuctionButton';
@@ -23,7 +35,7 @@ export function AuctionContainer() {
   const placeBid = usePlaceBid();
   const [balance = 0] = useAccountBalance();
   const [{ accountAddress, isConnected, networkStatus }] = useNetwork();
-  const { auction, isLoading, loadAuction } = useLoadAuction()
+  const { auction, isLoading, loadAuction } = useLoadAuction();
 
   const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
   const isProcessing = isConnecting || isLoading;
@@ -32,15 +44,15 @@ export function AuctionContainer() {
   const currentWallet = isConnected && accountAddress ? accountAddress : undefined;
   const winningWallet = auction?.winner?.bidder?.toString();
   const highestBid = auction?.bids[0]?.bid;
-  const isFinished = auction?.winner && !auction?.isLive;
+  const isFinished = !!auction?.winner?.bid;
   const walletBalance = balance && Math.round(balance * 10000) / 10000;
-  const endedAt = auction?.endedAt || undefined;
-  const isLive = auction?.isLive;
+  const auctionEnd = auction?.endAuctionAt || undefined;
+  const state = auction?.state;
   const bids = auction?.bids.map((bid) => ({
     ...bid,
     bidder: bid.bidder.toString()
   }));
-
+  const auctionIsPending = state === undefined ? undefined : state === AuctionState.Created;
 
   useEffect(() => {
     const isDisconnecting = auction && !isConnected;
@@ -50,15 +62,20 @@ export function AuctionContainer() {
   }, [isConnected]);
 
   const bidBoxStatusProps = {
-    endedAt,
-    isLive,
+    auctionEnd,
+    state,
     currentWallet,
     winningWallet,
     bids
   };
 
   const bidBoxInfo1Props = {
-    title: isLive ? 'Current Bid' : 'Winning Bid',
+    title:
+      state === AuctionState.Created
+        ? ''
+        : state === AuctionState.Started
+        ? 'Current Bid'
+        : 'Winning Bid',
     icon: <SolanaIcon size='small' />,
     body: highestBid ? `${highestBid} SOL` : undefined
   };
@@ -73,7 +90,6 @@ export function AuctionContainer() {
     if (isConnected) {
       bidBoxInfo2Props = {
         title: 'In Your Wallet',
-        icon: <SolanaIcon size='small' />,
         body: `${walletBalance} SOL`
       };
     } else {
@@ -84,7 +100,7 @@ export function AuctionContainer() {
   }
 
   let cta;
-  if (isLive) {
+  if (state === AuctionState.Started) {
     cta = (
       <BidBoxForm
         minBid={minBid}
@@ -110,10 +126,11 @@ export function AuctionContainer() {
       </div>
       <div className={styles.nftAuction}>
         <NftAuction
+          auctionIsPending={auctionIsPending}
           title={auction?.auctionNft?.metadata?.name}
+          status={<BidBoxStatus {...bidBoxStatusProps} />}
           bidBox={
             <BidBox
-              status={<BidBoxStatus {...bidBoxStatusProps} />}
               info={[
                 <BidBoxInfo key={1} {...bidBoxInfo1Props} isLoading={isLoading} />,
                 <BidBoxInfo key={2} {...bidBoxInfo2Props} isLoading={isLoading} />
@@ -121,7 +138,7 @@ export function AuctionContainer() {
               cta={cta}
               history={<BidHistory bids={bids} isProcessing={isProcessing} />}
               isLoading={isLoading}
-            />            
+            />
           }
           traitsBox={
             <TraitsBox
