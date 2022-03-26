@@ -1,7 +1,4 @@
 {
   "name": "@usm/ui",
-  "version": "0.0.1",
-  "scripts": {
-    "deploy-storybook": "storybook-to-ghpages"
-  }
+  "version": "0.0.1"
 }
