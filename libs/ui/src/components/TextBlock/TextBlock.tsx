@@ -9,11 +9,7 @@ export interface ITextBlockProps {
   children?: React.ReactNode;
 }
 
-export const TextBlock = ({
-  subject,
-  title,
-  children
-}: ITextBlockProps): JSX.Element => {
+export const TextBlock = ({ subject, title, children }: ITextBlockProps): JSX.Element => {
   const classNames = cn(styles.TextBlock);
 
   return (

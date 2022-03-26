@@ -18,9 +18,7 @@ export function SiteFooter() {
         <Image src={logo} className={styles.logo} />
         <div className={styles.usm}>{copy.usm_long}</div>
       </div>
-      <div className={styles.copyright}>
-        {interpolate(copy.copyright, year)}
-      </div>
+      <div className={styles.copyright}>{interpolate(copy.copyright, year)}</div>
       <div className={styles.socials}>
         <Link to={urls.usmDiscord}>
           <RiDiscordFill />

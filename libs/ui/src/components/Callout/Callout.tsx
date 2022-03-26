@@ -9,9 +9,7 @@ export interface ICalloutProps {
 }
 
 export function Callout({ children, shout }: ICalloutProps) {
-  return (
-    <div className={cn(styles.Callout, shout && styles.shout)}>{children}</div>
-  );
+  return <div className={cn(styles.Callout, shout && styles.shout)}>{children}</div>;
 }
 
 export default Callout;

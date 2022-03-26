@@ -37,8 +37,7 @@ $hero-height: 650px;
   right: 0;
   width: 100%;
   min-height: $hero-height;
-  background-image: url('@usm/assets/img/smoke.png'),
-    url('@usm/assets/img/hero_jambot1.png');
+  background-image: url('@usm/assets/img/smoke.png'), url('@usm/assets/img/hero_jambot1.png');
   background-repeat: no-repeat, no-repeat;
   background-size: contain, contain;
   background-position: left bottom, right bottom;

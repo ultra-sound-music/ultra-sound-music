@@ -10,10 +10,7 @@ import mediator from '@usm/store/mediator';
 let web3Client;
 let web3EventChannel;
 
-export function* init(
-  action,
-  { web3Client: client, eventListeners, autoConnect }
-) {
+export function* init(action, { web3Client: client, eventListeners, autoConnect }) {
   web3Client = client;
 
   if (web3Client.init && autoConnect) {
@@ -23,9 +20,7 @@ export function* init(
   let connectedAccount = yield call([web3Client, web3Client.getWalletAddress]);
 
   if (web3Client.isWeb3Available) {
-    yield fork(startWatchingForWalletEvents, web3Client, eventListeners, [
-      web3Client
-    ]);
+    yield fork(startWatchingForWalletEvents, web3Client, eventListeners, [web3Client]);
   }
 
   if (connectedAccount) {
@@ -130,11 +125,7 @@ export function* onUpdateNetworkStatus(
   }
 }
 
-export function* startWatchingForWalletEvents(
-  web3Client,
-  eventListeners,
-  eventArgs
-) {
+export function* startWatchingForWalletEvents(web3Client, eventListeners, eventArgs) {
   if (web3EventChannel) {
     web3EventChannel.close();
   }

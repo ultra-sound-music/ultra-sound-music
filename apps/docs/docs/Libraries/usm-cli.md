@@ -4,7 +4,7 @@
 
 the USM CLI can be used to configure a metaplex auction using their metaplex store, vault, auction, auction manager and metadata program.
 
-## Installation 
+## Installation
 
 ```
 git clone https://github.com/ultra-sound-music/usm-ts
@@ -14,7 +14,7 @@ npm i
 
 ## General Usage
 
-Below is a list of commands available on the CLI 
+Below is a list of commands available on the CLI
 
 ```
 Usage: usm-cli [options] [command]
@@ -39,13 +39,13 @@ Commands:
   end-auction [options] <vault>
   claim-bid [options] <vault>
   help [command]                                                  display help for command
-  ```
+```
 
 to run a command locally you can use `npx ts-node src/usm-cli <command>`
 
 the commands in the list above are listed in order that they are needed to configure an auction. start with `init-store` and end with `start-auction`. to see specific args and options for a command use `npx ts-node src/usm-cli <command> -h`
 
-### Example: create metadata uri 
+### Example: create metadata uri
 
 ```
 Usage: usm-cli create-metadata-uri [options]
@@ -57,8 +57,6 @@ Options:
   -h, --help              display help for command
 
 ```
-
-
 
 ### Example: mint nft
 
@@ -81,7 +79,7 @@ Options:
 
 1. upload image
 
-To upload an image to arweave you can use the following command from the cli `usm-cli upload-image` with below options and arguements 
+To upload an image to arweave you can use the following command from the cli `usm-cli upload-image` with below options and arguements
 
 ```
 Usage: usm-cli upload-image [options]
@@ -92,7 +90,7 @@ Options:
   -h, --help              display help for command
 ```
 
-you'll need an arweave wallet stored locally with enough winstons in it to perform the upload + the image asset saved in your file system. use the `-ar` flag to point to your wallet and the `-i` flage to point to your image. This will output a url like this `https://arweave.net:443/yWIXWKAVTzy59jEEC1pQXckZd8ryUL5q5z1wBICOrjM` that can be used in the next step, metadata creation. 
+you'll need an arweave wallet stored locally with enough winstons in it to perform the upload + the image asset saved in your file system. use the `-ar` flag to point to your wallet and the `-i` flage to point to your image. This will output a url like this `https://arweave.net:443/yWIXWKAVTzy59jEEC1pQXckZd8ryUL5q5z1wBICOrjM` that can be used in the next step, metadata creation.
 
 2. upload metadata
 
@@ -124,7 +122,7 @@ after you have uploaded your image asset you're ready to create your nft metadat
 }
 ```
 
-Save your metadata json file locally and use the `usm-cli create-metadata-uri` command to upload the metadata json file to arweave. this command is similar to the `usm-cli upload-image` command. 
+Save your metadata json file locally and use the `usm-cli create-metadata-uri` command to upload the metadata json file to arweave. this command is similar to the `usm-cli upload-image` command.
 
 ```
 Usage: usm-cli create-metadata-uri [options]
@@ -153,9 +151,3 @@ Options:
                         provided")
   -h, --help            display help for command
 ```
-
-
-
-
-
-

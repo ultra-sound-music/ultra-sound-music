@@ -5,8 +5,5 @@ import * as workers from './workers';
 
 export default function* appSaga() {
   yield takeLatest(actionTypes.INIT_APP, workers.initApp);
-  yield takeLatest(
-    mediator.actionTypes.INIT_WEB3_SUCCESS,
-    workers.onInitWeb3Success
-  );
+  yield takeLatest(mediator.actionTypes.INIT_WEB3_SUCCESS, workers.onInitWeb3Success);
 }

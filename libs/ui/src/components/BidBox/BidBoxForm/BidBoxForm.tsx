@@ -13,7 +13,7 @@ export interface IBidFormBoxProps {
 }
 
 export function BidBoxForm({
-  minBid = .1,
+  minBid = 0.1,
   isWalletConnected,
   connectButton,
   isProcessing,

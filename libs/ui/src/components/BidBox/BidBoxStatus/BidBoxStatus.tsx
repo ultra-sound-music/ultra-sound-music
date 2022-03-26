@@ -19,7 +19,7 @@ export interface IBidBoxStatusProps {
 }
 
 export function getPendingStatusMessage() {
-  return <strong>Coming Soon!</strong>
+  return <strong>Coming Soon!</strong>;
 }
 
 export function getLiveStatusMessage(auctionEnd?: number) {
@@ -38,8 +38,8 @@ export function getLiveStatusMessage(auctionEnd?: number) {
   return (
     <>
       <strong>Auction ends in</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-      <strong>{hours}</strong> hours <strong>{dateDiff.minutes()}</strong>{' '}
-      minutes <strong>{dateDiff.seconds()}</strong> seconds
+      <strong>{hours}</strong> hours <strong>{dateDiff.minutes()}</strong> minutes{' '}
+      <strong>{dateDiff.seconds()}</strong> seconds
     </>
   );
 }
@@ -59,7 +59,7 @@ export function getEndedStatusMessage(
     return <strong>Congratulations, you won!</strong>;
   } else if (isBiddingWallet) {
     return <strong>You didn't win. Click to claim your bid.</strong>;
-  } 
+  }
 
   return <strong>Auction ended {endDate.format('MMM M, YYYY h:m A')}</strong>;
 }

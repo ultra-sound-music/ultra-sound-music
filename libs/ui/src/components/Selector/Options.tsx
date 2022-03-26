@@ -30,12 +30,7 @@ export const Options = ({
   }
 
   return (
-    <Modal
-      subject={title}
-      isOpen={isOpen}
-      onHide={onHide}
-      withCloseButton={false}
-    >
+    <Modal subject={title} isOpen={isOpen} onHide={onHide} withCloseButton={false}>
       {options.map((option, i) => {
         return (
           <div key={i} className={styles.option} onClick={onClickOption}>

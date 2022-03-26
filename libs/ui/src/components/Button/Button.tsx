@@ -64,13 +64,7 @@ export const Button = ({
   if (to && !disabled) {
     if (isExternal) {
       return (
-        <a
-          href={to}
-          className={classNames}
-          target='_blank'
-          rel='noreferrer'
-          {...props}
-        >
+        <a href={to} className={classNames} target='_blank' rel='noreferrer' {...props}>
           {content}
         </a>
       );
@@ -84,13 +78,7 @@ export const Button = ({
   }
 
   return (
-    <button
-      type='button'
-      className={classNames}
-      onClick={onClick}
-      disabled={disabled}
-      {...props}
-    >
+    <button type='button' className={classNames} onClick={onClick} disabled={disabled} {...props}>
       {content}
     </button>
   );

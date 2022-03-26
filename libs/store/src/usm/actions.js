@@ -42,10 +42,7 @@ export function setActiveBand({ bandId }) {
   };
 }
 
-export function fetchAllTokens({
-  pendingTransactionType,
-  pendingMetadataUri
-} = {}) {
+export function fetchAllTokens({ pendingTransactionType, pendingMetadataUri } = {}) {
   return {
     type: ActionTypes.FETCH_TOKENS_REQUEST,
     data: {
@@ -97,14 +94,7 @@ export function createTrack({ bandId }) {
   };
 }
 
-export function addTransaction({
-  method,
-  key,
-  transactionId,
-  status,
-  errorCode,
-  errorMessage
-}) {
+export function addTransaction({ method, key, transactionId, status, errorCode, errorMessage }) {
   return {
     type: ActionTypes.ADD_TRANSACTION,
     data: {
@@ -118,14 +108,7 @@ export function addTransaction({
   };
 }
 
-export function updateTransaction({
-  method,
-  key,
-  transactionId,
-  status,
-  errorCode,
-  errorMessage
-}) {
+export function updateTransaction({ method, key, transactionId, status, errorCode, errorMessage }) {
   return {
     type: ActionTypes.UPDATE_TRANSACTION,
     data: {

@@ -8,21 +8,15 @@ $media-mobile: 481px;
 
 $media_queries: (
   monitor: 'only screen and (min-width: #{$media-laptop})',
-  laptop:
-    'only screen and (min-width: #{$media-tablet}) and (max-width: #{$media-laptop})',
-  tablet:
-    'only screen and (min-width: #{$media-mobile}) and (max-width: #{$media-tablet})',
+  laptop: 'only screen and (min-width: #{$media-tablet}) and (max-width: #{$media-laptop})',
+  tablet: 'only screen and (min-width: #{$media-mobile}) and (max-width: #{$media-tablet})',
   mobile: 'only screen and (max-width: #{$media-mobile})'
 );
 
 @mixin media-query($breakpoints) {
   $conditions: ();
   @each $breakpoint in $breakpoints {
-    $conditions: append(
-      $conditions,
-      #{unquote(map-get($media_queries, $breakpoint))},
-      comma
-    );
+    $conditions: append($conditions, #{unquote(map-get($media_queries, $breakpoint))}, comma);
   }
 
   @media #{$conditions} {

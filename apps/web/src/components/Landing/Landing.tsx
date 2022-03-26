@@ -63,10 +63,7 @@ export function Landing() {
               <Image src={jambot2} className={styles.jambot2Image} />
             </div>
             <div>
-              <TextBlock
-                subject={copy.whatAreJambots}
-                title={copy.blockchainMusicians}
-              >
+              <TextBlock subject={copy.whatAreJambots} title={copy.blockchainMusicians}>
                 <p>{copy.musicByMusicians}</p>
               </TextBlock>
             </div>
@@ -76,17 +73,11 @@ export function Landing() {
         {/* section #3 */}
         <div className={styles.section}>
           <Grid className={styles.grid2}>
-            <TextBlock
-              subject={copy.uniqueAndIndividual}
-              title={copy.jambotTraits}
-            >
+            <TextBlock subject={copy.uniqueAndIndividual} title={copy.jambotTraits}>
               <p>{copy.jambotTraitsDescription}</p>
             </TextBlock>
             <div className={styles.badges} ref={badgesRef}>
-              <Badges
-                play={badgesInView}
-                names={['debut', 'hometown', 'version']}
-              />
+              <Badges play={badgesInView} names={['debut', 'hometown', 'version']} />
             </div>
             <TextBlock>
               <div className={styles.subhead}>{copy.characterTraits}</div>
@@ -120,21 +111,9 @@ export function Landing() {
               <p>{copy.musicalTraitsDescription}</p>
             </TextBlock>
             <div className={styles.musicalTraits} ref={musicalTraitsRef}>
-              <MusicalTrait
-                name='energy'
-                value='upbeat'
-                play={musicalTraitsInView}
-              />
-              <MusicalTrait
-                name='melody'
-                value='complex'
-                play={musicalTraitsInView}
-              />
-              <MusicalTrait
-                name='texture'
-                value='harmonic'
-                play={musicalTraitsInView}
-              />
+              <MusicalTrait name='energy' value='upbeat' play={musicalTraitsInView} />
+              <MusicalTrait name='melody' value='complex' play={musicalTraitsInView} />
+              <MusicalTrait name='texture' value='harmonic' play={musicalTraitsInView} />
             </div>
           </Grid>
         </div>
@@ -165,9 +144,7 @@ export function Landing() {
               {team.map((member) => (
                 <div key={member.twitter}>
                   <h4 className={styles.crewLink}>
-                    <Link to={`${urls.twitter}/${member.twitter}`}>
-                      @{member.twitter}
-                    </Link>
+                    <Link to={`${urls.twitter}/${member.twitter}`}>@{member.twitter}</Link>
                   </h4>
                   <div>{member.blurb}</div>
                 </div>

@@ -9,7 +9,4 @@ export const selectActiveSource = createSelector(
   (playback) => playback.activeSource
 );
 
-export const isPlaying = createSelector(
-  getPlaybackState,
-  (playback) => !!playback.isPlaying
-);
+export const isPlaying = createSelector(getPlaybackState, (playback) => !!playback.isPlaying);

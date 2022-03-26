@@ -29,8 +29,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       tokenId: 2,
       id: '1233',
       name: 'Rodrigo',
-      image:
-        'https://storageapi.fleek.co/dongambas-team-bucket/tepeyollotl.png',
+      image: 'https://storageapi.fleek.co/dongambas-team-bucket/tepeyollotl.png',
       price: 2.5
     },
     {
@@ -38,8 +37,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       tokenId: 3,
       id: '1234',
       name: 'Minelirma',
-      image:
-        'https://storageapi.fleek.co/dongambas-team-bucket/quetzalcoatl.png',
+      image: 'https://storageapi.fleek.co/dongambas-team-bucket/quetzalcoatl.png',
       price: 2.5
     },
     {
@@ -63,8 +61,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       tokenId: 5,
       id: '1236',
       name: 'Samuela',
-      image:
-        'https://storageapi.fleek.co/dongambas-team-bucket/chalchiuhtlicue.png',
+      image: 'https://storageapi.fleek.co/dongambas-team-bucket/chalchiuhtlicue.png',
       price: 2.5
     },
     {
@@ -72,8 +69,7 @@ export function onFetchNewMintsSuccess(state /*, { payload = {} }*/) {
       tokenId: 5,
       id: '1236',
       name: 'Timbaleo',
-      image:
-        'https://storageapi.fleek.co/dongambas-team-bucket/tezcatlipoca.png',
+      image: 'https://storageapi.fleek.co/dongambas-team-bucket/tezcatlipoca.png',
       price: 2.5
     }
   ];

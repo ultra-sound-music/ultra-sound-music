@@ -13,18 +13,9 @@ export interface IConnectModalProps {
   onHide?(): void;
 }
 
-export function ConnectModal({
-  isOpen,
-  onConnect,
-  onHide
-}: IConnectModalProps) {
+export function ConnectModal({ isOpen, onConnect, onHide }: IConnectModalProps) {
   return (
-    <Modal
-      isOpen={isOpen}
-      onHide={onHide}
-      withCloseButton={false}
-      withCloseX={false}
-    >
+    <Modal isOpen={isOpen} onHide={onHide} withCloseButton={false} withCloseX={false}>
       <Button
         type='primary'
         isSmall={false}

@@ -44,10 +44,7 @@ interface IConnectModalProps {
   onConnect(): void;
 }
 
-type IModalProps = Omit<
-  IModalCoreProps & IModalBaseProps,
-  'children' | 'onHide'
-> &
+type IModalProps = Omit<IModalCoreProps & IModalBaseProps, 'children' | 'onHide'> &
   IBidModalProps &
   IConnectModalProps;
 type IModalState = Partial<IModalProps>;

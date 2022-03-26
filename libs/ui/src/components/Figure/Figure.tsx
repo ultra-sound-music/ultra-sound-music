@@ -6,11 +6,7 @@ export interface IFigureProps {
   caption: React.ReactNode;
 }
 
-export const Figure = ({
-  image,
-  title,
-  caption
-}: IFigureProps): JSX.Element => {
+export const Figure = ({ image, title, caption }: IFigureProps): JSX.Element => {
   return (
     <figure className={styles.Figure}>
       {image && <div className={styles.image}>{image}</div>}

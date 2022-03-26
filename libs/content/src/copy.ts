@@ -37,8 +37,7 @@ export default Object.freeze({
     'The USM platform will be a place where musical artists’ work can be deconstructed, reimagined and reconstructed in ways that were previously not possible.',
   whatsUSM: "what's usm",
   lipsum_3w: 'consectetur elit auctor',
-  lipsum_10w:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor.',
+  lipsum_10w: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor.',
   lipsum_25w:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque semper ut sem vel convallis. Maecenas ut condimentum massa. Fusce dignissim vitae urna vel pellentesque. Cras.',
   lipsum_50w:

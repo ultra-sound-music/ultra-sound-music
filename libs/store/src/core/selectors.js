@@ -36,15 +36,9 @@ export const getBandsWithPublishedTracks = createSelector(
   () => []
 );
 
-export const ownsAnArtist = createSelector(
-  getOwnedArtists,
-  (artists) => artists?.length > 0
-);
+export const ownsAnArtist = createSelector(getOwnedArtists, (artists) => artists?.length > 0);
 
-export const ownsABand = createSelector(
-  getOwnedBands,
-  (bands) => bands?.length > 0
-);
+export const ownsABand = createSelector(getOwnedBands, (bands) => bands?.length > 0);
 
 export const hasMintedABand = createSelector(
   web3.selectors.getAccountAddress,
@@ -58,20 +52,15 @@ export const hasMintedABand = createSelector(
 
 /// OLD
 
-export const hasMintedATrack = createSelector(
-  web3.selectors.getAccountAddress,
-  () => {
-    return ''; // @TODO
-  }
-);
+export const hasMintedATrack = createSelector(web3.selectors.getAccountAddress, () => {
+  return ''; // @TODO
+});
 
 export const tokenIsOwned = createSelector(
   web3.selectors.getAccountAddress,
   usm.selectors.selectAllTokenEntities,
   (accountAddress, tokenEntities) => {
-    return tokenEntities.some((token) =>
-      utils.areSameAccount(token.owner, accountAddress)
-    );
+    return tokenEntities.some((token) => utils.areSameAccount(token.owner, accountAddress));
   }
 );
 
@@ -80,8 +69,7 @@ export const tokenIsOwned = createSelector(
 export function hasAlreadyPublishedTrack(token, currentAccountId) {
   // @todo
   return (
-    token.tokenType === 'band' &&
-    utils.areSameAccount(token.metadata.artistDNA, currentAccountId)
+    token.tokenType === 'band' && utils.areSameAccount(token.metadata.artistDNA, currentAccountId)
   );
 }
 

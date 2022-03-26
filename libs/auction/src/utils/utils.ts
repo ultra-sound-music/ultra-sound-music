@@ -26,14 +26,10 @@ import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { AuctionManager } from '@metaplex-foundation/mpl-metaplex';
 import { Transaction, Account } from '@metaplex-foundation/mpl-core';
 
-export { AuctionState }
+export { AuctionState };
 
-const {
-  getCancelBidTransactions,
-  createApproveTxs,
-  createWrappedAccountTxs,
-  sendTransaction
-} = actions;
+const { getCancelBidTransactions, createApproveTxs, createWrappedAccountTxs, sendTransaction } =
+  actions;
 
 const getBidderPotTokenPDA = async (bidderPotPubKey: PublicKey) => {
   return AuctionProgram.findProgramAddress([
@@ -83,11 +79,7 @@ export class TransactionsBatch {
   }
 
   toTransactions() {
-    return [
-      ...this.beforeTransactions,
-      ...this.transactions,
-      ...this.afterTransactions
-    ];
+    return [...this.beforeTransactions, ...this.transactions, ...this.afterTransactions];
   }
 
   toInstructions() {
@@ -127,9 +119,7 @@ export const placeBid = async ({
   auction
 }: PlaceBidParams): Promise<PlaceBidResponse> => {
   const bidder = wallet.publicKey;
-  const accountRentExempt = await connection.getMinimumBalanceForRentExemption(
-    AccountLayout.span
-  );
+  const accountRentExempt = await connection.getMinimumBalanceForRentExemption(AccountLayout.span);
   const auctionManager = await AuctionManager.getPDA(auction);
   const manager = await AuctionManager.load(connection, auctionManager);
   const {
@@ -169,11 +159,7 @@ export const placeBid = async ({
     account: payingAccount,
     createTokenAccountTx,
     closeTokenAccountTx
-  } = await createWrappedAccountTxs(
-    connection,
-    bidder,
-    amount.toNumber() + accountRentExempt * 2
-  );
+  } = await createWrappedAccountTxs(connection, bidder, amount.toNumber() + accountRentExempt * 2);
   txBatch.addTransaction(createTokenAccountTx);
   txBatch.addSigner(payingAccount);
   ////
@@ -264,9 +250,7 @@ export const cancelBid = async ({
   const bidderMeta = await BidderMetadata.getPDA(auction, bidder);
   const bidderPotToken = await getBidderPotTokenPDA(bidderPot);
 
-  const accountRentExempt = await connection.getMinimumBalanceForRentExemption(
-    AccountLayout.span
-  );
+  const accountRentExempt = await connection.getMinimumBalanceForRentExemption(AccountLayout.span);
   const txBatch = await getCancelBidTransactions({
     destAccount,
     bidder,
@@ -321,18 +305,14 @@ export type USMAuctionData = {
   participants: PublicKey[];
 };
 
-export const transformAuctionData = async (
-  auction: Auction,
-  connection: Connection
-) => {
+export const transformAuctionData = async (auction: Auction, connection: Connection) => {
   //get NFT pubkeys
   const auctionManager = await AuctionManager.getPDA(auction.pubkey);
   const manager = await AuctionManager.load(connection, auctionManager);
   const vault = await Vault.load(connection, new PublicKey(manager.data.vault));
   const boxes = await vault.getSafetyDepositBoxes(connection);
   const nftPubKey = boxes[0].data.tokenMint;
-  const participationNftPubKey =
-    boxes.length > 1 ? boxes[1].data.tokenMint : null;
+  const participationNftPubKey = boxes.length > 1 ? boxes[1].data.tokenMint : null;
 
   // get metadata
   const nftData = await getMetadata(new PublicKey(nftPubKey), connection);
@@ -340,9 +320,7 @@ export const transformAuctionData = async (
     ? await getMetadata(new PublicKey(participationNftPubKey), connection)
     : null;
 
-  const nftMetadata = await fetch(nftData.uri).then((response) =>
-    response.json()
-  );
+  const nftMetadata = await fetch(nftData.uri).then((response) => response.json());
 
   const participationMetadata = participationData
     ? await fetch(participationData.uri).then((response) => response.json())
@@ -379,9 +357,7 @@ export const transformAuctionData = async (
     acceptedToken: new PublicKey(auction.data.tokenMint),
     // @TODO endAuctionAt is actually auction duration, poorly named, in seconds
     // metaplex/js/packages/web/src/views/auctionCreate/index.tsx
-    endAuctionAt: auction.data.endAuctionAt
-      ? auction.data.endAuctionAt.toNumber() * 1000
-      : null,
+    endAuctionAt: auction.data.endAuctionAt ? auction.data.endAuctionAt.toNumber() * 1000 : null,
     state: auction.data.state,
     bids: usmBidData,
     winner: auction.data.state === 2 ? usmBidData[0] : null,
@@ -391,10 +367,7 @@ export const transformAuctionData = async (
   return auctionData;
 };
 
-export const getMetadata = async (
-  tokenMint: PublicKey,
-  connection: Connection
-) => {
+export const getMetadata = async (tokenMint: PublicKey, connection: Connection) => {
   const metadata = await Metadata.getPDA(tokenMint);
   const metadataInfo = await Account.getInfo(connection, metadata);
   const { data } = new Metadata(metadata, metadataInfo).data;

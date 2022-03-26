@@ -16,10 +16,4 @@ export const transactionStatus = Object.freeze({
 
 export const transactionErrorCodes = Object.freeze({});
 
-export const traitNames = [
-  'texture',
-  'warmth',
-  'dissonance',
-  'aggression',
-  'space'
-];
+export const traitNames = ['texture', 'warmth', 'dissonance', 'aggression', 'space'];

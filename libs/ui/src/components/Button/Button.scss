@@ -1,19 +1,11 @@
 @use '../../styles' as *;
 
 @mixin gradient1 {
-  background-image: linear-gradient(
-    90deg,
-    $gradient-brilliant-start,
-    $gradient-brilliant-end
-  );
+  background-image: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);
 }
 
 @mixin gradient2 {
-  background: linear-gradient(
-    to right,
-    $gradient-brilliant-end,
-    $gradient-brilliant-start
-  );
+  background: linear-gradient(to right, $gradient-brilliant-end, $gradient-brilliant-start);
 }
 
 .Button {

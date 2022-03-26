@@ -7,9 +7,7 @@ export default {
   component: MusicalTrait
 } as Meta;
 
-const Template: Story<IMusicalTraitProps> = (args) => (
-  <MusicalTrait {...args} />
-);
+const Template: Story<IMusicalTraitProps> = (args) => <MusicalTrait {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

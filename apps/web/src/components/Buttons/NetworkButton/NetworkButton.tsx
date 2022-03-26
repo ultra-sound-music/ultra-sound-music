@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
 
 import { Button } from '@usm/ui';
-import {
-  useConnect,
-  useDisconnect,
-  useNetwork,
-  useModal,
-  web3Constants
-} from '@usm/app-state';
+import { useConnect, useDisconnect, useNetwork, useModal, web3Constants } from '@usm/app-state';
 import { getShortenedAccountAddress } from '@usm/util-string';
 
 export default function NetworkButton() {

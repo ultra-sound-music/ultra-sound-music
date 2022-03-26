@@ -26,11 +26,7 @@ export const Image = ({
   hoverOverlay = <RiCameraLine />,
   ...props
 }: IImageProps) => {
-  const classNames = cn(
-    styles.Image,
-    !!onClick && styles.withOverlay,
-    className
-  );
+  const classNames = cn(styles.Image, !!onClick && styles.withOverlay, className);
   const noImageToShow = !(src || image);
   const imageClassNames = cn(
     styles.image,
@@ -40,9 +36,7 @@ export const Image = ({
 
   let img;
   if (src) {
-    img = (
-      <BaseImage src={src} alt={alt} className={imageClassNames} {...props} />
-    );
+    img = <BaseImage src={src} alt={alt} className={imageClassNames} {...props} />;
   } else {
     img = <div className={imageClassNames}>{image}</div>;
   }

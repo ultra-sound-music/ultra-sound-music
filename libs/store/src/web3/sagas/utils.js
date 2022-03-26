@@ -1,9 +1,4 @@
-export function bindCoreEventListeners(
-  emitter,
-  web3Client,
-  eventListeners,
-  extraArgs
-) {
+export function bindCoreEventListeners(emitter, web3Client, eventListeners, extraArgs) {
   return Object.keys(eventListeners).reduce((boundListeners, eventName) => {
     const handler = (...args) => {
       const getAction = eventListeners[eventName];

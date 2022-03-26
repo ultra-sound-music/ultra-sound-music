@@ -17,13 +17,7 @@ export interface IAnimatedMeterProps {
 }
 
 const meters = [meter1, meter2, meter3];
-export function AnimatedMeter({
-  play = true,
-  meter = 1,
-  label,
-  name,
-  value
-}: IAnimatedMeterProps) {
+export function AnimatedMeter({ play = true, meter = 1, label, name, value }: IAnimatedMeterProps) {
   const meterId = Math.min(Math.max(meter - 1, 0), meters.length - 1);
   const data = meters[meterId];
 
@@ -38,7 +32,7 @@ export function AnimatedMeter({
         <Lottie
           animationData={data}
           direction={1}
-          speed={0.3}
+          speed={0.5}
           play={play}
           segments={[0, value[0]]}
           loop={1}
@@ -47,7 +41,7 @@ export function AnimatedMeter({
         <Lottie
           animationData={data}
           direction={1}
-          speed={0.3}
+          speed={0.5}
           play={play}
           segments={[0, value[1]]}
           loop={1}

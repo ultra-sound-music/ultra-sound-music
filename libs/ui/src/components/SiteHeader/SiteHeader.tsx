@@ -11,10 +11,7 @@ export interface ISiteHeaderProps {
   ctaButton?: React.ReactElement<typeof Button>;
 }
 
-export const SiteHeader = ({
-  nav,
-  ctaButton
-}: ISiteHeaderProps): JSX.Element => {
+export const SiteHeader = ({ nav, ctaButton }: ISiteHeaderProps): JSX.Element => {
   return (
     <div className={styles.SiteHeader}>
       <div className={styles.container}>

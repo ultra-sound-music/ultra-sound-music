@@ -32,11 +32,7 @@ export function renderButtons(
   return (
     <div className={styles.buttons}>
       {withCloseButton && (
-        <Button
-          onClick={onHide}
-          isFullWidth={true}
-          type={ctaButton ? 'secondary' : 'primary'}
-        >
+        <Button onClick={onHide} isFullWidth={true} type={ctaButton ? 'secondary' : 'primary'}>
           Close
         </Button>
       )}

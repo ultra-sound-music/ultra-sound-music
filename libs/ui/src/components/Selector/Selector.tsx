@@ -12,12 +12,7 @@ export interface ISelectorProps {
   onSelect?: () => void;
 }
 
-export const Selector = ({
-  title,
-  select,
-  options,
-  onSelect
-}: ISelectorProps): JSX.Element => {
+export const Selector = ({ title, select, options, onSelect }: ISelectorProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

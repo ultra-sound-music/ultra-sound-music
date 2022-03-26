@@ -9,11 +9,7 @@ export const coreEventListeners = {
 };
 
 export function* startWatchingForEthereumEvents(ethClient) {
-  return yield web3Utils.startWatchingForWalletEvents(
-    ethClient,
-    coreEventListeners,
-    [ethClient]
-  );
+  return yield web3Utils.startWatchingForWalletEvents(ethClient, coreEventListeners, [ethClient]);
 }
 
 export function onAccountsChanged(solClient) {

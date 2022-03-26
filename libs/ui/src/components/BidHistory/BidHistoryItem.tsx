@@ -54,9 +54,7 @@ export function BidHistoryItem({ bidder, bid, timestamp }: IBidHistoryItem) {
       </div>
       {timeSinceBid && <div className={styles.bidTime}>{timeSinceBid}</div>}
       <div className={styles.bidWalletAddress}>
-        <Link
-          to={`https://explorer.solana.com/address/${bidder}?cluster=${config.solanaCluster}`}
-        >
+        <Link to={`https://explorer.solana.com/address/${bidder}?cluster=${config.solanaCluster}`}>
           {bidder}
         </Link>
       </div>

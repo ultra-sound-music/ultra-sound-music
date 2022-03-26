@@ -30,9 +30,7 @@ export const localStorageAsyncEffect: ILocalStorageEffect =
 export const localStorageEffect: ILocalStorageEffect =
   (key: string) =>
   ({ setSelf, onSet }) => {
-    setSelf(
-      db.get(key).then((val) => (val ? JSON.parse(val) : new DefaultValue()))
-    );
+    setSelf(db.get(key).then((val) => (val ? JSON.parse(val) : new DefaultValue())));
 
     // Subscribe to state changes and persist them to localForage
     onSet((newValue, _, isReset) => {

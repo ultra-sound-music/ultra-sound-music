@@ -13,9 +13,7 @@ export function Modal() {
   const hideModal = useHideModal();
   const { type, isOpen, ...modalProps } = useRecoilValue(modalState);
   const ModalComponent = type ? modalMap[type] || ModalBase : ModalBase;
-  return (
-    <ModalComponent {...modalProps} isOpen={!!isOpen} onHide={hideModal} />
-  );
+  return <ModalComponent {...modalProps} isOpen={!!isOpen} onHide={hideModal} />;
 }
 
 export default Modal;

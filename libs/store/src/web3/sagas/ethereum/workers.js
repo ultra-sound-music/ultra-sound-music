@@ -1,8 +1,5 @@
 import { call } from 'redux-saga/effects';
-import EthClient, {
-  isValidProductionNetworkId,
-  isValidTestNetworkId
-} from '@lib/EthClient';
+import EthClient, { isValidProductionNetworkId, isValidTestNetworkId } from '@lib/EthClient';
 import * as web3Helpers from '../helpers';
 import * as helpers from './helpers';
 
@@ -14,7 +11,9 @@ export function* init(action) {
   });
 }
 
-export function* installWallet() {}
+export function* installWallet() {
+  yield call(console.log);
+}
 
 export function* connectWallet(action) {
   yield call([web3Helpers, web3Helpers.connectWallet], action, {

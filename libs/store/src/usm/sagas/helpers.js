@@ -7,10 +7,7 @@ import mediator from '@usm/store/mediator';
 import * as usmActions from '../actions';
 import * as usmSelectors from '../selectors';
 
-export function onCreateArtistComplete({
-  transaction,
-  data: { metadataUri, artistDNA }
-}) {
+export function onCreateArtistComplete({ transaction, data: { metadataUri, artistDNA } }) {
   const store = storeUtils.getStore();
   store.dispatch(
     usmActions.updateTransaction({
@@ -27,10 +24,7 @@ export function onCreateArtistComplete({
   );
 }
 
-export function onCreateBandComplete({
-  transaction,
-  data: { metadataUri, artistTid }
-}) {
+export function onCreateBandComplete({ transaction, data: { metadataUri, artistTid } }) {
   const store = storeUtils.getStore();
   store.dispatch(
     usmActions.updateTransaction({
@@ -47,10 +41,7 @@ export function onCreateBandComplete({
   );
 }
 
-export function onJoinBandComplete({
-  transaction,
-  data: { metadataUri, bandTid, artistTid }
-}) {
+export function onJoinBandComplete({ transaction, data: { metadataUri, bandTid, artistTid } }) {
   const store = storeUtils.getStore();
   store.dispatch(
     usmActions.updateTransaction({
@@ -67,10 +58,7 @@ export function onJoinBandComplete({
   );
 }
 
-export function onCreateTrackComplete({
-  transaction,
-  data: { metadataUri, bandTid, artistTid }
-}) {
+export function onCreateTrackComplete({ transaction, data: { metadataUri, bandTid, artistTid } }) {
   const store = storeUtils.getStore();
   store.dispatch(
     usmActions.updateTransaction({

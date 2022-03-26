@@ -18,10 +18,7 @@ const initialState = {
 
 export function updateSource(sources, updates) {
   const foundIndex = sources.findIndex((source) => {
-    return (
-      source.audioUrl === updates.audioUrl ||
-      source.entityId === updates.entityId
-    );
+    return source.audioUrl === updates.audioUrl || source.entityId === updates.entityId;
   });
 
   if (foundIndex) {

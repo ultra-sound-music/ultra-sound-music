@@ -89,10 +89,7 @@ export default class UsmPlayer {
     return await this.audioContext.decodeAudioData(arrayBuffer);
   };
 
-  play = async ({
-    id = '',
-    audioUrl = ''
-  }: IUsmPlayerPlayArgs): Promise<void> => {
+  play = async ({ id = '', audioUrl = '' }: IUsmPlayerPlayArgs): Promise<void> => {
     if (!audioUrl) {
       this.logger.info('audioUrl must be provided');
       return;

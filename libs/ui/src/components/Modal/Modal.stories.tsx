@@ -12,8 +12,8 @@ const Template: Story<IModalProps> = (args) => {
   return (
     <div>
       <Modal {...args}>
-        And so, today my world it smiles. Your hand in mine, we walk the miles.
-        Thanks to you, it will be done. For you to me are the only one.
+        And so, today my world it smiles. Your hand in mine, we walk the miles. Thanks to you, it
+        will be done. For you to me are the only one.
       </Modal>
     </div>
   );

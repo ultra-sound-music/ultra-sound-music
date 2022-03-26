@@ -43,10 +43,7 @@ if (!weAreLive) {
 const App = () => (
   <div className={styles.App}>
     <div className={styles.header}>
-      <SiteHeader
-        nav={<Nav items={nav} />}
-        ctaButton={weAreLive ? <NetworkButton /> : undefined}
-      />
+      <SiteHeader nav={<Nav items={nav} />} ctaButton={weAreLive ? <NetworkButton /> : undefined} />
     </div>
     <Routes>
       <Route path={routes.home} element={<Home />} />

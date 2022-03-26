@@ -10,11 +10,7 @@ export interface ICarouselProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
-export const Carousel = ({
-  onClickPrev,
-  onClickNext,
-  children
-}: ICarouselProps): JSX.Element => {
+export const Carousel = ({ onClickPrev, onClickNext, children }: ICarouselProps): JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const childrensArray = React.Children.toArray(children);
@@ -48,10 +44,7 @@ export const Carousel = ({
   const isLast = activeIndex === totalCount - 1;
   return (
     <div className={styles.Carousel}>
-      <Paginate
-        onClickPrev={!isFirst ? goPrev : void 0}
-        onClickNext={!isLast ? goNext : void 0}
-      />
+      <Paginate onClickPrev={!isFirst ? goPrev : void 0} onClickNext={!isLast ? goNext : void 0} />
       <div className={styles.item}>{childrensArray[activeIndex]}</div>
     </div>
   );

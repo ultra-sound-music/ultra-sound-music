@@ -8,13 +8,7 @@ export interface IColProps {
   className?: string;
 }
 
-export function Col({
-  start = 1,
-  end = 24,
-  span,
-  className,
-  children
-}: IColProps) {
+export function Col({ start = 1, end = 24, span, className, children }: IColProps) {
   const styles = {
     gridColumnStart: start,
     gridColumnEnd: end,
