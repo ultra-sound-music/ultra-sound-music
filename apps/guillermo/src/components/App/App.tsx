@@ -20,7 +20,7 @@ export function App() {
           <MintNFTForm />
         </div>
         <div className={styles.section}>
-        <h3>Create the auction</h3>
+          <h3>Create the auction</h3>
           <CreateAuctionForm />
         </div>
         <div className={styles.section}>

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Placeholder } from '@usm/ui';
+import { Placeholder } from '../../Placeholder/Placeholder';
 
 import styles from './BidBoxInfo.scss';
 

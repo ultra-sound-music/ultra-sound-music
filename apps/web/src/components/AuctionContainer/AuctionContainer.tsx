@@ -1,4 +1,10 @@
-import { web3Constants, useNetwork, useLoadAuction, useAccountBalance, usePlaceBid } from '@usm/app-state';
+import {
+  web3Constants,
+  useNetwork,
+  useLoadAuction,
+  useAccountBalance,
+  usePlaceBid
+} from '@usm/app-state';
 import { NftAuction } from '@usm/ui';
 import { useEffect } from 'react';
 import {

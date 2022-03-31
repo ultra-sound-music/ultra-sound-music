@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
 
-import Button, { IButtonProps } from '../../Button/Button';
 import { getShortenedAccountAddress } from '@usm/util-string';
 
-export interface INetworkButton {
+import Button, { IButtonProps } from '../../Button/Button';
+
+export interface INetworkButtonProps {
   type?: IButtonProps['type'];
   accountAddress?: string;
   isConnecting?: boolean;
@@ -19,7 +20,7 @@ export function NetworkButton({
   onConnectClick,
   onDisconnectClick,
   children
-}: INetworkButton) {
+}: INetworkButtonProps) {
   function onButtonClick() {
     if (isConnected) {
       onDisconnectClick();

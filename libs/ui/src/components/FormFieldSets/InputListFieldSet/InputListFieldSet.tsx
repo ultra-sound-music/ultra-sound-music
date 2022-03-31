@@ -57,7 +57,11 @@ export default function InputListFieldSet({
           {valueList.map((item: string, index: number) => (
             <li className={styles.item}>
               {item}{' '}
-              <span onClick={() => removeItem(index)} data-val={index} className={styles.removeItem}>
+              <span
+                onClick={() => removeItem(index)}
+                data-val={index}
+                className={styles.removeItem}
+              >
                 <RiCloseLine />
               </span>
             </li>

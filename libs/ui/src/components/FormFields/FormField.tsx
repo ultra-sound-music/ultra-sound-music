@@ -58,7 +58,7 @@ export function FormField<P>({ defaultValue, component: Component, ...props }: I
     isInitialized,
     setValue,
     errors,
-    innerRef: elRef as RefObject<HTMLElement>,
+    innerRef: elRef as RefObject<HTMLElement>
   });
 
   return <Component {...(props as P)} />;

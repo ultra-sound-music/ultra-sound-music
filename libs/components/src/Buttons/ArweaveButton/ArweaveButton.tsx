@@ -15,7 +15,7 @@ export function ArweaveButton() {
   }
 
   function onConnectClick() {
-    connect();
+    connect(logo);
   }
 
   const [{ isConnected, accountAddress, networkStatus }] = useArweaveNetwork();
