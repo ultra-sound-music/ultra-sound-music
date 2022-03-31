@@ -17,10 +17,11 @@
     "baseUrl": ".",
     "paths": {
       "@usm/app-state": ["libs/app-state/src/index.ts"],
+      "@usm/arweave": ["libs/arweave/src/index.ts"],
       "@usm/assets/*": ["libs/assets/src/*"],
       "@usm/auction": ["libs/auction/src/index.ts"],
       "@usm/audio-player": ["libs/audio-player/src/index.ts"],
-      "@usm/components": ["apps/web/src/components.ts"],
+      "@usm/components": ["libs/components/src/index.ts"],
       "@usm/config": ["libs/config/src/index.ts"],
       "@usm/content": ["libs/content/src/index.ts"],
       "@usm/copy": ["libs/copy/src/index.ts"],

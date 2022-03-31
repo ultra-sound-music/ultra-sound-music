@@ -1,0 +1,34 @@
+@use '../../../styles.scss' as *;
+
+.fieldContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  column-gap: 24px;
+
+  :first-child {
+    flex-basis: 80%;
+  }
+}
+
+.list {
+  margin: 16px 0;
+}
+
+.item {
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid $color-empty-sky;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.removeItem {
+  cursor: pointer;
+}

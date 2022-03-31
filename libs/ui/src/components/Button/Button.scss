@@ -9,11 +9,11 @@
 }
 
 .Button {
-  background-color: $color-void;
+  border-radius: 10px;
   border: none;
-  border-radius: 7px;
   color: $color-polar-bear;
   line-height: 50px;
+  text-transform: capitalize;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
@@ -21,23 +21,22 @@
 
   // Use this technique for the border in order to be consistent with the .secondary border radius styling
   &::before {
+    background-color: $color-void;
+    border: none;
+    border-radius: 8px;
     content: '';
+    cursor: pointer;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: -1;
-    margin: -3px;
-    border-radius: 10px;
-  }
-
-  &::after:empty {
-    content: '\200b';
+    margin: 3px;
   }
 }
 
-.primary {
+.primary,
+%primary-button {
   @include gradient1;
 
   &::before {
@@ -53,10 +52,9 @@
   }
 }
 
-.secondary {
-  &::before {
-    @include gradient1;
-  }
+.secondary,
+%secondary-button {
+  @include gradient1;
 
   &:hover {
     @include gradient1;
@@ -99,11 +97,6 @@
 .pill {
   height: 50px;
   width: 192px;
-
-  &::before {
-    content: '';
-    border-radius: 10px;
-  }
 }
 
 .wide {
@@ -124,11 +117,14 @@
 }
 
 .tile {
-  background-image: none;
-  color: $color-breakwater;
   display: flex;
   flex-direction: column;
-  transition: background-color 200ms ease-in-out;
+
+  &::before {
+    background-image: none;
+    color: $color-breakwater;
+    transition: background-color 200ms ease-in-out;
+  }
 
   &.withImage {
     padding: 18px 40px;
@@ -172,9 +168,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 22px;
+  position: relative;
   @extend %font-button;
 }
 
 .subtext {
+  position: relative;
   @extend %font-body;
 }

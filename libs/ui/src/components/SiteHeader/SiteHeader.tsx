@@ -8,7 +8,7 @@ import styles from './SiteHeader.scss';
 
 export interface ISiteHeaderProps {
   nav?: React.ReactElement<typeof NavLinks>;
-  ctaButton?: React.ReactElement<typeof Button>;
+  ctaButton?: React.ReactElement<typeof Button> | React.ReactElement<typeof Button>[];
 }
 
 export const SiteHeader = ({ nav, ctaButton }: ISiteHeaderProps): JSX.Element => {

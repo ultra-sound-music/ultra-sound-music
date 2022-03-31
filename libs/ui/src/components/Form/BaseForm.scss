@@ -1,7 +1,7 @@
 @use '../../styles.scss' as *;
 
 .formField {
-  margin-bottom: 2.5rem;
+  margin-bottom: 3.6rem;
 }
 
 .buttons {
@@ -13,7 +13,7 @@
 }
 
 .error {
-  color: $color-failure;
+  color: $color-fail;
 }
 
 .footerLinks {

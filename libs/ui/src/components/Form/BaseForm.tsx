@@ -8,14 +8,13 @@ import Link from '../Link/Link';
 import { FormContext, IFormValues } from '../../util/Forms/FormContext';
 import Button from '../Button/Button';
 import FormSubmit from '../FormFields/FormSubmit/FormSubmit';
-import AmountField from '../FormFields/AmountField/AmountField';
-import AvatarField from '../FormFields/AvatarField/AvatarField';
 import InputField from '../FormFields/InputField/InputField';
+import FileInputField from '../FormFields/FileInputField/FileInputField';
+import ImageInputField from '../FormFields/ImageInputField/ImageInputField';
 import PasswordField from '../FormFields/PasswordField/PasswordField';
 import SearchField from '../FormFields/SearchField/SearchField';
 import SelectField from '../FormFields/SelectField/SelectField';
 import TextAreaField from '../FormFields/TextAreaField/TextAreaField';
-import CuratorSearch from '../FormFields/CuratorSearch/CuratorSearch';
 import UploadField from '../FormFields/UploadField/UploadField';
 
 import styles from './BaseForm.scss';
@@ -41,14 +40,13 @@ export interface IBaseFormProps {
 }
 
 const formFieldTypes = [
-  AmountField,
-  AvatarField,
   InputField,
+  FileInputField,
+  ImageInputField,
   PasswordField,
   SearchField,
   SelectField,
   TextAreaField,
-  CuratorSearch,
   UploadField
 ];
 

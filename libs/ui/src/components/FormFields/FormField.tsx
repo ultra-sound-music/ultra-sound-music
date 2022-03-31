@@ -1,12 +1,8 @@
 import { ComponentType, useEffect, RefObject, useRef, HTMLAttributes } from 'react';
-import ReactTooltip from 'react-tooltip';
 
 import useFormContext from '../../util/Forms/useFormContext';
 import useFormField from '../../util/Forms/useFormField';
-import Tooltip from '../Tooltip/Tooltip';
-import { getFormFieldTooltip } from '../../util/Forms/FormFieldTooltip';
 
-import styles from './FormField.scss';
 import { IBaseFormElementProps, IBaseFormFieldProps } from '../FormFieldSets/types';
 
 export type IFormFieldElement<T> = HTMLAttributes<T> & {
@@ -46,19 +42,10 @@ export function FormField<P>({ defaultValue, component: Component, ...props }: I
   });
 
   const elRef = innerRef || ref;
-  const tipData = getFormFieldTooltip({
-    errors: errors
-  });
 
   useEffect(() => {
     if (!elRef?.current) {
       return;
-    }
-
-    if (errors) {
-      ReactTooltip.show(elRef.current);
-    } else if (!errors) {
-      ReactTooltip.hide(elRef.current);
     }
   }, [elRef, errors]);
 
@@ -72,25 +59,9 @@ export function FormField<P>({ defaultValue, component: Component, ...props }: I
     setValue,
     errors,
     innerRef: elRef as RefObject<HTMLElement>,
-    'data-for': props.name,
-    'data-tip': ''
   });
 
-  return (
-    <>
-      <Component {...(props as P)} />
-      <Tooltip
-        className={styles.tooltip}
-        id={props.name}
-        effect='solid'
-        place='left'
-        html={true}
-        scrollHide={false}
-        event='fooshnikens'
-        getContent={() => tipData}
-      ></Tooltip>
-    </>
-  );
+  return <Component {...(props as P)} />;
 }
 
 export default FormField;

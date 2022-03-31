@@ -1,0 +1,28 @@
+{
+  "root": "apps/guillermo-e2e",
+  "sourceRoot": "apps/guillermo-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/guillermo-e2e/cypress.json",
+        "devServerTarget": "guillermo:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "guillermo:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/guillermo-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["guillermo"]
+}

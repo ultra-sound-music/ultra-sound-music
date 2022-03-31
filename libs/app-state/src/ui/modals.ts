@@ -11,7 +11,7 @@ import {
 // Resolve buildable not being able to import from buildable
 // import { IModalProps, IBidModalProps } from '@usm/ui';
 
-type IModalType = 'base' | 'bidModal' | 'connectModal';
+type IModalType = 'base' | 'bidModal' | 'connectModal' | 'disconnectModal';
 
 interface IModalCoreProps {
   type: IModalType;
@@ -44,9 +44,15 @@ interface IConnectModalProps {
   onConnect(): void;
 }
 
+interface IDisconnectModalProps {
+  isOpen: boolean;
+  onDisconnect(): void;
+}
+
 type IModalProps = Omit<IModalCoreProps & IModalBaseProps, 'children' | 'onHide'> &
   IBidModalProps &
-  IConnectModalProps;
+  IConnectModalProps &
+  IDisconnectModalProps;
 type IModalState = Partial<IModalProps>;
 
 export const modalProps = atom<IModalState>({

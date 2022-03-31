@@ -1,10 +1,4 @@
-import {
-  useNetwork,
-  web3Constants,
-  useLoadAuction,
-  useAccountBalance,
-  usePlaceBid
-} from '@usm/app-state';
+import { web3Constants, useNetwork, useLoadAuction, useAccountBalance, usePlaceBid } from '@usm/app-state';
 import { NftAuction } from '@usm/ui';
 import { useEffect } from 'react';
 import {
@@ -22,7 +16,7 @@ import styles from './AuctionContainer.scss';
 import { getShortenedAccountAddress } from '@usm/util-string';
 import { AuctionState } from '@usm/auction';
 
-import NetworkButton from '../Buttons/NetworkButton/NetworkButton';
+import { SolanaButton } from '@usm/components';
 import EndedAuctionButton from '../Buttons/EndedAuctionButton/EndedAuctionButton';
 
 export function AuctionContainer() {
@@ -105,7 +99,7 @@ export function AuctionContainer() {
       <BidBoxForm
         minBid={minBid}
         isWalletConnected={isConnected}
-        connectButton={<NetworkButton />}
+        connectButton={<SolanaButton />}
         isProcessing={isProcessing}
         onBid={onBid}
       />

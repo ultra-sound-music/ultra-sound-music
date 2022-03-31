@@ -6,8 +6,7 @@ import FormField, { IFormFieldComponentProps } from '../FormField';
 export type ISelectFieldProps = IFormFieldComponentProps<ISelectFieldSetProps>;
 
 export function SelectField(props: ISelectFieldProps) {
-  return null;
-  // return <FormField {...props} component={Select} />;
+  return <FormField {...props} component={SelectFieldSet} />;
 }
 
 export default SelectField;

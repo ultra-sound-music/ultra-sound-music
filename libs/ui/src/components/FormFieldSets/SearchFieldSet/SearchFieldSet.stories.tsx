@@ -4,7 +4,7 @@ import SearchFieldSet, { ISearchFieldSetProps } from './SearchFieldSet';
 
 export default {
   component: SearchFieldSet,
-  title: 'FormElements/Input'
+  title: 'FormFieldSets/SearchFieldSet'
 } as Meta;
 
 const Template: Story<ISearchFieldSetProps> = (args) => <SearchFieldSet {...args} />;

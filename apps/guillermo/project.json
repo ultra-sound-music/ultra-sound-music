@@ -1,0 +1,78 @@
+{
+  "root": "apps/guillermo",
+  "sourceRoot": "apps/guillermo/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/guillermo",
+        "index": "apps/guillermo/public/index.html",
+        "baseHref": "/",
+        "main": "apps/guillermo/src/main.tsx",
+        "polyfills": "apps/guillermo/src/polyfills.ts",
+        "tsConfig": "apps/guillermo/tsconfig.app.json",
+        "assets": ["apps/guillermo/src/favicon.ico", "apps/guillermo/src/assets"],
+        "styles": ["apps/guillermo/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/web/build/webpack.js"
+      },
+      "configurations": {
+        "development": {
+          "fileReplacements": [
+            {
+              "replace": "libs/config/src/environments/environment.ts",
+              "with": "libs/config/src/environments/environment.dev.ts"
+            }
+          ]
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "libs/config/src/environment",
+              "with": "libs/config/src/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "guillermo:build:development",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "guillermo:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/guillermo/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/guillermo"],
+      "options": {
+        "jestConfig": "apps/guillermo/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

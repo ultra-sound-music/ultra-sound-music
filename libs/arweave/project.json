@@ -1,0 +1,32 @@
+{
+  "root": "libs/arweave",
+  "sourceRoot": "libs/arweave/src",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/arweave",
+        "main": "libs/arweave/src/index.ts",
+        "tsConfig": "libs/arweave/tsconfig.lib.json",
+        "assets": ["libs/arweave/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/arweave/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/arweave"],
+      "options": {
+        "jestConfig": "libs/arweave/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

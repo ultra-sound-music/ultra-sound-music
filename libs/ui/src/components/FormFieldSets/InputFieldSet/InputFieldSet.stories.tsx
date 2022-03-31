@@ -4,7 +4,7 @@ import InputFieldSet, { IInputFieldSetProps } from './InputFieldSet';
 
 export default {
   component: InputFieldSet,
-  title: 'FormElements/InputFieldSet'
+  title: 'FormFieldSets/InputFieldSet'
 } as Meta;
 
 const Template: Story<IInputFieldSetProps> = (args) => <InputFieldSet {...args} />;

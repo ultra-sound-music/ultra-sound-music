@@ -3,12 +3,12 @@ import { RiDiscordFill, RiTwitterFill } from 'react-icons/ri';
 import ReactTooltip from 'react-tooltip';
 
 import { INavItem, Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
+import { SolanaButton } from '@usm/components';
 import { copy, urls, routes } from '@usm/content';
 import config from '@usm/config';
 
 import Home from '../Landing/Landing';
-import NetworkButton from '../Buttons/NetworkButton/NetworkButton';
-import Modal from '../Modal/Modal';
+import { Modal } from '@usm/components';
 import Notification from '../Notification/Notification';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
@@ -43,7 +43,7 @@ if (!weAreLive) {
 const App = () => (
   <div className={styles.App}>
     <div className={styles.header}>
-      <SiteHeader nav={<Nav items={nav} />} ctaButton={weAreLive ? <NetworkButton /> : undefined} />
+      <SiteHeader nav={<Nav items={nav} />} ctaButton={weAreLive ? <SolanaButton /> : undefined} />
     </div>
     <Routes>
       <Route path={routes.home} element={<Home />} />

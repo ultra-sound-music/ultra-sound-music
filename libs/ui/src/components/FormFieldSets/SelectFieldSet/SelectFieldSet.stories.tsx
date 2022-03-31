@@ -5,7 +5,7 @@ import genres from './SelectFieldSet.stories-data';
 
 export default {
   component: SelectFieldSet,
-  title: 'FormElements/Select'
+  title: 'FormFieldSets/Select'
 } as Meta;
 
 const Template: Story<ISelectFieldSetProps> = (args) => <SelectFieldSet {...args} />;

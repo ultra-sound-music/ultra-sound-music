@@ -3,7 +3,7 @@ import TextAreaFieldSet, { ITextAreaFieldSetProps } from './TextAreaFieldSet';
 
 export default {
   component: TextAreaFieldSet,
-  title: 'FormElements/TextAreaFieldSet'
+  title: 'FormFieldSets/TextAreaFieldSet'
 } as Meta;
 
 const Template: Story<ITextAreaFieldSetProps> = (args) => <TextAreaFieldSet {...args} />;

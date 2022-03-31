@@ -1,61 +1,120 @@
 @use '../../../styles.scss' as *;
 
+:global(.c8__control) {
+  background-color: transparent !important;
+  border: 1px solid $color-lavish !important;
+  border-radius: 50px;
+  height: 4.8rem;
+  padding-left: 10px;
+  cursor: pointer;
+
+  &::placeholder {
+    color: $color-polar-bear;
+    font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
+  }
+
+  &:active,
+  &:hover,
+  &:focus {
+    border: 2px solid $color-new-towel;
+    box-shadow: 0 0 4px $color-new-towel;
+  }
+}
+
+:global(.c8__clear-indicator) {
+  cursor: pointer;
+}
+
+:global(.c8__dropdown-indicator) {
+  cursor: pointer;
+}
+
+:global(.c8__control--is-focused) {
+  border: 2px solid $color-new-towel;
+  box-shadow: 0 0 4px $color-new-towel;
+}
+
+:global(.c8__placeholder) {
+  color: $color-new-towel;
+  font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
+  text-transform: capitalize;
+}
+
+:global(.c8__menu) {
+  color: $color-polar-bear !important;
+  background-color: $color-new-towel !important;
+}
+
+:global(.c8__menu-notice) {
+  color: $color-polar-bear !important;
+}
+
+:global(.c8__option) {
+  color: $color-polar-bear !important;
+  background-color: $color-new-towel !important;
+}
+
+:global(.c8__option--is-focused) {
+  color: $color-dusk !important;
+  background-color: $color-new-towel !important;
+  cursor: pointer;
+}
+
+:global(.c8__multi-value) {
+  border: 1px solid $color-old-towel;
+  border-radius: 0.4rem;
+  color: $color-old-towel;
+  column-gap: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.2rem;
+  line-height: 1;
+  cursor: default;
+
+  @extend %font-small;
+}
+
+:global(.c8__multi-value__remove) {
+  cursor: pointer;
+
+  &:hover {
+    color: $color-dusk;
+    background-color: $color-new-towel;
+  }
+}
+
+:global(.c8__value-container) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .Select {
   position: relative;
 
-  :global .c8__control {
-    border: 2px solid #ccc;
-    border-radius: 50px;
-    height: 5.6rem;
-    padding-left: 10px;
-
-    &::placeholder {
-      color: $color-breakwater;
-      font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
-    }
-
-    &:active,
-    &:hover,
-    &:focus {
-      border: 2px solid #ccc;
-      box-shadow: 0 0 4px #ccc;
-    }
-  }
-
-  .label {
-    display: block;
-    position: absolute;
-    top: 6px;
-    left: 24px;
-    text-transform: capitalize;
-
-    @extend %font-small;
-  }
-
-  :global .c8__dropdown-indicator {
-    cursor: pointer;
-  }
-
-  :global .c8__control--is-focused {
-    border: 2px solid #ccc;
-    box-shadow: 0 0 4px #ccc;
-  }
-
-  :global .c8__placeholder {
-    color: $color-breakwater;
-    font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
-    text-transform: capitalize;
-  }
-
   &::placeholder {
-    color: $color-breakwater;
+    color: $color-new-towel;
     font-family: $font-fam-body; // Overrides the modification to the font for input[type='password']
     text-transform: capitalize;
   }
 
   &:focus {
-    border: 2px solid #ccc;
-    box-shadow: 0 0 4px #ccc;
+    border: 2px solid $color-new-towel;
+    box-shadow: 0 0 4px $color-void;
     outline: 0;
   }
+}
+
+.label {
+  color: $color-polar-bear;
+  display: block;
+  position: absolute;
+  top: 6px;
+  left: 24px;
+  text-transform: capitalize;
+
+  @extend %font-small;
+}
+
+.title {
+  margin: 0 0 15px;
 }
