@@ -43,12 +43,12 @@ export function AuctionContainer() {
   const isProcessing = isConnecting || isLoading;
 
   const minBid = 0; // @TODO - (currentHighestBid + step) || minBid
-  const currentWallet = isConnected && accountAddress ? accountAddress : undefined;
+  const currentAddress = isConnected && accountAddress ? accountAddress : undefined;
   const hasCompleted = auction?.state === 'ended';
   const winningWallet = hasCompleted ? auction?.bids?.[0].bidder : undefined; // we can assume there is only 1 winner
-  const myBid = auction?.bids.find((bid) => bid.bidder === currentWallet);
+  const myBid = auction?.bids.find((bid) => bid.bidder === currentAddress);
   const iBid = !!myBid;
-  const iWon = hasCompleted && winningWallet === currentWallet;
+  const iWon = hasCompleted && winningWallet === currentAddress;
   const iLost = hasCompleted && iBid && !iWon;
   const highestBid = auction?.bids[0]?.bid;
   const walletBalance = balance && Math.round(balance * 10000) / 10000;
@@ -66,7 +66,7 @@ export function AuctionContainer() {
   const bidBoxStatusProps = {
     endTimestamp,
     state,
-    currentWallet,
+    currentAddress,
     bids: auction?.bids
   };
 
@@ -150,7 +150,13 @@ export function AuctionContainer() {
                 <BidBoxInfo key={2} {...bidBoxInfo2Props} isLoading={isLoading} />
               ]}
               cta={cta}
-              history={<BidHistory bids={auction?.bids} isProcessing={isProcessing} />}
+              history={
+                <BidHistory
+                  bids={auction?.bids}
+                  isProcessing={isProcessing}
+                  currentAddress={currentAddress}
+                />
+              }
               isLoading={isLoading}
             />
           }

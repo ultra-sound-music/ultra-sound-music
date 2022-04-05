@@ -7,7 +7,7 @@ import styles from './BidBoxStatus.scss';
 export interface IBidBoxStatusProps {
   endTimestamp?: number;
   state?: AuctionState;
-  currentWallet?: string;
+  currentAddress?: string;
   bids?: USMBidData[];
 }
 
@@ -39,11 +39,11 @@ export function getLiveStatusMessage(endTimestamp?: number) {
 
 export function getEndedStatusMessage(
   auctionEnd?: number,
-  currentWallet?: string,
+  currentAddress?: string,
   bids?: USMBidData[]
 ) {
-  const myBid = bids?.find(({ bidder }) => bidder === currentWallet);
-  const iWon = bids?.[0].bidder === currentWallet;
+  const myBid = bids?.find(({ bidder }) => bidder === currentAddress);
+  const iWon = bids?.[0].bidder === currentAddress;
   const iLost = !!myBid && !iWon;
 
   if (iWon && !myBid?.hasBeenRedeemed) {
@@ -63,7 +63,7 @@ export function getEndedStatusMessage(
   }
 }
 
-export function BidBoxStatus({ endTimestamp, state, currentWallet, bids }: IBidBoxStatusProps) {
+export function BidBoxStatus({ endTimestamp, state, currentAddress, bids }: IBidBoxStatusProps) {
   dayjs.extend(duration);
 
   let statusMessage;
@@ -72,7 +72,7 @@ export function BidBoxStatus({ endTimestamp, state, currentWallet, bids }: IBidB
   } else if (state === 'started') {
     statusMessage = getLiveStatusMessage(endTimestamp);
   } else if (state === 'ended') {
-    statusMessage = getEndedStatusMessage(endTimestamp, currentWallet, bids);
+    statusMessage = getEndedStatusMessage(endTimestamp, currentAddress, bids);
   }
 
   return <div className={styles.BidBoxStatus}>{statusMessage}</div>;
