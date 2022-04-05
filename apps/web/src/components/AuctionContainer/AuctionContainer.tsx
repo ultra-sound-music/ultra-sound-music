@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import {
   web3Constants,
   useNetwork,
@@ -5,8 +7,8 @@ import {
   useAccountBalance,
   usePlaceBid
 } from '@usm/app-state';
-import { NftAuction } from '@usm/ui';
-import { useEffect } from 'react';
+import { Button, NftAuction, Link } from '@usm/ui';
+import { urls } from '@usm/content';
 import {
   Grid,
   Image,
@@ -20,10 +22,10 @@ import {
 } from '@usm/ui';
 import styles from './AuctionContainer.scss';
 import { getShortenedAccountAddress } from '@usm/util-string';
-import { AuctionState } from '@usm/auction';
 
 import { SolanaButton } from '@usm/components';
-import EndedAuctionButton from '../Buttons/EndedAuctionButton/EndedAuctionButton';
+import RedeemBidButton from '../Buttons/RedeemBidButton/RedeemBidButton';
+import RefundButton from '../Buttons/RefundButton/RefundButton';
 
 export function AuctionContainer() {
   function onBid(bidAmount: string) {
@@ -42,17 +44,17 @@ export function AuctionContainer() {
 
   const minBid = 0; // @TODO - (currentHighestBid + step) || minBid
   const currentWallet = isConnected && accountAddress ? accountAddress : undefined;
-  const winningWallet = auction?.winner?.bidder?.toString();
+  const hasCompleted = auction?.state === 'ended';
+  const winningWallet = hasCompleted ? auction?.bids?.[0].bidder : undefined; // we can assume there is only 1 winner
+  const myBid = auction?.bids.find((bid) => bid.bidder === currentWallet);
+  const iBid = !!myBid;
+  const iWon = hasCompleted && winningWallet === currentWallet;
+  const iLost = hasCompleted && iBid && !iWon;
   const highestBid = auction?.bids[0]?.bid;
-  const isFinished = !!auction?.winner?.bid;
   const walletBalance = balance && Math.round(balance * 10000) / 10000;
-  const auctionEnd = auction?.endAuctionAt || undefined;
+  const endTimestamp = auction?.endTimestamp;
   const state = auction?.state;
-  const bids = auction?.bids.map((bid) => ({
-    ...bid,
-    bidder: bid.bidder.toString()
-  }));
-  const auctionIsPending = state === undefined ? undefined : state === AuctionState.Created;
+  const auctionIsPending = state === undefined ? undefined : state === 'created';
 
   useEffect(() => {
     const isDisconnecting = auction && !isConnected;
@@ -62,26 +64,20 @@ export function AuctionContainer() {
   }, [isConnected]);
 
   const bidBoxStatusProps = {
-    auctionEnd,
+    endTimestamp,
     state,
     currentWallet,
-    winningWallet,
-    bids
+    bids: auction?.bids
   };
 
   const bidBoxInfo1Props = {
-    title:
-      state === AuctionState.Created
-        ? ''
-        : state === AuctionState.Started
-        ? 'Current Bid'
-        : 'Winning Bid',
+    title: state === 'created' ? '' : state === 'started' ? 'Current Bid' : 'Winning Bid',
     icon: <SolanaIcon size='small' />,
     body: highestBid ? `${highestBid} SOL` : undefined
   };
 
   let bidBoxInfo2Props;
-  if (isFinished) {
+  if (hasCompleted) {
     bidBoxInfo2Props = {
       title: 'winner',
       body: getShortenedAccountAddress(winningWallet)
@@ -100,7 +96,18 @@ export function AuctionContainer() {
   }
 
   let cta;
-  if (state === AuctionState.Started) {
+  if (iWon && !myBid?.hasBeenRedeemed) {
+    cta = <RedeemBidButton />;
+  } else if (iLost && !myBid.hasBeenRefunded) {
+    cta = <RefundButton />;
+  } else if (state === 'created') {
+    cta = (
+      <div>
+        Connect with us on <Link to={urls.usmTwitter}>Twitter</Link> and{' '}
+        <Link to={urls.usmDiscord}>Discord</Link>
+      </div>
+    );
+  } else if (state === 'started') {
     cta = (
       <BidBoxForm
         minBid={minBid}
@@ -110,8 +117,15 @@ export function AuctionContainer() {
         onBid={onBid}
       />
     );
+  } else if (state === 'ended') {
+    cta = (
+      <div>
+        Connect with us on <Link to={urls.usmTwitter}>Twitter</Link> and{' '}
+        <Link to={urls.usmDiscord}>Discord</Link>
+      </div>
+    );
   } else {
-    cta = <EndedAuctionButton />;
+    cta = <Button isProcessing={true} />;
   }
 
   return (
@@ -136,7 +150,7 @@ export function AuctionContainer() {
                 <BidBoxInfo key={2} {...bidBoxInfo2Props} isLoading={isLoading} />
               ]}
               cta={cta}
-              history={<BidHistory bids={bids} isProcessing={isProcessing} />}
+              history={<BidHistory bids={auction?.bids} isProcessing={isProcessing} />}
               isLoading={isLoading}
             />
           }

@@ -1,34 +1,27 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
-import { AuctionState } from '@usm/auction';
+import { AuctionState, USMBidData } from '@usm/auction';
 import styles from './BidBoxStatus.scss';
 
-export interface IBidBoxStatusBids {
-  bidder: string;
-  bid: number;
-  timestamp: number;
-}
-
 export interface IBidBoxStatusProps {
-  auctionEnd?: number;
+  endTimestamp?: number;
   state?: AuctionState;
   currentWallet?: string;
-  winningWallet?: string;
-  bids?: IBidBoxStatusBids[];
+  bids?: USMBidData[];
 }
 
 export function getPendingStatusMessage() {
   return <strong>Coming Soon!</strong>;
 }
 
-export function getLiveStatusMessage(auctionEnd?: number) {
-  if (!auctionEnd) {
+export function getLiveStatusMessage(endTimestamp?: number) {
+  if (!endTimestamp) {
     return '';
   }
 
   const today = dayjs();
-  const endDate = dayjs(auctionEnd);
+  const endDate = dayjs(endTimestamp);
   const dateDiff = dayjs.duration(endDate.diff(today));
 
   const days = dateDiff.days();
@@ -47,39 +40,39 @@ export function getLiveStatusMessage(auctionEnd?: number) {
 export function getEndedStatusMessage(
   auctionEnd?: number,
   currentWallet?: string,
-  winningWallet?: string,
-  bids?: IBidBoxStatusBids[]
+  bids?: USMBidData[]
 ) {
-  const endDate = dayjs(auctionEnd);
-  const isWinningWallet = currentWallet === winningWallet;
-  const hasClaimedBid = false;
-  const isBiddingWallet = false;
+  const myBid = bids?.find(({ bidder }) => bidder === currentWallet);
+  const iWon = bids?.[0].bidder === currentWallet;
+  const iLost = !!myBid && !iWon;
 
-  if (isWinningWallet && !hasClaimedBid) {
-    return <strong>Congratulations, you won!</strong>;
-  } else if (isBiddingWallet) {
-    return <strong>You didn't win. Click to claim your bid.</strong>;
+  if (iWon && !myBid?.hasBeenRedeemed) {
+    return <strong>You won! Click the button to redeem your NFT.</strong>;
+  } else if (iWon && !myBid?.hasRedeemedParticipationToken) {
+    return <strong>Redeem your participation NFT!</strong>;
+  } else if (iLost && !myBid?.hasBeenRefunded) {
+    return <strong>You didn't win. Click your refunded.</strong>;
+  } else if (iLost && !myBid?.hasRedeemedParticipationToken) {
+    return <strong>Redeem your participation NFT!</strong>;
+  } else {
+    const today = dayjs();
+    const endDate = dayjs(auctionEnd);
+
+    const formatString = today.isSame(endDate, 'year') ? 'MMM D, h:m A' : 'MMM D, YYYY h:m A';
+    return <strong>Auction ended {endDate.format(formatString)}</strong>;
   }
-
-  return <strong>Auction ended {endDate.format('MMM M, YYYY h:m A')}</strong>;
 }
 
-export function BidBoxStatus({
-  auctionEnd,
-  state,
-  currentWallet,
-  winningWallet,
-  bids
-}: IBidBoxStatusProps) {
+export function BidBoxStatus({ endTimestamp, state, currentWallet, bids }: IBidBoxStatusProps) {
   dayjs.extend(duration);
 
   let statusMessage;
-  if (state === AuctionState.Created) {
+  if (state === 'created') {
     statusMessage = getPendingStatusMessage();
-  } else if (state === AuctionState.Started) {
-    statusMessage = getLiveStatusMessage(auctionEnd);
-  } else if (state === AuctionState.Ended) {
-    statusMessage = getEndedStatusMessage(auctionEnd, currentWallet, winningWallet, bids);
+  } else if (state === 'started') {
+    statusMessage = getLiveStatusMessage(endTimestamp);
+  } else if (state === 'ended') {
+    statusMessage = getEndedStatusMessage(endTimestamp, currentWallet, bids);
   }
 
   return <div className={styles.BidBoxStatus}>{statusMessage}</div>;

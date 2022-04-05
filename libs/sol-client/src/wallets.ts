@@ -16,7 +16,7 @@ export type IPubKeyString = string;
 export interface IWallet {
   init?(): Promise<IPubKeyString | null>;
   connectWallet(): Promise<string>;
-  getWalletAddress(): Promise<IPubKeyString | null>;
+  getWalletAddress(): IPubKeyString | null;
   getNetworkId(): Promise<INetworkId>;
   isConnected(): boolean;
   mint(): Promise<string>;

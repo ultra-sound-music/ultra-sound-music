@@ -1,6 +1,8 @@
 @use '../../../styles.scss' as *;
 
 .BidBoxInfo {
+  padding-bottom: 20px;
+
   &:not(:last-child) {
     border-right: 1px solid $color-old-towel;
     flex-basis: 42%;

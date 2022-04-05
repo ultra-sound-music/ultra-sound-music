@@ -10,7 +10,7 @@ import {
   useRecoilState,
   useResetRecoilState
 } from 'recoil';
-import Usm, { USMAuctionData, PublicKey } from '@usm/auction';
+import Usm, { USMAuctionData, PublicKey, BidMutationResponse } from '@usm/auction';
 
 import { Wallet } from '@metaplex/js';
 import SolClient from '@usm/sol-client';
@@ -36,6 +36,17 @@ export type IAuctionIsLoading = boolean;
 
 export type IUpdateNetworkStateProps = Partial<IWeb3State>;
 
+export interface UpdateAuctionCallbackArgs {
+  updater(): Promise<BidMutationResponse>;
+  processingMessage: string;
+  successMessage: string;
+  confirmedMessage: string;
+  errorMessage: string;
+  loadAuction(b: boolean): Promise<void>;
+  showNotification(args: ui.INotificationState): void;
+}
+
+const storePubKey = new PublicKey(config.storePubKey || '');
 const auctionPubkey = new PublicKey(config.auctionPubKey || '');
 let solClient: SolClient;
 let usm: Usm;
@@ -100,18 +111,40 @@ export const auctionState = atom<USMAuctionData | undefined>({
   default: undefined
 });
 
-export function getSolClient() {
+export function useSolClient() {
+  const [accountBalance, setAccountBalance] = useAccountBalance();
+  const resetAccountBalance = useResetRecoilState(balanceState);
+  const updateNetworkState = useUpdateNetworkState();
+
   if (!solClient) {
     solClient = new SolClient();
+
+    solClient.on('disconnect', () => {
+      resetAccountBalance();
+      updateNetworkState({
+        accountAddress: '',
+        networkStatus: web3Constants.networkStatus.NOT_CONNECTED,
+        networkId: '',
+        isConnected: false
+      });
+    });
   }
 
   return solClient;
 }
 
-export function getUsm() {
+export function useUsm() {
+  const solClient = useSolClient();
+
   if (!usm) {
-    const solClient = getSolClient();
-    usm = new Usm(config.solanaCluster as string, solClient.wallet as Wallet);
+    const connection = config.solanaCluster as string;
+    const accounts = {
+      wallet: solClient.wallet as Wallet,
+      store: storePubKey,
+      auction: auctionPubkey
+    };
+
+    usm = new Usm(connection, accounts);
   }
 
   return usm;
@@ -174,6 +207,7 @@ export function useNetwork() {
 export function useAuctionLoader() {
   const [prevAuction, setAuction] = useAuction();
   const [, setIsLoading] = useAuctionIsLoading();
+  const usm = useUsm();
   const showNotification = ui.useShowNotification();
 
   return useRecoilCallback(
@@ -185,8 +219,6 @@ export function useAuctionLoader() {
 
         try {
           setIsLoading(true);
-
-          usm = getUsm();
           const auction = await usm.getAuctionData(auctionPubkey);
 
           setIsLoading(false);
@@ -208,6 +240,7 @@ export function usePlaceBid() {
   const { auction, setIsLoading, loadAuction } = useLoadAuction();
   const { showModal } = ui.useModal();
   const showNotification = ui.useShowNotification();
+  const usm = useUsm();
 
   return useRecoilCallback(() => async (amountInSol: number) => {
     if (!auction) {
@@ -231,8 +264,6 @@ export function usePlaceBid() {
 
     try {
       setIsLoading(true);
-
-      usm = getUsm();
       const { confirmTransaction } = await usm.placeBid(amountInSol, auctionPubkey);
 
       await loadAuction(true);
@@ -247,7 +278,6 @@ export function usePlaceBid() {
         title: 'Success',
         message: 'Your bid has been recorded',
         type: 'success'
-        // timeout: 4000
       });
     } catch (error) {
       console.error(error);
@@ -264,20 +294,90 @@ export function usePlaceBid() {
   });
 }
 
-export function useRedeemNft() {
-  return useRecoilCallback(() => async () => {
-    const usm = getUsm();
+export async function updateAuctionCallback({
+  updater,
+  processingMessage,
+  successMessage,
+  confirmedMessage,
+  errorMessage,
+  loadAuction,
+  showNotification
+}: UpdateAuctionCallbackArgs) {
+  showNotification({
+    type: 'processing',
+    message: processingMessage
+  });
 
-    // @TODO claim the nft (winner)
+  try {
+    const { result, confirmTransaction } = await updater();
+
+    showNotification({
+      title: 'Success',
+      message: successMessage,
+      type: 'processing'
+    });
+
+    await loadAuction(true);
+    await confirmTransaction();
+
+    showNotification({
+      title: 'Success',
+      message: confirmedMessage,
+      type: 'success',
+      timeout: 3500
+    });
+  } catch (error) {
+    console.error(error);
+    showNotification({
+      title: 'Error',
+      message: errorMessage,
+      type: 'error'
+    });
+  }
+}
+
+export function useUpdateAuction() {
+  const showNotification = ui.useShowNotification();
+  const loadAuction = useAuctionLoader();
+
+  // We return a function, that calls a function that takes a function as an argument and returns a function ¯\_(ツ)_/¯
+  // Sorry, this is confusing AF but the tradeoff is it centralizes all this logic in one place
+  return (args: Omit<UpdateAuctionCallbackArgs, 'showNotification' | 'loadAuction'>) =>
+    useRecoilCallback(() => async () => {
+      updateAuctionCallback({ showNotification, loadAuction, ...args });
+    });
+}
+
+export function useRedeemBid() {
+  const updateAuction = useUpdateAuction();
+  return updateAuction({
+    updater: () => usm.redeemBid(),
+    processingMessage: 'Redeeming your NFT.',
+    successMessage: 'Redemption Approved.  Waiting for final confirmation...',
+    confirmedMessage: 'Your NFT has been redeemed!',
+    errorMessage: 'Failed to redeem your NFT.  Please try again'
   });
 }
 
-export function useRefund() {
-  return useRecoilCallback(() => async () => {
-    const usm = getUsm();
+export function useRedeemParticipationToken() {
+  const updateAuction = useUpdateAuction();
+  return updateAuction({
+    updater: () => usm.redeemParticipationBid(),
+    processingMessage: 'Redeeming your participation NFT',
+    successMessage: 'Redemption Approved.  Waiting for final confirmation...',
+    confirmedMessage: 'Your NFT has been redeemed!',
+    errorMessage: 'Failed to redeem your NFT.  Please try again'
+  });
+}
 
-    // @TODO - get the refund (loser)
-    // @TODO - if there is a participation nft get that too
+export function useRefundBid() {
+  const updateAuction = useUpdateAuction();
+  return updateAuction({
+    updater: () => usm.cancelBid(),
+    processingMessage: 'Processing your refund',
+    successMessage: 'Refund approved.  Waiting for final confirmation',
+    confirmedMessage: 'Your refund has been confirmed.',
+    errorMessage: 'Failed to refund your bid.  Please try again'
   });
 }
 
@@ -285,6 +385,8 @@ export function useConnect() {
   const [, setBalance] = useAccountBalance();
   const showNotification = ui.useShowNotification();
   const updateNetworkStatus = useUpdateNetworkState();
+  const solClient = useSolClient();
+  const usm = useUsm();
 
   return useRecoilCallback(
     () => async () => {
@@ -293,7 +395,6 @@ export function useConnect() {
           networkStatus: web3Constants.networkStatus.CONNECTING
         });
 
-        const solClient = getSolClient();
         const accountAddress = await solClient.connectWallet();
         updateNetworkStatus({
           accountAddress,
@@ -302,7 +403,6 @@ export function useConnect() {
           isConnected: true
         });
 
-        const usm = getUsm();
         const balance = await usm.getWalletBalance();
         setBalance(balance);
       } catch (error) {
@@ -323,22 +423,12 @@ export function useConnect() {
 
 export function useDisconnect() {
   const showNotification = ui.useShowNotification();
-  const resetAccountBalance = useResetRecoilState(balanceState);
-  const updateNetworkState = useUpdateNetworkState();
+  const solClient = useSolClient();
 
   return useRecoilCallback(
     () => async () => {
       try {
-        const solClient = getSolClient();
         await solClient.disconnectWallet();
-
-        resetAccountBalance();
-        updateNetworkState({
-          accountAddress: '',
-          networkStatus: web3Constants.networkStatus.NOT_CONNECTED,
-          networkId: '',
-          isConnected: false
-        });
       } catch (error) {
         showNotification({
           title: 'Error',

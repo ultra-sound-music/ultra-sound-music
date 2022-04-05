@@ -66,7 +66,7 @@ export default class SolClient implements IWallet {
     // @TODO - there's a bug where the wallet address can be null for a second even after the wallet connects
     await waitForWallet(this.wallet);
 
-    const newAddress = await this.getWalletAddress();
+    const newAddress = this.getWalletAddress();
     return newAddress;
   }
 
@@ -74,7 +74,7 @@ export default class SolClient implements IWallet {
     await this.wallet.disconnect();
   }
 
-  async getWalletAddress(): Promise<IPubKeyString> {
+  getWalletAddress(): IPubKeyString {
     if (!this.wallet) {
       return '';
     }

@@ -15,14 +15,16 @@ import {
   transformAuctionData,
   placeBid,
   getMetadata,
+  USMBidData,
   USMAuctionData
 } from './utils/utils';
+import { redeemTokenOnlyBid } from './redeemTokenOnlyBid';
 import BN from 'bn.js';
 
 export * from './utils/utils';
-export { PublicKey, USMAuctionData };
+export { PublicKey, USMAuctionData, USMBidData };
 
-const { redeemFullRightsTransferBid, redeemParticipationBidV3 } = actions;
+const { redeemParticipationBidV3 } = actions;
 
 interface IRedeemParticipationBidV3Response {
   txIds: TransactionSignature[];
@@ -34,7 +36,7 @@ interface IRedeemBidResponse {
 
 export type IConfirmTransactionResult = Awaited<ReturnType<Connection['confirmTransaction']>>;
 
-export interface IBidMutationResponse {
+export interface BidMutationResponse {
   result: IRedeemBidResponse | IRedeemParticipationBidV3Response;
   confirmTransaction():
     | Promise<IConfirmTransactionResult>
@@ -58,13 +60,23 @@ export function createRpcConnection(config: IConnectionConfigOrEndpoint): Connec
   return new Connection(endpoint, commitment);
 }
 
+export interface AuctionAccounts {
+  wallet: Wallet;
+  store: PublicKey;
+  auction: PublicKey;
+}
+
 export class USMClient {
   connection: Connection;
   wallet: Wallet;
+  auction: PublicKey;
+  store: PublicKey;
 
-  constructor(connectionConfig: IConnectionConfigOrEndpoint, wallet: Wallet) {
+  constructor(connectionConfig: IConnectionConfigOrEndpoint, accounts: AuctionAccounts) {
     this.connection = createRpcConnection(connectionConfig);
-    this.wallet = wallet;
+    this.wallet = accounts.wallet;
+    this.auction = accounts.auction;
+    this.store = accounts.store;
   }
 
   async getWalletBalance() {
@@ -72,19 +84,15 @@ export class USMClient {
     return balance / LAMPORTS_PER_SOL;
   }
 
-  async getAuction(pubKey: PublicKey) {
-    return Auction.load(this.connection, pubKey);
-  }
-
   async getAuctionData(pubKey: PublicKey) {
-    const a = await Auction.load(this.connection, pubKey);
+    const auction = await Auction.load(this.connection, pubKey);
 
     // @TODO - Get Transaction ID for each bid
     // @TODO - Get NFT + Metadata
     // Examples for getting all this other information can be found in:
     // metaplex/js/packages/web/src/views/auction/index.tsx
     // metaplex/js/packages/web/src/hooks/useAuctions.ts -> AuctionView (an amalgamation of various data sources)
-    return transformAuctionData(a, this.connection);
+    return transformAuctionData(auction, this.connection, this.wallet.publicKey);
   }
 
   async placeBid(amountInSol: number, auction: PublicKey) {
@@ -106,11 +114,11 @@ export class USMClient {
     };
   }
 
-  async cancelBid(auction: PublicKey) {
+  async cancelBid() {
     const result = await cancelBid({
       connection: this.connection,
       wallet: this.wallet,
-      auction
+      auction: this.auction
     });
 
     return {
@@ -120,15 +128,12 @@ export class USMClient {
     };
   }
 
-  async redeemParticipationBid(
-    store: PublicKey,
-    auction: PublicKey
-  ): Promise<IBidMutationResponse> {
+  async redeemParticipationBid(): Promise<BidMutationResponse> {
     const result = await redeemParticipationBidV3({
       connection: this.connection,
       wallet: this.wallet,
-      store,
-      auction
+      store: this.store,
+      auction: this.auction
     });
 
     return {
@@ -142,12 +147,12 @@ export class USMClient {
     };
   }
 
-  async redeemBid(store: PublicKey, auction: PublicKey): Promise<IBidMutationResponse> {
-    const result = await redeemFullRightsTransferBid({
+  async redeemBid(): Promise<BidMutationResponse> {
+    const result = await redeemTokenOnlyBid({
       connection: this.connection,
       wallet: this.wallet,
-      store,
-      auction
+      store: this.store,
+      auction: this.auction
     });
 
     return {

@@ -14,9 +14,10 @@ import {
   Auction,
   AuctionExtended,
   AuctionProgram,
-  AuctionState,
+  AuctionState as AuctionStateEnum,
   BidderMetadata,
   BidderPot,
+  BidderMetadataData,
   PlaceBid
 } from '@metaplex-foundation/mpl-auction';
 
@@ -26,7 +27,58 @@ import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { AuctionManager } from '@metaplex-foundation/mpl-metaplex';
 import { Transaction, Account } from '@metaplex-foundation/mpl-core';
 
-export { AuctionState };
+interface TransactionsBatchParams {
+  beforeTransactions?: Transaction[];
+  transactions: Transaction[];
+  afterTransactions?: Transaction[];
+}
+
+/**
+ * Parameters for {@link placeBid}s
+ */
+export interface PlaceBidParams {
+  connection: Connection;
+  /** The wallet from which tokens will be taken and transferred to the {@link bidderPotToken} account **/
+  wallet: Wallet;
+  /** The {@link Auction} program account address for the bid **/
+  auction: PublicKey;
+  /** Associated token account for the bidder pot **/
+  bidderPotToken?: PublicKey;
+  /** Amount of tokens (accounting for decimals) or lamports to bid. One important nuance to remember is that each token mint has a different amount of decimals, which need to be accounted while specifying the amount. For instance, to send 1 token with a 0 decimal mint you would provide `1` as the amount, but for a token mint with 6 decimals you would provide `1000000` as the amount to transfer one whole token **/
+  amount: BN;
+  commitment?: Commitment;
+}
+
+export interface PlaceBidResponse {
+  txId: TransactionSignature;
+  bidderPotToken: PublicKey;
+  bidderMeta: PublicKey;
+}
+
+export type USMBidData = {
+  bidder: string;
+  bid: number;
+  timestamp: number;
+  hasBeenRedeemed?: boolean;
+  hasRedeemedParticipationToken?: boolean;
+  hasBeenRefunded?: boolean;
+  won?: boolean;
+};
+
+export type NftData = {
+  pubKey: PublicKey;
+  metadata: any;
+};
+
+export type USMAuctionData = {
+  pubkey: PublicKey;
+  auctionNft: NftData;
+  participationNft?: NftData;
+  acceptedToken: PublicKey;
+  endTimestamp?: EpochTimeStamp;
+  state: AuctionState;
+  bids: USMBidData[];
+};
 
 const { getCancelBidTransactions, createApproveTxs, createWrappedAccountTxs, sendTransaction } =
   actions;
@@ -39,11 +91,8 @@ const getBidderPotTokenPDA = async (bidderPotPubKey: PublicKey) => {
   ]);
 };
 
-interface TransactionsBatchParams {
-  beforeTransactions?: Transaction[];
-  transactions: Transaction[];
-  afterTransactions?: Transaction[];
-}
+const auctionStates = ['created', 'started', 'ended'] as const;
+export type AuctionState = typeof auctionStates[number];
 
 export class TransactionsBatch {
   beforeTransactions: Transaction[];
@@ -88,29 +137,7 @@ export class TransactionsBatch {
 }
 
 /**
- * Parameters for {@link placeBid}s
- */
-export interface PlaceBidParams {
-  connection: Connection;
-  /** The wallet from which tokens will be taken and transferred to the {@link bidderPotToken} account **/
-  wallet: Wallet;
-  /** The {@link Auction} program account address for the bid **/
-  auction: PublicKey;
-  /** Associated token account for the bidder pot **/
-  bidderPotToken?: PublicKey;
-  /** Amount of tokens (accounting for decimals) or lamports to bid. One important nuance to remember is that each token mint has a different amount of decimals, which need to be accounted while specifying the amount. For instance, to send 1 token with a 0 decimal mint you would provide `1` as the amount, but for a token mint with 6 decimals you would provide `1000000` as the amount to transfer one whole token **/
-  amount: BN;
-  commitment?: Commitment;
-}
-
-export interface PlaceBidResponse {
-  txId: TransactionSignature;
-  bidderPotToken: PublicKey;
-  bidderMeta: PublicKey;
-}
-
-/**
- * Place a bid by taking it from the provided wallet and placing it in the bidder pot account.
+ * Place a bid by moving funds from the provided wallet to the bidder pot account.
  */
 export const placeBid = async ({
   connection,
@@ -137,8 +164,8 @@ export const placeBid = async ({
 
   let txBatch = new TransactionsBatch({ transactions: [] });
 
-  //if the user has an existing biddder pot token acct cancel pending bid
-
+  // An existing bidder pot account means the user has an existing bid.
+  // Cancel it before placing a new bid.
   if (accountInfo) {
     txBatch = await getCancelBidTransactions({
       destAccount: undefined,
@@ -274,75 +301,73 @@ export const cancelBid = async ({
   return { txId };
 };
 
-export type USMBidData = {
-  bidder: PublicKey;
-  bid: number;
-  timestamp: number;
-};
-
-export type nftData = {
-  pubKey: PublicKey;
-  metadata: any;
-};
-
-export type USMAuctionData = {
-  // auction identifier
-  pubkey: PublicKey;
-  // public key of nft being auctioned off
-  auctionNft: nftData;
-  // public key of participation nft
-  participationNft: nftData | null;
-  //token that is used for bids
-  acceptedToken: PublicKey;
-  //returns unix timestamp
-  endAuctionAt: number | null;
-  //if the auction is currently live
-  state: AuctionState;
-  // array of processed bid
-  bids: USMBidData[];
-  //  if auction over returns winning bid else returns null
-  winner: USMBidData | null;
-  participants: PublicKey[];
-};
-
-export const transformAuctionData = async (auction: Auction, connection: Connection) => {
-  //get NFT pubkeys
-  const auctionManager = await AuctionManager.getPDA(auction.pubkey);
-  const manager = await AuctionManager.load(connection, auctionManager);
-  const vault = await Vault.load(connection, new PublicKey(manager.data.vault));
+export const transformAuctionData = async (
+  auction: Auction,
+  connection: Connection,
+  bidder: PublicKey
+): Promise<USMAuctionData | undefined> => {
+  const auctionManagerPk = await AuctionManager.getPDA(auction.pubkey);
+  const auctionManager = await AuctionManager.load(connection, auctionManagerPk);
+  const vault = await Vault.load(connection, new PublicKey(auctionManager.data.vault));
   const boxes = await vault.getSafetyDepositBoxes(connection);
-  const nftPubKey = boxes[0].data.tokenMint;
-  const participationNftPubKey = boxes.length > 1 ? boxes[1].data.tokenMint : null;
 
-  // get metadata
+  // The primary NFT will not always be the first in the array of boxes. Maybe "order" will be reliable?
+  // The participation NFT, *I think*, is the one with the highest order (you can have > 1 non-participation NFTs)
+  const primaryBox = boxes.find((box) => box.data.order === 0);
+  const participationBox = boxes.find((box) => box.data.order === boxes.length);
+
+  if (!primaryBox) {
+    return;
+  }
+
+  const nftPubKey = primaryBox.data.tokenMint;
   const nftData = await getMetadata(new PublicKey(nftPubKey), connection);
-  const participationData = participationNftPubKey
-    ? await getMetadata(new PublicKey(participationNftPubKey), connection)
-    : null;
-
   const nftMetadata = await fetch(nftData.uri).then((response) => response.json());
 
+  const participationNftPubKey = participationBox?.data.tokenMint;
+  const participationData = participationNftPubKey
+    ? await getMetadata(new PublicKey(participationNftPubKey), connection)
+    : undefined;
   const participationMetadata = participationData
     ? await fetch(participationData.uri).then((response) => response.json())
-    : null;
+    : undefined;
 
+  const auctionState = auction.data.state;
+  const maxWinners = auction.data.bidState.max.toNumber();
   const bids = await auction.getBidderMetadata(connection);
   const usmBidData = bids
-    .filter((bid) => !bid.data.cancelled)
-    .map((bid) => {
-      const { data } = bid;
+    .filter((bid) => !isCancelledBid(bid.data, auctionState))
+    .sort((a, b) => b.data.lastBid.toNumber() - a.data.lastBid.toNumber())
+    .map(({ data }, index) => {
       const bidData: USMBidData = {
-        bidder: new PublicKey(data.bidderPubkey),
+        bidder: data.bidderPubkey,
         bid: data.lastBid.toNumber() / LAMPORTS_PER_SOL,
         timestamp: data.lastBidTimestamp.toNumber() * 1000
       };
+
+      if (auctionState === AuctionStateEnum.Ended) {
+        return {
+          hasBeenRedeemed: false, // @TODO
+          hasRedeemedParticipationToken: false, // @TODO
+          hasBeenRefunded: !!data.cancelled,
+          won: index < maxWinners,
+          ...bidData
+        };
+      }
+
       return bidData;
-    })
-    .sort((a, b) => b.bid - a.bid);
+    });
 
-  usmBidData.map((bid) => bid.bidder);
+  let endTimestamp;
+  if (auctionState === AuctionStateEnum.Ended) {
+    endTimestamp = auction.data.endedAt ? auction.data.endedAt.toNumber() * 1000 : undefined;
+  } else {
+    endTimestamp = auction.data.endAuctionAt
+      ? auction.data.endAuctionAt.toNumber() * 1000
+      : undefined;
+  }
 
-  const auctionData: USMAuctionData = {
+  return {
     pubkey: auction.pubkey,
     auctionNft: {
       pubKey: new PublicKey(nftPubKey),
@@ -353,19 +378,17 @@ export const transformAuctionData = async (auction: Auction, connection: Connect
           pubKey: new PublicKey(participationNftPubKey),
           metadata: participationMetadata
         }
-      : null,
+      : undefined,
     acceptedToken: new PublicKey(auction.data.tokenMint),
-    // @TODO endAuctionAt is actually auction duration, poorly named, in seconds
-    // metaplex/js/packages/web/src/views/auctionCreate/index.tsx
-    endAuctionAt: auction.data.endAuctionAt ? auction.data.endAuctionAt.toNumber() * 1000 : null,
-    state: auction.data.state,
-    bids: usmBidData,
-    winner: auction.data.state === 2 ? usmBidData[0] : null,
-    participants: usmBidData.map((bid) => bid.bidder)
+    endTimestamp,
+    state: auctionStates[auctionState],
+    bids: usmBidData
   };
-
-  return auctionData;
 };
+
+export function isCancelledBid(bidderMetaData: BidderMetadataData, auctionState: AuctionStateEnum) {
+  return !!bidderMetaData.cancelled && auctionState !== AuctionStateEnum.Ended;
+}
 
 export const getMetadata = async (tokenMint: PublicKey, connection: Connection) => {
   const metadata = await Metadata.getPDA(tokenMint);
