@@ -18,7 +18,7 @@ export class TransactionsBatch {
   constructor({
     beforeTransactions = [],
     transactions,
-    afterTransactions = [],
+    afterTransactions = []
   }: TransactionsBatchParams) {
     this.beforeTransactions = beforeTransactions;
     this.transactions = transactions;
