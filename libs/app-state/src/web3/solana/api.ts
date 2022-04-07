@@ -2,12 +2,10 @@ import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
 
 import * as solClient from '@usm/sol-client';
-import configs from '@usm/config';
+import { MissingConfigError } from '@usm/config';
 
-import { getWallet, getConnection } from './registry';
+import { getWallet, getConnection, getStorePublicKey } from './registry';
 import { AuctionAddress } from './models/auctions';
-
-const store = new PublicKey(configs.mplStorePubKey || '');
 
 export async function connectWallet() {
   const wallet = await getWallet();
@@ -55,6 +53,11 @@ export async function redeemBid(auction: AuctionAddress) {
   const wallet = await getWallet();
   const connection = await getConnection();
   const auctionPk = new PublicKey(auction);
+  const store = getStorePublicKey();
+
+  if (!store) {
+    throw new MissingConfigError('mplStorePubKey');
+  }
 
   return solClient.redeemBid({
     connection,

@@ -184,7 +184,7 @@ export async function updateAuctionCallback({
   });
 
   try {
-    const { result, confirmTransaction } = await updater();
+    const { confirmTransaction } = await updater();
 
     showNotification({
       title: 'Success',
@@ -213,7 +213,7 @@ export async function updateAuctionCallback({
 
 export function useUpdateAuction(auctionAddress: AuctionAddress) {
   const showNotification = useShowNotification();
-  const { auction, loadAuction, loadingState } = useLoadAuction(auctionAddress);
+  const { loadAuction } = useLoadAuction(auctionAddress);
 
   // We return a function, that calls a function that takes a function as an argument and returns a function ¯\_(ツ)_/¯
   // Sorry, this is confusing AF but the tradeoff is it centralizes all this logic in one place

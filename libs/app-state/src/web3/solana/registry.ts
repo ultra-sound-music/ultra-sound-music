@@ -1,6 +1,53 @@
+import { PublicKey } from '@solana/web3.js';
 import { getWallet as getWalletData, Wallet } from '@usm/sol-client';
-import configs from '@usm/config';
+import config, { MissingConfigError } from '@usm/config';
 import { createRpcConnection, Cluster, Connection } from '@usm/sol-client';
+import { AuctionAddress } from './models/auctions';
+
+const { mplStorePubKey, mplAuctionPubKeys } = config;
+
+export type AuctionPublicKeysMap = Record<string, PublicKey>;
+
+let storePk: PublicKey;
+export function getStorePublicKey() {
+  if (!mplStorePubKey) {
+    return;
+  }
+
+  if (!storePk) {
+    storePk = new PublicKey(mplStorePubKey);
+  }
+
+  return storePk;
+}
+
+let auctionPks: AuctionPublicKeysMap;
+export function getAuctionPublicKeysMap() {
+  if (!mplAuctionPubKeys || !Array.isArray(mplAuctionPubKeys)) {
+    return;
+  }
+
+  if (!auctionPks) {
+    auctionPks = mplAuctionPubKeys.reduce<AuctionPublicKeysMap>((obj, val) => {
+      obj[val] = new PublicKey(val);
+      return obj;
+    }, {});
+  }
+
+  return auctionPks;
+}
+
+const emptyAuctionPks: PublicKey[] = [];
+export function getAuctionPublicKeys() {
+  const pkMap = getAuctionPublicKeysMap();
+  return pkMap ? Object.values(pkMap) : emptyAuctionPks;
+}
+
+const emptyAuctionAddresses: AuctionAddress[] = [];
+export function getAuctionAddresses() {
+  const pkMap = getAuctionPublicKeysMap();
+  return pkMap ? Object.keys(pkMap) : emptyAuctionAddresses;
+}
 
 export let wallet: Wallet | undefined;
 export async function initWallet() {
@@ -26,7 +73,11 @@ export const getWallet = async () => walletPromise;
 
 export let connection: Connection | undefined;
 export function initConnection() {
-  const cluster = configs.solanaCluster as Cluster;
+  const cluster = config.solanaCluster as Cluster;
+  if (!cluster) {
+    throw new MissingConfigError('solanaCluster');
+  }
+
   connection = createRpcConnection(cluster);
   return connection;
 }

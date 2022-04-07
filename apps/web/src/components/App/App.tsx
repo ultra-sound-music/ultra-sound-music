@@ -15,7 +15,6 @@ import Notification from '../Notification/Notification';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
 import styles from './App.scss';
-import { useEffect } from 'react';
 
 export let nav: INavItem[] = [
   {

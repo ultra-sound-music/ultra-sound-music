@@ -2,7 +2,7 @@ import { atom, useRecoilState, atomFamily } from 'recoil';
 import { USMAuctionData, TransactionInterface } from '@usm/sol-client';
 
 import { NotificationState } from '../../../ui';
-import configs from '@usm/config';
+import { getAuctionAddresses } from '../registry';
 
 export interface IWeb3State {
   accountAddress: string;
@@ -32,8 +32,6 @@ export interface UpdateAuctionCallbackArgs {
 export type AuctionAddress = string;
 export type LoadingState = 'ready' | 'loading' | 'loaded' | 'errored' | undefined;
 
-const auctions = configs.mplAuctionPubKeys || [];
-
 export const auctionDataState = atomFamily<USMAuctionData | undefined, AuctionAddress | undefined>({
   key: 'solAuction/auctionDataState',
   default: undefined
@@ -46,17 +44,17 @@ export const auctionLoadingState = atomFamily<LoadingState, AuctionAddress | und
 
 export const auctionSortState = atom<AuctionAddress[]>({
   key: 'solAuction/auctionSortState',
-  default: auctions
+  default: Object.values(getAuctionAddresses())
 });
 
 export const selectedAuctionState = atom<AuctionAddress>({
   key: 'solAuction/selectedAuctionState',
-  default: auctions[0]
+  default: getAuctionAddresses()[0]
 });
 
 export const activeAuctionState = atom<AuctionAddress>({
   key: 'solAuction/activeAuctionState',
-  default: auctions[0]
+  default: getAuctionAddresses()[0]
 });
 
 export function useAuction(auctionAddress: AuctionAddress) {

@@ -64,11 +64,10 @@ export function AuctionContainer() {
   const auctionIsPending = state === undefined ? undefined : state === 'created';
 
   useEffect(() => {
-    const isDisconnecting = auction && !isConnected;
-    if (!isDisconnecting) {
+    if (isConnected && activeAuction) {
       loadAuction();
     }
-  }, [isConnected]);
+  }, [isConnected, activeAuction]);
 
   const bidBoxStatusProps = {
     endTimestamp,

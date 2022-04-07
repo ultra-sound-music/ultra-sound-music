@@ -3,8 +3,8 @@ import { RiFileCopyLine, RiArrowRightLine } from 'react-icons/ri';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-import config from '@usm/config';
 import { useShowNotification } from '@usm/app-state';
+import { getAccountUrl } from '@usm/sol-client';
 
 import Link from '../Link/Link';
 import SolanaIcon from '../Icons/SolanaIcon/SolanaIcon';
@@ -54,9 +54,7 @@ export function BidHistoryItem({ isCurrentWallet, bidder, bid, timestamp }: IBid
       </div>
       {timeSinceBid && <div className={styles.bidTime}>{timeSinceBid}</div>}
       <div className={styles.bidWalletAddress}>
-        <Link to={`https://explorer.solana.com/address/${bidder}?cluster=${config.solanaCluster}`}>
-          {bidder}
-        </Link>
+        <Link to={getAccountUrl(bidder)}>{bidder}</Link>
       </div>
       <div onClick={onCopyClick} className={styles.copy}>
         <RiFileCopyLine />

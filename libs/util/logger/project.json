@@ -3,6 +3,17 @@
   "sourceRoot": "libs/util/logger/src",
   "projectType": "library",
   "generators": {},
-  "targets": {},
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/util/logger",
+        "main": "libs/util/logger/src/index.ts",
+        "tsConfig": "libs/util/logger/tsconfig.lib.json",
+        "assets": ["libs/util/logger/*.md"]
+      }
+    }
+  },
   "tags": []
 }
