@@ -32,7 +32,7 @@ export interface UpdateAuctionCallbackArgs {
 export type AuctionAddress = string;
 export type LoadingState = 'ready' | 'loading' | 'loaded' | 'errored' | undefined;
 
-const auctions = configs.mplAuctionPubKeys || [configs.mplAuctionPubKey] || [];
+const auctions = configs.mplAuctionPubKeys || [];
 
 export const auctionDataState = atomFamily<USMAuctionData | undefined, AuctionAddress | undefined>({
   key: 'solAuction/auctionDataState',
@@ -51,12 +51,12 @@ export const auctionSortState = atom<AuctionAddress[]>({
 
 export const selectedAuctionState = atom<AuctionAddress>({
   key: 'solAuction/selectedAuctionState',
-  default: auctions[3]
+  default: auctions[0]
 });
 
 export const activeAuctionState = atom<AuctionAddress>({
   key: 'solAuction/activeAuctionState',
-  default: auctions[3]
+  default: auctions[0]
 });
 
 export function useAuction(auctionAddress: AuctionAddress) {
