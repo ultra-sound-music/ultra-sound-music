@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 
 import {
-  web3Constants,
-  useNetwork,
+  useNetworkStatus,
   useLoadAuction,
   useAccountBalance,
-  usePlaceBid
+  usePlaceBid,
+  useActiveAuction,
+  useAccountAddress,
+  useGetWalletBalance,
+  AuctionAddress
 } from '@usm/app-state';
 import { Button, NftAuction, Link } from '@usm/ui';
 import { urls } from '@usm/content';
@@ -26,6 +29,7 @@ import { getShortenedAccountAddress } from '@usm/util-string';
 import { SolanaButton } from '@usm/components';
 import RedeemBidButton from '../Buttons/RedeemBidButton/RedeemBidButton';
 import RefundButton from '../Buttons/RefundButton/RefundButton';
+import RedeemParticipationButton from '../Buttons/RedeemParticipationButton/RedeemParticipationButton';
 
 export function AuctionContainer() {
   function onBid(bidAmount: string) {
@@ -35,13 +39,16 @@ export function AuctionContainer() {
   }
 
   const placeBid = usePlaceBid();
-  const [balance = 0] = useAccountBalance();
-  const [{ accountAddress, isConnected, networkStatus }] = useNetwork();
-  const { auction, isLoading, loadAuction } = useLoadAuction();
+  const balance = useGetWalletBalance();
+  const [networkStatus] = useNetworkStatus();
+  const accountAddress = useAccountAddress();
+  const [activeAuction] = useActiveAuction();
+  const { auction, loadAuction, loadingState } = useLoadAuction(activeAuction || '');
 
-  const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
+  const isConnected = networkStatus === 'CONNECTED';
+  const isConnecting = networkStatus === 'CONNECTING';
+  const isLoading = loadingState === 'loading';
   const isProcessing = isConnecting || isLoading;
-
   const minBid = 0; // @TODO - (currentHighestBid + step) || minBid
   const currentAddress = isConnected && accountAddress ? accountAddress : undefined;
   const hasCompleted = auction?.state === 'ended';
@@ -97,9 +104,11 @@ export function AuctionContainer() {
 
   let cta;
   if (iWon && !myBid?.hasBeenRedeemed) {
-    cta = <RedeemBidButton />;
+    cta = <RedeemBidButton auction={activeAuction} />;
   } else if (iLost && !myBid.hasBeenRefunded) {
-    cta = <RefundButton />;
+    cta = <RefundButton auction={activeAuction} />;
+  } else if (iBid && !myBid.hasRedeemedParticipationToken) {
+    cta = <RedeemParticipationButton auction={activeAuction} />;
   } else if (state === 'created') {
     cta = (
       <div>

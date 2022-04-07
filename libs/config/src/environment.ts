@@ -3,5 +3,6 @@
 export default {
   production: false,
   build: 'development',
-  environment: 'local'
+  environment: 'local',
+  mplAuctionPubKeys: []
 };

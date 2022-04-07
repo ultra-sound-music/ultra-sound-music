@@ -5,8 +5,6 @@ import ArweaveClient from '@usm/arweave';
 import * as ui from '../ui';
 import { localStorageEffect } from '../utils';
 
-import * as web3Constants from './constants';
-
 let arClient: ArweaveClient;
 
 export interface IArweaveState {
@@ -46,7 +44,7 @@ const networkState = selector<Partial<IArweaveState>>({
     accountAddress: get(accountAddressState),
     networkStatus: get(networkStatusState),
     networkId: get(networkIdState),
-    isConnected: get(networkStatusState) === web3Constants.networkStatus.CONNECTED
+    isConnected: get(networkStatusState) === 'CONNECTED'
   }),
   set: ({ set, reset }, newState) => {
     if (newState instanceof DefaultValue) {
@@ -72,7 +70,7 @@ export function useArweaveConnect() {
     () => async (logo?: string) => {
       try {
         setArweaveNetwork({
-          networkStatus: web3Constants.networkStatus.CONNECTING
+          networkStatus: 'CONNECTING'
         });
 
         const arClient = getArweaveClient(logo);
@@ -84,12 +82,12 @@ export function useArweaveConnect() {
 
         setArweaveNetwork({
           accountAddress,
-          networkStatus: web3Constants.networkStatus.CONNECTED,
+          networkStatus: 'CONNECTED',
           networkId: ''
         });
       } catch (error) {
         setArweaveNetwork({
-          networkStatus: web3Constants.networkStatus.NOT_CONNECTED
+          networkStatus: 'NOT_CONNECTED'
         });
 
         showNotification({
@@ -115,7 +113,7 @@ export function useArweaveDisconnect() {
 
         setArweaveNetwork({
           accountAddress: '',
-          networkStatus: web3Constants.networkStatus.NOT_CONNECTED,
+          networkStatus: 'NOT_CONNECTED',
           networkId: ''
         });
       } catch (error) {

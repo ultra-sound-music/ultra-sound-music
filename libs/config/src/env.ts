@@ -16,6 +16,6 @@ export default Object.freeze({
     process.env.MPL_AUCTION_PUBKEY,
 
   solanaCluster: process.env.SOLANA_CLUSTER,
-  auctionPubKey: process.env.MPL_AUCTION_PUBKEY,
-  storePubKey: process.env.MPL_STORE_PUBKEY
+  mplAuctionPubKey: process.env.MPL_AUCTION_PUBKEY,
+  mplStorePubKey: process.env.MPL_STORE_PUBKEY
 });

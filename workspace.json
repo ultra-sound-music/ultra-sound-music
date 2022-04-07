@@ -4,7 +4,6 @@
     "app-state": "libs/app-state",
     "arweave": "libs/arweave",
     "assets": "libs/assets",
-    "auction": "libs/auction",
     "audio-player": "libs/audio-player",
     "components": "libs/components",
     "config": "libs/config",

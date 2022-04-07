@@ -9,10 +9,13 @@ import config from '@usm/config';
 
 import Home from '../Landing/Landing';
 import { Modal } from '@usm/components';
+import { useAppInit } from '@usm/app-state';
+
 import Notification from '../Notification/Notification';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
 import styles from './App.scss';
+import { useEffect } from 'react';
 
 export let nav: INavItem[] = [
   {
@@ -40,23 +43,30 @@ if (!weAreLive) {
   ]);
 }
 
-const App = () => (
-  <div className={styles.App}>
-    <div className={styles.header}>
-      <SiteHeader nav={<Nav items={nav} />} ctaButton={weAreLive ? <SolanaButton /> : undefined} />
+export function App() {
+  useAppInit();
+
+  return (
+    <div className={styles.App}>
+      <div className={styles.header}>
+        <SiteHeader
+          nav={<Nav items={nav} />}
+          ctaButton={weAreLive ? <SolanaButton /> : undefined}
+        />
+      </div>
+      <Routes>
+        <Route path={routes.home} element={<Home />} />
+        <Route path={routes.blog} element={<Link to={urls.usmBlog} />} />
+        <Route path='*' element={<PageNotFound />} />
+      </Routes>
+      <div className={styles.footer}>
+        <SiteFooter />
+      </div>
+      <ReactTooltip className={styles.tooltips} />
+      <Notification />
+      <Modal />
     </div>
-    <Routes>
-      <Route path={routes.home} element={<Home />} />
-      <Route path={routes.blog} element={<Link to={urls.usmBlog} />} />
-      <Route path='*' element={<PageNotFound />} />
-    </Routes>
-    <div className={styles.footer}>
-      <SiteFooter />
-    </div>
-    <ReactTooltip className={styles.tooltips} />
-    <Notification />
-    <Modal />
-  </div>
-);
+  );
+}
 
 export default App;

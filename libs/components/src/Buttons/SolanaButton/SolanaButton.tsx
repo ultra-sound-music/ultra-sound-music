@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
-
 import { NetworkButton } from '@usm/ui';
-import { useNetwork, useConnect, useDisconnect, useModal, web3Constants } from '@usm/app-state';
+import { useNetwork, useConnect, useDisconnect, useModal, useAccountAddress } from '@usm/app-state';
 
 export function SolanaButton() {
   const { showModal, hideModal } = useModal();
@@ -26,22 +24,15 @@ export function SolanaButton() {
     });
   }
 
-  const [{ isConnected, accountAddress, networkStatus }] = useNetwork();
+  const [{ networkStatus }] = useNetwork();
+  const accountAddress = useAccountAddress();
   const connect = useConnect();
   const disconnect = useDisconnect();
 
-  const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
-
-  useEffect(() => {
-    if (!isConnected && accountAddress) {
-      connect();
-    }
-  }, []);
-
   return (
     <NetworkButton
-      accountAddress={accountAddress}
-      isConnecting={isConnecting}
+      accountAddress={networkStatus === 'CONNECTED' ? accountAddress : undefined}
+      isConnecting={networkStatus === 'CONNECTING'}
       onConnectClick={onConnectClick}
       onDisconnectClick={onDisconnectClick}
     >

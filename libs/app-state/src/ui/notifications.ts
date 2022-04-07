@@ -9,7 +9,7 @@ import {
   useRecoilState
 } from 'recoil';
 
-export interface INotificationState {
+export interface NotificationState {
   isVisible?: boolean;
   title?: string;
   message?: React.ReactNode;
@@ -22,27 +22,27 @@ export const isNotificationVisibleState = atom({
   default: false
 });
 
-export const notificationMessageState = atom<INotificationState['message']>({
+export const notificationMessageState = atom<NotificationState['message']>({
   key: 'notificationMessageState',
   default: ''
 });
 
-export const notificationTitleState = atom<INotificationState['title']>({
+export const notificationTitleState = atom<NotificationState['title']>({
   key: 'notificationTitleState',
   default: ''
 });
 
-export const notificationTypeState = atom<INotificationState['type']>({
+export const notificationTypeState = atom<NotificationState['type']>({
   key: 'notificationTypeState',
   default: 'info'
 });
 
-export const notificationTimeoutState = atom<INotificationState['timeout']>({
+export const notificationTimeoutState = atom<NotificationState['timeout']>({
   key: 'notificationTimeoutState',
   default: undefined
 });
 
-export const notificationState = selector<INotificationState>({
+export const notificationState = selector<NotificationState>({
   key: 'notificationState',
   get: ({ get }) => ({
     isVisible: get(isNotificationVisibleState),

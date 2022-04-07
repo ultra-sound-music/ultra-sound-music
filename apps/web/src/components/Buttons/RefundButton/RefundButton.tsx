@@ -1,8 +1,12 @@
-import { useRefundBid } from '@usm/app-state';
+import { useRefundBid, AuctionAddress } from '@usm/app-state';
 import { Button } from '@usm/ui';
 
-export function EndedAuctionButton() {
-  const refundBid = useRefundBid();
+export interface RefundButtonProps {
+  auction: AuctionAddress;
+}
+
+export function EndedAuctionButton({ auction }: RefundButtonProps) {
+  const refundBid = useRefundBid(auction);
 
   function onClick() {
     refundBid();

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
-import { AuctionState, USMBidData } from '@usm/auction';
+import { AuctionState, USMBidData } from '@usm/sol-client';
 import styles from './BidBoxStatus.scss';
 
 export interface IBidBoxStatusProps {

@@ -2,12 +2,7 @@ import { useEffect } from 'react';
 
 import { NetworkButton } from '@usm/ui';
 import logo from '@usm/assets/img/logo.png';
-import {
-  useArweaveConnect,
-  useArweaveDisconnect,
-  useArweaveNetwork,
-  web3Constants
-} from '@usm/app-state';
+import { useArweaveConnect, useArweaveDisconnect, useArweaveNetwork } from '@usm/app-state';
 
 export function ArweaveButton() {
   function onDisconnectClick() {
@@ -22,7 +17,7 @@ export function ArweaveButton() {
   const connect = useArweaveConnect();
   const disconnect = useArweaveDisconnect();
 
-  const isConnecting = networkStatus === web3Constants.networkStatus.CONNECTING;
+  const isConnecting = networkStatus === 'CONNECTING';
 
   useEffect(() => {
     if (!isConnected && accountAddress) {

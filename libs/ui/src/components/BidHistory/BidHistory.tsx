@@ -1,7 +1,7 @@
 import BidHistoryItem, { IBidHistoryItem } from './BidHistoryItem';
 
 import styles from './BidHistory.scss';
-import { USMBidData } from '@usm/auction';
+import { USMBidData } from '@usm/sol-client';
 
 export { IBidHistoryItem };
 

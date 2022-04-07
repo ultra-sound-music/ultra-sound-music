@@ -22,12 +22,18 @@
         "webpackConfig": "apps/web/build/webpack.js"
       },
       "configurations": {
-        "local": {
+        "development": {
           "assets": [
             {
               "input": "libs/assets/src/img/favicons",
               "glob": "*.*",
               "output": "."
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "libs/config/src/environment.ts",
+              "with": "libs/config/src/environment.dev.ts"
             }
           ]
         },
@@ -41,7 +47,7 @@
           ],
           "fileReplacements": [
             {
-              "replace": "libs/config/src/environment",
+              "replace": "libs/config/src/environment.ts",
               "with": "libs/config/src/environment.stage.ts"
             }
           ],
@@ -67,7 +73,7 @@
           ],
           "fileReplacements": [
             {
-              "replace": "libs/config/src/environment",
+              "replace": "libs/config/src/environment.ts",
               "with": "libs/config/src/environment.prod.ts"
             }
           ],
@@ -83,7 +89,7 @@
     "serve": {
       "executor": "@nrwl/web:dev-server",
       "options": {
-        "buildTarget": "web:build:local",
+        "buildTarget": "web:build:development",
         "hmr": true
       },
       "configurations": {

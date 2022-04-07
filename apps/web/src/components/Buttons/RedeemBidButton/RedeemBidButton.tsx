@@ -1,8 +1,12 @@
-import { useRedeemBid } from '@usm/app-state';
+import { useRedeemBid, AccountAddress } from '@usm/app-state';
 import { Button } from '@usm/ui';
 
-export function EndedAuctionButton() {
-  const redeemBid = useRedeemBid();
+export interface EndedAuctionButtonProps {
+  auction: AccountAddress;
+}
+
+export function EndedAuctionButton({ auction }: EndedAuctionButtonProps) {
+  const redeemBid = useRedeemBid(auction);
 
   function onClick() {
     redeemBid();

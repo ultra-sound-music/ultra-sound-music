@@ -2,39 +2,42 @@ import { Keypair, PublicKey, Connection } from '@solana/web3.js';
 import { AccountLayout } from '@solana/spl-token';
 import { Wallet, transactions, actions } from '@metaplex/js';
 import { AuctionExtended, BidderMetadata } from '@metaplex-foundation/mpl-auction';
-import { TransactionsBatch } from './utils/transactionsBatch';
+
 import {
   AuctionManager,
   MetaplexProgram,
   RedeemBid,
   SafetyDepositConfig
 } from '@metaplex-foundation/mpl-metaplex';
-const { CreateTokenAccount } = transactions;
+
 import { Vault } from '@metaplex-foundation/mpl-token-vault';
 import {
   Metadata,
   UpdatePrimarySaleHappenedViaToken
 } from '@metaplex-foundation/mpl-token-metadata';
 
+import { TransactionsBatch, withTransactionInterface, TransactionInterface } from '../utils';
+
+const { CreateTokenAccount } = transactions;
 const { sendTransaction } = actions;
 
-export interface RedeemTokenOnlyBidParams {
+export interface RedeemBidParams {
   connection: Connection;
   wallet: Wallet;
   auction: PublicKey;
   store: PublicKey;
 }
 
-export interface RedeemTokenOnlyBidResponse {
+export interface RedeemBidResponse {
   txId: string;
 }
 
-export const redeemTokenOnlyBid = async ({
+export const redeemBid = async ({
   connection,
   wallet,
   store,
   auction
-}: RedeemTokenOnlyBidParams): Promise<RedeemTokenOnlyBidResponse> => {
+}: RedeemBidParams): Promise<TransactionInterface> => {
   const bidder = wallet.publicKey;
   const accountRentExempt = await connection.getMinimumBalanceForRentExemption(AccountLayout.span);
   const auctionManager = await AuctionManager.getPDA(auction);
@@ -86,10 +89,10 @@ export const redeemTokenOnlyBid = async ({
     signers: txBatch.signers
   });
 
-  return { txId };
+  return withTransactionInterface(connection, { txId });
 };
 
-interface RedeemTokenOnlyTransactionsParams {
+interface RedeemTransactionsParams {
   bidder: PublicKey;
   accountRentExempt: number;
   bidderPotToken?: PublicKey;
@@ -126,7 +129,7 @@ export const getRedeemTokenTransferOnlyTransactions = async ({
   safetyDepositConfig,
   transferAuthority,
   metadata
-}: RedeemTokenOnlyTransactionsParams) => {
+}: RedeemTransactionsParams) => {
   const txBatch = new TransactionsBatch({ transactions: [] });
 
   // create a new account for redeeming

@@ -1,4 +1,3 @@
-// This was taken from metaplex-js (src/utils/transactions-batch.ts)
 import { Keypair } from '@solana/web3.js';
 import { Transaction } from '@metaplex-foundation/mpl-core';
 
