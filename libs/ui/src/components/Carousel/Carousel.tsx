@@ -44,7 +44,7 @@ export const Carousel = ({ onClickPrev, onClickNext, children }: ICarouselProps)
   const isLast = activeIndex === totalCount - 1;
   return (
     <div className={styles.Carousel}>
-      <Paginate onClickPrev={!isFirst ? goPrev : void 0} onClickNext={!isLast ? goNext : void 0} />
+      <Paginate onPrev={!isFirst ? goPrev : void 0} onNext={!isLast ? goNext : void 0} />
       <div className={styles.item}>{childrensArray[activeIndex]}</div>
     </div>
   );

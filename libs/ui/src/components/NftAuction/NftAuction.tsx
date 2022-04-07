@@ -14,7 +14,9 @@ export interface NftAuctionProps {
   status: ReactElement<typeof BidBoxStatus>;
   bidBox: ReactElement<typeof BidBox>;
   traitsBox: ReactElement<typeof TraitsBox>;
+  auctions: string[];
   auctionIsPending?: boolean;
+  setActiveAuction(address: string): void;
 }
 
 export function NftAuction({
@@ -22,12 +24,22 @@ export function NftAuction({
   status,
   bidBox,
   traitsBox,
+  auctions,
+  setActiveAuction,
   auctionIsPending
 }: NftAuctionProps) {
   const [page, setPage] = useState<number>();
   const isLoading = page === undefined;
   const showStatus = page === 0 || auctionIsPending === true;
   const showButtons = auctionIsPending === false;
+
+  function onClickPrevious(index: number, auctionAddress: string) {
+    setActiveAuction(auctionAddress);
+  }
+
+  function onClickNext(index: number, auctionAddress: string) {
+    setActiveAuction(auctionAddress);
+  }
 
   useEffect(() => {
     if (typeof auctionIsPending === 'boolean') {
@@ -59,7 +71,7 @@ export function NftAuction({
             </Button>
           </>
         )}
-        <Paginate />
+        <Paginate startIndex={0} items={auctions} onPrev={onClickPrevious} onNext={onClickNext} />
       </div>
       {showStatus && status}
       <div className={styles.body}>

@@ -3,12 +3,11 @@ import { useEffect } from 'react';
 import {
   useNetworkStatus,
   useLoadAuction,
-  useAccountBalance,
+  useGetAuctions,
   usePlaceBid,
   useActiveAuction,
   useAccountAddress,
-  useGetWalletBalance,
-  AuctionAddress
+  useGetWalletBalance
 } from '@usm/app-state';
 import { Button, NftAuction, Link } from '@usm/ui';
 import { urls } from '@usm/content';
@@ -40,9 +39,10 @@ export function AuctionContainer() {
 
   const placeBid = usePlaceBid();
   const balance = useGetWalletBalance();
+  const auctions = useGetAuctions();
   const [networkStatus] = useNetworkStatus();
   const accountAddress = useAccountAddress();
-  const [activeAuction] = useActiveAuction();
+  const [activeAuction, setActiveAuction] = useActiveAuction();
   const { auction, loadAuction, loadingState } = useLoadAuction(activeAuction || '');
 
   const isConnected = networkStatus === 'CONNECTED';
@@ -62,9 +62,9 @@ export function AuctionContainer() {
   const endTimestamp = auction?.endTimestamp;
   const state = auction?.state;
   const auctionIsPending = state === undefined ? undefined : state === 'created';
-
   useEffect(() => {
-    if (isConnected && activeAuction) {
+    const isDisconnect = !isConnected && auction;
+    if (!isDisconnect) {
       loadAuction();
     }
   }, [isConnected, activeAuction]);
@@ -151,6 +151,8 @@ export function AuctionContainer() {
           auctionIsPending={auctionIsPending}
           title={auction?.auctionNft?.metadata?.name}
           status={<BidBoxStatus {...bidBoxStatusProps} />}
+          auctions={auctions}
+          setActiveAuction={setActiveAuction}
           bidBox={
             <BidBox
               info={[

@@ -13,10 +13,10 @@ const Template: Story<IPaginateProps> = (args) => {
 
 export const Primary = Template.bind({});
 Primary.args = {
-  onClickPrev: () => {
+  onPrev: () => {
     console.log('TEST');
   },
-  onClickNext: () => {
+  onNext: () => {
     console.log('TEST');
   }
 };

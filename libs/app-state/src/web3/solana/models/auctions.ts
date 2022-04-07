@@ -1,4 +1,4 @@
-import { atom, useRecoilState, atomFamily } from 'recoil';
+import { atom, useRecoilState, useRecoilValue, atomFamily } from 'recoil';
 import { USMAuctionData, TransactionInterface } from '@usm/sol-client';
 
 import { NotificationState } from '../../../ui';
@@ -67,6 +67,10 @@ export function useAuctionLoadingState(auctionAddress: AuctionAddress) {
 
 export function useSelectedAuction() {
   return useRecoilState(selectedAuctionState);
+}
+
+export function useGetAuctions() {
+  return useRecoilValue(auctionSortState);
 }
 
 export function useActiveAuction() {
