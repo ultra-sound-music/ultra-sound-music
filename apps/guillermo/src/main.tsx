@@ -12,6 +12,7 @@ import App from './components/App/App';
 ReactDOM.render(
   <StrictMode>
     <BrowserRouter>
+      {/* @ts-expect-error - Temporary until this is fixed https://github.com/facebookexperimental/Recoil/pull/1718 */}
       <RecoilRoot>
         <Suspense fallback={<Spinner cover='fixed' />}>
           <App />
