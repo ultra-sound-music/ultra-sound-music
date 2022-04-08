@@ -1,12 +1,10 @@
-export type EnvValues = string | boolean | string[];
-
 const TRUE = 'TRUE';
 
 const mplAuctionPubKeys = process.env.MPL_AUCTION_PUBKEYS
   ? process.env.MPL_AUCTION_PUBKEYS.split(' ')
   : undefined;
 
-export default Object.freeze({
+export default {
   googleAnalyticsIsEnabled: process.env.USM_GOOGLE_ANALYTICS_ENABLED === TRUE,
   googleAnalyticsId: process.env.USM_GOOGLE_ANALYTICS_ID,
   sentryIsEnabled: process.env.USM_SENTRY_ENABLED === TRUE,
@@ -17,4 +15,4 @@ export default Object.freeze({
   solanaCluster: process.env.SOLANA_CLUSTER,
   mplAuctionPubKeys,
   mplStorePubKey: process.env.MPL_STORE_PUBKEY
-});
+};

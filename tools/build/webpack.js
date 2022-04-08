@@ -107,13 +107,25 @@ module.exports = (initialConfigs) => {
     );
   });
 
+  const { version, name } = require(`../../apps/${appName}/package.json`);
+
   const plugins = [
     new Dotenv({
       path: `apps/${appName}/.env`,
       systemvars: !!inProductionMode
     }),
+    new webpack.DefinePlugin({
+      __VERSION__: JSON.stringify(version),
+      __PACKAGE_NAME__: JSON.stringify(name),
+      __APP_NAME__: JSON.stringify(appName)
+    }),
+    // new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/.+[.]js/]),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
+      templateParameters: {
+        version,
+        name
+      },
       inject: true
     }),
     new webpack.ProvidePlugin({
