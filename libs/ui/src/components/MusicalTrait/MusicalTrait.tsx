@@ -54,6 +54,9 @@ export function MusicalTrait({ name, value, play = true }: IMusicalTraitProps) {
         play={play}
         segments={[0, 30]}
         loop={1}
+        renderer='svg'
+        rendererSettings={undefined}
+        audioFactory={undefined}
         className={styles.lottie}
       />
     </div>

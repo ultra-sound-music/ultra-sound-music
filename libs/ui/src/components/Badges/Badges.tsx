@@ -31,6 +31,9 @@ export function Badges({ play = true, names }: IBadgesProps) {
               speed={0.5}
               play={play}
               loop={false}
+              renderer='svg'
+              rendererSettings={undefined}
+              audioFactory={undefined}
               className={styles.lottie}
             />
           </div>

@@ -36,6 +36,9 @@ export function AnimatedMeter({ play = true, meter = 1, label, name, value }: IA
           play={play}
           segments={[0, value[0]]}
           loop={1}
+          renderer='svg'
+          rendererSettings={undefined}
+          audioFactory={undefined}
           className={styles.lottie}
         />
         <Lottie
@@ -45,6 +48,9 @@ export function AnimatedMeter({ play = true, meter = 1, label, name, value }: IA
           play={play}
           segments={[0, value[1]]}
           loop={1}
+          renderer='svg'
+          rendererSettings={undefined}
+          audioFactory={undefined}
           className={styles.lottie}
         />
       </div>

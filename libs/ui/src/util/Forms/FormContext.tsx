@@ -95,11 +95,11 @@ export function FormContextProvider({ onChange, children }: IFormContextProvider
   const ref = useRef<string[]>([]);
   const [values, setValues] = useState<IFormValues>({});
   const [errors, setErrors] = useState<IFormErrors>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [setIsLoading] = useState(true);
   const [fieldsThatValidated, setFieldsThatValidated] = useState<IFormErroredFields>({});
 
   const initializeField = useCallback(
-    (fieldName, fieldValue, fieldErrors) => {
+    (fieldName: string, fieldValue: string, fieldErrors: string[]) => {
       if (ref.current.includes(fieldName)) {
         return;
       }
@@ -121,7 +121,7 @@ export function FormContextProvider({ onChange, children }: IFormContextProvider
   );
 
   const updateField = useCallback(
-    (fieldName, fieldValue, fieldErrors) => {
+    (fieldName: string, fieldValue: string, fieldErrors: string[]) => {
       if (!ref.current.includes(fieldName)) {
         ref.current.push(fieldName);
       }
