@@ -1,28 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import logger from '@usm/util-logger';
-import config from '@usm/config';
 
 import { useAccountAddress, useNetworkStatus } from './models/wallet';
 import { useConnect } from './hooks';
 import { initWallet, initConnection } from './registry';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-export function noop(): void {}
-
-function initializer() {
-  const [isReady, setIsReady] = useState(false);
-  const [networkStatus] = useNetworkStatus();
+export default function () {
+  const [networkStatus, setNetworkStatus] = useNetworkStatus();
   const accountAddress = useAccountAddress();
   const connect = useConnect();
 
   useEffect(() => {
     initWallet()
       .then(() => {
-        setIsReady(true);
+        setNetworkStatus('INITIALIZED');
       })
       .catch((error) => {
         logger.error('Failed to initialize Solana Wallet state,', error);
+        setNetworkStatus('ERRORED');
       });
 
     try {
@@ -33,15 +29,8 @@ function initializer() {
   }, []);
 
   useEffect(() => {
-    if (
-      isReady &&
-      accountAddress &&
-      networkStatus !== 'CONNECTED' &&
-      networkStatus !== 'CONNECTING'
-    ) {
+    if (accountAddress && networkStatus === 'INITIALIZED') {
       connect();
     }
-  }, [isReady]);
+  }, [networkStatus]);
 }
-
-export const useSolanaInit = config.weAreLive ? initializer : noop;

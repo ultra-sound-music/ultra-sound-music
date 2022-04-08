@@ -24,8 +24,8 @@ import {
 } from '@usm/ui';
 import styles from './AuctionContainer.scss';
 import { getShortenedAccountAddress } from '@usm/util-string';
-
 import { SolanaButton } from '@usm/components';
+
 import RedeemBidButton from '../Buttons/RedeemBidButton/RedeemBidButton';
 import RefundButton from '../Buttons/RefundButton/RefundButton';
 import RedeemParticipationButton from '../Buttons/RedeemParticipationButton/RedeemParticipationButton';
@@ -45,6 +45,7 @@ export function AuctionContainer() {
   const [activeAuction, setActiveAuction] = useActiveAuction();
   const { auction, loadAuction, loadingState } = useLoadAuction(activeAuction || '');
 
+  const networkIsReady = !!networkStatus;
   const isConnected = networkStatus === 'CONNECTED';
   const isConnecting = networkStatus === 'CONNECTING';
   const isLoading = loadingState === 'loading';
@@ -62,12 +63,13 @@ export function AuctionContainer() {
   const endTimestamp = auction?.endTimestamp;
   const state = auction?.state;
   const auctionIsPending = state === undefined ? undefined : state === 'created';
+
   useEffect(() => {
     const isDisconnect = !isConnected && auction;
-    if (!isDisconnect) {
+    if (networkIsReady && !isDisconnect) {
       loadAuction();
     }
-  }, [isConnected, activeAuction]);
+  }, [networkIsReady, isConnected, activeAuction]);
 
   const bidBoxStatusProps = {
     endTimestamp,

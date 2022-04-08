@@ -1,6 +1,8 @@
 import { SiteFooter, SiteHeader } from '@usm/ui';
 
-import { SolanaButton, Modal } from '@usm/components';
+import logo from '@usm/assets/img/logo.png';
+import { SolanaButton, Modal, Notification } from '@usm/components';
+import { useAppInit } from '@usm/app-state';
 
 import Tokens from '../Tokens/Tokens';
 import CreateAuctionForm from '../CreateAuctionForm/CreateAuctionForm';
@@ -9,6 +11,8 @@ import MintNFTForm from '../MintNFTForm/MintNFTForm';
 import styles from './App.scss';
 
 export function App() {
+  useAppInit({ logo });
+
   return (
     <div className={styles.App}>
       <div className={styles.header}>
@@ -30,6 +34,7 @@ export function App() {
       <div className={styles.footer}>
         <SiteFooter />
       </div>
+      <Notification />
       <Modal />
     </div>
   );

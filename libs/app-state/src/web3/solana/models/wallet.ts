@@ -2,16 +2,16 @@ import { atom, useRecoilValue, selector, DefaultValue, useRecoilState } from 're
 
 import { localStorageEffect } from '../../../utils';
 
-// NOT_AVAILABLE - Has wallet but not connected to network
+// undefined - No information / no wallet
 // INSTALLING
+// INITIALIZED - Has wallet but not connected to network
 // NOT_CONNECTED // Has wallet but the wallet is not connected to the USM Client.
 // CONNECTING
 // CONNECTED
 // ERRORED // Tried to connect but ran into a problem
-// undefined - No information / no wallet
 export type NetworkStatus =
-  | 'NOT_AVAILABLE'
   | 'INSTALLING'
+  | 'INITIALIZED'
   | 'NOT_CONNECTED'
   | 'CONNECTING'
   | 'CONNECTED'

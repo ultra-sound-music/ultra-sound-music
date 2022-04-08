@@ -18,7 +18,6 @@ export default function InputListFieldSet({
   setValue
 }: IInputListFieldSetProps) {
   const [inputValue, setInputValue] = useState<string>();
-  console.log(inputValue);
   function addItem() {
     const list = (value + '').split(separator);
     if (!inputValue || list.includes(inputValue)) {

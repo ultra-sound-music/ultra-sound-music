@@ -24,15 +24,15 @@
         "development": {
           "fileReplacements": [
             {
-              "replace": "libs/config/src/environments/environment.ts",
-              "with": "libs/config/src/environments/environment.dev.ts"
+              "replace": "libs/config/src/environment.ts",
+              "with": "libs/config/src/environment.dev.ts"
             }
           ]
         },
         "production": {
           "fileReplacements": [
             {
-              "replace": "libs/config/src/environment",
+              "replace": "libs/config/src/environment.ts",
               "with": "libs/config/src/environment.prod.ts"
             }
           ],

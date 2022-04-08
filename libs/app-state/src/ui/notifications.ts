@@ -13,7 +13,7 @@ export interface NotificationState {
   isVisible?: boolean;
   title?: string;
   message?: React.ReactNode;
-  timeout?: number;
+  timeout?: number | true;
   type?: 'info' | 'success' | 'error' | 'warn' | 'processing';
 }
 

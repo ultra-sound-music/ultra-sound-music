@@ -11,6 +11,8 @@ import Spinner from '../Spinner/Spinner';
 
 import styles from './Notification.scss';
 
+const DEFAULT_TIMEOUT = 4000;
+
 const iconMap = {
   info: RiInformationFill,
   warn: RiErrorWarningFill,
@@ -27,7 +29,7 @@ export interface INotificationProps {
   type?: keyof typeof iconMap;
   title?: string;
   message?: React.ReactNode;
-  timeout?: number;
+  timeout?: number | true;
   isVisible?: boolean;
   onHide: () => void;
 }
@@ -44,10 +46,11 @@ export const Notification = ({
     onHide?.();
   }
 
-  if (timeout) {
+  const timer = timeout === true ? DEFAULT_TIMEOUT : Number.isInteger(timeout) ? timeout : 0;
+  if (timer) {
     setTimeout(() => {
       onHideHandler();
-    }, timeout);
+    }, timer);
   }
 
   const Icon = iconMap[type];

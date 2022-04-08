@@ -3,7 +3,7 @@ import { RiDiscordFill, RiTwitterFill } from 'react-icons/ri';
 import ReactTooltip from 'react-tooltip';
 
 import { INavItem, Link, Nav, SiteFooter, SiteHeader } from '@usm/ui';
-import { SolanaButton } from '@usm/components';
+import { SolanaButton, Notification } from '@usm/components';
 import { copy, urls, routes } from '@usm/content';
 import config from '@usm/config';
 
@@ -11,7 +11,6 @@ import Home from '../Landing/Landing';
 import { Modal } from '@usm/components';
 import { useAppInit } from '@usm/app-state';
 
-import Notification from '../Notification/Notification';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
 import styles from './App.scss';

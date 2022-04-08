@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useRecoilCallback, useResetRecoilState, useSetRecoilState } from 'recoil';
 
+import logger from '@usm/util-logger';
+
 import { useModal, useShowNotification } from '../../ui';
 import {
   useActiveAuction,
@@ -39,11 +41,13 @@ export function useConnect() {
       setAccountAddress(walletAddress);
       setNetworkStatus('CONNECTED');
     } catch (error) {
+      logger.error(error);
       setNetworkStatus('ERRORED');
       showNotification({
         title: 'Error',
         message: 'Failed to connect',
-        type: 'error'
+        type: 'error',
+        timeout: true
       });
     }
   });
@@ -61,7 +65,7 @@ export function useDisconnect() {
         updateNetworkStatus('NOT_CONNECTED');
         resetWalletAddress();
       } catch (error) {
-        console.error(error);
+        logger.error(error);
         showNotification({
           title: 'Error',
           type: 'error'
@@ -103,7 +107,7 @@ export function useLoadAuction(auctionAddress: AuctionAddress) {
       setAuction(auction);
       setLoadingState('loaded');
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       setLoadingState('errored');
     }
   });
@@ -120,7 +124,7 @@ export function usePlaceBid() {
 
   return useRecoilCallback(() => async (amountInSol: number) => {
     if (!activeAuctionAddress || !auction) {
-      console.error('Unable to place bid: auction not loaded');
+      logger.error('Unable to place bid: auction not loaded');
       return;
     }
 
@@ -156,8 +160,8 @@ export function usePlaceBid() {
         type: 'success'
       });
     } catch (error) {
+      logger.error(error);
       setLoadingState('errored');
-      console.error(error);
       showNotification({
         title: 'Error',
         message: 'Failed to placing bid.  Please try again',
@@ -202,7 +206,7 @@ export async function updateAuctionCallback({
       timeout: 3500
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     showNotification({
       title: 'Error',
       message: errorMessage,

@@ -5,6 +5,7 @@ import { createRpcConnection, Cluster, Connection } from '@usm/sol-client';
 import { AuctionAddress } from './models/auctions';
 
 const { mplStorePubKey, mplAuctionPubKeys } = config;
+const WALLET_INIT_TIMEOUT = 10000;
 
 export type AuctionPublicKeysMap = Record<string, PublicKey>;
 
@@ -49,29 +50,45 @@ export function getAuctionAddresses() {
   return pkMap ? Object.keys(pkMap) : emptyAuctionAddresses;
 }
 
-export let wallet: Wallet | undefined;
+let wallet: Wallet;
+let walletPromise: Promise<typeof wallet>;
+
+// Initialize the wallet and immediately set up the walletPromise
+// such that calls to getWallet() can legitimately throw if the wallet
+// has not been initialized OR wait on the wallet to finish initializing
 export async function initWallet() {
+  const startTime = Date.now();
+  walletPromise = new Promise((resolve, reject) => {
+    const id = setInterval(() => {
+      if (wallet) {
+        clearInterval(id);
+        wallet.ready().then(() => {
+          resolve(wallet as Wallet);
+        });
+      }
+
+      if (Date.now() - startTime > WALLET_INIT_TIMEOUT) {
+        clearInterval(id);
+        reject('Wallet failed to initialize');
+      }
+    }, 100);
+  });
+
   const walletData = getWalletData();
-  const pendingWallet = walletData.wallet as NonNullable<Wallet>;
-  await pendingWallet.ready();
-  wallet = pendingWallet;
+  wallet = walletData.wallet as NonNullable<Wallet>;
+  await wallet.ready();
   return wallet;
 }
 
-export const walletPromise = new Promise<Wallet>((resolve) => {
-  const id = setInterval(() => {
-    if (wallet) {
-      wallet.ready().then(() => {
-        resolve(wallet as Wallet);
-        clearInterval(id);
-      });
-    }
-  }, 100);
-});
+export async function getWallet() {
+  if (!walletPromise) {
+    throw new Error('Wallet not initialized');
+  }
 
-export const getWallet = async () => walletPromise;
+  return walletPromise;
+}
 
-export let connection: Connection | undefined;
+export let connection: Connection;
 export function initConnection() {
   const cluster = config.solanaCluster as Cluster;
   if (!cluster) {
@@ -82,13 +99,10 @@ export function initConnection() {
   return connection;
 }
 
-export const connectionPromise = new Promise<Connection>((resolve) => {
-  const id = setInterval(() => {
-    if (connection) {
-      resolve(connection);
-      clearInterval(id);
-    }
-  }, 100);
-});
+export function getConnection() {
+  if (!connection) {
+    throw new Error('Connection not initialized');
+  }
 
-export const getConnection = async () => connectionPromise;
+  return connection;
+}

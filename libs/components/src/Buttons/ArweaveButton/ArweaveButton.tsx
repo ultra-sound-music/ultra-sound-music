@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 import { NetworkButton } from '@usm/ui';
-import logo from '@usm/assets/img/logo.png';
 import { useArweaveConnect, useArweaveDisconnect, useArweaveNetwork } from '@usm/app-state';
 
 export function ArweaveButton() {
@@ -10,7 +9,7 @@ export function ArweaveButton() {
   }
 
   function onConnectClick() {
-    connect(logo);
+    connect();
   }
 
   const [{ isConnected, accountAddress, networkStatus }] = useArweaveNetwork();
@@ -21,7 +20,7 @@ export function ArweaveButton() {
 
   useEffect(() => {
     if (!isConnected && accountAddress) {
-      connect(logo);
+      connect();
     }
   }, []);
 
