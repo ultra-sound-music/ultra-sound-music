@@ -6,7 +6,7 @@ import { useArweaveConnect, useArweaveDisconnect, useArweaveNetwork } from '@usm
 
 export function ArweaveButton() {
   function onDisconnectClick() {
-    disconnect;
+    disconnect();
   }
 
   function onConnectClick() {
