@@ -3398,22 +3398,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/cli@npm:13.3.1":
-  version: 13.3.1
-  resolution: "@nrwl/cli@npm:13.3.1"
-  dependencies:
-    "@nrwl/tao": 13.3.1
-    chalk: 4.1.0
-    enquirer: ~2.3.6
-    v8-compile-cache: 2.3.0
-    yargs: 15.4.1
-    yargs-parser: 20.0.0
-  bin:
-    nx: bin/nx.js
-  checksum: e5ea2c681cced68d5d48f58a3ec34c7186cc9b4d8c98afc1a0ce79f69fd5d3f141251f95dea48417f96c41492e8608300f8f67d5f44bfc9fa31f16e81a2df56d
-  languageName: node
-  linkType: hard
-
 "@nrwl/cli@npm:13.9.5":
   version: 13.9.5
   resolution: "@nrwl/cli@npm:13.9.5"
@@ -3600,29 +3584,6 @@ __metadata:
     ts-loader: ^9.2.6
     tsconfig-paths-webpack-plugin: 3.5.2
   checksum: 461aff9730624e515205884c075029e8fb7dc0240e9a999b339c95b422904ed2fa1c4277f5d7e59071a69d7aa03fa7a6e8f466c608b39bfd298ded8be3de3f40
-  languageName: node
-  linkType: hard
-
-"@nrwl/tao@npm:13.3.1":
-  version: 13.3.1
-  resolution: "@nrwl/tao@npm:13.3.1"
-  dependencies:
-    chalk: 4.1.0
-    enquirer: ~2.3.6
-    fast-glob: 3.2.7
-    fs-extra: ^9.1.0
-    ignore: ^5.0.4
-    jsonc-parser: 3.0.0
-    nx: 13.3.1
-    rxjs: ^6.5.4
-    rxjs-for-await: 0.0.2
-    semver: 7.3.4
-    tmp: ~0.2.1
-    tslib: ^2.3.0
-    yargs-parser: 20.0.0
-  bin:
-    tao: index.js
-  checksum: e7067cc1f760c7160893a8f10363ee3a5ac6b1f894c936d2c017b9127479a0a562b920e1d9bbc5b7dd6eb60b98f12312fdc125328c7a331d265f5aaeb6f240fb
   languageName: node
   linkType: hard
 
@@ -18836,17 +18797,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:13.3.1":
-  version: 13.3.1
-  resolution: "nx@npm:13.3.1"
-  dependencies:
-    "@nrwl/cli": 13.3.1
-  bin:
-    nx: bin/nx.js
-  checksum: 0e125e8785ea46236a52cedbb54e98a375ac9becd6945f2a4d580a1a41604f362f08783691eae33d408bea93a99e986dc60a9aed46bf31de6c600217b2e13cad
-  languageName: node
-  linkType: hard
-
 "nx@npm:13.9.5, nx@npm:^13.9.5":
   version: 13.9.5
   resolution: "nx@npm:13.9.5"
@@ -24824,7 +24774,6 @@ __metadata:
     "@metaplex-foundation/mpl-token-metadata": ^1.2.4
     "@metaplex-foundation/mpl-token-vault": ^0.0.2
     "@metaplex/js": ^4.12.0
-    "@nrwl/cli": 13.3.1
     "@nrwl/cypress": 13.9.5
     "@nrwl/eslint-plugin-nx": 13.9.5
     "@nrwl/jest": 13.9.5
