@@ -2,6 +2,7 @@ export default {
   production: false,
   build: 'development',
   environment: 'dev',
+  solanaCluster: 'devnet',
 
   mplAuctionPubKeys: [
     'ES85FaRosnTqRaVAtYXjvCRnubehAFyjLFjP2kEyfNgx',

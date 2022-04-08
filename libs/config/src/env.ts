@@ -11,7 +11,7 @@ export default {
   sentryDNS: process.env.USM_SENTRY_DNS,
   solanaFMApiKey: process.env.USM_SOLANA_FM_API_KEY,
   solanaFMUri: process.env.USM_SOLANA_FM_URI,
-  weAreLive: process.env.WE_ARE_LIVE === TRUE,
+  weAreLive: process.env.WE_ARE_LIVE === undefined ? undefined : process.env.WE_ARE_LIVE === TRUE,
   solanaCluster: process.env.SOLANA_CLUSTER,
   mplAuctionPubKeys,
   mplStorePubKey: process.env.MPL_STORE_PUBKEY
