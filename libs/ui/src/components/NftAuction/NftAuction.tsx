@@ -28,7 +28,7 @@ export function NftAuction({
   setActiveAuction,
   auctionIsPending
 }: NftAuctionProps) {
-  const [page, setPage] = useState<number>();
+  const [page, setPage] = useState<number>(0);
   const isLoading = page === undefined;
   const showStatus = page === 0 || auctionIsPending === true;
   const showButtons = auctionIsPending === false;

@@ -41,7 +41,7 @@
 
 .section:not(:last-child) {
   @include media-query(laptop monitor) {
-    margin-bottom: 200px;
+    margin-bottom: 160px;
   }
 
   @include media-query(mobile tablet) {

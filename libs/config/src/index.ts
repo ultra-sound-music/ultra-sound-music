@@ -17,9 +17,9 @@ const combinedConfigs = {
 };
 
 // OVERRIDES - NOT EVEN ENV VARS CAN HELP YOU NOW...
-// This setting is here for the auction site - do not load Solana if we are not live with the auction.
-if (combinedConfigs.weAreLive === false) {
-  combinedConfigs.solana = false;
+// This setting is here for the auction site - just to make sure we don't accidentally turn on the auction and forget to enable Solana
+if (combinedConfigs.weAreLive === true) {
+  combinedConfigs.solana = true;
 }
 
 export default combinedConfigs;
