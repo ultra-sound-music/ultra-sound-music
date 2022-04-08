@@ -95,7 +95,7 @@ export function FormContextProvider({ onChange, children }: IFormContextProvider
   const ref = useRef<string[]>([]);
   const [values, setValues] = useState<IFormValues>({});
   const [errors, setErrors] = useState<IFormErrors>({});
-  const [setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   const [fieldsThatValidated, setFieldsThatValidated] = useState<IFormErroredFields>({});
 
   const initializeField = useCallback(
