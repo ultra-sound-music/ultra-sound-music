@@ -18,7 +18,7 @@
         "assets": ["apps/guillermo/src/favicon.ico", "apps/guillermo/src/assets"],
         "styles": ["apps/guillermo/src/styles.scss"],
         "scripts": [],
-        "webpackConfig": "apps/web/build/webpack.js"
+        "webpackConfig": "apps/guillermo/build/webpack.js"
       },
       "configurations": {
         "development": {
