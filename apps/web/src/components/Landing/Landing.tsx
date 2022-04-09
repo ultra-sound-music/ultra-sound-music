@@ -40,7 +40,7 @@ export function Landing() {
     rootMargin: '-100px 0px'
   });
 
-  const weAreLive = config.weAreLive;
+  const LFG = config.LFG;
   return (
     <div className={styles.Landing}>
       <div className={styles.tri1}>
@@ -52,8 +52,8 @@ export function Landing() {
 
       <div className={styles.brandedDropJambots}>
         {/* section #1 */}
-        <div className={cn(styles.section, weAreLive && styles.live)}>
-          {weAreLive ? <AuctionContainer /> : <ComingSoon />}
+        <div className={cn(styles.section, LFG && styles.live)}>
+          {LFG ? <AuctionContainer /> : <ComingSoon />}
         </div>
 
         {/* section #2 */}

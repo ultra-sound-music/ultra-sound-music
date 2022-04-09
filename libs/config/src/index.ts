@@ -13,7 +13,7 @@ const combinedConfigs = merge(configs, appConfigs, envVariables);
 
 // OVERRIDES - NOT EVEN ENV VARS CAN HELP YOU NOW...
 // This setting is here for the auction site - just to make sure we don't accidentally turn on the auction and forget to enable Solana
-if (combinedConfigs.weAreLive === true) {
+if (combinedConfigs.LFG === true) {
   combinedConfigs.solana = true;
 }
 

@@ -26,9 +26,9 @@ export let nav: INavItem[] = [
   }
 ];
 
-const weAreLive = !!config.weAreLive;
+const LFG = !!config.LFG;
 
-if (!weAreLive) {
+if (!LFG) {
   nav = nav.concat([
     {
       content: <RiDiscordFill style={{ color: '#5865f2' }} />,
@@ -47,10 +47,7 @@ export function App() {
   return (
     <div className={styles.App}>
       <div className={styles.header}>
-        <SiteHeader
-          nav={<Nav items={nav} />}
-          ctaButton={weAreLive ? <SolanaButton /> : undefined}
-        />
+        <SiteHeader nav={<Nav items={nav} />} ctaButton={LFG ? <SolanaButton /> : undefined} />
       </div>
       <Routes>
         <Route path={routes.home} element={<Home />} />
