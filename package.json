@@ -30,6 +30,7 @@
     "apollo-boost": "^0.4.9",
     "arweave": "^1.10.23",
     "arweave-wallet-connector": "^0.0.26",
+    "bip39": "^3.0.4",
     "buffer": "^6.0.3",
     "clsx": "^1.1.1",
     "core-js": "^3.21.1",

@@ -1,0 +1,41 @@
+@use '@usm/styles/colors.scss' as *;
+@use '@usm/styles/layout.scss' as *;
+@use '@usm/styles/typo.scss' as *;
+
+.App {
+  height: 100%;
+  background-color: $color-dusk;
+  background-image: linear-gradient(180deg, $color-dusk 0%, $color-empty-sky 70%);
+  background-repeat: no-repeat;
+  background-size: 100% 500px;
+  background-position: 0 100%;
+  min-width: $app-width-min;
+  position: relative;
+  overflow: hidden;
+}
+
+.header {
+  background-color: $color-empty-sky;
+  z-index: 2;
+  position: relative;
+}
+
+.body {
+  max-width: 680px;
+  margin: 56px auto;
+  padding: 0 40px;
+}
+
+.section {
+  &:not(:last-child) {
+    border-bottom: 1px solid $color-evening-sky;
+    margin-bottom: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+.footer {
+  background-color: $color-empty-sky;
+  position: sticky;
+  top: 100vh;
+}

@@ -11,6 +11,7 @@
     "docs": "apps/docs",
     "guillermo": "apps/guillermo",
     "guillermo-e2e": "apps/guillermo-e2e",
+    "sandbox": "apps/sandbox",
     "services-solanafm": "libs/services/solanafm",
     "sol-client": "libs/sol-client",
     "store": "libs/store",
