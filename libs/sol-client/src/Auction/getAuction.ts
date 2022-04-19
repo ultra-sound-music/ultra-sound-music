@@ -13,6 +13,7 @@ import { Vault } from '@metaplex-foundation/mpl-token-vault';
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { AuctionManager } from '@metaplex-foundation/mpl-metaplex';
 import { Account } from '@metaplex-foundation/mpl-core';
+import { getBidRedemptionTicket, hasRedeemedBid } from './hasRedeemedBid';
 
 export type USMBidData = {
   bidder: string;
@@ -87,6 +88,14 @@ export const transformAuctionData = async (
   const auctionState = auction.data.state;
   const maxWinners = auction.data.bidState.max.toNumber();
   const bids = await auction.getBidderMetadata(connection);
+
+  //get redemption ticket for user
+  const bidderRedemptionTicket = await getBidRedemptionTicket(
+    connection,
+    new PublicKey(auction.pubkey),
+    bidder
+  );
+
   const usmBidData = bids
     .filter((bid) => !isCancelledBid(bid.data, auctionState))
     .sort((a, b) => b.data.lastBid.toNumber() - a.data.lastBid.toNumber())
@@ -98,9 +107,17 @@ export const transformAuctionData = async (
       };
 
       if (auctionState === AuctionStateEnum.Ended) {
+        const hasBeenRedeemed =
+          bidder.toBase58() === data.bidderPubkey
+            ? hasRedeemedBid(bidderRedemptionTicket, 0)
+            : undefined;
+        const hasRedeemedParticipationToken =
+          bidder.toBase58() === data.bidderPubkey
+            ? hasRedeemedBid(bidderRedemptionTicket, Math.min(1, boxes.length - 1))
+            : undefined;
         return {
-          hasBeenRedeemed: false, // @TODO
-          hasRedeemedParticipationToken: false, // @TODO
+          hasBeenRedeemed,
+          hasRedeemedParticipationToken,
           hasBeenRefunded: !!data.cancelled,
           won: index < maxWinners,
           ...bidData

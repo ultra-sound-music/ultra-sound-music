@@ -1,20 +1,21 @@
 import { BidderMetadata } from '@metaplex-foundation/mpl-auction';
-import { getBidRedemptionPDA } from './redeemBid';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { BidRedemptionTicket } from '@metaplex-foundation/mpl-metaplex';
+import { getBidRedemptionPDA } from './redeemBid';
 
-export const hasRedeemedTicket = async (
+export const getBidRedemptionTicket = async (
   connection: Connection,
   auction: PublicKey,
-  bidder: PublicKey,
-  order: number
+  bidder: PublicKey
 ) => {
   const bidderMetaPDA = await BidderMetadata.getPDA(auction, bidder);
   const bidRedemptionPDA = await getBidRedemptionPDA(auction, bidderMetaPDA);
   const accountInfo = await connection.getAccountInfo(bidRedemptionPDA);
-  const bidRedemption = new BidRedemptionTicket(bidRedemptionPDA, accountInfo);
+  return new BidRedemptionTicket(bidRedemptionPDA, accountInfo);
+};
 
-  const data = bidRedemption.data.data;
+export const hasRedeemedBid = (ticket: BidRedemptionTicket, order: number) => {
+  const data = ticket.data.data;
 
   let offset = 42;
   if (data[1] == 0) {
