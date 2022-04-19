@@ -59,7 +59,7 @@ export const redeemParticipationBid = async ({
   const auctionExtendedPDA = await AuctionExtended.getPDA(vault.pubkey);
 
   const boxes = await vault.getSafetyDepositBoxes(connection);
-  const participationBox = boxes.find((box) => box.data.order === 1);
+  const participationBox = boxes.find((box) => box.data.order === Math.min(1, boxes.length - 1));
 
   if (!participationBox) {
     throw new Error('Vault is missing the participation NFT');

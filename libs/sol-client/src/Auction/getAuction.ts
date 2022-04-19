@@ -66,7 +66,7 @@ export const transformAuctionData = async (
   // The primary NFT will not always be the first in the array of boxes. Maybe "order" will be reliable?
   // The participation NFT, *I think*, is the one with the highest order (you can have > 1 non-participation NFTs)
   const primaryBox = boxes.find((box) => box.data.order === 0);
-  const participationBox = boxes.find((box) => box.data.order === boxes.length);
+  const participationBox = boxes.find((box) => box.data.order === Math.min(1, boxes.length - 1));
 
   if (!primaryBox) {
     return;
