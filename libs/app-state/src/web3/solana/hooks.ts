@@ -148,7 +148,7 @@ export function usePlaceBid() {
 
       showNotification({
         title: 'Success',
-        message: 'Your bid has been placed. Waiting for final confirmation',
+        message: "Your bid's been submitted. Waiting for confirmation",
         type: 'processing'
       });
 
@@ -164,7 +164,10 @@ export function usePlaceBid() {
       setLoadingState('errored');
       showNotification({
         title: 'Error',
-        message: 'Failed to placing bid.  Please try again',
+        message: 'Unable to confirm bid. Please try again',
+        // @TODO
+        // It is actually unknown if it succeeded or failed.
+        // User should be shown the txid and instructed to check the explorer
         type: 'error'
       });
     }

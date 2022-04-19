@@ -3,10 +3,10 @@ export default {
   build: 'development',
   environment: 'dev',
   solanaCluster: 'devnet',
-
+  auctionOwner: 'At3TUERJEqU5CE8ipb7v7LuLtTQ5ZoGK8ELij9bSFNPU',
   mplAuctionPubKeys: [
-    'ES85FaRosnTqRaVAtYXjvCRnubehAFyjLFjP2kEyfNgx',
-    'CoLLdjSy964VTo5NdGsoAGEeuS6CSkN7T8UJPuKpaggi',
-    'Eibveh7egDAGinZ3XfNcLivVmbXFMNupJgCwzPP8hLwg'
+    '7qSVDA7vXZ5DDus65SEJP8YuMzq5zpiU4g9iWxhfHmpZ',
+    '8xUYLXSwjzgAQdnL7D9sPL2kUb8h57CdpqpYsRQYQoso'
+    // '@TODO - CREATE ONE MORE AUCTION'
   ]
 };

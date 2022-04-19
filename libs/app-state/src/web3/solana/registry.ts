@@ -1,22 +1,29 @@
 import { PublicKey } from '@solana/web3.js';
-import { getWallet as getWalletData, Wallet } from '@usm/sol-client';
+import {
+  getWallet as getWalletData,
+  Wallet,
+  createRpcConnection,
+  Cluster,
+  Connection,
+  Store
+} from '@usm/sol-client';
 import config, { MissingConfigError } from '@usm/config';
-import { createRpcConnection, Cluster, Connection } from '@usm/sol-client';
 import { AuctionAddress } from './models/auctions';
 
-const { mplStorePubKey, mplAuctionPubKeys } = config;
+const { auctionOwner, mplAuctionPubKeys } = config;
 const WALLET_INIT_TIMEOUT = 10000;
 
 export type AuctionPublicKeysMap = Record<string, PublicKey>;
 
 let storePk: PublicKey;
-export function getStorePublicKey() {
-  if (!mplStorePubKey) {
+export async function getStorePublicKey() {
+  if (!auctionOwner) {
     return;
   }
 
   if (!storePk) {
-    storePk = new PublicKey(mplStorePubKey);
+    const auctionOwnerPk = new PublicKey(auctionOwner);
+    storePk = await Store.getPDA(auctionOwnerPk);
   }
 
   return storePk;

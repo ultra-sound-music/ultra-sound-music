@@ -19,7 +19,7 @@ export async function disconnectWallet() {
 }
 
 export async function getWalletBalance() {
-  const connection = await getConnection();
+  const connection = getConnection();
   const wallet = await getWallet();
 
   if (!wallet.publicKey) {
@@ -31,14 +31,14 @@ export async function getWalletBalance() {
 
 export async function getAuction(auction: Exclude<AuctionAddress, undefined>) {
   const wallet = await getWallet();
-  const connection = await getConnection();
+  const connection = getConnection();
   const auctionPk = new PublicKey(auction);
   return solClient.getAuction(connection, wallet as solClient.MplWallet, auctionPk);
 }
 
 export async function placeBid(auction: Exclude<AuctionAddress, undefined>, amount: number) {
   const wallet = await getWallet();
-  const connection = await getConnection();
+  const connection = getConnection();
   const auctionPk = new PublicKey(auction);
 
   return solClient.placeBid({
@@ -51,12 +51,12 @@ export async function placeBid(auction: Exclude<AuctionAddress, undefined>, amou
 
 export async function redeemBid(auction: AuctionAddress) {
   const wallet = await getWallet();
-  const connection = await getConnection();
+  const connection = getConnection();
   const auctionPk = new PublicKey(auction);
-  const store = getStorePublicKey();
+  const store = await getStorePublicKey();
 
   if (!store) {
-    throw new MissingConfigError('mplStorePubKey');
+    throw new MissingConfigError('auctionOwner');
   }
 
   return solClient.redeemBid({
@@ -69,7 +69,7 @@ export async function redeemBid(auction: AuctionAddress) {
 
 export async function redeemParticipationBid(auction: AuctionAddress) {
   const wallet = await getWallet();
-  const connection = await getConnection();
+  const connection = getConnection();
   const auctionPk = new PublicKey(auction);
 
   return solClient.redeemParticipationBid(connection, wallet, auctionPk);
@@ -77,7 +77,7 @@ export async function redeemParticipationBid(auction: AuctionAddress) {
 
 export async function cancelBid(auction: AuctionAddress) {
   const wallet = await getWallet();
-  const connection = await getConnection();
+  const connection = getConnection();
   const auctionPk = new PublicKey(auction);
 
   return solClient.cancelBid({
