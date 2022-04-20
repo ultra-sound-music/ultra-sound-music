@@ -101,7 +101,7 @@ export const redeemParticipationBid = async ({
   const winIndexNum = bidState.getWinnerIndex(bidder.toBase58());
   const winIndex = Number.isFinite(winIndexNum) ? new BN(winIndexNum as number) : null;
 
-  const desiredEdition = masterEdition.data.supply;
+  const desiredEdition = masterEdition.data.supply.add(new BN(1));
   const editionMarkerPDA = await EditionMarker.getPDA(originalMint, desiredEdition);
 
   const { account, createTokenAccountTx, closeTokenAccountTx } = await createWrappedAccountTxs(
