@@ -11,9 +11,9 @@ import {
 import { Vault } from '@metaplex-foundation/mpl-token-vault';
 
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
-import { AuctionManager } from '@metaplex-foundation/mpl-metaplex';
+import { AuctionManager, BidRedemptionTicket } from '@metaplex-foundation/mpl-metaplex';
 import { Account } from '@metaplex-foundation/mpl-core';
-import { getBidRedemptionTicket, hasRedeemedBid } from './hasRedeemedBid';
+import { getBidRedemptionTicket, hasRedeemedBid } from '../utils/bidRedemption';
 
 export type USMBidData = {
   bidder: string;
@@ -89,12 +89,21 @@ export const transformAuctionData = async (
   const maxWinners = auction.data.bidState.max.toNumber();
   const bids = await auction.getBidderMetadata(connection);
 
-  //get redemption ticket for user
-  const bidderRedemptionTicket = await getBidRedemptionTicket(
-    connection,
-    new PublicKey(auction.pubkey),
-    bidder
-  );
+  let bidderRedemptionTicket: BidRedemptionTicket | undefined;
+  try {
+    // @TODO - confirm if bid redemption tickets only exist IF the auction has ended.
+    // If so, then only make this check call if the auction is ended
+    // If not,then there's something strange going on with:
+    // user -> At3TUERJEqU5CE8ipb7v7LuLtTQ5ZoGK8ELij9bSFNPU
+    // auction -> 7qSVDA7vXZ5DDus65SEJP8YuMzq5zpiU4g9iWxhfHmpZ
+    bidderRedemptionTicket = await getBidRedemptionTicket(
+      connection,
+      new PublicKey(auction.pubkey),
+      bidder
+    );
+  } catch (error) {
+    console.error(error);
+  }
 
   const usmBidData = bids
     .filter((bid) => !isCancelledBid(bid.data, auctionState))
@@ -108,11 +117,11 @@ export const transformAuctionData = async (
 
       if (auctionState === AuctionStateEnum.Ended) {
         const hasBeenRedeemed =
-          bidder.toBase58() === data.bidderPubkey
+          bidder.toBase58() === data.bidderPubkey && bidderRedemptionTicket
             ? hasRedeemedBid(bidderRedemptionTicket, 0)
             : undefined;
         const hasRedeemedParticipationToken =
-          bidder.toBase58() === data.bidderPubkey
+          bidder.toBase58() === data.bidderPubkey && bidderRedemptionTicket
             ? hasRedeemedBid(bidderRedemptionTicket, Math.min(1, boxes.length - 1))
             : undefined;
         return {

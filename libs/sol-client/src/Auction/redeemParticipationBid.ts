@@ -1,25 +1,16 @@
 import BN from 'bn.js';
-import {
-  PublicKey,
-  TransactionSignature,
-  sendAndConfirmTransaction,
-  Connection,
-  Transaction
-} from '@solana/web3.js';
-import { TransactionsBatch } from '../utils';
-import { actions, NodeWallet } from '@metaplex/js';
-const { createApproveTxs, createWrappedAccountTxs, prepareTokenAccountAndMintTxs } = actions;
+import { PublicKey } from '@solana/web3.js';
+import { actions, Wallet } from '@metaplex/js';
+import { Connection } from '../Connection';
+import { TransactionInterface, TransactionsBatch, withTransactionInterface } from '../utils';
 import { getBidRedemptionPDA } from './redeemBid';
 import { Auction, AuctionExtended, BidderMetadata } from '@metaplex-foundation/mpl-auction';
 import { Vault } from '@metaplex-foundation/mpl-token-vault';
 import {
   AuctionManager,
-  NonWinningConstraint,
-  ParticipationConfigV2,
   PrizeTrackingTicket,
   RedeemParticipationBidV3,
-  SafetyDepositConfig,
-  WinningConstraint
+  SafetyDepositConfig
 } from '@metaplex-foundation/mpl-metaplex';
 import {
   Edition,
@@ -29,15 +20,18 @@ import {
   UpdatePrimarySaleHappenedViaToken
 } from '@metaplex-foundation/mpl-token-metadata';
 
+const {
+  createApproveTxs,
+  createWrappedAccountTxs,
+  prepareTokenAccountAndMintTxs,
+  sendTransaction
+} = actions;
+
 export interface RedeemParticipationBidV3Params {
   connection: Connection;
-  wallet: NodeWallet;
+  wallet: Wallet;
   auction: PublicKey;
   store: PublicKey;
-}
-
-export interface RedeemParticipationBidV3Response {
-  txIds: TransactionSignature[];
 }
 
 export const redeemParticipationBid = async ({
@@ -45,7 +39,7 @@ export const redeemParticipationBid = async ({
   wallet,
   store,
   auction
-}: RedeemParticipationBidV3Params): Promise<RedeemParticipationBidV3Response> => {
+}: RedeemParticipationBidV3Params): Promise<TransactionInterface> => {
   const txInitBatch = new TransactionsBatch({ transactions: [] });
   const txMainBatch = new TransactionsBatch({ transactions: [] });
 
@@ -57,15 +51,16 @@ export const redeemParticipationBid = async ({
   const manager = await AuctionManager.load(connection, auctionManagerPDA);
   const vault = await Vault.load(connection, manager.data.vault);
   const auctionExtendedPDA = await AuctionExtended.getPDA(vault.pubkey);
-
-  const boxes = await vault.getSafetyDepositBoxes(connection);
-  const participationBox = boxes.find((box) => box.data.order === Math.min(1, boxes.length - 1));
+  const safetyDepositBoxes = await vault.getSafetyDepositBoxes(connection);
+  const participationBox = safetyDepositBoxes.find(
+    (box) => box.data.order === Math.min(1, safetyDepositBoxes.length - 1)
+  );
 
   if (!participationBox) {
     throw new Error('Vault is missing the participation NFT');
   }
-  const originalMint = new PublicKey(participationBox.data.tokenMint);
 
+  const originalMint = new PublicKey(participationBox.data.tokenMint);
   const safetyDepositTokenStore = new PublicKey(participationBox.data.store);
   const bidderMetaPDA = await BidderMetadata.getPDA(auction, bidder);
   const bidRedemptionPDA = await getBidRedemptionPDA(auction, bidderMetaPDA);
@@ -79,6 +74,7 @@ export const redeemParticipationBid = async ({
   const { mint, createMintTx, createAssociatedTokenAccountTx, mintToTx, recipient } =
     await prepareTokenAccountAndMintTxs(connection, wallet.publicKey);
 
+  txInitBatch.addSigner(mint);
   txInitBatch.addTransaction(createMintTx);
   txInitBatch.addTransaction(createAssociatedTokenAccountTx);
   txInitBatch.addTransaction(mintToTx);
@@ -92,15 +88,31 @@ export const redeemParticipationBid = async ({
   const masterEdition = await MasterEdition.load(connection, masterEditionPDA);
 
   const prizeTrackingTicketPDA = await PrizeTrackingTicket.getPDA(auctionManagerPDA, originalMint);
-  const winIndex = bidState.getWinnerIndex(bidder.toBase58());
 
-  const desiredEdition = masterEdition.data.supply.add(new BN(1));
+  // this account doesn't exist when we do redeem for the first time
+  // @TODO - I saw mentioned as an issue somewhere not sure if it's actually a thing but throwing
+  // in here just in case, at least until we can get the redemptions to go through
+  try {
+    await PrizeTrackingTicket.load(connection, prizeTrackingTicketPDA);
+  } catch (e) {
+    console.error(e);
+  }
+
+  const winIndexNum = bidState.getWinnerIndex(bidder.toBase58());
+  const winIndex = winIndexNum === null ? undefined : new BN(winIndexNum);
+
+  const desiredEdition = masterEdition.data.supply;
   const editionMarkerPDA = await EditionMarker.getPDA(originalMint, desiredEdition);
 
-  const { account, createTokenAccountTx } = await createWrappedAccountTxs(connection, bidder, 0);
+  const { account, createTokenAccountTx, closeTokenAccountTx } = await createWrappedAccountTxs(
+    connection,
+    bidder,
+    0
+  );
   const tokenPaymentAccount = account.publicKey;
   txInitBatch.addTransaction(createTokenAccountTx);
-  //txMainBatch.addAfterTransaction(closeTokenAccountTx);
+  txInitBatch.addSigner(account);
+  txMainBatch.addAfterTransaction(closeTokenAccountTx);
 
   const { authority, createApproveTx, createRevokeTx } = createApproveTxs({
     account: tokenPaymentAccount,
@@ -109,6 +121,7 @@ export const redeemParticipationBid = async ({
   });
   txMainBatch.addTransaction(createApproveTx);
   txMainBatch.addAfterTransaction(createRevokeTx);
+  txMainBatch.addSigner(authority);
 
   const redeemParticipationBidV3Tx = new RedeemParticipationBidV3(
     { feePayer: bidder },
@@ -132,7 +145,9 @@ export const redeemParticipationBid = async ({
       masterEdition: masterEditionPDA,
       editionMark: editionMarkerPDA,
       prizeTrackingTicket: prizeTrackingTicketPDA,
-      winIndex: winIndex !== null ? new BN(winIndex) : null,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      winIndex,
       transferAuthority: authority.publicKey,
       tokenPaymentAccount,
       acceptPaymentAccount
@@ -150,33 +165,22 @@ export const redeemParticipationBid = async ({
   );
   txMainBatch.addTransaction(updatePrimarySaleHappenedViaTokenTx);
 
-  const initTx = new Transaction();
-  initTx.add(...txInitBatch.toTransactions());
-
-  const initTxId = await sendAndConfirmTransaction(
+  const initTxId = await sendTransaction({
     connection,
-    initTx,
-    [wallet.payer, mint, account],
-    { commitment: 'finalized' }
-  );
-
-  const mainTx = new Transaction();
-  mainTx.add(...txMainBatch.toTransactions());
-
-  const mainTxId = await sendAndConfirmTransaction(connection, mainTx, [wallet.payer, authority], {
-    commitment: 'finalized'
+    wallet,
+    txs: txInitBatch.toTransactions(),
+    signers: txInitBatch.signers
   });
 
-  return { txIds: [initTxId, mainTxId] };
-};
+  // wait for all accounts to be created
+  await connection.confirmTransaction(initTxId, 'finalized');
 
-export function isEligibleForParticipationPrize(
-  winIndex: number,
-  { nonWinningConstraint, winnerConstraint }: ParticipationConfigV2 = {} as ParticipationConfigV2
-) {
-  const noWinnerConstraints = winnerConstraint !== WinningConstraint.NoParticipationPrize;
-  const noNonWinnerConstraints = nonWinningConstraint !== NonWinningConstraint.NoParticipationPrize;
-  return (
-    (winIndex === null && noNonWinnerConstraints) || (winIndex !== null && noWinnerConstraints)
-  );
-}
+  const mainTxId = await sendTransaction({
+    connection,
+    wallet,
+    txs: txMainBatch.toTransactions(),
+    signers: txMainBatch.signers
+  });
+
+  return withTransactionInterface(connection, { txIds: [initTxId, mainTxId] });
+};

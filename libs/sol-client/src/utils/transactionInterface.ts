@@ -27,6 +27,7 @@ export const withTransactionInterface = (
 ): TransactionInterface => {
   return {
     result: txResult,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore @TODO - comeback to this
     confirmTransaction: async (commitment: Commitment = 'finalized') => {
       if (Array.isArray(txResult.txIds)) {

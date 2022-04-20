@@ -1,10 +1,5 @@
-import { Keypair, PublicKey, Connection } from '@solana/web3.js';
-import {
-  AccountLayout,
-  ASSOCIATED_TOKEN_PROGRAM_ID,
-  TOKEN_PROGRAM_ID,
-  Token
-} from '@solana/spl-token';
+import { PublicKey, Connection } from '@solana/web3.js';
+import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID, Token } from '@solana/spl-token';
 import { Wallet, transactions, actions } from '@metaplex/js';
 import { AuctionExtended, BidderMetadata } from '@metaplex-foundation/mpl-auction';
 
@@ -37,7 +32,7 @@ export interface RedeemBidResponse {
   txId: string;
 }
 
-export const redeemTokenOnlyBid = async ({
+export const redeemBid = async ({
   connection,
   wallet,
   store,
