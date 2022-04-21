@@ -54,7 +54,7 @@
     "react-select": "^5.2.2",
     "react-test-renderer": "18.0.0",
     "react-tooltip": "^4.2.21",
-    "recoil": "^0.7.0",
+    "recoil": "^0.7.2",
     "regenerator-runtime": "^0.13.9",
     "reset-css": "^5.0.1",
     "stream": "^0.0.2",

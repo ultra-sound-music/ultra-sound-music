@@ -5,9 +5,7 @@ import { RecoilRoot } from 'recoil';
 import * as Sentry from '@sentry/react';
 
 import config from '@usm/config';
-import logger from '@usm/util-logger';
 import { Spinner } from '@usm/ui';
-import { reportWebVitals } from '@usm/util-web';
 
 import DebugObserver from './tools/Debug/Debug';
 import App from './components/App/App';
@@ -30,7 +28,6 @@ ReactDOM.render(
     {/* @ts-expect-error - Temporary until this is fixed: https://github.com/getsentry/sentry-javascript/issues/4904  */}
     <Sentry.ErrorBoundary fallback={<Borked />}>
       <BrowserRouter>
-        {/* @ts-expect-error - Temporary until this is fixed https://github.com/facebookexperimental/Recoil/pull/1718 */}
         <RecoilRoot>
           <DebugObserver />
           <Suspense fallback={<Spinner cover='fixed' />}>
