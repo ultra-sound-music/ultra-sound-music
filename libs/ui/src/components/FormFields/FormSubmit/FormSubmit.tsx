@@ -3,8 +3,6 @@ import { useContext, ReactNode, useEffect } from 'react';
 import Button from '../../Button/Button';
 import { FormContext } from '../../../util/Forms/FormContext';
 
-import './FormSubmit.scss';
-
 export interface IFormSubmitProps {
   name?: string;
   value?: string;

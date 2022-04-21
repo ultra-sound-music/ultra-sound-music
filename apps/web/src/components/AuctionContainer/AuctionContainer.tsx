@@ -108,7 +108,7 @@ export function AuctionContainer() {
     cta = <RedeemBidButton auction={activeAuction} />;
   } else if (iLost && !myBid.hasBeenRefunded) {
     cta = <RefundButton auction={activeAuction} />;
-  } else if (iBid && !myBid.hasRedeemedParticipationToken) {
+  } else if (iLost && !myBid.hasRedeemedParticipationToken) {
     cta = <RedeemParticipationButton auction={activeAuction} />;
   } else if (state === 'created') {
     cta = (

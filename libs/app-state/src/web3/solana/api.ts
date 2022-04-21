@@ -71,8 +71,22 @@ export async function redeemParticipationBid(auction: AuctionAddress) {
   const wallet = await getWallet();
   const connection = getConnection();
   const auctionPk = new PublicKey(auction);
+  const store = getStorePublicKey();
 
-  return solClient.redeemParticipationBid(connection, wallet, auctionPk);
+  if (!wallet) {
+    throw new Error('Wallet not set');
+  }
+
+  if (!store) {
+    throw new MissingConfigError('mplStorePubKey');
+  }
+
+  return solClient.redeemParticipationBid({
+    connection,
+    wallet: wallet as solClient.MplWallet,
+    store,
+    auction: auctionPk
+  });
 }
 
 export async function cancelBid(auction: AuctionAddress) {

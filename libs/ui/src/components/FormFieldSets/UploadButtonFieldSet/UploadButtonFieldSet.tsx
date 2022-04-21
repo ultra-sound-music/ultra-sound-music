@@ -21,7 +21,9 @@ export function UploadButtonFieldSet({
   setValue,
   ...props
 }: IUploadButtonFieldSetProps) {
-  function onClick() {}
+  function onClick() {
+    console.log();
+  }
 
   return (
     <div className={styles.UploadButtonFieldSet}>

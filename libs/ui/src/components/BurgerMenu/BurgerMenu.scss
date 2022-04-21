@@ -1,6 +1,5 @@
 @use '../../styles.scss' as *;
 
-/* stylelint-disable-next-line selector-pseudo-class-no-unknown */
 :global(.bm-menu-wrap) {
   position: fixed;
   right: 0;
@@ -9,7 +8,7 @@
 
 :global(.bm-burger-bars-hover) {
   background: $color-sassy !important;
-  opacity: 100% !important;
+  opacity: 1 !important;
 }
 
 /* Position and sizing of burger button */
