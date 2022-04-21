@@ -1,4 +1,6 @@
 import { PublicKey } from '@solana/web3.js';
+import memoize from 'lodash/memoize';
+
 import {
   getWallet as getWalletData,
   Wallet,
@@ -8,57 +10,19 @@ import {
   Store
 } from '@usm/sol-client';
 import config, { MissingConfigError } from '@usm/config';
-import { AuctionAddress } from './models/auctions';
+import logger from '@usm/util-logger';
 
-const { auctionOwner, mplAuctionPubKeys } = config;
-const WALLET_INIT_TIMEOUT = 10000;
+import { AccountAddress } from './types';
 
 export type AuctionPublicKeysMap = Record<string, PublicKey>;
 
-let storePk: PublicKey;
-export async function getStorePublicKey() {
-  if (!auctionOwner) {
-    return;
-  }
-
-  if (!storePk) {
-    const auctionOwnerPk = new PublicKey(auctionOwner);
-    storePk = await Store.getPDA(auctionOwnerPk);
-  }
-
-  return storePk;
-}
-
-let auctionPks: AuctionPublicKeysMap;
-export function getAuctionPublicKeysMap() {
-  if (!mplAuctionPubKeys || !Array.isArray(mplAuctionPubKeys)) {
-    return;
-  }
-
-  if (!auctionPks) {
-    auctionPks = mplAuctionPubKeys.reduce<AuctionPublicKeysMap>((obj, val) => {
-      obj[val] = new PublicKey(val);
-      return obj;
-    }, {});
-  }
-
-  return auctionPks;
-}
-
-const emptyAuctionPks: PublicKey[] = [];
-export function getAuctionPublicKeys() {
-  const pkMap = getAuctionPublicKeysMap();
-  return pkMap ? Object.values(pkMap) : emptyAuctionPks;
-}
-
-const emptyAuctionAddresses: AuctionAddress[] = [];
-export function getAuctionAddresses() {
-  const pkMap = getAuctionPublicKeysMap();
-  return pkMap ? Object.keys(pkMap) : emptyAuctionAddresses;
-}
-
+const WALLET_INIT_TIMEOUT = 10000;
 let wallet: Wallet;
 let walletPromise: Promise<typeof wallet>;
+
+export let getStorePublicKey: () => Promise<PublicKey>;
+export let getAuctionPublicKeys: () => PublicKey[];
+export let getAuctionAddresses: () => AccountAddress[];
 
 // Initialize the wallet and immediately set up the walletPromise
 // such that calls to getWallet() can legitimately throw if the wallet
@@ -112,4 +76,45 @@ export function getConnection() {
   }
 
   return connection;
+}
+
+export async function initAuctions() {
+  const connection = getConnection();
+  const auctionAddresses = config.mplAuctionPubKeys;
+  const ownerAddress = config.auctionOwner;
+
+  if (auctionAddresses.length) {
+    logger.info('Auctions are enabled');
+  } else {
+    logger.info('Auctions are disabled');
+    return;
+  }
+
+  if (!ownerAddress) {
+    throw new Error('You must configure an auction owner.');
+  }
+
+  const auctionOwnerPk = new PublicKey(ownerAddress);
+  const storePkPromise = Store.getPDA(auctionOwnerPk);
+
+  // Set the getters up synchronously so they become immediately available
+  getStorePublicKey = () => storePkPromise;
+  getAuctionPublicKeys = memoize(() => auctionAddresses.map((a) => new PublicKey(a)));
+  getAuctionAddresses = () => auctionAddresses;
+
+  const storePk = await storePkPromise;
+  const store = await Store.load(connection, storePk);
+  const auctionManagers = await store.getAuctionManagers(connection);
+  const mismatchedAuctions = auctionAddresses.filter(
+    (auctionAddress) =>
+      !auctionManagers.some((auctionMgr) => auctionMgr.data.auction === auctionAddress)
+  );
+
+  if (mismatchedAuctions.length) {
+    throw Error(
+      `Auction owner mismatch. Wallet ${ownerAddress} does not own the following addresses: ${mismatchedAuctions}`
+    );
+  }
+
+  return auctionAddresses;
 }

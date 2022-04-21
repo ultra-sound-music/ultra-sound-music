@@ -112,7 +112,7 @@ export const redeemParticipationBid = async ({
   const tokenPaymentAccount = account.publicKey;
   txInitBatch.addTransaction(createTokenAccountTx);
   txInitBatch.addSigner(account);
-  txMainBatch.addAfterTransaction(closeTokenAccountTx);
+  // txMainBatch.addAfterTransaction(closeTokenAccountTx);
 
   const { authority, createApproveTx, createRevokeTx } = createApproveTxs({
     account: tokenPaymentAccount,

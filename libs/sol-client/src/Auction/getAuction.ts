@@ -57,7 +57,7 @@ export const getAuction = async (connection: Connection, wallet: Wallet, pubKey:
 export const transformAuctionData = async (
   auction: Auction,
   connection: Connection,
-  bidder: PublicKey
+  bidder?: PublicKey
 ): Promise<USMAuctionData | undefined> => {
   const auctionManagerPk = await AuctionManager.getPDA(auction.pubkey);
   const auctionManager = await AuctionManager.load(connection, auctionManagerPk);
@@ -90,19 +90,21 @@ export const transformAuctionData = async (
   const bids = await auction.getBidderMetadata(connection);
 
   let bidderRedemptionTicket: BidRedemptionTicket | undefined;
-  try {
-    // @TODO - confirm if bid redemption tickets only exist IF the auction has ended.
-    // If so, then only make this check call if the auction is ended
-    // If not,then there's something strange going on with:
-    // user -> At3TUERJEqU5CE8ipb7v7LuLtTQ5ZoGK8ELij9bSFNPU
-    // auction -> 7qSVDA7vXZ5DDus65SEJP8YuMzq5zpiU4g9iWxhfHmpZ
-    bidderRedemptionTicket = await getBidRedemptionTicket(
-      connection,
-      new PublicKey(auction.pubkey),
-      bidder
-    );
-  } catch (error) {
-    console.error(error);
+  if (bidder) {
+    try {
+      // @TODO - confirm if bid redemption tickets only exist IF the auction has ended.
+      // If so, then only make this check call if the auction is ended
+      // If not,then there's something strange going on with:
+      // user -> At3TUERJEqU5CE8ipb7v7LuLtTQ5ZoGK8ELij9bSFNPU
+      // auction -> 7qSVDA7vXZ5DDus65SEJP8YuMzq5zpiU4g9iWxhfHmpZ
+      bidderRedemptionTicket = await getBidRedemptionTicket(
+        connection,
+        new PublicKey(auction.pubkey),
+        bidder
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const usmBidData = bids
@@ -117,11 +119,11 @@ export const transformAuctionData = async (
 
       if (auctionState === AuctionStateEnum.Ended) {
         const hasBeenRedeemed =
-          bidder.toBase58() === data.bidderPubkey && bidderRedemptionTicket
+          bidder?.toBase58() === data.bidderPubkey && bidderRedemptionTicket
             ? hasRedeemedBid(bidderRedemptionTicket, 0)
             : undefined;
         const hasRedeemedParticipationToken =
-          bidder.toBase58() === data.bidderPubkey && bidderRedemptionTicket
+          bidder?.toBase58() === data.bidderPubkey && bidderRedemptionTicket
             ? hasRedeemedBid(bidderRedemptionTicket, Math.min(1, boxes.length - 1))
             : undefined;
         return {

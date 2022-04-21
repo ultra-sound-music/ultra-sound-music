@@ -1,8 +1,8 @@
-import { useRedeemParticipationBid, AuctionAddress } from '@usm/app-state';
+import { useRedeemParticipationBid, AccountAddress } from '@usm/app-state';
 import { Button } from '@usm/ui';
 
 export interface RedeemParticipationButtonProps {
-  auction: AuctionAddress;
+  auction: AccountAddress;
 }
 
 export function RedeemParticipationButton({ auction }: RedeemParticipationButtonProps) {

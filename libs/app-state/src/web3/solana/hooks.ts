@@ -4,11 +4,11 @@ import { useRecoilCallback, useResetRecoilState, useSetRecoilState } from 'recoi
 import logger from '@usm/util-logger';
 
 import { useModal, useShowNotification } from '../../ui';
+import { AccountAddress } from './types';
 import {
   useActiveAuction,
   useAuction,
   useAuctionLoadingState,
-  AuctionAddress,
   UpdateAuctionCallbackArgs
 } from './models/auctions';
 
@@ -92,7 +92,7 @@ export function useGetWalletBalance() {
   return walletBalance;
 }
 
-export function useLoadAuction(auctionAddress: AuctionAddress) {
+export function useLoadAuction(auctionAddress: AccountAddress) {
   const [loadingState, setLoadingState] = useAuctionLoadingState(auctionAddress);
   const [auction, setAuction] = useAuction(auctionAddress);
 
@@ -218,7 +218,7 @@ export async function updateAuctionCallback({
   }
 }
 
-export function useUpdateAuction(auctionAddress: AuctionAddress) {
+export function useUpdateAuction(auctionAddress: AccountAddress) {
   const showNotification = useShowNotification();
   const { loadAuction } = useLoadAuction(auctionAddress);
 
@@ -230,7 +230,7 @@ export function useUpdateAuction(auctionAddress: AuctionAddress) {
     });
 }
 
-export function useRedeemBid(auctionAddress: AuctionAddress) {
+export function useRedeemBid(auctionAddress: AccountAddress) {
   const updateAuction = useUpdateAuction(auctionAddress);
 
   return updateAuction({
@@ -242,7 +242,7 @@ export function useRedeemBid(auctionAddress: AuctionAddress) {
   });
 }
 
-export function useRedeemParticipationBid(auctionAddress: AuctionAddress) {
+export function useRedeemParticipationBid(auctionAddress: AccountAddress) {
   const updateAuction = useUpdateAuction(auctionAddress);
   return updateAuction({
     updater: () => redeemParticipationBid(auctionAddress),
@@ -253,7 +253,7 @@ export function useRedeemParticipationBid(auctionAddress: AuctionAddress) {
   });
 }
 
-export function useRefundBid(auctionAddress: AuctionAddress) {
+export function useRefundBid(auctionAddress: AccountAddress) {
   const updateAuction = useUpdateAuction(auctionAddress);
   return updateAuction({
     updater: () => cancelBid(auctionAddress),

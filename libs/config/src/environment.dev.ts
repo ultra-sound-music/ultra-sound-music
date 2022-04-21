@@ -7,6 +7,5 @@ export default {
   mplAuctionPubKeys: [
     '7qSVDA7vXZ5DDus65SEJP8YuMzq5zpiU4g9iWxhfHmpZ',
     '8xUYLXSwjzgAQdnL7D9sPL2kUb8h57CdpqpYsRQYQoso'
-    // '@TODO - CREATE ONE MORE AUCTION'
   ]
 };
