@@ -2,25 +2,27 @@
 
 @keyframes fade-in {
   0% {
-    opacity: 0%;
+    opacity: 0;
   }
+
   100% {
-    opacity: 100%;
+    opacity: 1;
   }
 }
 
 @keyframes fade-out {
   100% {
-    opacity: 0%;
+    opacity: 0;
   }
 }
 
 @keyframes pulse {
   0% {
-    opacity: 20%;
+    opacity: 0.2;
   }
+
   100% {
-    opacity: 40%;
+    opacity: 0.4;
   }
 }
 
@@ -36,7 +38,7 @@
     cursor: pointer;
 
     .image {
-      opacity: 70%;
+      opacity: 0.7;
     }
 
     .hoverOverlay {
@@ -81,6 +83,6 @@
 .placeholder {
   background-color: #ccc;
   border-radius: 4px;
-  opacity: 0%;
+  opacity: 0;
   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) 0s alternate infinite none running;
 }

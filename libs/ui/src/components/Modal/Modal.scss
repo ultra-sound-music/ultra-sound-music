@@ -2,16 +2,16 @@
 
 :global(.ReactModal__Overlay) {
   background-color: rebeccapurple;
-  opacity: 0%;
+  opacity: 0;
 }
 
 :global(.ReactModal__Overlay--after-open) {
-  opacity: 100%;
+  opacity: 1;
   transition: opacity 200ms ease-in-out;
 }
 
 :global(.ReactModal__Overlay--before-close) {
-  opacity: 0%;
+  opacity: 0;
 }
 
 .Modal {
@@ -25,11 +25,11 @@
   padding: 20px;
   min-width: 340px;
   max-width: 480px;
-  opacity: 0%;
+  opacity: 0;
 }
 
 .open {
-  opacity: 100%;
+  opacity: 1;
   transition: opacity ease 2s;
 }
 

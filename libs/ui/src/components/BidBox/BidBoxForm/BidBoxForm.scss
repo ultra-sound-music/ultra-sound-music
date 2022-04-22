@@ -7,13 +7,13 @@
 .bidInput {
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+    appearance: none;
     margin: 0;
   }
 
   &::-moz-inner-spin-button,
   &::-moz-outer-spin-button {
-    -moz-appearance: textfield;
+    appearance: textfield;
     margin: 0;
   }
 }
