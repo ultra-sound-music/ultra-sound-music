@@ -31,3 +31,7 @@ nx g @nrwl/js:lib <lib-name> --buildable=true --importPath=@usm/<lib-name> --pas
 ```
 
 [Here](https://nx.dev/js/library) is a full list of options for the `@nrwl/js:lib` generator.
+
+## Practices
+
+When creating a client for a 3rd party service, make the client as stateless as possible, this includes using functions over classes. This puts the responsibility on the application to maintain all state, thus keeping it in one canonical location.

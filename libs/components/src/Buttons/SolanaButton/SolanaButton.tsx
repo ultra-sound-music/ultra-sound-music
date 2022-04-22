@@ -1,5 +1,7 @@
 import { NetworkButton } from '@usm/ui';
-import { useNetwork, useConnect, useDisconnect, useModal, useAccountAddress } from '@usm/app-state';
+import { solana, useModal } from '@usm/app-state';
+
+const { useNetwork, useConnect, useDisconnect, useAccountAddress } = solana;
 
 export function SolanaButton() {
   const { showModal, hideModal } = useModal();
@@ -25,7 +27,7 @@ export function SolanaButton() {
   }
 
   const [{ networkStatus }] = useNetwork();
-  const accountAddress = useAccountAddress();
+  const [accountAddress] = useAccountAddress();
   const connect = useConnect();
   const disconnect = useDisconnect();
 

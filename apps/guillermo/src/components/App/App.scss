@@ -21,8 +21,7 @@
 }
 
 .body {
-  max-width: 680px;
-  margin: 56px auto;
+  margin: 56px auto 240px;
   padding: 0 40px;
 }
 
@@ -32,6 +31,50 @@
     margin-bottom: 80px;
     padding-bottom: 80px;
   }
+}
+
+.callout {
+  background-color: $color-evening-sky;
+  border: 2px solid $color-dusk;
+  border-radius: 6px;
+  color: $color-lavish;
+  margin-top: 10px;
+  margin-bottom: 60px;
+  padding: 18px 25px;
+  @extend %font-small;
+
+  & a {
+    color: currentcolor;
+  }
+}
+
+.accountInfo {
+  margin-bottom: 8px;
+}
+
+.accountAddress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 24px;
+
+  & > :first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.assetsGrid {
+  grid-auto-flow: row;
+}
+
+.uploadCol {
+  grid-column: 2/10;
+}
+
+.summaryCol {
+  grid-column: 11/-1;
 }
 
 .footer {

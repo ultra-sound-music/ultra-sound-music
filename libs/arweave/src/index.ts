@@ -1,47 +1,17 @@
-import { ArweaveWebWallet } from 'arweave-wallet-connector';
+import Arweave from 'arweave';
+import configs from '@usm/config';
 
-export type IArweaveWalletEvents = 'connect' | 'disconnect';
+export * from './upload';
+export * from './loadWalletData';
+export * from './wallet';
+export * from './types';
 
-const defaultARImage = 'https://jfbeats.github.io/ArweaveWalletConnector/placeholder.svg';
+export { Arweave };
 
-export class ArweaveClient {
-  wallet;
-
-  constructor(logo: string = defaultARImage) {
-    this.wallet = new ArweaveWebWallet(
-      {
-        name: 'Guillermo Upload Client',
-        logo
-      },
-      'arweave.app'
-    );
-  }
-
-  async connect() {
-    const { wallet } = this;
-
-    wallet.on('change', (address) => {
-      if (!address) {
-        this.onDisconnected();
-      } else {
-        this.onConnected(address);
-      }
-    });
-
-    return await wallet.connect();
-  }
-
-  disconnect() {
-    return this.wallet.disconnect();
-  }
-
-  onDisconnected() {}
-
-  onConnected(address: string): void {}
-
-  off(eventName: IArweaveWalletEvents, eventHandler: () => void): void {
-    this.wallet.off(eventName, eventHandler);
-  }
+export async function initArweave() {
+  return Arweave.init({
+    host: configs.arweaveHost,
+    port: configs.arweavePort,
+    protocol: configs.arweaveProtocol
+  });
 }
-
-export default ArweaveClient;

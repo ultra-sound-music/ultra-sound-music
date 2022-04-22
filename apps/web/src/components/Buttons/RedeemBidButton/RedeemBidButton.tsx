@@ -1,8 +1,10 @@
-import { useRedeemBid, AccountAddress } from '@usm/app-state';
+import { solana } from '@usm/app-state';
 import { Button } from '@usm/ui';
 
+const { useRedeemBid } = solana;
+
 export interface EndedAuctionButtonProps {
-  auction: AccountAddress;
+  auction: solana.AccountAddress;
 }
 
 export function EndedAuctionButton({ auction }: EndedAuctionButtonProps) {

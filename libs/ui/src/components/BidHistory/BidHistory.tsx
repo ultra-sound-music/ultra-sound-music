@@ -1,12 +1,12 @@
 import BidHistoryItem, { IBidHistoryItem } from './BidHistoryItem';
 
 import styles from './BidHistory.scss';
-import { USMBidData } from '@usm/sol-client';
+import { UsmBidData } from '@usm/sol-client';
 
 export { IBidHistoryItem };
 
 export interface IBidHistoryProps {
-  bids?: USMBidData[];
+  bids?: UsmBidData[];
   currentAddress?: string;
   isProcessing: boolean;
 }

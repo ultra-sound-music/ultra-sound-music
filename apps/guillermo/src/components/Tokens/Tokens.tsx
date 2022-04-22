@@ -10,7 +10,7 @@ export interface ITokensProps {
 export function Tokens({ tokens }: ITokensProps) {
   return (
     <div className={styles.Tokens}>
-      <h3>Tokens in your vault</h3>
+      <h3>Tokens in your store</h3>
       {isEmpty(tokens) ? (
         <h4>There aren't any tokens to display</h4>
       ) : (

@@ -4320,6 +4320,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sphinxxxx/color-conversion@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@sphinxxxx/color-conversion@npm:2.2.2"
+  checksum: 73d07e5b0d0039bd7176c8693320cadd375fce66adc9ee33326caa97a82847d39ab7ce9396dd7a6a0ccc568f72fc2acbbf94eca51945ee5c2c262ed417fc7617
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-actions@npm:6.4.20":
   version: 6.4.20
   resolution: "@storybook/addon-actions@npm:6.4.20"
@@ -6063,6 +6070,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/ace@npm:*":
+  version: 0.0.48
+  resolution: "@types/ace@npm:0.0.48"
+  checksum: 99225e6a7b9d91f11c6abe7641dc7d80d21af28a14701819241a9697fd80a696db83df6e2afa87dfccdf2fdbc93ee07b56f6056e9022cbc4e9f9db316fbda79a
+  languageName: node
+  linkType: hard
+
 "@types/aria-query@npm:^4.2.0":
   version: 4.2.2
   resolution: "@types/aria-query@npm:4.2.2"
@@ -6379,6 +6393,16 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
+  languageName: node
+  linkType: hard
+
+"@types/jsoneditor@npm:^9.5.1":
+  version: 9.5.1
+  resolution: "@types/jsoneditor@npm:9.5.1"
+  dependencies:
+    "@types/ace": "*"
+    ajv: ^6.12.0
+  checksum: 517266af1ca2b5239066e371bccf8ef66738f1ff11d58545cb00598db5a7bff688ae12bc13d1cabead6a271971be18a70b50a6b5863b3acaa8b2bf3e6f18fcb7
   languageName: node
   linkType: hard
 
@@ -7467,6 +7491,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ace-builds@npm:^1.4.14":
+  version: 1.4.14
+  resolution: "ace-builds@npm:1.4.14"
+  checksum: 7e7fbfc6add7e250015bc3f6452a173b2b4722bb9d2ceaa7c5cc506d166906d6df72a595cee3d4c931f9814a480ce583026652a2285abdcd2c0881e92f34c5b0
+  languageName: node
+  linkType: hard
+
 "acorn-globals@npm:^6.0.0":
   version: 6.0.0
   resolution: "acorn-globals@npm:6.0.0"
@@ -7641,7 +7672,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^6.1.0, ajv@npm:^6.10.0, ajv@npm:^6.10.2, ajv@npm:^6.12.2, ajv@npm:^6.12.4, ajv@npm:^6.12.5":
+"ajv@npm:^6.1.0, ajv@npm:^6.10.0, ajv@npm:^6.10.2, ajv@npm:^6.12.0, ajv@npm:^6.12.2, ajv@npm:^6.12.4, ajv@npm:^6.12.5, ajv@npm:^6.12.6":
   version: 6.12.6
   resolution: "ajv@npm:6.12.6"
   dependencies:
@@ -11064,10 +11095,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.10.4, dayjs@npm:^1.11.0":
+"dayjs@npm:^1.10.4":
   version: 1.11.0
   resolution: "dayjs@npm:1.11.0"
   checksum: 2d36f6d71345114cdcd89147adf9e05b4f8fe81684e08c8bf1f86b140aa0b86ecc3cae661a9348d96feb7fbefd03e1bc3697303688e95209670abcb36b4ece15
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.1":
+  version: 1.11.1
+  resolution: "dayjs@npm:1.11.1"
+  checksum: d5fefd79935f64a3c262e67af7ebeca180bc402b3e99be4e12d20b6d438af3f86d507ba1cbaff95dc0b4e67f1067cea3eaf37b6b74f5494fdd4a6a2909514cd1
   languageName: node
   linkType: hard
 
@@ -15860,6 +15898,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"javascript-natural-sort@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "javascript-natural-sort@npm:0.7.1"
+  checksum: 161e2c512cc7884bc055a582c6645d9032cab88497a76123d73cb23bfb03d97a04cf7772ecdb8bd3366fc07192c2f996366f479f725c23ef073fffe03d6a586a
+  languageName: node
+  linkType: hard
+
 "jayson@npm:^3.4.4":
   version: 3.6.6
   resolution: "jayson@npm:3.6.6"
@@ -16519,6 +16564,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jmespath@npm:^0.16.0":
+  version: 0.16.0
+  resolution: "jmespath@npm:0.16.0"
+  checksum: 2d602493a1e4addfd1350ac8c9d54b1b03ed09e305fd863bab84a4ee1f52868cf939dd1a08c5cdea29ce9ba8f86875ebb458b6ed45dab3e1c3f2694503fb2fd9
+  languageName: node
+  linkType: hard
+
 "joi@npm:^17.6.0":
   version: 17.6.0
   resolution: "joi@npm:17.6.0"
@@ -16697,6 +16749,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-source-map@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "json-source-map@npm:0.6.1"
+  checksum: 61b24b97824d538df796621d02519260a99024e0e366a6dc702089603f0a80d32e814734392fb6004a06b1a669b3c9fa337d46f5cda014b65afcd127a2882ebc
+  languageName: node
+  linkType: hard
+
 "json-stable-stringify-without-jsonify@npm:^1.0.1":
   version: 1.0.1
   resolution: "json-stable-stringify-without-jsonify@npm:1.0.1"
@@ -16735,6 +16794,23 @@ __metadata:
   version: 3.0.0
   resolution: "jsonc-parser@npm:3.0.0"
   checksum: 1df2326f1f9688de30c70ff19c5b2a83ba3b89a1036160da79821d1361090775e9db502dc57a67c11b56e1186fc1ed70b887f25c5febf9a3ec4f91435836c99d
+  languageName: node
+  linkType: hard
+
+"jsoneditor@npm:^9.7.4":
+  version: 9.7.4
+  resolution: "jsoneditor@npm:9.7.4"
+  dependencies:
+    ace-builds: ^1.4.14
+    ajv: ^6.12.6
+    javascript-natural-sort: ^0.7.1
+    jmespath: ^0.16.0
+    json-source-map: ^0.6.1
+    jsonrepair: ^2.2.1
+    mobius1-selectr: ^2.4.13
+    picomodal: ^3.0.0
+    vanilla-picker: ^2.12.1
+  checksum: 51aa520ab1956c2df030759a4bf40bbabfd969332445c17102aad9618fe1958b26e2be7e88b7b0b5148d5ceb0ce6aaac731600233677fdd1c4f68d65e64ccabb
   languageName: node
   linkType: hard
 
@@ -16779,6 +16855,15 @@ __metadata:
   version: 1.3.1
   resolution: "jsonparse@npm:1.3.1"
   checksum: 6514a7be4674ebf407afca0eda3ba284b69b07f9958a8d3113ef1005f7ec610860c312be067e450c569aab8b89635e332cee3696789c750692bb60daba627f4d
+  languageName: node
+  linkType: hard
+
+"jsonrepair@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "jsonrepair@npm:2.2.1"
+  bin:
+    jsonrepair: bin/cli.js
+  checksum: c9ad3c948d78c356602e5f43023167acee8e2a32fde1e22481b0f311e54f9b1d0ab47a73feeb87b65585df4ecf42d34aac1d457ff5aa2010fe032b3634113cf8
   languageName: node
   linkType: hard
 
@@ -17911,7 +17996,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.12, mime-types@npm:^2.1.27, mime-types@npm:^2.1.30, mime-types@npm:^2.1.31, mime-types@npm:~2.1.17, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.27, mime-types@npm:^2.1.30, mime-types@npm:^2.1.31, mime-types@npm:^2.1.35, mime-types@npm:~2.1.17, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
@@ -18191,6 +18276,13 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
+  languageName: node
+  linkType: hard
+
+"mobius1-selectr@npm:^2.4.13":
+  version: 2.4.13
+  resolution: "mobius1-selectr@npm:2.4.13"
+  checksum: 6014642d798ded2d462240755c96e10781de9d9a4781ac800b62d2706f893502228b2e5acaae7eab775029c09eaf77c9a89765ff1561fb2f64b0ae55b4806c45
   languageName: node
   linkType: hard
 
@@ -19531,6 +19623,13 @@ __metadata:
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 050c865ce81119c4822c45d3c84f1ced46f93a0126febae20737bd05ca20589c564d6e9226977df859ed5e03dc73f02584a2b0faad36e896936238238b0446cf
+  languageName: node
+  linkType: hard
+
+"picomodal@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "picomodal@npm:3.0.0"
+  checksum: ca16bb9b128b6b104c15e1055d67ad71b3125b290b0b9168d408ab719cd533cc979b1fbe7880033a46270f5b27d9b5b6a320a92ac2ef09ef8daa2a4dcdb26ab5
   languageName: node
   linkType: hard
 
@@ -24695,6 +24794,7 @@ __metadata:
     "@testing-library/react": 12.1.2
     "@testing-library/react-hooks": 7.0.2
     "@types/jest": ^27.4.1
+    "@types/jsoneditor": ^9.5.1
     "@types/node": ^17.0.23
     "@types/react": ^18.0.0
     "@types/react-burger-menu": ^2.8.3
@@ -24716,7 +24816,7 @@ __metadata:
     cross-fetch: ^3.1.5
     css-loader: ^6.7.1
     cypress: ^9.5.3
-    dayjs: ^1.11.0
+    dayjs: ^1.11.1
     dotenv-webpack: ^7.1.0
     eslint: ^8.12.0
     eslint-config-prettier: ^8.5.0
@@ -24731,9 +24831,11 @@ __metadata:
     idb-keyval: ^6.1.0
     jest: ^27.5.1
     jest-mock-extended: ^2.0.5
+    jsoneditor: ^9.7.4
     lint-staged: ^12.3.7
     lodash: ^4.17.21
     lodash-webpack-plugin: ^0.11.6
+    mime-types: ^2.1.35
     mini-css-extract-plugin: ^2.6.0
     mini-svg-data-uri: ^1.4.4
     nx: 13.10.0
@@ -25323,6 +25425,15 @@ __metadata:
   version: 1.0.1
   resolution: "value-equal@npm:1.0.1"
   checksum: bb7ae1facc76b5cf8071aeb6c13d284d023fdb370478d10a5d64508e0e6e53bb459c4bbe34258df29d82e6f561f874f0105eba38de0e61fe9edd0bdce07a77a2
+  languageName: node
+  linkType: hard
+
+"vanilla-picker@npm:^2.12.1":
+  version: 2.12.1
+  resolution: "vanilla-picker@npm:2.12.1"
+  dependencies:
+    "@sphinxxxx/color-conversion": ^2.2.2
+  checksum: 92cedd11869a7b9b2e1c1476f07c64d942bd3de625063618ff4a3758fc51371c3b9ef7e175f22634b702416df5a5a02e7ab62395ab9b159b36be44c3c43895fc
   languageName: node
   linkType: hard
 

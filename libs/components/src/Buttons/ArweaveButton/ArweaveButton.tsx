@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-
 import { NetworkButton } from '@usm/ui';
-import { useArweaveConnect, useArweaveDisconnect, useArweaveNetwork } from '@usm/app-state';
+import { arweave } from '@usm/app-state';
+
+const { useNetworkStatus, useAccountAddress, useConnect, useDisconnect } = arweave;
 
 export function ArweaveButton() {
   function onDisconnectClick() {
@@ -12,23 +12,16 @@ export function ArweaveButton() {
     connect();
   }
 
-  const [{ isConnected, accountAddress, networkStatus }] = useArweaveNetwork();
-  const connect = useArweaveConnect();
-  const disconnect = useArweaveDisconnect();
-
-  const isConnecting = networkStatus === 'CONNECTING';
-
-  useEffect(() => {
-    if (!isConnected && accountAddress) {
-      connect();
-    }
-  }, []);
+  const [accountAddress] = useAccountAddress();
+  const [networkStatus] = useNetworkStatus();
+  const connect = useConnect();
+  const disconnect = useDisconnect();
 
   return (
     <NetworkButton
       type='secondary'
-      accountAddress={accountAddress}
-      isConnecting={isConnecting}
+      accountAddress={networkStatus === 'CONNECTED' ? accountAddress : undefined}
+      isConnecting={networkStatus === 'CONNECTING'}
       onConnectClick={onConnectClick}
       onDisconnectClick={onDisconnectClick}
     >

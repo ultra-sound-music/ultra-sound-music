@@ -1,16 +1,19 @@
-import { atom, useRecoilValue, selector, DefaultValue, useRecoilState } from 'recoil';
+import { atom, selector, DefaultValue, useRecoilState } from 'recoil';
 
 import { localStorageEffect } from '../../../utils';
+import { AccountAddress } from '../types';
 
 // undefined - No information / no wallet
-// INSTALLING
+// INSTALLING - Installing wallet
+// INITIALIZING - The state related to the solana network is still being initialized
 // INITIALIZED - Has wallet but not connected to network
-// NOT_CONNECTED // Has wallet but the wallet is not connected to the USM Client.
+// NOT_CONNECTED - Has wallet but the wallet is not connected to the USM Client.
 // CONNECTING
 // CONNECTED
 // ERRORED // Tried to connect but ran into a problem
 export type NetworkStatus =
   | 'INSTALLING'
+  | 'INITIALIZING'
   | 'INITIALIZED'
   | 'NOT_CONNECTED'
   | 'CONNECTING'
@@ -23,7 +26,6 @@ export interface NetworkState {
   networkId: NetworkId;
 }
 
-export type AccountAddress = string;
 export type AccountBalance = number;
 
 export const networkStatusState = atom<NetworkStatus>({
@@ -56,10 +58,10 @@ export const networkState = selector<NetworkState>({
   }
 });
 
-export const accountAddressState = atom<AccountAddress | undefined>({
+export const accountAddressState = atom<AccountAddress>({
   key: 'solWallet/accountAddressState',
   default: undefined,
-  effects: [localStorageEffect('accountAddress')]
+  effects: [localStorageEffect<string>('solana.accountAddress')]
 });
 
 export const accountBalanceState = atom<AccountBalance | undefined>({
@@ -68,7 +70,7 @@ export const accountBalanceState = atom<AccountBalance | undefined>({
 });
 
 export function useAccountAddress() {
-  return useRecoilValue(accountAddressState);
+  return useRecoilState(accountAddressState);
 }
 
 export function useAccountBalance() {

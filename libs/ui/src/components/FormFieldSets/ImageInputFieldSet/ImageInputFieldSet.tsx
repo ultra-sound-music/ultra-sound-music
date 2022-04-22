@@ -8,14 +8,22 @@ import styles from './ImageInputFieldSet.scss';
 
 export type IImageInputFieldSetProps = IBaseFormElementProps<IInputProps>;
 
-export function ImageInputFieldSet({ id, title, label, accept }: IImageInputFieldSetProps) {
+export function ImageInputFieldSet({
+  name,
+  id,
+  title,
+  label,
+  accept,
+  setValue
+}: IImageInputFieldSetProps) {
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) {
       return;
     }
 
-    setImage(URL.createObjectURL(file));
+    setValue?.(file); // Save to form state for upload
+    setImage(URL.createObjectURL(file)); // Save to local state for display
   }
 
   const [image, setImage] = useState<string>();
@@ -26,6 +34,7 @@ export function ImageInputFieldSet({ id, title, label, accept }: IImageInputFiel
       <div className={styles.inputContainer}>
         <Input
           type='file'
+          name={name}
           id={id}
           aria-label='File browser'
           accept={accept}
@@ -35,7 +44,7 @@ export function ImageInputFieldSet({ id, title, label, accept }: IImageInputFiel
         {label && (
           <label htmlFor={id} className={styles.label}>
             {image ? (
-              <img src={image} className={styles.preview} />
+              <img alt='preview' src={image} className={styles.preview} />
             ) : (
               <RiFileAddLine className={styles.imageIcon} />
             )}

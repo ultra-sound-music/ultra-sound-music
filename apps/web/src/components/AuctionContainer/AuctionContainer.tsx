@@ -1,15 +1,6 @@
 import { useEffect } from 'react';
 
-import {
-  useNetworkStatus,
-  useLoadAuction,
-  useGetAuctions,
-  useAuction,
-  usePlaceBid,
-  useActiveAuction,
-  useAccountAddress,
-  useGetWalletBalance
-} from '@usm/app-state';
+import { solana } from '@usm/app-state';
 import { Button, NftAuction, Link } from '@usm/ui';
 import { urls } from '@usm/content';
 import {
@@ -31,6 +22,17 @@ import RedeemBidButton from '../Buttons/RedeemBidButton/RedeemBidButton';
 import RefundButton from '../Buttons/RefundButton/RefundButton';
 import RedeemParticipationButton from '../Buttons/RedeemParticipationButton/RedeemParticipationButton';
 
+const {
+  useNetworkStatus,
+  useLoadAuction,
+  useGetAuctions,
+  useAuction,
+  usePlaceBid,
+  useActiveAuction,
+  useAccountAddress,
+  useGetWalletBalance
+} = solana;
+
 export function AuctionContainer() {
   function onBid(bidAmount: string) {
     if (isConnected) {
@@ -42,12 +44,11 @@ export function AuctionContainer() {
   const balance = useGetWalletBalance();
   const auctions = useGetAuctions();
   const [networkStatus] = useNetworkStatus();
-  const accountAddress = useAccountAddress();
+  const [accountAddress] = useAccountAddress();
   const [activeAuctionPk, setActiveAuction] = useActiveAuction();
   const [auction, loadingState] = useAuction(activeAuctionPk);
   const loadAuction = useLoadAuction();
 
-  const networkIsReady = !!networkStatus;
   const isConnected = networkStatus === 'CONNECTED';
   const isConnecting = networkStatus === 'CONNECTING';
   const isLoading = loadingState === 'loading';
@@ -67,15 +68,14 @@ export function AuctionContainer() {
   const auctionIsPending = state === undefined ? undefined : state === 'created';
 
   useEffect(() => {
-    const hasDisconnected = !isConnected && !!auction;
-    if (networkIsReady && !hasDisconnected) {
+    if (isConnected && activeAuctionPk) {
       loadAuction(activeAuctionPk);
     }
 
-    // The partial list of dependencies is ok bc a change in auction or loadAuction has no impact on
+    // The partial list of dependencies is ok bc a change in loadAuction has no impact on
     // whether we should load the auction or not.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [networkIsReady, isConnected, activeAuctionPk]);
+  }, [isConnected, activeAuctionPk]);
 
   const bidBoxStatusProps = {
     endTimestamp,
@@ -157,7 +157,7 @@ export function AuctionContainer() {
       <div className={styles.nftAuction}>
         <NftAuction
           auctionIsPending={auctionIsPending}
-          title={auction?.auctionNft?.metadata?.name}
+          title={auction?.auctionNft?.metadata?.name ?? ''}
           status={<BidBoxStatus {...bidBoxStatusProps} />}
           auctions={auctions}
           setActiveAuction={setActiveAuction}

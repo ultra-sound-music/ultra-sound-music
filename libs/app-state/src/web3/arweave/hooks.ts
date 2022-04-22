@@ -3,36 +3,54 @@ import { useRecoilCallback } from 'recoil';
 import logger from '@usm/util-logger';
 
 import * as ui from '../../ui';
-import { getArweave } from './registry';
-import { useArweaveNetwork } from './models';
+import { connect, disconnect, upload, loadWalletData } from './api';
+import { useNetwork, useAccountAddress, useAccountBalance, useSetAccountBalance } from './models';
 
-export function useArweaveConnect() {
+export function useUpload() {
+  // @TODO
   const showNotification = ui.useShowNotification();
-  const [, setArweaveNetwork] = useArweaveNetwork();
+  const [, setNetwork] = useNetwork();
+
+  return useRecoilCallback(
+    () => async (data: ArrayBuffer) => {
+      return upload(data);
+    },
+    []
+  );
+}
+
+export function useConnect() {
+  const showNotification = ui.useShowNotification();
+  const setAccountBalance = useSetAccountBalance();
+  const [, setAccountAddress] = useAccountAddress();
+  const [, setNetwork] = useNetwork();
 
   return useRecoilCallback(
     () => async () => {
       try {
-        setArweaveNetwork({
-          networkStatus: 'CONNECTING'
+        setNetwork({
+          status: 'CONNECTING'
         });
 
-        const arweave = getArweave();
-        const accountAddress = await arweave.connect();
-
+        const accountAddress = await connect();
         if (!accountAddress) {
           throw new Error('Failed to connect to Arweave');
         }
 
-        setArweaveNetwork({
-          accountAddress,
-          networkStatus: 'CONNECTED',
+        setAccountAddress(accountAddress);
+        loadWalletData(accountAddress).then((balance) => {
+          // @TODO, do a smarter conversion
+          setAccountBalance(balance);
+        });
+
+        setNetwork({
+          status: 'CONNECTED',
           networkId: ''
         });
       } catch (error) {
         logger.error(error);
-        setArweaveNetwork({
-          networkStatus: 'ERRORED'
+        setNetwork({
+          status: 'ERRORED'
         });
 
         showNotification({
@@ -46,19 +64,17 @@ export function useArweaveConnect() {
   );
 }
 
-export function useArweaveDisconnect() {
+export function useDisconnect() {
   const showNotification = ui.useShowNotification();
-  const [, setArweaveNetwork] = useArweaveNetwork();
+  const [, setNetwork] = useNetwork();
 
   return useRecoilCallback(
     () => async () => {
       try {
-        const arweave = getArweave();
-        arweave.disconnect();
+        disconnect();
 
-        setArweaveNetwork({
-          accountAddress: '',
-          networkStatus: 'NOT_CONNECTED',
+        setNetwork({
+          status: 'NOT_CONNECTED',
           networkId: ''
         });
       } catch (error) {

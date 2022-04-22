@@ -5,6 +5,12 @@
   margin-bottom: 12px;
 }
 
+.container {
+  display: flex;
+  column-gap: 4px;
+  justify-content: space-between;
+}
+
 .inputContainer {
   position: relative;
   border: 1px solid $color-lavish;
@@ -14,6 +20,26 @@
   justify-content: space-between;
   height: 4.8rem;
   line-height: 4.8rem;
+  width: 100%;
+}
+
+.preview {
+  color: $color-void;
+  position: relative;
+  flex-basis: 56px;
+
+  .active {
+    cursor: pointer;
+    color: $color-lavish;
+  }
+}
+
+.previewIcon {
+  font-size: 3.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .input {

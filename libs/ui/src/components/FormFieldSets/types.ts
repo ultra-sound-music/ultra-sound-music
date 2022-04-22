@@ -8,7 +8,7 @@ export type IBaseFormElementProps<
   error?: string;
   errors?: string[];
   isInitialized?: boolean;
-  setValue?(v: P['value']): void;
+  setValue?(v: P['value'] | ArrayBuffer | Blob): void;
   showIcon?: (v?: P['value'], e?: string[]) => boolean;
   toggleVisibility?(): void;
   toggleExpand?(): void;

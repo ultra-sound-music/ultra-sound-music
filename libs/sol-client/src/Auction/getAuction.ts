@@ -15,7 +15,7 @@ import { AuctionManager, BidRedemptionTicket } from '@metaplex-foundation/mpl-me
 import { Account } from '@metaplex-foundation/mpl-core';
 import { getBidRedemptionTicket, hasRedeemedBid } from '../utils/bidRedemption';
 
-export type USMBidData = {
+export type UsmBidData = {
   bidder: string;
   bid: number;
   timestamp: number;
@@ -25,9 +25,22 @@ export type USMBidData = {
   won?: boolean;
 };
 
+export interface UsmNftAttributes {
+  trait_type: string;
+  value: string;
+  display_type: string;
+}
+
+export type NftUriMetaData = {
+  name: string;
+  image: string;
+  description?: string;
+  attributes?: UsmNftAttributes[];
+};
+
 export type NftData = {
   pubKey: PublicKey;
-  metadata: unknown;
+  metadata: NftUriMetaData;
 };
 
 export type USMAuctionData = {
@@ -37,7 +50,7 @@ export type USMAuctionData = {
   acceptedToken: PublicKey;
   endTimestamp?: EpochTimeStamp;
   state: AuctionState;
-  bids: USMBidData[];
+  bids: UsmBidData[];
 };
 
 const auctionStates = ['created', 'started', 'ended'] as const;
@@ -114,7 +127,7 @@ export const transformAuctionData = async (
     .filter((bid) => !isCancelledBid(bid.data, auctionState))
     .sort((a, b) => b.data.lastBid.toNumber() - a.data.lastBid.toNumber())
     .map(({ data }, index) => {
-      const bidData: USMBidData = {
+      const bidData: UsmBidData = {
         bidder: data.bidderPubkey,
         bid: data.lastBid.toNumber() / LAMPORTS_PER_SOL,
         timestamp: data.lastBidTimestamp.toNumber() * 1000

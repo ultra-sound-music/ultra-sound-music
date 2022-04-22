@@ -16,19 +16,16 @@ export default function () {
   const connect = useConnect();
 
   useEffect(() => {
-    initWallet()
-      .then(() => {
-        setNetworkStatus('INITIALIZED');
-      })
-      .catch((error) => {
-        logger.error('Failed to initialize Solana Wallet state,', error);
-        setNetworkStatus('ERRORED');
-      });
+    setNetworkStatus('INITIALIZING');
+    initWallet().catch((error) => {
+      logger.error('Failed to initialize Solana Wallet,', error);
+      setNetworkStatus('ERRORED');
+    });
 
     try {
       initConnection(configs.solanaCluster as Cluster);
     } catch (error) {
-      logger.error('Failed to initialize Solana Connection state,', error);
+      logger.error('Failed to initialize Solana Connection,', error);
     }
 
     initAuctions(configs.auctionOwner, configs.mplAuctionPubKeys).then((auctionAddresses) => {
@@ -39,8 +36,10 @@ export default function () {
   }, []);
 
   useEffect(() => {
-    if (accountAddress && networkStatus === 'INITIALIZED') {
+    if (accountAddress && networkStatus === 'INITIALIZING') {
       connect();
+    } else if (networkStatus === 'INITIALIZING') {
+      setNetworkStatus('INITIALIZED');
     }
   }, [networkStatus]);
 }

@@ -2,7 +2,7 @@ import { createContext, useState, useCallback, useRef, Dispatch, SetStateAction 
 import isEqual from 'lodash/isEqual';
 
 export type IFieldName = string;
-export type IFieldValue = React.InputHTMLAttributes<HTMLInputElement>['value'];
+export type IFieldValue = React.InputHTMLAttributes<HTMLInputElement>['value'] | ArrayBuffer | Blob;
 export type IFieldSetter = (fname: string, fval: IFieldName) => void;
 
 export interface IFormValues {
@@ -31,7 +31,7 @@ export interface IFormContext {
 }
 
 export interface IFormContextProviderProps {
-  onChange?: (fieldName: string, fieldValue: IFieldValue, setValue: IFieldSetter) => void;
+  onChange?: (fieldName: IFieldName, fieldValue: IFieldValue, setValue: IFieldSetter) => void;
   children: React.ReactNode;
 }
 

@@ -9,6 +9,7 @@ import { FormContext, IFormValues } from '../../util/Forms/FormContext';
 import Button from '../Button/Button';
 import FormSubmit from '../FormFields/FormSubmit/FormSubmit';
 import InputField from '../FormFields/InputField/InputField';
+import InputListField from '../FormFields/InputListField/InputListField';
 import FileInputField from '../FormFields/FileInputField/FileInputField';
 import ImageInputField from '../FormFields/ImageInputField/ImageInputField';
 import PasswordField from '../FormFields/PasswordField/PasswordField';
@@ -42,6 +43,7 @@ export interface IBaseFormProps {
 const formFieldTypes = [
   InputField,
   FileInputField,
+  InputListField,
   ImageInputField,
   PasswordField,
   SearchField,

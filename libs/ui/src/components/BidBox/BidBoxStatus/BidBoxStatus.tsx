@@ -1,14 +1,14 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
-import { AuctionState, USMBidData } from '@usm/sol-client';
+import { AuctionState, UsmBidData } from '@usm/sol-client';
 import styles from './BidBoxStatus.scss';
 
 export interface IBidBoxStatusProps {
   endTimestamp?: number;
   state?: AuctionState;
   currentAddress?: string;
-  bids?: USMBidData[];
+  bids?: UsmBidData[];
 }
 
 export function getPendingStatusMessage() {
@@ -40,19 +40,17 @@ export function getLiveStatusMessage(endTimestamp?: number) {
 export function getEndedStatusMessage(
   auctionEnd?: number,
   currentAddress?: string,
-  bids?: USMBidData[]
+  bids?: UsmBidData[]
 ) {
   const myBid = bids?.find(({ bidder }) => bidder === currentAddress);
   const iWon = bids?.[0].bidder === currentAddress;
   const iLost = !!myBid && !iWon;
 
   if (iWon && !myBid?.hasBeenRedeemed) {
-    return <strong>You won! Click the button to redeem your NFT.</strong>;
-  } else if (iWon && !myBid?.hasRedeemedParticipationToken) {
-    return <strong>Redeem your participation NFT!</strong>;
-  } else if (iLost && !myBid?.hasBeenRefunded) {
-    return <strong>You didn't win. Click your refunded.</strong>;
-  } else if (iLost && !myBid?.hasRedeemedParticipationToken) {
+    return <strong>You won! Click the button to redeem your NFT</strong>;
+  } else if (iLost && !myBid.hasBeenRefunded) {
+    return <strong>Get refund and claim participation NFT</strong>;
+  } else if (iLost && !myBid.hasRedeemedParticipationToken) {
     return <strong>Redeem your participation NFT!</strong>;
   } else {
     const today = dayjs();

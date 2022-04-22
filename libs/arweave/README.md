@@ -2,6 +2,8 @@
 
 This library was generated with [Nx](https://nx.dev).
 
+Documentation lives in [/apps/docs/docs/Libraries/arweave.md](https://docs.ultrasoundmusic.dev/docs/Libraries/arweave)
+
 ## Building
 
 Run `nx build arweave` to build the library.

@@ -45,6 +45,9 @@ export function useConnect() {
     try {
       setNetworkStatus('CONNECTING');
       const walletAddress = await connectWallet();
+      if (!walletAddress) {
+        throw new Error('Missing wallet address');
+      }
       setAccountAddress(walletAddress);
       setNetworkStatus('CONNECTED');
     } catch (error) {

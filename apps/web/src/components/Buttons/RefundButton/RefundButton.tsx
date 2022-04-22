@@ -1,8 +1,10 @@
-import { useRefundBid, AccountAddress } from '@usm/app-state';
+import { solana } from '@usm/app-state';
 import { Button } from '@usm/ui';
 
+const { useRefundBid } = solana;
+
 export interface RefundButtonProps {
-  auction: AccountAddress;
+  auction: solana.AccountAddress;
 }
 
 export function EndedAuctionButton({ auction }: RefundButtonProps) {

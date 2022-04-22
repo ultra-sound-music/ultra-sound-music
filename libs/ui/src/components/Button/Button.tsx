@@ -20,6 +20,7 @@ export interface IButtonProps {
   isExternal?: boolean;
   isSmall?: boolean;
   subtext?: React.ReactNode;
+  isFormSubmit?: boolean;
   children?: React.ReactNode;
   onClick?: () => void;
 }
@@ -35,6 +36,7 @@ export const Button = ({
   isProcessing = false,
   isExternal = false,
   isSmall = false,
+  isFormSubmit = false,
   onClick,
   subtext,
   children,
@@ -78,7 +80,13 @@ export const Button = ({
   }
 
   return (
-    <button type='button' className={classNames} onClick={onClick} disabled={disabled} {...props}>
+    <button
+      type={isFormSubmit ? 'submit' : 'button'}
+      className={classNames}
+      onClick={onClick}
+      disabled={disabled}
+      {...props}
+    >
       {content}
     </button>
   );
