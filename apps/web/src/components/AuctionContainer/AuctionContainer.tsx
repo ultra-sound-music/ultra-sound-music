@@ -4,6 +4,7 @@ import {
   useNetworkStatus,
   useLoadAuction,
   useGetAuctions,
+  useAuction,
   usePlaceBid,
   useActiveAuction,
   useAccountAddress,
@@ -33,7 +34,7 @@ import RedeemParticipationButton from '../Buttons/RedeemParticipationButton/Rede
 export function AuctionContainer() {
   function onBid(bidAmount: string) {
     if (isConnected) {
-      placeBid(Number.isNaN(parseFloat(bidAmount)) ? 0 : parseFloat(bidAmount));
+      placeBid(activeAuctionPk, Number.isNaN(parseFloat(bidAmount)) ? 0 : parseFloat(bidAmount));
     }
   }
 
@@ -42,8 +43,9 @@ export function AuctionContainer() {
   const auctions = useGetAuctions();
   const [networkStatus] = useNetworkStatus();
   const accountAddress = useAccountAddress();
-  const [activeAuction, setActiveAuction] = useActiveAuction();
-  const { auction, loadAuction, loadingState } = useLoadAuction(activeAuction || '');
+  const [activeAuctionPk, setActiveAuction] = useActiveAuction();
+  const [auction, loadingState] = useAuction(activeAuctionPk);
+  const loadAuction = useLoadAuction();
 
   const networkIsReady = !!networkStatus;
   const isConnected = networkStatus === 'CONNECTED';
@@ -65,11 +67,15 @@ export function AuctionContainer() {
   const auctionIsPending = state === undefined ? undefined : state === 'created';
 
   useEffect(() => {
-    const isDisconnect = !isConnected && auction;
-    if (networkIsReady && !isDisconnect) {
-      loadAuction();
+    const hasDisconnected = !isConnected && !!auction;
+    if (networkIsReady && !hasDisconnected) {
+      loadAuction(activeAuctionPk);
     }
-  }, [networkIsReady, isConnected, activeAuction]);
+
+    // The partial list of dependencies is ok bc a change in auction or loadAuction has no impact on
+    // whether we should load the auction or not.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [networkIsReady, isConnected, activeAuctionPk]);
 
   const bidBoxStatusProps = {
     endTimestamp,
@@ -105,11 +111,11 @@ export function AuctionContainer() {
 
   let cta;
   if (iWon && !myBid?.hasBeenRedeemed) {
-    cta = <RedeemBidButton auction={activeAuction} />;
+    cta = <RedeemBidButton auction={activeAuctionPk} />;
   } else if (iLost && !myBid.hasBeenRefunded) {
-    cta = <RefundButton auction={activeAuction} />;
+    cta = <RefundButton auction={activeAuctionPk} />;
   } else if (iLost && !myBid.hasRedeemedParticipationToken) {
-    cta = <RedeemParticipationButton auction={activeAuction} />;
+    cta = <RedeemParticipationButton auction={activeAuctionPk} />;
   } else if (state === 'created') {
     cta = (
       <div>

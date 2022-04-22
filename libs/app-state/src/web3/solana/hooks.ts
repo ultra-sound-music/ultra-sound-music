@@ -2,16 +2,16 @@ import { useEffect } from 'react';
 import { useRecoilCallback, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import logger from '@usm/util-logger';
+import { TransactionInterface } from '@usm/sol-client';
 
 import { useModal, useShowNotification } from '../../ui';
+
 import { AccountAddress } from './types';
 import {
   useActiveAuction,
-  useAuction,
-  useAuctionLoadingState,
-  UpdateAuctionCallbackArgs
+  auctionDataByAddressState,
+  auctionLoadingByAddressState
 } from './models/auctions';
-
 import {
   networkStatusState,
   accountAddressState,
@@ -29,6 +29,13 @@ import {
   redeemParticipationBid,
   cancelBid
 } from './api';
+
+export interface UpdateAuctionMessaging {
+  processingMessage: string;
+  successMessage: string;
+  confirmedMessage: string;
+  errorMessage: string;
+}
 
 export function useConnect() {
   const showNotification = useShowNotification();
@@ -92,174 +99,186 @@ export function useGetWalletBalance() {
   return walletBalance;
 }
 
-export function useLoadAuction(auctionAddress: AccountAddress) {
-  const [loadingState, setLoadingState] = useAuctionLoadingState(auctionAddress);
-  const [auction, setAuction] = useAuction(auctionAddress);
+export function useLoadAuction() {
+  return useRecoilCallback(
+    ({ snapshot, set }) =>
+      async (auctionAddress: AccountAddress, forceUpdate = false) => {
+        if (!auctionAddress) {
+          return;
+        }
 
-  const loadAuction = useRecoilCallback(() => async () => {
-    if (!auctionAddress) {
-      return;
-    }
+        const auctionAtom = auctionDataByAddressState(auctionAddress);
+        const auction = await snapshot.getPromise(auctionAtom);
+        if (auction && !forceUpdate) {
+          return;
+        }
 
-    try {
-      setLoadingState('loading');
-      const auction = await getAuction(auctionAddress);
-      setAuction(auction);
-      setLoadingState('loaded');
-    } catch (error) {
-      logger.error(error);
-      setLoadingState('errored');
-    }
-  });
+        const auctionLoadingStateAtom = auctionLoadingByAddressState(auctionAddress);
+        set(auctionLoadingStateAtom, 'loading');
+        try {
+          const newAuction = await getAuction(auctionAddress);
+          if (!newAuction) {
+            return;
+          }
 
-  return { loadAuction, auction, loadingState };
+          set(auctionAtom, newAuction);
+          set(auctionLoadingStateAtom, 'loaded');
+        } catch (error) {
+          logger.error(error);
+          set(auctionLoadingStateAtom, 'errored');
+        }
+      }
+  );
 }
 
 export function usePlaceBid() {
   const [activeAuctionAddress] = useActiveAuction();
-  const [_, setLoadingState] = useAuctionLoadingState(activeAuctionAddress || '');
-  const { loadAuction, auction } = useLoadAuction(activeAuctionAddress || '');
+  const loadAuction = useLoadAuction();
   const { showModal } = useModal();
   const showNotification = useShowNotification();
 
-  return useRecoilCallback(() => async (amountInSol: number) => {
-    if (!activeAuctionAddress || !auction) {
-      logger.error('Unable to place bid: auction not loaded');
-      return;
-    }
+  return useRecoilCallback(
+    ({ snapshot, set }) =>
+      async (auctionAddress: AccountAddress, amountInSol: number) => {
+        const auctionAtom = auctionDataByAddressState(auctionAddress);
 
-    const currentBid = auction?.bids[0]?.bid || 0;
-    if (amountInSol <= currentBid) {
-      showModal({
-        withCloseX: false,
-        body: 'Bid must be greater than the top bid'
-      });
-      return;
-    }
+        const auction = await snapshot.getPromise(auctionAtom);
+        if (!activeAuctionAddress || !auction) {
+          logger.error('Unable to place bid: auction not loaded');
+          return;
+        }
 
-    showNotification({
-      type: 'processing',
-      message: 'Your bid is being processed'
-    });
+        const currentBid = auction?.bids[0]?.bid || 0;
+        if (amountInSol <= currentBid) {
+          showModal({
+            withCloseX: false,
+            body: 'Bid must be greater than the top bid'
+          });
+          return;
+        }
 
-    try {
-      setLoadingState('loading');
-      const { confirmTransaction } = await placeBid(activeAuctionAddress, amountInSol);
+        showNotification({
+          type: 'processing',
+          message: 'Your bid is being processed'
+        });
 
-      showNotification({
-        title: 'Success',
-        message: "Your bid's been submitted. Waiting for confirmation",
-        type: 'processing'
-      });
+        const auctionLoadingAtom = auctionLoadingByAddressState(auctionAddress);
+        try {
+          set(auctionLoadingAtom, 'loading');
+          const { confirmTransaction } = await placeBid(activeAuctionAddress, amountInSol);
 
-      await confirmTransaction();
-      setLoadingState('loaded');
-      showNotification({
-        title: 'Success',
-        message: 'Your bid has been recorded',
-        type: 'success'
-      });
-    } catch (error) {
-      logger.error(error);
-      setLoadingState('errored');
-      showNotification({
-        title: 'Error',
-        message: 'Unable to confirm bid. Please try again',
-        // @TODO
-        // It is actually unknown if it succeeded or failed.
-        // User should be shown the txid and instructed to check the explorer
-        type: 'error'
-      });
-    }
+          showNotification({
+            title: 'Success',
+            message: "Your bid's been submitted. Waiting for confirmation",
+            type: 'processing'
+          });
 
-    loadAuction();
-  });
+          await confirmTransaction();
+          set(auctionLoadingAtom, 'loaded');
+          showNotification({
+            title: 'Success',
+            message: 'Your bid has been recorded',
+            type: 'success'
+          });
+        } catch (error) {
+          logger.error(error);
+          set(auctionLoadingAtom, 'errored');
+          showNotification({
+            title: 'Error',
+            message: 'Unable to confirm bid. Please try again',
+            // @TODO
+            // It is actually unknown if it succeeded or failed.
+            // User should be shown the txid and instructed to check the explorer
+            type: 'error'
+          });
+        }
+
+        loadAuction(auctionAddress, true);
+      }
+  );
 }
 
-export async function updateAuctionCallback({
-  updater,
-  processingMessage,
-  successMessage,
-  confirmedMessage,
-  errorMessage,
-  loadAuction,
-  showNotification
-}: UpdateAuctionCallbackArgs) {
-  showNotification({
-    type: 'processing',
-    message: processingMessage
-  });
-
-  try {
-    const { confirmTransaction } = await updater();
-
-    showNotification({
-      title: 'Success',
-      message: successMessage,
-      type: 'processing'
-    });
-
-    await loadAuction(true);
-    await confirmTransaction();
-
-    showNotification({
-      title: 'Success',
-      message: confirmedMessage,
-      type: 'success',
-      timeout: 3500
-    });
-  } catch (error) {
-    logger.error(error);
-    showNotification({
-      title: 'Error',
-      message: errorMessage,
-      type: 'error'
-    });
-  }
-}
-
-export function useUpdateAuction(auctionAddress: AccountAddress) {
+export function useUpdateAuction() {
   const showNotification = useShowNotification();
-  const { loadAuction } = useLoadAuction(auctionAddress);
+  const loadAuction = useLoadAuction();
 
   // We return a function, that calls a function that takes a function as an argument and returns a function ¯\_(ツ)_/¯
   // Sorry, this is confusing AF but the tradeoff is it centralizes all this logic in one place
-  return (args: Omit<UpdateAuctionCallbackArgs, 'showNotification' | 'loadAuction'>) =>
-    useRecoilCallback(() => async () => {
-      updateAuctionCallback({ showNotification, loadAuction, ...args });
-    });
+  return useRecoilCallback(
+    () =>
+      async (
+        updater: (...args: [string]) => Promise<TransactionInterface>,
+        [accountAddress, ...args]: [string],
+        { processingMessage, successMessage, confirmedMessage, errorMessage }
+      ) => {
+        showNotification({
+          type: 'processing',
+          message: processingMessage
+        });
+
+        try {
+          const { confirmTransaction } = await updater(accountAddress, ...args);
+
+          showNotification({
+            title: 'Success',
+            message: successMessage,
+            type: 'processing'
+          });
+
+          await loadAuction(accountAddress, true);
+          await confirmTransaction();
+
+          showNotification({
+            title: 'Success',
+            message: confirmedMessage,
+            type: 'success',
+            timeout: 3500
+          });
+        } catch (error) {
+          logger.error(error);
+          showNotification({
+            title: 'Error',
+            message: errorMessage,
+            type: 'error'
+          });
+        }
+      }
+  );
 }
 
-export function useRedeemBid(auctionAddress: AccountAddress) {
-  const updateAuction = useUpdateAuction(auctionAddress);
-
-  return updateAuction({
-    updater: () => redeemBid(auctionAddress),
+export function useRedeemBid() {
+  const updateAuction = useUpdateAuction();
+  const messaging = {
     processingMessage: 'Redeeming your NFT.',
     successMessage: 'Redemption Approved.  Waiting for final confirmation...',
     confirmedMessage: 'Your NFT has been redeemed!',
     errorMessage: 'Failed to redeem your NFT.  Please try again'
-  });
+  };
+
+  return (auctionAddress: AccountAddress) => updateAuction(redeemBid, [auctionAddress], messaging);
 }
 
-export function useRedeemParticipationBid(auctionAddress: AccountAddress) {
-  const updateAuction = useUpdateAuction(auctionAddress);
-  return updateAuction({
-    updater: () => redeemParticipationBid(auctionAddress),
+export function useRedeemParticipationBid() {
+  const updateAuction = useUpdateAuction();
+  const messaging = {
     processingMessage: 'Redeeming your participation NFT',
     successMessage: 'Redemption Approved.  Waiting for final confirmation...',
     confirmedMessage: 'Your NFT has been redeemed!',
     errorMessage: 'Failed to redeem your NFT.  Please try again'
-  });
+  };
+
+  return (auctionAddress: AccountAddress) =>
+    updateAuction(redeemParticipationBid, [auctionAddress], messaging);
 }
 
-export function useRefundBid(auctionAddress: AccountAddress) {
-  const updateAuction = useUpdateAuction(auctionAddress);
-  return updateAuction({
-    updater: () => cancelBid(auctionAddress),
+export function useRefundBid() {
+  const updateAuction = useUpdateAuction();
+  const messaging = {
     processingMessage: 'Processing your refund',
     successMessage: 'Refund approved.  Waiting for final confirmation',
     confirmedMessage: 'Your refund has been confirmed.',
     errorMessage: 'Failed to refund your bid.  Please try again'
-  });
+  };
+
+  return (auctionAddress: AccountAddress) => updateAuction(cancelBid, [auctionAddress], messaging);
 }

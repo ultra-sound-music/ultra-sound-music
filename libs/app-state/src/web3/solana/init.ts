@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 
 import logger from '@usm/util-logger';
+import configs from '@usm/config';
+import { Cluster } from '@usm/sol-client';
 
 import { useAccountAddress, useNetworkStatus } from './models/wallet';
 import { useConnect } from './hooks';
@@ -24,12 +26,12 @@ export default function () {
       });
 
     try {
-      initConnection();
+      initConnection(configs.solanaCluster as Cluster);
     } catch (error) {
       logger.error('Failed to initialize Solana Connection state,', error);
     }
 
-    initAuctions().then((auctionAddresses) => {
+    initAuctions(configs.auctionOwner, configs.mplAuctionPubKeys).then((auctionAddresses) => {
       if (auctionAddresses) {
         setActiveAuction(auctionAddresses[0]);
       }

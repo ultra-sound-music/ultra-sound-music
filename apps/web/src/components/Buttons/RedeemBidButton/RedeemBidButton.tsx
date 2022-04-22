@@ -6,10 +6,10 @@ export interface EndedAuctionButtonProps {
 }
 
 export function EndedAuctionButton({ auction }: EndedAuctionButtonProps) {
-  const redeemBid = useRedeemBid(auction);
+  const redeemBid = useRedeemBid();
 
   function onClick() {
-    redeemBid();
+    redeemBid(auction);
   }
 
   return (

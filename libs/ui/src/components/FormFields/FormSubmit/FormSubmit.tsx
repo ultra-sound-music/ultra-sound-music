@@ -1,4 +1,4 @@
-import { useContext, ReactNode, useEffect } from 'react';
+import { useContext, ReactNode } from 'react';
 
 import Button from '../../Button/Button';
 import { FormContext } from '../../../util/Forms/FormContext';

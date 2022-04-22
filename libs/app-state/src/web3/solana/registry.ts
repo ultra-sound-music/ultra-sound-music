@@ -9,7 +9,6 @@ import {
   Connection,
   Store
 } from '@usm/sol-client';
-import config, { MissingConfigError } from '@usm/config';
 import logger from '@usm/util-logger';
 
 import { AccountAddress } from './types';
@@ -60,12 +59,7 @@ export async function getWallet() {
 }
 
 export let connection: Connection;
-export function initConnection() {
-  const cluster = config.solanaCluster as Cluster;
-  if (!cluster) {
-    throw new MissingConfigError('solanaCluster');
-  }
-
+export function initConnection(cluster: Cluster) {
   connection = createRpcConnection(cluster);
   return connection;
 }
@@ -78,10 +72,11 @@ export function getConnection() {
   return connection;
 }
 
-export async function initAuctions() {
+export async function initAuctions(
+  auctionOwner: AccountAddress,
+  auctionAddresses: AccountAddress[]
+) {
   const connection = getConnection();
-  const auctionAddresses = config.mplAuctionPubKeys;
-  const ownerAddress = config.auctionOwner;
 
   if (auctionAddresses.length) {
     logger.info('Auctions are enabled');
@@ -90,11 +85,11 @@ export async function initAuctions() {
     return;
   }
 
-  if (!ownerAddress) {
+  if (!auctionOwner) {
     throw new Error('You must configure an auction owner.');
   }
 
-  const auctionOwnerPk = new PublicKey(ownerAddress);
+  const auctionOwnerPk = new PublicKey(auctionOwner);
   const storePkPromise = Store.getPDA(auctionOwnerPk);
 
   // Set the getters up synchronously so they become immediately available
@@ -112,7 +107,7 @@ export async function initAuctions() {
 
   if (mismatchedAuctions.length) {
     throw Error(
-      `Auction owner mismatch. Wallet ${ownerAddress} does not own the following addresses: ${mismatchedAuctions}`
+      `Auction owner mismatch. Wallet ${auctionOwner} does not own the following addresses: ${mismatchedAuctions}`
     );
   }
 

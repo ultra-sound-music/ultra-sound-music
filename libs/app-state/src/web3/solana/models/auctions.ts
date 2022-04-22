@@ -1,9 +1,7 @@
-import { atom, useRecoilState, useRecoilValue, atomFamily } from 'recoil';
-import { USMAuctionData, TransactionInterface } from '@usm/sol-client';
+import { atom, useRecoilState, useRecoilValue, atomFamily, selectorFamily } from 'recoil';
+import { USMAuctionData } from '@usm/sol-client';
 import configs from '@usm/config';
 
-import { NotificationState } from '../../../ui';
-import { getAuctionAddresses } from '../registry';
 import { AccountAddress } from '../types';
 
 export interface IWeb3State {
@@ -18,28 +16,30 @@ export interface IWalletState {
 }
 
 export type IAuctionIsLoading = boolean;
-
 export type IUpdateNetworkStateProps = Partial<IWeb3State>;
-
-export interface UpdateAuctionCallbackArgs {
-  updater(): Promise<TransactionInterface>;
-  processingMessage: string;
-  successMessage: string;
-  confirmedMessage: string;
-  errorMessage: string;
-  loadAuction(b: boolean): Promise<void>;
-  showNotification(args: NotificationState): void;
-}
-
 export type LoadingState = 'ready' | 'loading' | 'loaded' | 'errored' | undefined;
 
-export const auctionDataState = atomFamily<USMAuctionData | undefined, AccountAddress | undefined>({
-  key: 'solAuction/auctionDataState',
+export const auctionDataByAddressState = atomFamily<USMAuctionData, AccountAddress>({
+  key: 'solAuction/auctionDataByAddressState',
   default: undefined
 });
 
-export const auctionLoadingState = atomFamily<LoadingState, AccountAddress | undefined>({
-  key: 'solAuction/auctionLoadingStateFamily',
+export const auctionDataState = selectorFamily<
+  [USMAuctionData | undefined, LoadingState],
+  AccountAddress
+>({
+  key: 'solAuction/auctionDataState',
+  get:
+    (auctionAddress: AccountAddress) =>
+    ({ get }) =>
+      [
+        get(auctionDataByAddressState(auctionAddress)),
+        get(auctionLoadingByAddressState(auctionAddress))
+      ]
+});
+
+export const auctionLoadingByAddressState = atomFamily<LoadingState, AccountAddress>({
+  key: 'solAuction/auctionLoadingByAddress',
   default: undefined
 });
 
@@ -59,11 +59,15 @@ export const activeAuctionState = atom<AccountAddress>({
 });
 
 export function useAuction(auctionAddress: AccountAddress) {
-  return useRecoilState(auctionDataState(auctionAddress));
+  return useRecoilValue(auctionDataState(auctionAddress));
+}
+
+export function useSetAuction(auctionAddress: AccountAddress) {
+  return useRecoilValue(auctionDataByAddressState(auctionAddress));
 }
 
 export function useAuctionLoadingState(auctionAddress: AccountAddress) {
-  return useRecoilState(auctionLoadingState(auctionAddress));
+  return useRecoilState(auctionDataByAddressState(auctionAddress));
 }
 
 export function useSelectedAuction() {

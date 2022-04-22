@@ -6,10 +6,10 @@ export interface RedeemParticipationButtonProps {
 }
 
 export function RedeemParticipationButton({ auction }: RedeemParticipationButtonProps) {
-  const redeemToken = useRedeemParticipationBid(auction);
+  const redeemToken = useRedeemParticipationBid();
 
   function onClick() {
-    redeemToken();
+    redeemToken(auction);
   }
 
   return (

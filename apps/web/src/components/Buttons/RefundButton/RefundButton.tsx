@@ -6,10 +6,10 @@ export interface RefundButtonProps {
 }
 
 export function EndedAuctionButton({ auction }: RefundButtonProps) {
-  const refundBid = useRefundBid(auction);
+  const refundBid = useRefundBid();
 
   function onClick() {
-    refundBid();
+    refundBid(auction);
   }
 
   return (

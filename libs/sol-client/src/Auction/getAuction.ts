@@ -27,7 +27,7 @@ export type USMBidData = {
 
 export type NftData = {
   pubKey: PublicKey;
-  metadata: any;
+  metadata: unknown;
 };
 
 export type USMAuctionData = {
@@ -64,10 +64,13 @@ export const transformAuctionData = async (
   const vault = await Vault.load(connection, new PublicKey(auctionManager.data.vault));
   const boxes = await vault.getSafetyDepositBoxes(connection);
 
-  // The primary NFT will not always be the first in the array of boxes. Maybe "order" will be reliable?
-  // The participation NFT, *I think*, is the one with the highest order (you can have > 1 non-participation NFTs)
-  const primaryBox = boxes.find((box) => box.data.order === 0);
-  const participationBox = boxes.find((box) => box.data.order === Math.min(1, boxes.length - 1));
+  // The NFTs inside the safetyDepositBox array are not in any particular order.
+  // Instead we have to rely on each box's "order" property.
+  // The participation NFT, *I think*, is the one with the highest order (e.g. you can have > 1 non-participation NFTs)
+  const primaryNftOrder = 0;
+  const participationNftOrder = Math.min(1, boxes.length - 1);
+  const primaryBox = boxes.find((box) => box.data.order === primaryNftOrder);
+  const participationBox = boxes.find((box) => box.data.order === participationNftOrder);
 
   if (!primaryBox) {
     return;
@@ -120,11 +123,11 @@ export const transformAuctionData = async (
       if (auctionState === AuctionStateEnum.Ended) {
         const hasBeenRedeemed =
           bidder?.toBase58() === data.bidderPubkey && bidderRedemptionTicket
-            ? hasRedeemedBid(bidderRedemptionTicket, 0)
+            ? hasRedeemedBid(bidderRedemptionTicket, primaryNftOrder)
             : undefined;
         const hasRedeemedParticipationToken =
           bidder?.toBase58() === data.bidderPubkey && bidderRedemptionTicket
-            ? hasRedeemedBid(bidderRedemptionTicket, Math.min(1, boxes.length - 1))
+            ? hasRedeemedBid(bidderRedemptionTicket, participationNftOrder)
             : undefined;
         return {
           hasBeenRedeemed,
