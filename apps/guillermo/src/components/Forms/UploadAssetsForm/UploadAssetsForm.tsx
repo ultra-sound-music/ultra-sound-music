@@ -72,8 +72,8 @@ export function UploadAssetsForm({ address }: UploadAssetsFormProps) {
   }
 
   const [arweaveNetwork] = arweave.useNetwork();
-  const [, setUploadedImageUrl] = useState<string>();
-  const [, setUploadedMetadataUrl] = useState<string>();
+  const [imageUrl, setUploadedImageUrl] = useState<string>();
+  const [metadataUrl, setUploadedMetadataUrl] = useState<string>();
   const [nftImage, setNftImage] = useState<Blob>();
   const [nftMetadata, setNftMetadata] = useState<Blob>();
   const upload = arweave.useUpload();
@@ -110,10 +110,12 @@ export function UploadAssetsForm({ address }: UploadAssetsFormProps) {
 
         {isConnected && (
           <FormSubmit name='mint' isFormDisabled={!enableMint}>
-            Mint
+            Upload
           </FormSubmit>
         )}
       </Form>
+      <div>image: {imageUrl}</div>
+      <div>metadata: {metadataUrl}</div>
     </div>
   );
 }

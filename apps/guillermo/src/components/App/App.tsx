@@ -1,8 +1,9 @@
 import isNil from 'lodash/isNil';
 
-import { Callout, Col, Grid, Link, SiteFooter, SiteHeader } from '@usm/ui';
+import { Col, Grid, Link, SiteFooter, SiteHeader } from '@usm/ui';
 import logo from '@usm/assets/img/logo.png';
 import { SolanaButton, Modal, Notification } from '@usm/components';
+import configs from '@usm/config';
 import { useAppInit, arweave, solana } from '@usm/app-state';
 
 import Tokens from '../Tokens/Tokens';
@@ -11,19 +12,35 @@ import MintNFTForm from '../Forms/MintNFTForm/MintNFTForm';
 
 import styles from './App.scss';
 import UploadAssetsForm from '../Forms/UploadAssetsForm/UploadAssetsForm';
-import { RiFileCopyLine } from 'react-icons/ri';
+import { RiAddCircleLine, RiFileCopyLine } from 'react-icons/ri';
 import { getAccountUrl } from '@usm/sol-client';
 
 export function App() {
+  async function addAR() {
+    const host = `${configs.arweaveProtocol}://${configs.arweaveHost}:${configs.arweavePort}`;
+    const newBalanceResponse = await fetch(
+      `${host}/mint/${arweaveAccount}/${arweave.WINSTONS_PER_AR * 1}`
+    );
+    await fetch(`${host}/mine`);
+    const newBalanceInWinstons = await newBalanceResponse.text();
+    setArweaveBalance(newBalanceInWinstons + '');
+  }
+
   useAppInit({ logo });
 
   const [solanaAccount] = solana.useAccountAddress();
   const [solanaBalance] = solana.useAccountBalance();
   const arweaveBalance = arweave.useAccountBalance();
-  const [arweaveAccount] = arweave.useAccountAddress();
+  const setArweaveBalance = arweave.useSetAccountBalance();
+  const [arweaveAddress] = arweave.useAccountAddress();
+  const [arweaveNetworkStatus] = arweave.useNetworkStatus();
+  const arweaveIsConnected = arweaveNetworkStatus === 'CONNECTED';
+  const arweaveAccount = arweaveIsConnected ? arweaveAddress : undefined;
 
+  const isUsingLocalArweave = configs.arweaveHost === 'localhost';
   const solBalance = isNil(solanaBalance) ? undefined : `${solanaBalance}  SOL`;
-  const arBalance = isNil(arweaveBalance) ? undefined : `${arweaveBalance}  AR`;
+  const arBalance =
+    !isNil(arweaveBalance) && arweaveIsConnected ? `${arweaveBalance}  AR` : undefined;
 
   return (
     <div className={styles.App}>
@@ -51,7 +68,12 @@ export function App() {
                   <div className={styles.accountAddress}>
                     <div>Arweave: {arweaveAccount}</div> {arweaveAccount && <RiFileCopyLine />}
                   </div>
-                  <div>Balance: {arBalance}</div>
+                  <div className={styles.accountBalance}>
+                    Balance: {arBalance}{' '}
+                    {arBalance && isUsingLocalArweave && (
+                      <RiAddCircleLine onClick={addAR} className={styles.addAR} />
+                    )}
+                  </div>
                 </div>
               </div>
               <UploadAssetsForm />

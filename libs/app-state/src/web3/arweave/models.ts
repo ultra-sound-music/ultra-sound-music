@@ -27,7 +27,7 @@ export type AccountAddress = string;
 export type AccountBalanceInWinstons = string;
 export type AccountBalance = number;
 
-export const WINSTONS_PER_SOL = 1000000000000;
+export const WINSTONS_PER_AR = 1000000000000;
 
 const accountAddressState = atom<AccountAddress>({
   key: 'arweaveAccountAddressState',
@@ -40,10 +40,12 @@ const accountBalanceInWinstonsState = atom<AccountBalanceInWinstons>({
   default: ''
 });
 
-const accountBalanceState = selector<string | number>({
+const accountBalanceState = selector<number>({
   key: 'arweaveAccountBalanceState',
   // @TODO make a smarter conversion
-  get: ({ get }) => +get(accountBalanceInWinstonsState) * WINSTONS_PER_SOL
+  get: ({ get }) => +get(accountBalanceInWinstonsState) / WINSTONS_PER_AR,
+  set: ({ set }, newARBalance) =>
+    set(accountBalanceInWinstonsState, (newARBalance as number) * WINSTONS_PER_AR + '')
 });
 
 const networkStatusState = atom<NetworkStatus>({

@@ -65,6 +65,17 @@
   }
 }
 
+.accountBalance {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 24px;
+}
+
+.addAR {
+  cursor: pointer;
+}
+
 .assetsGrid {
   grid-auto-flow: row;
 }

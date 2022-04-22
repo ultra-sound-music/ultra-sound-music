@@ -1,5 +1,4 @@
 import { Form, InputListField, InputField, FormSubmit } from '@usm/ui';
-import styles from './CreateAuctionForm.scss';
 
 export function CreateAuctionForm() {
   function onSubmit() {
@@ -7,7 +6,7 @@ export function CreateAuctionForm() {
   }
 
   return (
-    <div className={styles.CreateAuctionForm}>
+    <div>
       <Form onSubmit={onSubmit}>
         <InputListField name='creators' label='creators' />
 
