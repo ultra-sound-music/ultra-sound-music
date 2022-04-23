@@ -1,5 +1,5 @@
 import { StrictMode, Suspense } from 'react';
-import * as ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
@@ -9,7 +9,8 @@ import '@usm/styles/global.scss';
 
 import App from './components/App/App';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(
   <StrictMode>
     <BrowserRouter>
       <RecoilRoot>
@@ -18,6 +19,5 @@ ReactDOM.render(
         </Suspense>
       </RecoilRoot>
     </BrowserRouter>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 );

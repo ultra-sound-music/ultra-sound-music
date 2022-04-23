@@ -23,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/arweave"],
       "options": {
-        "jestConfig": "libs/arweave/jest.config.js",
+        "jestConfig": "libs/arweave/jest.config.ts",
         "passWithNoTests": true
       }
     }

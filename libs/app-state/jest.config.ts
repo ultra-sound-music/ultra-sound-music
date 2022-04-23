@@ -1,6 +1,6 @@
 module.exports = {
   displayName: 'app-state',
-  preset: '../../jest.preset.js',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json'
@@ -10,5 +10,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/app-state'
+  coverageDirectory: '../../coverage/libs/app-state',
+  preset: '../../jest.preset.ts'
 };

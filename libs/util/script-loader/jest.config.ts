@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'store',
-  preset: '../../jest.preset.js',
+  displayName: 'util-script-loader',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json'
@@ -10,5 +10,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/store'
+  coverageDirectory: '../../../coverage/libs/util/script-loader',
+  preset: '../../../jest.preset.ts'
 };

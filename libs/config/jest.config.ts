@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'sol-client',
-  preset: '../../jest.preset.js',
+  displayName: 'config',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json'
@@ -10,5 +10,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/sol-client'
+  coverageDirectory: '../../coverage/libs/config',
+  preset: '../../jest.preset.ts'
 };

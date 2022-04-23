@@ -100,8 +100,12 @@
         "production": {
           "buildTarget": "web:build:production",
           "hmr": false
+        },
+        "development": {
+          "buildTarget": "web:build:development"
         }
-      }
+      },
+      "defaultConfiguration": "development"
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -121,7 +125,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/web"],
       "options": {
-        "jestConfig": "apps/web/jest.config.js",
+        "jestConfig": "apps/web/jest.config.ts",
         "passWithNoTests": true
       }
     }

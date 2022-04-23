@@ -25,7 +25,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/audio-player"],
       "options": {
-        "jestConfig": "libs/audio-player/jest.config.js",
+        "jestConfig": "libs/audio-player/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -24,7 +24,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/util/web"],
       "options": {
-        "jestConfig": "libs/util/web/jest.config.js",
+        "jestConfig": "libs/util/web/jest.config.ts",
         "passWithNoTests": true
       }
     }

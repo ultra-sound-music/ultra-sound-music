@@ -35,7 +35,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/services/solanafm"],
       "options": {
-        "jestConfig": "libs/services/solanafm/jest.config.js",
+        "jestConfig": "libs/services/solanafm/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'audio-player',
-  preset: '../../jest.preset.js',
+  displayName: 'util-web',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json'
@@ -10,5 +10,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/audio-player'
+  coverageDirectory: '../../../coverage/libs/util/web',
+  preset: '../../../jest.preset.ts'
 };

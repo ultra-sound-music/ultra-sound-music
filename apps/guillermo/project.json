@@ -55,8 +55,12 @@
         "production": {
           "buildTarget": "guillermo:build:production",
           "hmr": false
+        },
+        "development": {
+          "buildTarget": "guillermo:build:development"
         }
-      }
+      },
+      "defaultConfiguration": "development"
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -69,7 +73,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/guillermo"],
       "options": {
-        "jestConfig": "apps/guillermo/jest.config.js",
+        "jestConfig": "apps/guillermo/jest.config.ts",
         "passWithNoTests": true
       }
     }

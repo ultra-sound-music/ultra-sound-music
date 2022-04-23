@@ -24,7 +24,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/sol-client"],
       "options": {
-        "jestConfig": "libs/sol-client/jest.config.js",
+        "jestConfig": "libs/sol-client/jest.config.ts",
         "passWithNoTests": true
       }
     }

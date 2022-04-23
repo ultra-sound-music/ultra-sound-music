@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'util-webStorage',
-  preset: '../../../jest.preset.js',
+  displayName: 'sol-client',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json'
@@ -10,5 +10,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../coverage/libs/util/webStorage'
+  coverageDirectory: '../../coverage/libs/sol-client',
+  preset: '../../jest.preset.ts'
 };
