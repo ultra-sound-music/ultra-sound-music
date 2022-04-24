@@ -1,5 +1,5 @@
 import { StrictMode, Suspense } from 'react';
-import * as ReactDOM from 'react-dom/client';
+import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import * as Sentry from '@sentry/react';
@@ -23,8 +23,7 @@ if (config.sentryIsEnabled) {
   });
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
+ReactDOM.render(
   <StrictMode>
     {/* @ts-expect-error - Temporary until this is fixed https://github.com/facebookexperimental/Recoil/pull/1718 */}
     <Sentry.ErrorBoundary fallback={<Borked />}>
@@ -37,5 +36,8 @@ root.render(
         </RecoilRoot>
       </BrowserRouter>
     </Sentry.ErrorBoundary>
-  </StrictMode>
+  </StrictMode>,
+  document.getElementById('root')
 );
+
+// reportWebVitals(logger.info);
