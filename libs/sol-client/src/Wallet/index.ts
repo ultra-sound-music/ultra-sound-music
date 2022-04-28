@@ -14,7 +14,9 @@ import { Wallet as MplWallet } from '@metaplex/js';
 
 export { MplWallet };
 
-export type Wallet = BaseMessageSignerWalletAdapter;
+export type Wallet = BaseMessageSignerWalletAdapter & {
+  publicKey: NonNullable<PublicKey>;
+};
 export type INetworkId = number;
 export type IPubKeyString = string;
 

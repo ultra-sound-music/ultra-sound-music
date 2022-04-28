@@ -1,142 +1,160 @@
-import { useState } from 'react';
-import {
-  FileInputField,
-  ImageInputField,
-  Form,
-  IFormValues,
-  FormSubmit,
-  IFieldValue,
-  IFieldName,
-  InputField,
-  SelectField
-} from '@usm/ui';
-import { arweave } from '@usm/app-state';
+import { PublicKey, Keypair } from '@solana/web3.js';
+import { Transaction } from '@usm/sol-client';
+import { useEffect, useState } from 'react';
+import { Button, Form, IFormValues, FormSubmit, InputField, CheckboxField } from '@usm/ui';
+import { solana } from '@usm/app-state';
+import configs from '@usm/config';
 
 import styles from './MintNFTForm.scss';
+import { TransactionsBatch } from '@metaplex/js/lib/utils/transactions-batch';
 
-export interface IMintNFTFormProps {
-  address?: string;
+export type MintNftResultData = {
+  mint: solana.AccountAddress;
+  metadata: solana.AccountAddress;
+  transaction?: Transaction;
+};
+
+export interface MintNFTFormProps {
+  metadataUrl?: string;
 }
 
-export async function validateMetadata(file: File, uploadedImageUrl?: string) {
-  const text = await file.text();
-  const json = JSON.parse(text);
+const { useNetworkStatus, useMintNft, useCreateProposal, getWallet } = solana;
 
-  console.log(`validating ${file.name}:`, file);
-  console.log('This is the json data:', json);
-  console.log('Updating the root and properties.files image path...');
-
-  json.image = uploadedImageUrl;
-  json.properties.files.unshift({
-    uri: uploadedImageUrl,
-    type: 'image/@TODO'
-  });
-
-  console.log('The json data has been updated: ', json);
-  return new File([JSON.stringify(json)], file.name, { lastModified: Date.now(), type: 'testing' });
+export async function validateMetadata() {
+  // THIS just needs to make sure the metadata has what we want before minting
 }
 
-export function MintNFTForm({ address }: IMintNFTFormProps) {
-  function onChange(fieldName: IFieldName, fieldValue: IFieldValue) {
-    if (fieldValue instanceof Blob && fieldValue?.size > 1000) {
-      if (fieldName === 'image') {
-        setNftImage(fieldValue);
-      } else if (fieldName === 'metadata') {
-        setNftMetadata(fieldValue);
-      }
-    }
+export function MintNFTForm({ metadataUrl }: MintNFTFormProps) {
+  function loadImageUrl(metadata: string) {
+    return fetch(metadata)
+      .then((response) => response.json())
+      .then((metadata) => {
+        const url = metadata.image;
+        const isInFilesArray =
+          url &&
+          typeof url === 'string' &&
+          metadata?.properties?.files?.find((f: { uri: string }) => f.uri === url);
+
+        if (isInFilesArray) {
+          return url;
+        } else {
+          throw new Error('Invalid metadata');
+        }
+      });
   }
 
-  async function onSubmit({ image, metadata }: IFormValues, buttonName: string) {
-    console.log();
+  async function onExecuteTransaction() {}
 
-    let uploadedImage;
-    if (image instanceof Blob) {
-      const imageBuffer = await image?.arrayBuffer();
-      const uploadResults = await upload(imageBuffer);
-      uploadedImage = uploadResults.url;
-      // uploadedImage =
-      //   'https://arweave.net:443/YnfPPAodKbrGG687wXipHOQ_aZcTQ3btCbEXgtGIWaI?ext=jpeg';
-      // // https://arweave.net:443/YnfPPAodKbrGG687wXipHOQ_aZcTQ3btCbEXgtGIWaI?ext=jpeg
-      setUploadedImageUrl(uploadedImage);
+  async function onSubmit({
+    nftOwner,
+    daoTreasury,
+    metadataUrl,
+    isParticipationNft = false
+  }: IFormValues) {
+    setIsProcessing(true);
+    const wallet = await getWallet();
+
+    // test with my wallet instead
+    daoTreasury = wallet.publicKey.toBase58();
+
+    const { mint, metadata, transaction } = await mintNft(
+      metadataUrl as string,
+      nftOwner as string,
+      daoTreasury as string,
+      isParticipationNft as boolean
+    );
+
+    setNft(mint);
+    setMetadata(metadata);
+    setTransaction(JSON.stringify(transaction));
+
+    if (!daoTreasury) {
+      setIsProcessing(false);
+      return;
     }
 
-    // @Todo this should only happen AFTER the image has successfully uploaded
-    if (metadata instanceof File) {
-      const newMetadata = await validateMetadata(metadata, uploadedImage);
-      const buffer = await newMetadata.arrayBuffer();
-      const uploadResults = await upload(buffer);
-      setUploadedMetadataUrl(uploadResults.url);
-    }
+    console.log('daoTreasury: ', daoTreasury);
+    console.log('nftOwner: ', nftOwner);
+    console.log('new mint: ', mint);
+
+    const newProposalPk = await createProposal(
+      daoTreasury as string,
+      nftOwner as string,
+      transaction as TransactionsBatch,
+      'Mint an NFT',
+      `Proposal to mint NFT: [mint](https://explorer.solana.com/address/${mint}?cluster=devnet) * [metadata url](${metadataUrl})`
+    );
+
+    console.log('new proposal: ', newProposalPk?.toBase58());
+    console.log(
+      'new mint address: ',
+      (transaction as TransactionsBatch)?.signers?.[0].publicKey.toBase58()
+    );
+    console.log(
+      'new mint secret: ',
+      (transaction as TransactionsBatch)?.signers?.[0].secretKey.toString()
+    );
+
+    setProposalPk(newProposalPk);
+    setSigners(transaction ? (transaction as TransactionsBatch).signers : undefined);
+    setIsProcessing(false);
   }
 
-  const [arweaveNetwork] = arweave.useNetwork();
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>();
-  const [uploadedMetadataUrl, setUploadedMetadataUrl] = useState<string>();
-  const [nftImage, setNftImage] = useState<Blob>();
-  const [nftMetadata, setNftMetadata] = useState<Blob>();
-  const upload = arweave.useUpload();
+  const [networkStatus] = useNetworkStatus();
+  const mintNft = useMintNft();
+  const createProposal = useCreateProposal();
 
-  const isConnected = arweaveNetwork.status === 'CONNECTED';
-  const enableMint = !!nftImage && !!nftMetadata;
+  useEffect(() => {
+    if (metadataUrl) {
+      loadImageUrl(metadataUrl).then((url) => setImageUrl(url));
+    }
+  }, [metadataUrl]);
+
+  const [proposalPk, setProposalPk] = useState<PublicKey>();
+  const [signers, setSigners] = useState<Keypair[]>();
+  const [isProcessing, setIsProcessing] = useState<boolean>();
+  const [imageUrl, setImageUrl] = useState<string>();
+  const [nft, setNft] = useState<string>();
+  const [metadata, setMetadata] = useState<string>();
+  const [transaction, setTransaction] = useState<string>();
+
+  const ready = !!metadataUrl && !!imageUrl;
+  const isConnected = networkStatus === 'CONNECTED';
+  const isFormDisabled = !ready || !isConnected;
 
   return (
     <div className={styles.MintNFTForm}>
-      <Form onSubmit={onSubmit} onChange={onChange}>
+      <Form onSubmit={onSubmit} isLoading={isProcessing}>
         <h3>NFT Details</h3>
-        <SelectField name='selectAuction' title='Select the NFT you want to auction'></SelectField>
-
+        <CheckboxField name='isParticipationNft' label='is participation nft?' />
         <InputField
-          name='imageUrl'
+          name={ready ? 'imageUrl' : ''}
           label='image Arweave url'
-          defaultValue='https://alkdsjfakdsjfald'
-          // icon={<Ri24HoursFill />}
+          defaultValue={imageUrl}
+          required={true}
+          readOnly={true}
         />
 
         <InputField
-          name='metadataUrl'
+          name={ready ? 'metadataUrl' : ''}
           label='metadata Arweave url'
-          value={uploadedMetadataUrl}
+          defaultValue={metadataUrl}
+          required={true}
           readOnly={true}
         />
 
-        <InputField
-          name='nft'
-          label='nft address'
-          value={uploadedMetadataUrl}
-          readOnly={true}
-          disabled={true}
-        />
-        <InputField
-          name='nftMetadata'
-          label='nft metadata address'
-          value={uploadedMetadataUrl}
-          readOnly={true}
-          disabled={true}
-        />
+        <InputField name={'nftOwner'} label='NFT Owner' defaultValue={configs.jamBotsGovernance} />
 
-        <InputField
-          name='participationNft'
-          label='participation nft address'
-          readOnly={true}
-          disabled={true}
-        />
-        <InputField
-          name='participationMetadata'
-          label='participation metadata address'
-          value={uploadedMetadataUrl}
-          readOnly={true}
-          disabled={true}
-        />
-        <InputField
-          name='alternateAccount'
-          label='alternative account owner'
-          value={uploadedMetadataUrl}
-          readOnly={true}
-          disabled={true}
-        />
-        <FormSubmit isFormDisabled={true}>Create NFT</FormSubmit>
+        <InputField name={'daoTreasury'} label='DAO Treasury' defaultValue={configs.daoTreasury} />
+
+        <FormSubmit isFormDisabled={isFormDisabled}>Create NFT</FormSubmit>
       </Form>
+      <div>
+        <Button onClick={onExecuteTransaction}>Execute Transaction</Button>
+        <div>mint: {nft}</div>
+        <div>metadata: {metadata}</div>
+        <div>transaction: {transaction}</div>
+      </div>
     </div>
   );
 }

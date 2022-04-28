@@ -4089,6 +4089,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@solana/spl-governance@npm:^0.0.34":
+  version: 0.0.34
+  resolution: "@solana/spl-governance@npm:0.0.34"
+  dependencies:
+    "@solana/web3.js": ^1.22.0
+    bignumber.js: ^9.0.1
+    bn.js: ^5.1.3
+    borsh: ^0.3.1
+    bs58: ^4.0.1
+    superstruct: ^0.15.2
+  checksum: 464fc531df18f63fed95f9571f8eee7eb037ba259168cc9f03289b0960e521ed342487a32e465bd1fb1337e55303f5fb9c1d4f00f69c06c5e683e483a28b8f12
+  languageName: node
+  linkType: hard
+
 "@solana/spl-token@npm:^0.1.8":
   version: 0.1.8
   resolution: "@solana/spl-token@npm:0.1.8"
@@ -4337,6 +4351,28 @@ __metadata:
     superstruct: ^0.14.2
     tweetnacl: ^1.0.0
   checksum: 3bf236c3adc939f832d3a3c4a7a8e0c638d9e7a5b0f01d07850138ceed65309abf2b7c496f7434c725e5219e460324376acc187ba6101413157d61377d06a46b
+  languageName: node
+  linkType: hard
+
+"@solana/web3.js@npm:^1.22.0":
+  version: 1.39.1
+  resolution: "@solana/web3.js@npm:1.39.1"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    "@ethersproject/sha2": ^5.5.0
+    "@solana/buffer-layout": ^4.0.0
+    bn.js: ^5.0.0
+    borsh: ^0.7.0
+    bs58: ^4.0.1
+    buffer: 6.0.1
+    cross-fetch: ^3.1.4
+    jayson: ^3.4.4
+    js-sha3: ^0.8.0
+    rpc-websockets: ^7.4.2
+    secp256k1: ^4.0.2
+    superstruct: ^0.14.2
+    tweetnacl: ^1.0.0
+  checksum: 40d2f4f629eff06726324e751d0a8e9f08c9c6fcdb3b4e2a62707e23b24046ee8659545686a2ad7a29ea781d9188e77c13f32b958d82d28cf1c5e772dd1a91a4
   languageName: node
   linkType: hard
 
@@ -5936,28 +5972,6 @@ __metadata:
     lz-string: ^1.4.4
     pretty-format: ^27.0.2
   checksum: 880f1872b9949800d4444e3bdbd03df86d6f41ec7c27136dff1da29e87d2df2d7ee904afcdf895ffce351c25bd12119117eae023354d50e707ad56d43b2ed3ed
-  languageName: node
-  linkType: hard
-
-"@testing-library/react-hooks@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@testing-library/react-hooks@npm:8.0.0"
-  dependencies:
-    "@babel/runtime": ^7.12.5
-    react-error-boundary: ^3.1.0
-  peerDependencies:
-    "@types/react": ^16.9.0 || ^17.0.0
-    react: ^16.9.0 || ^17.0.0
-    react-dom: ^16.9.0 || ^17.0.0
-    react-test-renderer: ^16.9.0 || ^17.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    react-dom:
-      optional: true
-    react-test-renderer:
-      optional: true
-  checksum: f45bd06601bf1d00e375c3d945b0e54b4d997b18402c45711deada7e8c4a8f569fe283973e6786c9ecd55e4bd01a43bd42546a2924453065880abf4b13dbafdb
   languageName: node
   linkType: hard
 
@@ -9043,7 +9057,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:^5.0.0, bn.js@npm:^5.1.0, bn.js@npm:^5.1.1, bn.js@npm:^5.1.2, bn.js@npm:^5.2.0":
+"bn.js@npm:^5.0.0, bn.js@npm:^5.1.0, bn.js@npm:^5.1.1, bn.js@npm:^5.1.2, bn.js@npm:^5.1.3, bn.js@npm:^5.2.0":
   version: 5.2.0
   resolution: "bn.js@npm:5.2.0"
   checksum: 6117170393200f68b35a061ecbf55d01dd989302e7b3c798a3012354fa638d124f0b2f79e63f77be5556be80322a09c40339eda6413ba7468524c0b6d4b4cb7a
@@ -9084,6 +9098,18 @@ __metadata:
   version: 1.0.0
   resolution: "boolbase@npm:1.0.0"
   checksum: 3e25c80ef626c3a3487c73dbfc70ac322ec830666c9ad915d11b701142fab25ec1e63eff2c450c74347acfd2de854ccde865cd79ef4db1683f7c7b046ea43bb0
+  languageName: node
+  linkType: hard
+
+"borsh@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "borsh@npm:0.3.1"
+  dependencies:
+    "@types/bn.js": ^4.11.5
+    bn.js: ^5.0.0
+    bs58: ^4.0.0
+    text-encoding-utf-8: ^1.0.2
+  checksum: 0f143a05c966bca8a75797e52d0e001923a9863e0b5c2c82e4998bea469c494b8cc046fd4116041f59d676106a9788af62ad5dd71f5778bc5aed35698f215f81
   languageName: node
   linkType: hard
 
@@ -20995,17 +21021,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-error-boundary@npm:^3.1.0":
-  version: 3.1.4
-  resolution: "react-error-boundary@npm:3.1.4"
-  dependencies:
-    "@babel/runtime": ^7.12.5
-  peerDependencies:
-    react: ">=16.13.1"
-  checksum: f36270a5d775a25c8920f854c0d91649ceea417b15b5bc51e270a959b0476647bb79abb4da3be7dd9a4597b029214e8fe43ea914a7f16fa7543c91f784977f1b
-  languageName: node
-  linkType: hard
-
 "react-error-overlay@npm:^6.0.10":
   version: 6.0.10
   resolution: "react-error-overlay@npm:6.0.10"
@@ -23862,6 +23877,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"superstruct@npm:^0.15.2":
+  version: 0.15.4
+  resolution: "superstruct@npm:0.15.4"
+  checksum: aac38eecda2c0d3aace2fe95baac042d39bfdd50dda480d3f70b8bacb87fe7ba228ede4869537dfb64f1d32a1fe3d794052e7765ed6c3f7bc156795fd761fdfd
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^5.3.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
@@ -24811,6 +24833,7 @@ __metadata:
     "@nrwl/workspace": 14.0.2
     "@project-serum/anchor": ^0.22.0
     "@sentry/react": ^6.19.6
+    "@solana/spl-governance": ^0.0.34
     "@solana/spl-token": ^0.1.8
     "@solana/wallet-adapter-base": ^0.8.0
     "@solana/wallet-adapter-wallets": ^0.13.0
@@ -24822,7 +24845,6 @@ __metadata:
     "@storybook/react": ^6.4.22
     "@svgr/webpack": ^6.2.1
     "@testing-library/react": 13.1.1
-    "@testing-library/react-hooks": ^8.0.0
     "@types/jest": 27.4.1
     "@types/jsoneditor": ^9.5.1
     "@types/node": ^17.0.25

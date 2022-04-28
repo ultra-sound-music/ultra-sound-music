@@ -4,8 +4,8 @@ import BN from 'bn.js';
 import * as solClient from '@usm/sol-client';
 import { MissingConfigError } from '@usm/config';
 
-import { getWallet, getConnection, getStorePublicKey } from './registry';
-import { AccountAddress } from './types';
+import { getWallet, getConnection, getStorePublicKey } from '../registry';
+import { AccountAddress } from '../types';
 
 export async function connectWallet() {
   const wallet = await getWallet();

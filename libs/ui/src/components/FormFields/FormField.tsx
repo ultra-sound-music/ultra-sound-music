@@ -1,4 +1,5 @@
-import { ComponentType, useEffect, RefObject, useRef, HTMLAttributes } from 'react';
+import { ComponentType, RefObject, useRef, HTMLAttributes } from 'react';
+import isNil from 'lodash/isNil';
 
 import useFormContext from '../../util/Forms/useFormContext';
 import useFormField from '../../util/Forms/useFormField';
@@ -20,16 +21,18 @@ export function FormField<P>({ defaultValue, component: Component, ...props }: I
     innerRef,
     isControlled,
     name,
-    selected: defaultSelected,
+    checked: defaultChecked,
     disabled: defaultDisabled,
     isLoading
   } = props;
 
   const ref = useRef<HTMLElement>();
+  const isSelectable = !isNil(defaultChecked);
 
-  const { value, selected, disabled, errors, isInitialized, setValue } = useFormContext({
+  const { value, checked, disabled, errors, isInitialized, setValue } = useFormContext({
     name,
-    selected: defaultSelected,
+    checked: defaultChecked,
+    isSelectable,
     disabled: defaultDisabled,
     isLoading
   });
@@ -37,28 +40,27 @@ export function FormField<P>({ defaultValue, component: Component, ...props }: I
   const { onChange, onBlur } = useFormField({
     isControlled,
     isInitialized,
+    isSelectable,
+    isDisabled: disabled,
     defaultValue,
     setValue
   });
 
   const elRef = innerRef || ref;
-
-  useEffect(() => {
-    if (!elRef?.current) {
-      return;
-    }
-  }, [elRef, errors]);
-
   props = Object.assign({}, props, {
+    initialValue: defaultValue,
+    id: props.name,
     value,
     disabled,
-    selected,
+    checked,
     onChange,
     onBlur,
     isInitialized,
     setValue,
     errors,
-    innerRef: elRef as RefObject<HTMLElement>
+    innerRef: elRef as RefObject<HTMLElement>,
+    'data-for': props.name,
+    'data-tip': ''
   });
 
   return <Component {...(props as P)} />;

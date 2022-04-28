@@ -2,13 +2,13 @@
 // however, these values are not really meant to be changing throughout the application lifecycle
 
 import * as arweave from '@usm/arweave';
-import { Arweave, ArweaveWallet } from '@usm/arweave';
+import { Arweave, ArweaveWallet, ArweaveClientConfigs } from '@usm/arweave';
 
 let arClient: Arweave;
 let arWallet: ArweaveWallet;
 
-export async function initArweave() {
-  arClient = await arweave.initArweave();
+export async function initArweave(origin: ArweaveClientConfigs) {
+  arClient = await arweave.initArweave(origin);
   if (!arClient) {
     throw new Error('Arweave not initialized');
   }

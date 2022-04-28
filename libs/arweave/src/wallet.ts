@@ -6,16 +6,6 @@ import { ArweaveWallet } from './types';
 
 export function initWallet(appInfo: AppInfo) {
   const webWallet = new ArweaveWebWallet(appInfo, 'arweave.app');
-
-  function onChange(address?: string) {
-    if (!address) {
-      // this.onDisconnected();
-    } else {
-      // this.onConnected(address);
-    }
-  }
-
-  webWallet.on('change', onChange);
   return webWallet.namespaces.arweaveWallet;
 }
 
@@ -24,5 +14,5 @@ export async function connect(wallet: ArweaveWallet) {
 }
 
 export async function disconnect(wallet: ArweaveWallet) {
-  return wallet.disconnect();
+  return await wallet.disconnect();
 }

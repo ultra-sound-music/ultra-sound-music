@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import JsonEditor from 'jsoneditor';
 
 import {
@@ -13,10 +13,12 @@ import {
 import { arweave } from '@usm/app-state';
 import { ArweaveButton } from '@usm/components';
 
+import { AuctionItemProgressStatus, useAddAuctionProgress } from '../../../state/tokens';
+
 import styles from './UploadAssetsForm.scss';
 
 export interface UploadAssetsFormProps {
-  address?: string;
+  setMetadataUrl(s: string): void;
 }
 
 export async function validateMetadata(file: File, uploadedImageUrl?: string) {
@@ -34,10 +36,13 @@ export async function validateMetadata(file: File, uploadedImageUrl?: string) {
   });
 
   console.log('The json data has been updated: ', json);
-  return new File([JSON.stringify(json)], file.name, { lastModified: Date.now(), type: 'testing' });
+  return new File([JSON.stringify(json)], file.name, {
+    lastModified: Date.now(),
+    type: 'application/json'
+  });
 }
 
-export function UploadAssetsForm({ address }: UploadAssetsFormProps) {
+export function UploadAssetsForm({ setMetadataUrl }: UploadAssetsFormProps) {
   function onChange(fieldName: IFieldName, fieldValue: IFieldValue) {
     if (fieldValue instanceof Blob && fieldValue?.size > 1000) {
       if (fieldName === 'image') {
@@ -49,16 +54,11 @@ export function UploadAssetsForm({ address }: UploadAssetsFormProps) {
   }
 
   async function onSubmit({ image, metadata }: IFormValues, buttonName: string) {
-    console.log();
-
     let uploadedImage;
     if (image instanceof Blob) {
       const imageBuffer = await image?.arrayBuffer();
-      const uploadResults = await upload(imageBuffer);
+      const uploadResults = await upload(imageBuffer, image.type);
       uploadedImage = uploadResults.url;
-      // uploadedImage =
-      //   'https://arweave.net:443/YnfPPAodKbrGG687wXipHOQ_aZcTQ3btCbEXgtGIWaI?ext=jpeg';
-      // // https://arweave.net:443/YnfPPAodKbrGG687wXipHOQ_aZcTQ3btCbEXgtGIWaI?ext=jpeg
       setUploadedImageUrl(uploadedImage);
     }
 
@@ -66,20 +66,31 @@ export function UploadAssetsForm({ address }: UploadAssetsFormProps) {
     if (metadata instanceof File) {
       const newMetadata = await validateMetadata(metadata, uploadedImage);
       const buffer = await newMetadata.arrayBuffer();
-      const uploadResults = await upload(buffer);
+      const uploadResults = await upload(buffer, newMetadata.type);
       setUploadedMetadataUrl(uploadResults.url);
+      addAuctionProgress({
+        status: AuctionItemProgressStatus.UPLOADED,
+        metadataUrl: uploadResults.url
+      });
     }
   }
 
   const [arweaveNetwork] = arweave.useNetwork();
   const [imageUrl, setUploadedImageUrl] = useState<string>();
   const [metadataUrl, setUploadedMetadataUrl] = useState<string>();
+  const addAuctionProgress = useAddAuctionProgress();
   const [nftImage, setNftImage] = useState<Blob>();
   const [nftMetadata, setNftMetadata] = useState<Blob>();
   const upload = arweave.useUpload();
 
   const isConnected = arweaveNetwork.status === 'CONNECTED';
   const enableMint = !!nftImage && !!nftMetadata;
+
+  useEffect(() => {
+    if (imageUrl && metadataUrl) {
+      setMetadataUrl(metadataUrl);
+    }
+  }, [metadataUrl, imageUrl]);
 
   return (
     <div className={styles.UploadAssetsForm}>

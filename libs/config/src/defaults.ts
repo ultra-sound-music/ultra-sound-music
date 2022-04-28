@@ -8,7 +8,6 @@ export default {
       solana: true,
       arweave: true,
       arweaveHost: 'arweave.net',
-      arweavePort: '443',
       arweaveProtocol: 'https'
     },
 

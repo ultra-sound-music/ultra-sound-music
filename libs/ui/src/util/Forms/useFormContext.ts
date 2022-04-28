@@ -1,6 +1,5 @@
 import { InputHTMLAttributes, useContext, useMemo, useCallback } from 'react';
 import pick from 'lodash/pick';
-import isNil from 'lodash/isNil';
 
 import FormContext from './FormContext';
 import { validate, constraintNames, IValidationConstraints } from './formFieldValidation';
@@ -16,7 +15,8 @@ export interface IUseFormContextProps extends IValidationConstraints {
   value?: IFormFieldValue;
   name: string;
   disabled?: boolean;
-  selected?: boolean;
+  checked?: boolean;
+  isSelectable?: boolean;
   isLoading?: boolean;
 }
 
@@ -29,7 +29,7 @@ export function mask(val: IFormFieldValue): IMask {
 }
 
 export default (props: IUseFormContextProps) => {
-  const { name, selected, disabled, isLoading } = props;
+  const { name, checked, disabled, isLoading, isSelectable } = props;
   const {
     getFieldValue,
     getFieldErrors,
@@ -38,20 +38,19 @@ export default (props: IUseFormContextProps) => {
     hasFieldBeenInitialized,
     initializeField
   } = useContext(FormContext);
-  const isSelectable = !isNil(selected);
-
   const validationConstraints: IValidationConstraints = useMemo(
     () => pick<IValidationConstraints>(props, constraintNames),
     [props]
   );
 
   const setValue = useCallback(
-    (val: IFormFieldValue, isIntialization = false) => {
+    (val: IFormFieldValue, isInitialization = false) => {
       let valueForValidation;
       let valueForDisplay;
 
       if (isSelectable) {
-        valueForValidation = valueForDisplay = selected ? val : undefined;
+        valueForValidation = val;
+        valueForDisplay = val;
       } else {
         const masked = mask(val);
         valueForValidation = masked.unmaskedValue;
@@ -59,19 +58,32 @@ export default (props: IUseFormContextProps) => {
       }
 
       const newErrors = validate(name, valueForValidation, validationConstraints);
-      if (isIntialization) {
+      if (isInitialization) {
         initializeField(name, valueForDisplay, newErrors.length ? newErrors : undefined);
       } else {
         updateField(name, valueForDisplay, newErrors.length ? newErrors : undefined);
       }
     },
-    [initializeField, isSelectable, name, selected, updateField, validationConstraints]
+    [initializeField, isSelectable, name, checked, updateField, validationConstraints]
   );
 
+  let isChecked;
+  if (isSelectable) {
+    const value = props.value;
+    if (value) {
+      isChecked = getFieldValue(name) === value;
+    } else {
+      isChecked = !!getFieldValue(name);
+    }
+  }
+
+  const newValue: IFormFieldValue = isSelectable
+    ? props.value
+    : props.value || (getFieldValue(name) as IFormFieldValue);
   return {
-    value: props.value || getFieldValue(name),
-    selected: isSelectable ? getFieldValue(name) === props.value : undefined,
-    disabled: disabled || isLoading,
+    value: newValue,
+    checked: isChecked,
+    disabled: !!(disabled || isLoading),
     errors: hasFieldBeenValid(name) ? getFieldErrors(name) : undefined,
     isInitialized: hasFieldBeenInitialized(name),
     setValue

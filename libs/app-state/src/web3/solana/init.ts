@@ -5,7 +5,7 @@ import configs from '@usm/config';
 import { Cluster } from '@usm/sol-client';
 
 import { useAccountAddress, useNetworkStatus } from './models/wallet';
-import { useConnect } from './hooks';
+import { useConnect } from './hooks/hooks';
 import { initWallet, initConnection, initAuctions } from './registry';
 import { useActiveAuction } from './models/auctions';
 

@@ -27,7 +27,8 @@ The account is [BJnj5DzcYhVEnib3UPFLBsXbnCfhUXsYEWfxEoV1gtnY](https://explorer.s
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------- |
 | Council Token Mint Authority | [6HaAke821jsaycJLFfG68rLmBWWV6fUuANfW2Lpu2Dss](https://explorer.solana.com/address/6HaAke821jsaycJLFfG68rLmBWWV6fUuANfW2Lpu2Dss/largest?cluster=devnet) | GovernanceV1      |         |
 | Council Token Authority      | [EcfDJe1eMh3FFZZrknDfD2pDHjjU3XDDW4uG1dRA6yX4](https://explorer.solana.com/address/EcfDJe1eMh3FFZZrknDfD2pDHjjU3XDDW4uG1dRA6yX4/largest?cluster=devnet) | GovernanceV1      |         |
-| Treasury                     | [6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz](https://explorer.solana.com/address/6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz/largest?cluster=devnet) | TokenGovernanceV1 | X       |
+| Treasury (deprecated)        | [6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz](https://explorer.solana.com/address/6CZaruf4ZCn1jJh6FUaEyZPhjp3yVJSXCpgRxVqW1mvz/largest?cluster=devnet) | TokenGovernanceV1 | X       |
+| Treasury                     | [75GTki3UNuH2tRQeUwEsGCs4cP7dKxryjZZUgvH4Wo6](https://explorer.solana.com/address/75GTki3UNuH2tRQeUwEsGCs4cP7dKxryjZZUgvH4Wo6/largest?cluster=devnet)   | TokenGovernanceV2 | X       |
 | ??                           | [Cqx8tj2JtV38oaFAaZinA63TxTAzfzncCznwxERLSdNJ](https://explorer.solana.com/address/Cqx8tj2JtV38oaFAaZinA63TxTAzfzncCznwxERLSdNJ?cluster=devnet)         | TokenGovernanceV2 | X       |
 | General NFT Treasury         | [99TJMhx52USA6HLpYmYwCAaDWiYEjvAmccu5pwRfkcXr](https://explorer.solana.com/address/99TJMhx52USA6HLpYmYwCAaDWiYEjvAmccu5pwRfkcXr?cluster=devnet)         | TokenGovernanceV2 | X       |
 | NFT Creator                  | [6ckMb1fXrELfqNJxKUFATfE1LM5wJxUmcpmGWEj91fY2](https://explorer.solana.com/address/6ckMb1fXrELfqNJxKUFATfE1LM5wJxUmcpmGWEj91fY2?cluster=devnet)         | TokenGovernanceV2 | X       |
@@ -56,3 +57,11 @@ The UI is under heavy active development. There is an [older UI](https://solana-
    - Click on the "Nay" button
 6. Approve the "Increase Max Voting Time To 4 Days" proposal.
 7. Feel free to play around and create / cancel proposals and governances to your heart’s desire!
+
+## ATA Accounts
+
+In addition to the governance accounts, some of the governance accounts have "associated token accounts" (ATA) which are derived from the governance account and can only hold a specific token (aka "mint"). Here are some the ATAs that are under this DAO but over time, there will likely be others...
+
+| ATA                                                                                                                                             | Mint                                                                                                                                            | Governance |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| [7tjaCvXyCM2wxWACphVRJfRukCRrw87MZVsGkLtsEYqe](https://explorer.solana.com/address/7tjaCvXyCM2wxWACphVRJfRukCRrw87MZVsGkLtsEYqe?cluster=devnet) | [99KgHSEW1x8yhtTY5QELq3g21ZxJvmvJfGjPU9PeMXwN](https://explorer.solana.com/address/99KgHSEW1x8yhtTY5QELq3g21ZxJvmvJfGjPU9PeMXwN?cluster=devnet) | Treasury   |

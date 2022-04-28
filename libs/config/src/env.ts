@@ -7,8 +7,17 @@ const mplAuctionPubKeys = process.env.MPL_AUCTION_PUBKEYS
 const auctionOwner = process.env.AUCTION_OWNER ? process.env.AUCTION_OWNER : undefined;
 const arweaveAddress = process.env.ARWEAVE_ADDRESS ? process.env.ARWEAVE_ADDRESS : undefined;
 const arweaveHost = process.env.ARWEAVE_HOST ? process.env.ARWEAVE_HOST : undefined;
-const arweavePort = process.env.ARWEAVE_PORT ? process.env.ARWEAVE_PORT : undefined;
+const arweavePort =
+  typeof process.env.ARWEAVE_PORT === 'string' ? process.env.ARWEAVE_PORT : undefined;
 const arweaveProtocol = process.env.ARWEAVE_PROTOCOL ? process.env.ARWEAVE_PROTOCOL : undefined;
+const governanceProgram = process.env.USM_GOVERNANCE_PROGRAM
+  ? process.env.USM_GOVERNANCE_PROGRAM
+  : undefined;
+const jamBotsGovernance = process.env.USM_JAM_BOTS_GOVERNANCE
+  ? process.env.USM_JAM_BOTS_GOVERNANCE
+  : undefined;
+const daoTreasury = process.env.USM_DAO_TREASURY ? process.env.USM_GOVERNANCE_ACCOUNT : undefined;
+const councilToken = process.env.USM_COUNCIL_TOKEN ? process.env.USM_COUNCIL_TOKEN : undefined;
 
 export default {
   googleAnalyticsIsEnabled: process.env.USM_GOOGLE_ANALYTICS_ENABLED === TRUE,
@@ -24,5 +33,9 @@ export default {
   auctionOwner,
   arweaveHost,
   arweavePort,
-  arweaveProtocol
+  arweaveProtocol,
+  governanceProgram,
+  jamBotsGovernance,
+  daoTreasury,
+  councilToken
 };
