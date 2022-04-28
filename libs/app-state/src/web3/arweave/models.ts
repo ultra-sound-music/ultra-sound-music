@@ -8,8 +8,10 @@ import {
 } from 'recoil';
 
 import { localStorageEffect } from '../../utils';
+import { WINSTONS_PER_AR } from './utils';
 
 export type NetworkStatus =
+  | 'INITIALIZING'
   | 'INSTALLING'
   | 'INITIALIZED'
   | 'NOT_CONNECTED'
@@ -26,8 +28,6 @@ export interface IArweaveState {
 export type AccountAddress = string;
 export type AccountBalanceInWinstons = string;
 export type AccountBalance = number;
-
-export const WINSTONS_PER_AR = 1000000000000;
 
 const accountAddressState = atom<AccountAddress>({
   key: 'arweaveAccountAddressState',

@@ -12,8 +12,8 @@ export function useUpload() {
   const [, setNetwork] = useNetwork();
 
   return useRecoilCallback(
-    () => async (data: ArrayBuffer) => {
-      return upload(data);
+    () => async (data: ArrayBuffer, type: string) => {
+      return upload(data, type);
     },
     []
   );

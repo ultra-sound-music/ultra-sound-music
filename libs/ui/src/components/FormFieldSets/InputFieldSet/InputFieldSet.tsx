@@ -7,8 +7,10 @@ import useFormFieldLabel from '../../../util/Forms/useFormFieldLabel';
 import { IBaseFormElementProps } from '../types';
 
 import styles from './InputFieldSet.scss';
+import { resetCaches } from '@apollo/client';
 
 export type IInputFieldSetProps = IBaseFormElementProps<IInputProps> & {
+  withLabel?: boolean;
   leadingIcon?: ReactNode;
   icon?: ReactNode;
   context?: ReactNode;
@@ -25,6 +27,7 @@ export function InputFieldSet({
   label: defaultLabel = '',
   error,
   errors,
+  withLabel = true,
   leadingIcon,
   icon,
   context,
@@ -50,6 +53,7 @@ export function InputFieldSet({
     styles.InputFieldSet,
     hasValue && styles.hasValue,
     leadingIcon && styles.withLeadingIcon,
+    withLabel && styles.withLabel,
     className
   );
 
@@ -69,7 +73,7 @@ export function InputFieldSet({
         />
         {showIcon(value as string, errors) && <div className={styles.icon}>{icon}</div>}
         {context && <div className={styles.context}>{context}</div>}
-        {label && value && (
+        {withLabel && (
           <label htmlFor={id} className={styles.label}>
             {label}
           </label>

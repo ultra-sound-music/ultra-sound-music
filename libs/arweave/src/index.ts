@@ -1,5 +1,4 @@
 import Arweave from 'arweave';
-import configs from '@usm/config';
 
 export * from './upload';
 export * from './loadWalletData';
@@ -8,10 +7,16 @@ export * from './types';
 
 export { Arweave };
 
-export async function initArweave() {
+export interface ArweaveClientConfigs {
+  protocol: string;
+  host: string;
+  port: string;
+}
+
+export async function initArweave(configs: ArweaveClientConfigs) {
   return Arweave.init({
-    host: configs.arweaveHost,
-    port: configs.arweavePort,
-    protocol: configs.arweaveProtocol
+    protocol: configs.protocol,
+    host: configs.host,
+    port: configs.port
   });
 }

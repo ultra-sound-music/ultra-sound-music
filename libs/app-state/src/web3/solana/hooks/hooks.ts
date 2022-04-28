@@ -4,21 +4,21 @@ import { useRecoilCallback, useResetRecoilState, useSetRecoilState } from 'recoi
 import logger from '@usm/util-logger';
 import { TransactionInterface } from '@usm/sol-client';
 
-import { useModal, useShowNotification } from '../../ui';
+import { useModal, useShowNotification } from '../../../ui';
 
-import { AccountAddress } from './types';
+import { AccountAddress } from '../types';
 import {
   useActiveAuction,
   auctionDataByAddressState,
   auctionLoadingByAddressState
-} from './models/auctions';
+} from '../models/auctions';
 import {
   networkStatusState,
   accountAddressState,
   useAccountBalance,
   useNetworkStatus,
   useAccountAddress
-} from './models/wallet';
+} from '../models/wallet';
 import {
   getAuction,
   placeBid,
@@ -28,7 +28,7 @@ import {
   redeemBid,
   redeemParticipationBid,
   cancelBid
-} from './api';
+} from '../api/api';
 
 export interface UpdateAuctionMessaging {
   processingMessage: string;
@@ -41,6 +41,7 @@ export function useConnect() {
   const showNotification = useShowNotification();
   const setNetworkStatus = useSetRecoilState(networkStatusState);
   const setAccountAddress = useSetRecoilState(accountAddressState);
+  const [, setAccountBalance] = useAccountBalance();
   return useRecoilCallback(() => async () => {
     try {
       setNetworkStatus('CONNECTING');
@@ -49,6 +50,9 @@ export function useConnect() {
         throw new Error('Missing wallet address');
       }
       setAccountAddress(walletAddress);
+      getWalletBalance().then((balance) => {
+        setAccountBalance(balance);
+      });
       setNetworkStatus('CONNECTED');
     } catch (error) {
       logger.error(error);

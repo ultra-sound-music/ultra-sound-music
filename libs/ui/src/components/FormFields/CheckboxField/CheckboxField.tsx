@@ -9,7 +9,7 @@ export type ICheckboxFieldProps = IFormFieldComponentProps<ICheckboxFieldSetProp
 };
 
 export function CheckboxField(props: ICheckboxFieldProps) {
-  return <FormField component={CheckboxFieldSet} selected={props.selected || false} {...props} />;
+  return <FormField component={CheckboxFieldSet} checked={props.selected || false} {...props} />;
 }
 
 export default CheckboxField;

@@ -2,8 +2,12 @@ import { createContext, useState, useCallback, useRef, Dispatch, SetStateAction 
 import isEqual from 'lodash/isEqual';
 
 export type IFieldName = string;
-export type IFieldValue = React.InputHTMLAttributes<HTMLInputElement>['value'] | ArrayBuffer | Blob;
-export type IFieldSetter = (fname: string, fval: IFieldName) => void;
+export type IFieldValue =
+  | React.InputHTMLAttributes<HTMLInputElement>['value']
+  | ArrayBuffer
+  | Blob
+  | boolean;
+export type IFieldSetter = (fname: IFieldName, fval: IFieldName) => void;
 
 export interface IFormValues {
   [n: string]: IFieldValue;
@@ -31,7 +35,7 @@ export interface IFormContext {
 }
 
 export interface IFormContextProviderProps {
-  onChange?: (fieldName: IFieldName, fieldValue: IFieldValue, setValue: IFieldSetter) => void;
+  onChange?: (fieldName: string, fieldValue: IFieldValue, setValue: IFieldSetter) => void;
   children: React.ReactNode;
 }
 
@@ -47,47 +51,6 @@ export interface IUpdateFieldProps {
   onChange?: (fieldName: string, fieldValue: IFieldValue, setValue: IFieldSetter) => void;
 }
 
-export function processUpdateField({
-  setValues,
-  setFieldsThatValidated,
-  setErrors,
-  fieldsThatValidated,
-  errors,
-  fieldName,
-  fieldValue,
-  fieldErrors,
-  onChange
-}: IUpdateFieldProps) {
-  function fieldSetter(fname: string, fval: IFieldName): void {
-    if (fieldName === fname) {
-      return;
-    }
-
-    setValues((prev) => ({
-      ...prev,
-      [fname]: fval
-    }));
-  }
-
-  if (!fieldErrors && !fieldsThatValidated[fieldName]) {
-    setFieldsThatValidated((prev) => ({ ...prev, [fieldName]: true }));
-  }
-
-  const prevErrors = errors[fieldName];
-  if (!isEqual(fieldErrors, prevErrors)) {
-    setErrors((prev) => ({ ...prev, [fieldName]: fieldErrors }));
-  }
-
-  setValues((prev) => {
-    onChange?.(fieldName, fieldValue, fieldSetter);
-
-    return {
-      ...prev,
-      [fieldName]: fieldValue
-    };
-  });
-}
-
 export const FormContext = createContext({} as IFormContext);
 export default FormContext;
 
@@ -98,48 +61,58 @@ export function FormContextProvider({ onChange, children }: IFormContextProvider
   const [, setIsLoading] = useState(true);
   const [fieldsThatValidated, setFieldsThatValidated] = useState<IFormErroredFields>({});
 
-  const initializeField = useCallback(
-    (fieldName: string, fieldValue: string, fieldErrors: string[]) => {
-      if (ref.current.includes(fieldName)) {
-        return;
-      }
+  function fieldSetter(fieldName: IFieldName, fieldValue: IFieldValue) {
+    if (values[fieldName] === fieldValue) {
+      return;
+    }
 
+    setValues((prev) => {
+      return {
+        ...prev,
+        [fieldName]: fieldValue
+      };
+    });
+  }
+
+  function processUpdateField(
+    fieldName: IFieldName,
+    fieldValue?: IFieldValue,
+    fieldErrors?: string[],
+    isInitialization?: boolean
+  ) {
+    if (!fieldErrors && !fieldsThatValidated[fieldName]) {
+      setFieldsThatValidated((prev) => ({ ...prev, [fieldName]: true }));
+    }
+
+    const prevErrors = errors[fieldName];
+    if (!isEqual(fieldErrors, prevErrors)) {
+      setErrors((prev) => ({ ...prev, [fieldName]: fieldErrors }));
+    }
+
+    const hasChanged = fieldValue !== values[fieldName];
+    setValues((prev) => ({ ...prev, [fieldName]: fieldValue }));
+
+    if (!isInitialization && hasChanged) {
+      onChange?.(fieldName, fieldValue, fieldSetter);
+    }
+  }
+
+  function initializeField(fieldName: IFieldName, fieldValue: IFieldValue, fieldErrors: string[]) {
+    if (ref.current.includes(fieldName)) {
+      return;
+    }
+
+    ref.current.push(fieldName);
+    return processUpdateField(fieldName, fieldValue, fieldErrors, true);
+  }
+
+  function updateField(fieldName: IFieldName, fieldValue: IFieldValue, fieldErrors: string[]) {
+    if (!ref.current.includes(fieldName)) {
       ref.current.push(fieldName);
-      return processUpdateField({
-        setValues,
-        setFieldsThatValidated,
-        setErrors,
-        fieldsThatValidated,
-        errors,
-        fieldName,
-        fieldValue,
-        fieldErrors,
-        onChange
-      });
-    },
-    [errors, fieldsThatValidated, onChange]
-  );
+    }
 
-  const updateField = useCallback(
-    (fieldName: string, fieldValue: string, fieldErrors: string[]) => {
-      if (!ref.current.includes(fieldName)) {
-        ref.current.push(fieldName);
-      }
-
-      return processUpdateField({
-        setValues,
-        setFieldsThatValidated,
-        setErrors,
-        fieldsThatValidated,
-        errors,
-        fieldName,
-        fieldValue,
-        fieldErrors,
-        onChange
-      });
-    },
-    [errors, fieldsThatValidated, onChange]
-  );
+    return processUpdateField(fieldName, fieldValue, fieldErrors);
+  }
 
   const formContext: IFormContext = {
     resetForm: () => {
@@ -155,9 +128,9 @@ export function FormContextProvider({ onChange, children }: IFormContextProvider
     hasFieldBeenInitialized: (fieldName) => !!ref.current.includes(fieldName),
     getFieldValue: (fieldName) => values?.[fieldName] ?? '',
     getFieldErrors: (fieldName) => errors?.[fieldName],
-    initializeField,
-    updateField
+    initializeField: useCallback(initializeField, [values, errors, fieldsThatValidated, onChange]),
+    updateField: useCallback(updateField, [values, errors, fieldsThatValidated, onChange])
   };
-
+  (window as any).formContext = formContext;
   return <FormContext.Provider value={formContext}>{children}</FormContext.Provider>;
 }
