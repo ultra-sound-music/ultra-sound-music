@@ -31,11 +31,11 @@ const LFG = !!config.LFG;
 if (!LFG) {
   nav = nav.concat([
     {
-      content: <RiDiscordFill style={{ color: '#5865f2' }} />,
+      content: <RiDiscordFill />,
       to: urls.usmDiscord
     },
     {
-      content: <RiTwitterFill style={{ color: '#1da1f2' }} />,
+      content: <RiTwitterFill />,
       to: urls.usmTwitter
     }
   ]);

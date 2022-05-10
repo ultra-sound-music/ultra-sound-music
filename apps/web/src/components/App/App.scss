@@ -15,9 +15,11 @@
 }
 
 .header {
-  background-color: $bg-color;
   z-index: 2;
-  position: relative;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 
 .footer {

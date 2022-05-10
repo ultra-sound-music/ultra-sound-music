@@ -9,7 +9,8 @@ import {
   Image,
   Link,
   MusicalTrait,
-  TextBlock
+  TextBlock,
+  Marquee
 } from '@usm/ui';
 import { copy } from '@usm/content';
 import config from '@usm/config';
@@ -56,6 +57,8 @@ export function Landing() {
           {LFG ? <AuctionContainer /> : <ComingSoon />}
         </div>
 
+        <Marquee>Dropping Soon</Marquee>
+
         {/* section #2 */}
         <div className={styles.section}>
           <Grid className={styles.grid2}>
@@ -63,7 +66,7 @@ export function Landing() {
               <Image src={jambot2} className={styles.jambot2Image} />
             </div>
             <div>
-              <TextBlock subject={copy.whatAreJambots} title={copy.blockchainMusicians}>
+              <TextBlock title={copy.blockchainMusicians}>
                 <p>{copy.musicByMusicians}</p>
               </TextBlock>
             </div>

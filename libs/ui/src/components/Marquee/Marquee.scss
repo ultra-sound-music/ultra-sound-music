@@ -1,0 +1,39 @@
+@use '../../styles.scss' as *;
+
+.Marquee {
+  background-color: $color-sassy;
+  position: relative;
+  overflow: hidden;
+  --offset: 20vw;
+  --move-initial: calc(-25% + var(--offset));
+  --move-final: calc(-50% + var(--offset));
+}
+
+.innerContainer {
+  display: flex;
+  width: fit-content;
+  position: relative;
+  transform: translate3d(var(--move-initial), 0, 0);
+  animation: marquee 280s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+.text {
+  padding: 5px 6vw;
+  white-space: nowrap;
+
+  @extend %font-h3;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(var(--move-initial), 0, 0);
+  }
+
+  100% {
+    transform: translate3d(var(--move-final), 0, 0);
+  }
+}

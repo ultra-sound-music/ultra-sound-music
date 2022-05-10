@@ -1,3 +1,4 @@
+export * from './components/Marquee/Marquee';
 export * from './components/Accordion/Accordion';
 export * from './components/Icons/SolanaIcon/SolanaIcon';
 export * from './components/AnimatedMeter/AnimatedMeter';

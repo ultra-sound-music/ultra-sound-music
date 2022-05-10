@@ -12,7 +12,7 @@ export interface IBidBoxStatusProps {
 }
 
 export function getPendingStatusMessage() {
-  return <strong>Coming Soon!</strong>;
+  return <strong>Dropping Soon!</strong>;
 }
 
 export function getLiveStatusMessage(endTimestamp?: number) {

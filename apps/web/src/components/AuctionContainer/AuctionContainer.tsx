@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 
 import { solana } from '@usm/app-state';
-import { Button, NftAuction, Link } from '@usm/ui';
 import { urls } from '@usm/content';
 import {
+  Button,
+  NftAuction,
+  Link,
   Grid,
   Image,
   TraitsBox,
@@ -14,13 +16,14 @@ import {
   BidHistory,
   SolanaIcon
 } from '@usm/ui';
-import styles from './AuctionContainer.scss';
 import { getShortenedAccountAddress } from '@usm/util-string';
 import { SolanaButton } from '@usm/components';
 
 import RedeemBidButton from '../Buttons/RedeemBidButton/RedeemBidButton';
 import RefundButton from '../Buttons/RefundButton/RefundButton';
 import RedeemParticipationButton from '../Buttons/RedeemParticipationButton/RedeemParticipationButton';
+
+import styles from './AuctionContainer.scss';
 
 const {
   useNetworkStatus,

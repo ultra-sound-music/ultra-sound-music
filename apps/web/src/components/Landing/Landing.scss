@@ -58,24 +58,19 @@
 
 .brandedDropJambots {
   background-color: $color-empty-sky;
-  background-image: linear-gradient(
-      180deg,
-      $gradient-top 50px,
-      $color-empty-sky 500px,
-      transparent 800px
-    ),
-    linear-gradient(90deg, $color-evening-sky 1px, transparent 1px),
+  background-image: linear-gradient(90deg, $color-evening-sky 1px, transparent 1px),
     linear-gradient(0deg, $color-evening-sky 1px, transparent 1px);
-  background-repeat: repeat, repeat, repeat;
-  background-size: 100% 100%, 40px 40px, 40px 40px;
-  background-position-x: 0, 0, 0;
+  background-repeat: repeat, repeat;
+  background-size: 40px 40px, 40px 40px;
+  background-position-x: 0, 0;
   margin-bottom: 220px;
+  padding-top: 132px;
   padding-bottom: 220px;
   border-bottom: 2px solid $color-sassy;
-  color: $color-taffy;
 
   @include media-query(mobile tablet) {
     margin-bottom: 60px;
+    padding-top: 40px;
     padding-bottom: max(60px, 16%);
   }
 }
