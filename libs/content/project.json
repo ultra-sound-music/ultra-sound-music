@@ -1,5 +1,4 @@
 {
-  "root": "libs/content",
   "sourceRoot": "libs/content/src",
   "projectType": "library",
   "targets": {

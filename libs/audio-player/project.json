@@ -1,5 +1,4 @@
 {
-  "root": "libs/audio-player",
   "sourceRoot": "libs/audio-player/src",
   "projectDir": "",
   "projectType": "library",

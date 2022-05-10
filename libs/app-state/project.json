@@ -1,5 +1,4 @@
 {
-  "root": "libs/app-state",
   "sourceRoot": "libs/app-state/src",
   "projectType": "library",
   "tags": [],

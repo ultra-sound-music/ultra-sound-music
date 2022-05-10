@@ -1,5 +1,4 @@
 {
-  "root": "apps/guillermo",
   "sourceRoot": "apps/guillermo/src",
   "projectType": "application",
   "targets": {

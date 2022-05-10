@@ -1,5 +1,4 @@
 {
-  "root": "libs/util/loader",
   "sourceRoot": "libs/util/loader/src",
   "projectType": "library",
   "generators": {},

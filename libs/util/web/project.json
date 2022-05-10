@@ -1,5 +1,4 @@
 {
-  "root": "libs/util/web",
   "sourceRoot": "libs/util/web/src",
   "projectType": "library",
   "targets": {

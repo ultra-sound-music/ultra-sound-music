@@ -1,5 +1,4 @@
 {
-  "root": "libs/services/solanafm",
   "sourceRoot": "libs/services/solanafm/src",
   "projectType": "library",
   "tags": [],

@@ -1,5 +1,4 @@
 {
-  "root": "apps/sandbox",
   "sourceRoot": "apps/sandbox/src",
   "projectType": "application",
   "targets": {

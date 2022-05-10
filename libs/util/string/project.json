@@ -1,5 +1,4 @@
 {
-  "root": "libs/util/string",
   "sourceRoot": "libs/util/string/src",
   "projectType": "library",
   "generators": {},

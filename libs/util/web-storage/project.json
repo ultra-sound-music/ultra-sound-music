@@ -1,5 +1,4 @@
 {
-  "root": "libs/util/web-storage",
   "sourceRoot": "libs/util/web-storage/src",
   "projectType": "library",
   "targets": {

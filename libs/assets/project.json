@@ -1,5 +1,4 @@
 {
-  "root": "libs/assets",
   "sourceRoot": "libs/assets/src",
   "projectType": "library",
   "generators": {},

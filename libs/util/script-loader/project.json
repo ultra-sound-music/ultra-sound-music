@@ -1,5 +1,4 @@
 {
-  "root": "libs/util/script-loader",
   "sourceRoot": "libs/util/script-loader/src",
   "projectType": "library",
   "targets": {

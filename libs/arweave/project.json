@@ -1,5 +1,4 @@
 {
-  "root": "libs/arweave",
   "sourceRoot": "libs/arweave/src",
   "targets": {
     "build": {
