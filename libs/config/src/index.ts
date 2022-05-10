@@ -20,6 +20,8 @@ if (envVariables.mplAuctionPubKeys) {
 // This setting is here for the auction site - just to make sure we don't accidentally turn on the auction and forget to enable Solana
 if (combinedConfigs.LFG === true) {
   combinedConfigs.solana = true;
+} else {
+  combinedConfigs.solana = false;
 }
 
 export default { ...combinedConfigs } as const;

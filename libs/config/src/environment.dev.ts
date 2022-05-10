@@ -21,5 +21,3 @@ export default {
     }
   }
 };
-
-// old governanceAccount
