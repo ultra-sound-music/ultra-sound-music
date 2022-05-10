@@ -145,6 +145,8 @@ module.exports = (initialConfigs) => {
   };
 
   config.resolve.fallback = {
+    // The slash is important: https://www.npmjs.com/package/buffer#usage
+    crypto: require.resolve('crypto-browserify/'),
     buffer: require.resolve('buffer/'),
     stream: require.resolve('stream/')
   };

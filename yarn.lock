@@ -10849,7 +10849,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-browserify@npm:^3.11.0":
+"crypto-browserify@npm:^3.11.0, crypto-browserify@npm:^3.12.0":
   version: 3.12.0
   resolution: "crypto-browserify@npm:3.12.0"
   dependencies:
@@ -24978,6 +24978,7 @@ __metadata:
     clsx: ^1.1.1
     core-js: ^3.21.1
     cross-fetch: ^3.1.5
+    crypto-browserify: ^3.12.0
     css-loader: ^6.7.1
     cypress: ^9.5.3
     dayjs: ^1.11.1
