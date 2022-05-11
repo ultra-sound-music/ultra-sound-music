@@ -6,8 +6,6 @@
 .Landing {
   background-color: $color-empty-sky;
 
-  @extend %font-body-large;
-
   @include media-query(mobile tablet) {
     text-align: center;
   }
@@ -52,6 +50,8 @@
 }
 
 .section {
+  @extend %font-body-large;
+
   .grid2 {
     row-gap: 60px;
     align-items: center;
@@ -75,6 +75,10 @@
     padding-top: 40px;
     padding-bottom: max(60px, 16%);
   }
+}
+
+.live {
+  @extend %font-body;
 }
 
 .jambot2Image {

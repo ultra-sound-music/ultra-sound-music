@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 import cn from 'clsx';
 import Lottie from 'react-lottie-player';
@@ -13,33 +13,46 @@ import smoothMeter from '@usm/assets/lottie/musical_traits/texture_smooth.json';
 
 import styles from './MusicalTrait.scss';
 
-const meters = {
-  aggressiveMeter,
-  relaxedMeter,
-  upbeatMeter,
-  complexMeter,
-  harmonicMeter,
-  noisyMeter,
-  smoothMeter
-};
-
 export type IMusicalTraitProps = {
   name: string;
   value: string;
   play?: boolean;
 };
 
-export function getMeter(value: keyof typeof meters) {
-  return meters[value];
+// This is a horrible way to handle this, ideally each asset gets loaded asynchronously
+// but atm, attempting it doesn't seem to work with alias paths
+export const traitsMap = {
+  energy_aggress: aggressiveMeter,
+  energy_relaxed: relaxedMeter,
+  energy_upbeat: upbeatMeter,
+  melody_complex: complexMeter,
+  melody_harmonic: harmonicMeter,
+  texture_noisy: noisyMeter,
+  texture_smooth: smoothMeter
+};
+
+// export async function loadMeter(name: string, value: string) {
+//   const url = `../../../../assets/src/lottie/musical_traits/${name}_${value}.json`;
+//   return import(url);
+// }
+
+export function getMeter(name: string, value: string) {
+  return traitsMap[`${name}_${value}` as keyof typeof traitsMap];
 }
 
 export function MusicalTrait({ name, value, play = true }: IMusicalTraitProps) {
-  const data = getMeter(value as keyof typeof meters);
+  const [data, setData] = useState<object>();
   const classNames = cn(styles.MusicMeter, styles[name]);
 
   useEffect(() => {
+    if (!name || !value) {
+      return;
+    }
+
     ReactTooltip.rebuild();
-  }, []);
+    const data = getMeter(name, value);
+    setData(data);
+  }, [name, value]);
 
   return (
     <div className={classNames} data-tip={value}>

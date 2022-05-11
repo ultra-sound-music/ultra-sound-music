@@ -89,20 +89,6 @@ export function Landing() {
             <div className={styles.characterTraits} ref={characterTraitsRef}>
               <AnimatedMeter
                 play={characterTraitsInView}
-                meter={1}
-                label='sanity'
-                name='almost insane'
-                value={[5, 7]}
-              />
-              <AnimatedMeter
-                play={characterTraitsInView}
-                meter={2}
-                label='fame'
-                name='low key'
-                value={[10, 12]}
-              />
-              <AnimatedMeter
-                play={characterTraitsInView}
                 meter={3}
                 label='swagger'
                 name='in the clouds'
@@ -115,8 +101,6 @@ export function Landing() {
             </TextBlock>
             <div className={styles.musicalTraits} ref={musicalTraitsRef}>
               <MusicalTrait name='energy' value='upbeat' play={musicalTraitsInView} />
-              <MusicalTrait name='melody' value='complex' play={musicalTraitsInView} />
-              <MusicalTrait name='texture' value='harmonic' play={musicalTraitsInView} />
             </div>
           </Grid>
         </div>

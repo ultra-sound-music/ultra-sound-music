@@ -1,3 +1,4 @@
+import cn from 'clsx';
 import { copy } from '@usm/content';
 
 import AnimatedMeter from '../AnimatedMeter/AnimatedMeter';
@@ -5,10 +6,6 @@ import MusicalTrait from '../MusicalTrait/MusicalTrait';
 import Badges from '../Badges/Badges';
 
 import styles from './TraitsBox.scss';
-
-const musical = ['energy', 'melodic style', 'textural style'];
-const character = ['sanity', 'fame', 'swagger'];
-const badge = [''];
 
 export interface IUsmNftAttributes {
   trait_type: string;
@@ -21,6 +18,16 @@ export interface TraitsBoxProps {
   attributes?: IUsmNftAttributes[];
 }
 
+export type MusicalTraitType = keyof typeof musicalTraitsMap;
+
+const musicalTraitsMap = {
+  energy: 'energy',
+  'melodic style': 'melody',
+  'textural style': 'texture'
+};
+const character = ['sanity', 'fame', 'swagger'];
+const badge = [''];
+
 export const TraitsBox = ({ description, attributes = [] }: TraitsBoxProps): JSX.Element => {
   attributes = attributes.map((attr) => ({
     trait_type: attr.trait_type?.toLowerCase(),
@@ -28,12 +35,12 @@ export const TraitsBox = ({ description, attributes = [] }: TraitsBoxProps): JSX
     display_type: attr.display_type?.toLowerCase()
   }));
 
-  const characterTraits = attributes.filter((attr) =>
-    character.includes(attr.trait_type?.toLocaleLowerCase())
-  );
+  const characterTraits = attributes.filter((attr) => character.includes(attr.trait_type));
   const hasCharacterTraits = !!characterTraits.length;
-  const musicalTraits = attributes.filter((attr) =>
-    musical.includes(attr.trait_type?.toLocaleLowerCase())
+  const musicalTraits = attributes.flatMap(({ trait_type, value }) =>
+    trait_type?.toLocaleLowerCase() in musicalTraitsMap
+      ? [{ name: musicalTraitsMap[trait_type as MusicalTraitType], value }]
+      : []
   );
   const hasMusicalTraits = !!musicalTraits.length;
 
@@ -45,7 +52,7 @@ export const TraitsBox = ({ description, attributes = [] }: TraitsBoxProps): JSX
       {hasCharacterTraits && (
         <div className={styles.traitSection}>
           <div className={styles.traitHeader}>{copy.characterTraits}</div>
-          <div className={styles.traits}>
+          <div className={cn(styles.traits, styles.characterTraits)}>
             {characterTraits?.map(({ trait_type, value }) => (
               <AnimatedMeter
                 key={trait_type}
@@ -62,15 +69,15 @@ export const TraitsBox = ({ description, attributes = [] }: TraitsBoxProps): JSX
         <div className={styles.traitSection}>
           <div className={styles.traitHeader}>{copy.musicalTraits}</div>
           <div className={styles.traits}>
-            {musicalTraits?.map(({ trait_type, value }) => (
-              <MusicalTrait key={trait_type} name={trait_type} value={value} />
+            {musicalTraits?.map(({ name, value }) => (
+              <MusicalTrait key={name + value} name={name} value={value} />
             ))}
           </div>
         </div>
       )}
       <div className={styles.traitSection}>
         <div className={styles.traitHeader}>{copy.biography}</div>
-        <p>{description}</p>
+        <p className={styles.bio}>{description}</p>
       </div>
       {hasBadges && (
         <div className={styles.traitSection}>

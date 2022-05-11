@@ -17,3 +17,13 @@
 
   @extend %font-h5;
 }
+
+.characterTraits {
+  > * {
+    padding-bottom: 22px;
+  }
+}
+
+.bio {
+  @extend %font-body;
+}

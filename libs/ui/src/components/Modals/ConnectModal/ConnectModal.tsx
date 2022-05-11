@@ -40,7 +40,7 @@ export function ConnectModal({ isOpen, hasWallet, onConnect, onHide }: IConnectM
   );
 
   const text = hasWallet
-    ? 'Connect with a browser extension'
+    ? 'Connect with your Solana Phantom wallet to continue'
     : 'You will need the Solana Phantom wallet to continue';
 
   return (
