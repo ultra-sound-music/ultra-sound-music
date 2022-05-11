@@ -8,8 +8,8 @@ import BidHistory from '../BidHistory/BidHistory';
 import styles from './BidBox.scss';
 
 export interface IBidBoxProps {
-  info: [ReactElement<typeof BidBoxInfo>, ReactElement<typeof BidBoxInfo>];
-  cta: ReactElement<typeof BidBoxForm>;
+  info?: [ReactElement<typeof BidBoxInfo>, ReactElement<typeof BidBoxInfo>];
+  cta?: ReactElement<typeof BidBoxForm>;
   history: ReactElement<typeof BidHistory>;
   isLoading: boolean;
 }

@@ -6,7 +6,7 @@ export default {
   production: false,
   build: 'development',
   environment: 'local',
-  solanaCluster: 'some-string',
+  solanaRpc: 'some-string',
   auctionOwner: 'auction owner wallet address',
   mplAuctionPubKeys: ['array of auction account addresses']
 };

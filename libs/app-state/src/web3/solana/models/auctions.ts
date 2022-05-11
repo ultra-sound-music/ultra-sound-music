@@ -1,12 +1,4 @@
-import {
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  atomFamily,
-  selectorFamily,
-  useResetRecoilState
-} from 'recoil';
+import { atom, useRecoilState, useRecoilValue, atomFamily, selectorFamily } from 'recoil';
 import { USMAuctionData } from '@usm/sol-client';
 import configs from '@usm/config';
 

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { RiExternalLinkLine } from 'react-icons/ri';
 
 import { solana } from '@usm/app-state';
 import { urls } from '@usm/content';
@@ -16,6 +17,7 @@ import {
   BidHistory,
   SolanaIcon
 } from '@usm/ui';
+import { getAccountUrl } from '@usm/sol-client';
 import { getShortenedAccountAddress } from '@usm/util-string';
 import { SolanaButton } from '@usm/components';
 
@@ -54,11 +56,13 @@ export function AuctionContainer() {
 
   const isConnected = networkStatus === 'CONNECTED';
   const isConnecting = networkStatus === 'CONNECTING';
-  const isLoading = loadingState === 'loading';
-  const isProcessing = isConnecting || isLoading;
+  const isAuctionLoading = loadingState !== 'loaded';
+  const isProcessing = isConnecting || isAuctionLoading;
   const minBid = 0; // @TODO - (currentHighestBid + step) || minBid
   const currentAddress = isConnected && accountAddress ? accountAddress : undefined;
-  const hasCompleted = auction?.state === 'ended';
+  const state = auction?.state;
+  const hasCompleted = state === 'ended';
+  const auctionIsPending = state === undefined ? undefined : state === 'created';
   const winningWallet = hasCompleted ? auction?.bids?.[0].bidder : undefined; // we can assume there is only 1 winner
   const myBid = auction?.bids.find((bid) => bid.bidder === currentAddress);
   const iBid = !!myBid;
@@ -67,18 +71,16 @@ export function AuctionContainer() {
   const highestBid = auction?.bids[0]?.bid;
   const walletBalance = balance && Math.round(balance * 10000) / 10000;
   const endTimestamp = auction?.endTimestamp;
-  const state = auction?.state;
-  const auctionIsPending = state === undefined ? undefined : state === 'created';
 
   useEffect(() => {
-    if (isConnected && activeAuctionPk) {
+    if (activeAuctionPk) {
       loadAuction(activeAuctionPk);
     }
 
     // The partial list of dependencies is ok bc a change in loadAuction has no impact on
     // whether we should load the auction or not.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConnected, activeAuctionPk]);
+  }, [activeAuctionPk]);
 
   const bidBoxStatusProps = {
     endTimestamp,
@@ -100,7 +102,7 @@ export function AuctionContainer() {
       body: getShortenedAccountAddress(winningWallet)
     };
   } else {
-    if (isConnected) {
+    if (isConnected && Number.isFinite(walletBalance)) {
       bidBoxInfo2Props = {
         title: 'In Your Wallet',
         body: `${walletBalance} SOL`
@@ -137,25 +139,24 @@ export function AuctionContainer() {
       />
     );
   } else if (state === 'ended') {
-    cta = (
-      <div>
-        Connect with us on <Link to={urls.usmTwitter}>Twitter</Link> and{' '}
-        <Link to={urls.usmDiscord}>Discord</Link>
-      </div>
-    );
+    cta = undefined;
   } else {
-    cta = <Button isProcessing={true} />;
+    cta = <Button isFullWidth={true} isProcessing={true} />;
   }
 
   return (
     <Grid className={styles.AuctionContainer}>
       <div className={styles.nft}>
-        <Image
-          src={auction?.auctionNft?.metadata?.image}
-          fit='contain'
-          withPlaceholder={true}
-          className={styles.nftImage}
-        />
+        <Link to={getAccountUrl(auction?.auctionNft?.pubKey?.toBase58() || '')}>
+          <Image
+            src={auction?.auctionNft?.metadata?.image}
+            fit='contain'
+            withPlaceholder={true}
+            className={styles.nftImage}
+            hoverOverlay={<RiExternalLinkLine />}
+            onClick={() => null}
+          />
+        </Link>
       </div>
       <div className={styles.nftAuction}>
         <NftAuction
@@ -167,8 +168,8 @@ export function AuctionContainer() {
           bidBox={
             <BidBox
               info={[
-                <BidBoxInfo key={1} {...bidBoxInfo1Props} isLoading={isLoading} />,
-                <BidBoxInfo key={2} {...bidBoxInfo2Props} isLoading={isLoading} />
+                <BidBoxInfo key={1} {...bidBoxInfo1Props} isLoading={isAuctionLoading} />,
+                <BidBoxInfo key={2} {...bidBoxInfo2Props} isLoading={false} />
               ]}
               cta={cta}
               history={
@@ -178,7 +179,7 @@ export function AuctionContainer() {
                   currentAddress={currentAddress}
                 />
               }
-              isLoading={isLoading}
+              isLoading={isAuctionLoading}
             />
           }
           traitsBox={

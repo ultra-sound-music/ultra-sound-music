@@ -1,6 +1,7 @@
 import { clusterApiUrl, Connection, Commitment, Cluster } from '@solana/web3.js';
 
-export { Cluster, Connection };
+export { Connection };
+export type { Cluster };
 
 export type RpcEndpoint = Cluster | string;
 export type ConnectionConfig = {

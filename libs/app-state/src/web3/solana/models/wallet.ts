@@ -4,15 +4,13 @@ import { localStorageEffect } from '../../../utils';
 import { AccountAddress } from '../types';
 
 // undefined - No information / no wallet
-// INSTALLING - Installing wallet
 // INITIALIZING - The state related to the solana network is still being initialized
-// INITIALIZED - Has wallet but not connected to network
-// NOT_CONNECTED - Has wallet but the wallet is not connected to the USM Client.
+// INITIALIZED - The wallet is ready
+// NOT_CONNECTED - The wallet is ready but it is not connected to the USM Client.
 // CONNECTING
 // CONNECTED
 // ERRORED // Tried to connect but ran into a problem
 export type NetworkStatus =
-  | 'INSTALLING'
   | 'INITIALIZING'
   | 'INITIALIZED'
   | 'NOT_CONNECTED'

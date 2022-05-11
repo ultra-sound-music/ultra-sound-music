@@ -10,7 +10,8 @@ $font-weight-bold: 700;
 $font-size-xxl: 5.5rem;
 $font-size-xlrg: 3.5rem;
 $font-size-lrg: 2.5rem;
-$font-size-body: 2.3rem;
+$font-size-body-large: 2.3rem;
+$font-size-body: 1.8rem;
 $font-size-small: 1.6rem;
 $font-size-iconic: 1.4rem;
 $font-size-mini: 1.2rem;
@@ -52,6 +53,10 @@ $font-size-mini: 1.2rem;
   font: $font-weight-bold #{$font-size-small} / 1.2 $font-fam-body;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+
+%font-body-large {
+  font: $font-weight-normal #{$font-size-body-large} / 1.7 $font-fam-body;
 }
 
 %font-body {

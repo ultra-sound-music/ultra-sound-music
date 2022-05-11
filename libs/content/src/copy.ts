@@ -17,7 +17,6 @@ export default Object.freeze({
   what: 'what',
   musicByMusicians:
     'Music on the blockchain should be played by musicians, the Jam Bots are USM’s first series of Musician NFTs. Each Jam Bot has a unique character, appearance, and sound. The Jam Bot series is inspired by iconic musicians from the 80s and 90s.',
-  uniqueAndIndividual: 'unique & individual',
   jambotTraits: 'jambot traits',
   characterTraits: 'character traits',
   musicalTraits: 'musical traits',

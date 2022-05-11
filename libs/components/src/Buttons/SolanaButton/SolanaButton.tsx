@@ -19,6 +19,7 @@ export function SolanaButton() {
   function onConnectClick() {
     showModal({
       type: 'connectModal',
+      hasWallet: !!networkStatus,
       onConnect() {
         connect();
         hideModal();

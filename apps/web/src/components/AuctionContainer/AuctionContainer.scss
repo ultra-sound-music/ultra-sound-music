@@ -6,14 +6,20 @@
 }
 
 .nft {
-  padding-top: 140px;
-  grid-column: 2 / 12;
+  padding-top: 120px;
+  grid-column: 2 / 13;
+
+  a:hover {
+    color: $color-polar-bear;
+  }
 }
 
 .nftImage {
-  width: 400px;
+  width: 547px;
+  height: 547px;
 
   img {
+    background-image: $color-taffy;
     box-shadow: 0 4px 20px $color-void;
     height: auto;
   }
@@ -21,6 +27,6 @@
 
 .nftAuction {
   padding-top: 60px;
-  grid-column: 12 / 24;
+  grid-column: 13 / 24;
   z-index: 1;
 }

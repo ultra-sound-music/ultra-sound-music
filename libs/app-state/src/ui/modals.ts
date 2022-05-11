@@ -41,6 +41,7 @@ interface IBidModalProps {
 
 interface IConnectModalProps {
   isOpen: boolean;
+  hasWallet: boolean;
   onConnect(): void;
 }
 

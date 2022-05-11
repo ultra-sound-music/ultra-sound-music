@@ -6,6 +6,8 @@
 .Landing {
   background-color: $color-empty-sky;
 
+  @extend %font-body-large;
+
   @include media-query(mobile tablet) {
     text-align: center;
   }

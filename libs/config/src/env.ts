@@ -27,7 +27,7 @@ export default {
   solanaFMApiKey: process.env.USM_SOLANA_FM_API_KEY,
   solanaFMUri: process.env.USM_SOLANA_FM_URI,
   LFG: process.env.LFG === TRUE || undefined,
-  solanaCluster: process.env.SOLANA_CLUSTER,
+  solanaRpc: process.env.SOLANA_RPC,
   arweaveAddress,
   mplAuctionPubKeys,
   auctionOwner,

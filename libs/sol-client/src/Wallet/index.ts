@@ -12,7 +12,7 @@ import {
 } from '@solana/wallet-adapter-wallets';
 import { Wallet as MplWallet } from '@metaplex/js';
 
-export { MplWallet };
+export type { MplWallet };
 
 export type Wallet = BaseMessageSignerWalletAdapter & {
   publicKey: NonNullable<PublicKey>;

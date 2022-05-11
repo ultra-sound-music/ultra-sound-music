@@ -3,7 +3,7 @@ import BidHistoryItem, { IBidHistoryItem } from './BidHistoryItem';
 import styles from './BidHistory.scss';
 import { UsmBidData } from '@usm/sol-client';
 
-export { IBidHistoryItem };
+export type { IBidHistoryItem };
 
 export interface IBidHistoryProps {
   bids?: UsmBidData[];

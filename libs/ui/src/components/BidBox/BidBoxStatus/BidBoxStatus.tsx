@@ -17,7 +17,7 @@ export function getPendingStatusMessage() {
 
 export function getLiveStatusMessage(endTimestamp?: number) {
   if (!endTimestamp) {
-    return '';
+    return <strong>Auction is Live</strong>;
   }
 
   const today = dayjs();

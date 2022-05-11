@@ -12,18 +12,22 @@ import { useActiveAuction } from './models/auctions';
 export default function () {
   const [networkStatus, setNetworkStatus] = useNetworkStatus();
   const [, setActiveAuction] = useActiveAuction();
-  const accountAddress = useAccountAddress();
+  const [accountAddress] = useAccountAddress();
   const connect = useConnect();
+  const solana = (window as any).solana;
 
   useEffect(() => {
-    setNetworkStatus('INITIALIZING');
-    initWallet().catch((error) => {
-      logger.error('Failed to initialize Solana Wallet,', error);
-      setNetworkStatus('ERRORED');
-    });
+    const hasPhantomWallet = solana && solana.isPhantom;
+    if (hasPhantomWallet) {
+      setNetworkStatus('INITIALIZING');
+      initWallet().catch((error) => {
+        logger.error('Failed to initialize Solana Wallet,', error);
+        setNetworkStatus('ERRORED');
+      });
+    }
 
     try {
-      initConnection(configs.solanaCluster as Cluster);
+      initConnection(configs.solanaRpc as Cluster);
     } catch (error) {
       logger.error('Failed to initialize Solana Connection,', error);
     }

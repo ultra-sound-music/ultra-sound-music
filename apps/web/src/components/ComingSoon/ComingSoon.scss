@@ -91,15 +91,5 @@ $hero-height: 650px;
 
 .zinger {
   margin-bottom: 20px;
-  @extend %font-body;
-}
-
-.callout {
-  margin-right: 10px;
-  margin-left: -5px;
-
-  @include media-query(mobile tablet) {
-    margin-left: 0;
-    margin-right: 0;
-  }
+  @extend %font-body-large;
 }

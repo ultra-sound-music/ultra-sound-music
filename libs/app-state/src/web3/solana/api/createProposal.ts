@@ -78,7 +78,7 @@ export async function createProposal({
     governanceProgramVersion,
     wallet,
     connection,
-    configs.solanaCluster
+    configs.solanaRpc
   ) as RpcConnection;
 
   return coreCreateProposal(

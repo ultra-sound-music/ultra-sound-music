@@ -15,7 +15,7 @@ import MintNFTForm from '../Forms/MintNFTForm/MintNFTForm';
 import styles from './App.scss';
 import UploadAssetsForm from '../Forms/UploadAssetsForm/UploadAssetsForm';
 import { RiAddCircleLine, RiFileCopyLine } from 'react-icons/ri';
-import { getAccountUrl, LAMPORTS_PER_SOL, PublicKey } from '@usm/sol-client';
+import { getAccountUrl, LAMPORTS_PER_SOL, PublicKey, getSolanaCluster } from '@usm/sol-client';
 import Serializer from '../Serializer/Serializer';
 import CreateProposalForm from '../Forms/CreateProposalForm/CreateProposalForm';
 import { useAuctionsProgress, AuctionItemProgress } from '../../state/tokens';
@@ -47,7 +47,7 @@ export function App() {
   const arweaveIsConnected = arweaveNetworkStatus === 'CONNECTED';
   const arweaveAccount = arweaveIsConnected ? arweaveAddress : undefined;
 
-  const isSolanaDevnet = configs.solanaCluster.includes('devnet');
+  const isSolanaDevnet = getSolanaCluster() === 'devnet';
   const isUsingLocalArweave = configs.arweaveHost === 'localhost';
   const solBalance = isNil(solanaBalance) ? undefined : `${solanaBalance}  SOL`;
   const arBalance =

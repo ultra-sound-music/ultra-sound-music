@@ -30,7 +30,7 @@ export async function getWalletBalance() {
 }
 
 export async function getAuction(auction: Exclude<AccountAddress, undefined>) {
-  const wallet = await getWallet();
+  const wallet = await getWallet().catch(console.error);
   const connection = getConnection();
   const auctionPk = new PublicKey(auction);
   return solClient.getAuction(connection, wallet as solClient.MplWallet, auctionPk);

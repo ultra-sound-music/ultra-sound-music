@@ -9,27 +9,44 @@ import styles from './ConnectModal.scss';
 
 export interface IConnectModalProps {
   isOpen: boolean;
+  hasWallet?: boolean;
   onConnect?(): void;
   onHide?(): void;
 }
 
-export function ConnectModal({ isOpen, onConnect, onHide }: IConnectModalProps) {
+export function ConnectModal({ isOpen, hasWallet, onConnect, onHide }: IConnectModalProps) {
+  const content = hasWallet ? (
+    <Button
+      type='primary'
+      isSmall={false}
+      isFullWidth={true}
+      shape='tile'
+      image={<Image src={phantomLogo} />}
+      onClick={onConnect}
+    >
+      Phantom
+    </Button>
+  ) : (
+    <Button
+      type='primary'
+      to='https://phantom.app/download'
+      isExternal={true}
+      isSmall={false}
+      isFullWidth={true}
+      shape='tile'
+      image={<Image src={phantomLogo} />}
+      subtext='Install Phantom'
+    ></Button>
+  );
+
+  const text = hasWallet
+    ? 'Connect with a browser extension'
+    : 'You will need the Solana Phantom wallet to continue';
+
   return (
     <Modal isOpen={isOpen} onHide={onHide} withCloseButton={false} withCloseX={false}>
-      <Button
-        type='primary'
-        isSmall={false}
-        isFullWidth={true}
-        shape='tile'
-        image={<Image src={phantomLogo} />}
-        subtext='Connect with a browser extension'
-        onClick={onConnect}
-      >
-        Phantom
-      </Button>
-      <Link to='https://phantom.app/download' className={styles.walletLink}>
-        Get Phantom
-      </Link>
+      {content}
+      <div className={styles.text}>{text}</div>
     </Modal>
   );
 }

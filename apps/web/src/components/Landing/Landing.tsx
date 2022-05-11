@@ -57,7 +57,7 @@ export function Landing() {
           {LFG ? <AuctionContainer /> : <ComingSoon />}
         </div>
 
-        <Marquee>Dropping Soon</Marquee>
+        {!LFG && <Marquee>Dropping Soon</Marquee>}
 
         {/* section #2 */}
         <div className={styles.section}>
@@ -76,7 +76,7 @@ export function Landing() {
         {/* section #3 */}
         <div className={styles.section}>
           <Grid className={styles.grid2}>
-            <TextBlock subject={copy.uniqueAndIndividual} title={copy.jambotTraits}>
+            <TextBlock title={copy.jambotTraits}>
               <p>{copy.jambotTraitsDescription}</p>
             </TextBlock>
             <div className={styles.badges} ref={badgesRef}>

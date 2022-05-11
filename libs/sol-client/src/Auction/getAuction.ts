@@ -56,15 +56,15 @@ export type USMAuctionData = {
 const auctionStates = ['created', 'started', 'ended'] as const;
 export type AuctionState = typeof auctionStates[number];
 
-export const getAuction = async (connection: Connection, wallet: Wallet, pubKey: PublicKey) => {
-  const auction = await Auction.load(connection, pubKey);
+export const getAuction = async (connection: Connection, wallet: Wallet, auctionPk: PublicKey) => {
+  const auction = await Auction.load(connection, auctionPk);
 
   // @TODO - Get Transaction ID for each bid
   // @TODO - Get NFT + Metadata
   // Examples for getting all this other information can be found in:
   // metaplex/js/packages/web/src/views/auction/index.tsx
   // metaplex/js/packages/web/src/hooks/useAuctions.ts -> AuctionView (an amalgamation of various data sources)
-  return transformAuctionData(auction, connection, wallet.publicKey);
+  return transformAuctionData(auction, connection, wallet?.publicKey);
 };
 
 export const transformAuctionData = async (

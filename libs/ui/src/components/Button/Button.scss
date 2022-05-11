@@ -12,7 +12,6 @@
   border-radius: 10px;
   border: none;
   color: $color-polar-bear;
-  line-height: 50px;
   text-transform: capitalize;
   text-decoration: none;
   text-align: center;
@@ -113,7 +112,10 @@
   height: 32px;
   width: 112px;
   line-height: 32px;
-  @extend %font-button-small;
+
+  .content {
+    @extend %font-button-small;
+  }
 }
 
 .tile {
