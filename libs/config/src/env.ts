@@ -16,8 +16,9 @@ const governanceProgram = process.env.USM_GOVERNANCE_PROGRAM
 const jamBotsGovernance = process.env.USM_JAM_BOTS_GOVERNANCE
   ? process.env.USM_JAM_BOTS_GOVERNANCE
   : undefined;
-const daoTreasury = process.env.USM_DAO_TREASURY ? process.env.USM_GOVERNANCE_ACCOUNT : undefined;
+const daoTreasury = process.env.USM_DAO_TREASURY ? process.env.USM_DAO_TREASURY : undefined;
 const councilToken = process.env.USM_COUNCIL_TOKEN ? process.env.USM_COUNCIL_TOKEN : undefined;
+const solanaRpc = process.env.SOLANA_RPC ? process.env.SOLANA_RPC : undefined;
 
 export default {
   googleAnalyticsIsEnabled: process.env.USM_GOOGLE_ANALYTICS_ENABLED === TRUE,
@@ -27,7 +28,7 @@ export default {
   solanaFMApiKey: process.env.USM_SOLANA_FM_API_KEY,
   solanaFMUri: process.env.USM_SOLANA_FM_URI,
   LFG: process.env.LFG === TRUE || undefined,
-  solanaRpc: process.env.SOLANA_RPC,
+  solanaRpc,
   arweaveAddress,
   mplAuctionPubKeys,
   auctionOwner,
