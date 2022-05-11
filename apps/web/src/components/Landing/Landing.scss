@@ -162,7 +162,8 @@
   }
 }
 
-.grid2 {
+.grid2,
+.traitsGrid {
   grid-auto-flow: row;
   z-index: 1;
 }
@@ -180,6 +181,38 @@
 }
 
 .grid2 > :nth-child(even) {
+  grid-column: 12 / -2;
+
+  @include media-query(laptop) {
+    grid-column: 7 / -2;
+  }
+
+  @include media-query(tablet mobile) {
+    grid-column: 1 / -1;
+  }
+}
+
+.traitsGrid {
+  row-gap: 120px;
+
+  @include media-query(tablet mobile) {
+    row-gap: 50px;
+  }
+}
+
+.traitsGrid > :nth-child(odd) {
+  grid-column: 2 / 12;
+
+  @include media-query(laptop) {
+    grid-column: 2 / 6;
+  }
+
+  @include media-query(tablet mobile) {
+    grid-column: 1 / -1;
+  }
+}
+
+.traitsGrid > :nth-child(even) {
   grid-column: 12 / -2;
 
   @include media-query(laptop) {

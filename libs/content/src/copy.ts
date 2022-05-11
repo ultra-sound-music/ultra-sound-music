@@ -34,7 +34,7 @@ export default Object.freeze({
     'Our mission is to honor musical tradition in a variety of ways, including recording real musicians as we create a fun, online, virtual music experience. The platform will ultimately be inspired by the real world but it is also our hope for the platform itself to be inspiring.',
   musicalDeconstruction:
     'The USM platform will be a place where musical artists’ work can be deconstructed, reimagined and reconstructed in ways that were previously not possible.',
-  whatsUSM: "what's usm",
+  whatsUSM: "what's usm?",
   lipsum_3w: 'consectetur elit auctor',
   lipsum_10w: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor.',
   lipsum_25w:

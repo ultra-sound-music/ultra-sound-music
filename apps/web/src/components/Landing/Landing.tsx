@@ -75,7 +75,7 @@ export function Landing() {
 
         {/* section #3 */}
         <div className={styles.section}>
-          <Grid className={styles.grid2}>
+          <Grid className={styles.traitsGrid}>
             <TextBlock title={copy.jambotTraits}>
               <p>{copy.jambotTraitsDescription}</p>
             </TextBlock>
