@@ -12,6 +12,8 @@ export default {
 
   apps: {
     guillermo: {
+      solana: true,
+      arweave: true,
       arweaveProtocol: 'https',
       arweaveHost: 'arweave.net',
       arweavePort: '',

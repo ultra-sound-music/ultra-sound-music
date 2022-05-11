@@ -7,8 +7,8 @@ import envVariables from './env';
 
 export * from './errors';
 
-const { app, apps, ...configs } = merge(defaults, build, environmentConfigs);
-const appConfigs = apps[app as 'guillermo' | 'web'];
+const { apps, ...configs } = merge(defaults, build, environmentConfigs);
+const appConfigs = apps[configs.app as 'guillermo' | 'web'];
 const combinedConfigs = merge(configs, appConfigs, envVariables);
 
 // Make sure the entire array is replaced as apposed to merged
@@ -20,7 +20,7 @@ if (envVariables.mplAuctionPubKeys) {
 // This setting is here for the auction site - just to make sure we don't accidentally turn on the auction and forget to enable Solana
 if (combinedConfigs.LFG === true) {
   combinedConfigs.solana = true;
-} else {
+} else if (combinedConfigs.app === 'web') {
   combinedConfigs.solana = false;
 }
 

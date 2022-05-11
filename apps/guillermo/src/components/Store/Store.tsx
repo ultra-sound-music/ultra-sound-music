@@ -36,9 +36,12 @@ export function Tokens() {
     if (configs.auctionOwner) {
       Store.getPDA(new PublicKey(configs.auctionOwner)).then(async (storePk) => {
         setStoreAccount(storePk.toBase58());
-        const wallet = await getWallet();
-        const connection = getConnection();
+        const wallet = await getWallet().catch(console.error);
+        if (!wallet) {
+          return;
+        }
 
+        const connection = getConnection();
         let store: Store;
         try {
           store = await Store.load(connection, storePk);

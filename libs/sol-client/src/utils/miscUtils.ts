@@ -1,4 +1,4 @@
-import { PublicKey } from '@solana/web3.js';
+import { PublicKey, Cluster } from '@solana/web3.js';
 import { AuctionProgram } from '@metaplex-foundation/mpl-auction';
 
 import config from '@usm/config';
@@ -11,8 +11,8 @@ export function getAccountUrl(address: string) {
   return `https://explorer.solana.com/address/${address}?cluster=${getSolanaCluster()}`;
 }
 
-export function getSolanaCluster() {
-  return config.solanaRpc.includes('devnet') ? 'devnet' : 'mainnet';
+export function getSolanaCluster(): Cluster {
+  return config.solanaRpc.includes('devnet') ? 'devnet' : 'mainnet-beta';
 }
 
 export const getBidderPotTokenPDA = async (bidderPotPubKey: PublicKey) => {
