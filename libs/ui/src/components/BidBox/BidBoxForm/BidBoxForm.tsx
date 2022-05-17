@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement, useState } from 'react';
+import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 
 import Button from '../../Button/Button';
 
@@ -29,17 +29,24 @@ export function BidBoxForm({
 
   const [bidAmount, setBidAmount] = useState('');
 
+  useEffect(() => {
+    if (!isWalletConnected) {
+      setBidAmount('');
+    }
+  }, [isWalletConnected]);
+
   const inputField = isWalletConnected ? (
     <input
       className={styles.bidInput}
       type='number'
       placeholder={`Bid more than ${minBid} SOL`}
       min={minBid}
+      value={bidAmount}
       onChange={onChangeBidAmount}
       disabled={isProcessing}
     />
   ) : (
-    <input className={styles.bidInput} type='number' disabled />
+    <input className={styles.bidInput} type='number' value='' disabled />
   );
 
   const button = isWalletConnected ? (

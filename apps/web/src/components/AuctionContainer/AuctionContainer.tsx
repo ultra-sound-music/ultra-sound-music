@@ -58,7 +58,6 @@ export function AuctionContainer() {
   const isConnecting = networkStatus === 'CONNECTING';
   const isAuctionLoading = loadingState !== 'loaded';
   const isProcessing = isConnecting || isAuctionLoading;
-  const minBid = 0; // @TODO - (currentHighestBid + step) || minBid
   const currentAddress = isConnected && accountAddress ? accountAddress : undefined;
   const state = auction?.state;
   const hasCompleted = state === 'ended';
@@ -69,6 +68,9 @@ export function AuctionContainer() {
   const iWon = hasCompleted && winningWallet === currentAddress;
   const iLost = hasCompleted && iBid && !iWon;
   const highestBid = auction?.bids[0]?.bid;
+  const step = 0.05;
+  const reserve = 0.25;
+  const minBid = highestBid ? highestBid + step : reserve;
   const walletBalance = balance && Math.round(balance * 10000) / 10000;
   const endTimestamp = auction?.endTimestamp;
 
@@ -97,10 +99,15 @@ export function AuctionContainer() {
 
   let bidBoxInfo2Props;
   if (hasCompleted) {
-    bidBoxInfo2Props = {
-      title: 'winner',
-      body: getShortenedAccountAddress(winningWallet)
-    };
+    bidBoxInfo2Props = iWon
+      ? {
+          title: '\u00A0',
+          body: 'You won!'
+        }
+      : {
+          title: 'winner',
+          body: getShortenedAccountAddress(winningWallet)
+        };
   } else {
     if (isConnected && Number.isFinite(walletBalance)) {
       bidBoxInfo2Props = {
@@ -119,7 +126,7 @@ export function AuctionContainer() {
     cta = <RedeemBidButton auction={activeAuctionPk} />;
   } else if (iLost && !myBid.hasBeenRefunded) {
     cta = <RefundButton auction={activeAuctionPk} />;
-  } else if (iLost && !myBid.hasRedeemedParticipationToken) {
+  } else if (iBid && !myBid.hasRedeemedParticipationToken) {
     cta = <RedeemParticipationButton auction={activeAuctionPk} />;
   } else if (state === 'created') {
     cta = (

@@ -1,4 +1,4 @@
-import { useState, ReactElement, useEffect } from 'react';
+import { useState, ReactElement, useEffect, useRef } from 'react';
 import cn from 'clsx';
 
 import BidBoxStatus from '../BidBox/BidBoxStatus/BidBoxStatus';
@@ -28,11 +28,6 @@ export function NftAuction({
   setActiveAuction,
   auctionIsPending
 }: NftAuctionProps) {
-  const [page, setPage] = useState<number>(0);
-  const isLoading = page === undefined;
-  const showStatus = page === 0 || auctionIsPending === true;
-  const showButtons = auctionIsPending === false;
-
   function onClickPrevious(index: number, auctionAddress: string) {
     setActiveAuction(auctionAddress);
   }
@@ -40,6 +35,27 @@ export function NftAuction({
   function onClickNext(index: number, auctionAddress: string) {
     setActiveAuction(auctionAddress);
   }
+
+  const titleRef = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState<number>(0);
+  const [isHoveredOverTitle, setIsHoveredOverTitle] = useState<boolean>();
+  const isLoading = page === undefined;
+  const showStatus = page === 0 || auctionIsPending === true;
+  const showButtons = auctionIsPending === false;
+
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el || !title) {
+      return;
+    }
+
+    const { width, height } = el.getBoundingClientRect();
+    el.style.width = width + 'px';
+    el.style.height = height + 'px';
+    el.style.top = el.offsetTop + 'px';
+    el.style.left = el.offsetLeft + 'px';
+    el.style.position = 'absolute';
+  }, [title]);
 
   useEffect(() => {
     if (typeof auctionIsPending === 'boolean') {
@@ -49,8 +65,17 @@ export function NftAuction({
 
   return (
     <div className={cn(styles.NftAuction)}>
-      <div className={styles.header}>
-        <h3 className={styles.nftName}>{title}</h3>
+      <div className={cn(styles.header, isHoveredOverTitle && styles.animate)}>
+        <h3 className={styles.nftTitle}>
+          <div
+            className={styles.name}
+            ref={titleRef}
+            onMouseEnter={() => setIsHoveredOverTitle(true)}
+            onMouseLeave={() => setIsHoveredOverTitle(false)}
+          >
+            {title}
+          </div>
+        </h3>
         {showButtons && (
           <>
             <Button

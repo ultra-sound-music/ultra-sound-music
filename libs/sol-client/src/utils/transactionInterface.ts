@@ -1,7 +1,6 @@
 import {
   Commitment,
   Connection,
-  Transaction,
   TransactionSignature,
   RpcResponseAndContext,
   SignatureResult

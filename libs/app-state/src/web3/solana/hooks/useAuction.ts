@@ -60,7 +60,8 @@ export function usePlaceBid() {
           showNotification({
             title: 'Success',
             message: 'Your bid has been recorded',
-            type: 'success'
+            type: 'success',
+            timeout: true
           });
         } catch (error) {
           logger.error(error);

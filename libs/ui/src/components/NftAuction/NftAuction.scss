@@ -6,16 +6,36 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 5px;
+
+  :not(:first-child) {
+    transition: opacity 0.2s linear;
+    opacity: 1;
+  }
 }
 
-.nftName {
+.animate {
+  :not(:first-child) {
+    opacity: 0.2;
+  }
+
+  .name {
+    text-overflow: unset;
+    white-space: nowrap;
+    overflow: visible;
+  }
+}
+
+.nftTitle {
   margin: 0;
   display: inline-block;
   line-height: 25px;
+  width: 35%;
+}
+
+.name {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 35%;
 }
 
 .body {
