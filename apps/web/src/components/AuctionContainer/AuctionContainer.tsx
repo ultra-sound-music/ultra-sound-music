@@ -182,7 +182,7 @@ export function AuctionContainer() {
               history={
                 <BidHistory
                   bids={auction?.bids}
-                  isProcessing={isProcessing}
+                  isProcessing={isAuctionLoading}
                   currentAddress={currentAddress}
                 />
               }

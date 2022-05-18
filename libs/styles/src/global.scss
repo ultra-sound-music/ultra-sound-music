@@ -27,6 +27,7 @@ body {
 }
 
 a {
+  transition: color 0.05s linear;
   color: $color-polar-bear;
   text-decoration: none;
 

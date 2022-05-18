@@ -60,11 +60,31 @@
 
 .brandedDropJambots {
   background-color: $color-empty-sky;
-  background-image: linear-gradient(90deg, $color-evening-sky 1px, transparent 1px),
-    linear-gradient(0deg, $color-evening-sky 1px, transparent 1px);
-  background-repeat: repeat, repeat;
-  background-size: 40px 40px, 40px 40px;
-  background-position-x: 0, 0;
+  background-image: linear-gradient(
+      0deg,
+      $color-empty-sky 0%,
+      rgba($color-empty-sky, 0.8) 3%,
+      rgba($color-empty-sky, 0.5) 20%,
+      rgba($color-empty-sky, 0.2) 80%,
+      transparent 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba($color-evening-sky, 0.2) 0.5px,
+      $color-evening-sky 1.5px,
+      rgba($color-evening-sky, 0.2) 2px,
+      transparent 1px
+    ),
+    linear-gradient(
+      0deg,
+      rgba($color-evening-sky, 0.2) 0.5px,
+      $color-evening-sky 1.5px,
+      rgba($color-evening-sky, 0.2) 2px,
+      transparent 1px
+    );
+  background-repeat: no-repeat, repeat, repeat;
+  background-size: 100%, 40px 40px, 40px 40px;
+  background-position-x: 0, 0, 0;
   margin-bottom: 220px;
   padding-top: 132px;
   padding-bottom: 220px;
