@@ -8,6 +8,17 @@
     flex-basis: 42%;
     margin-right: 32px;
     padding-right: 8px;
+
+    @include media-query(mobile) {
+      flex-direction: column;
+      border-right: none;
+      border-bottom: 1px solid $color-old-towel;
+      margin-bottom: 32px;
+    }
+  }
+
+  @include media-query(mobile) {
+    width: 100%;
   }
 }
 

@@ -1,8 +1,13 @@
 @use '@usm/styles/colors.scss' as *;
+@use '@usm/styles/layout.scss' as *;
 
 .AuctionContainer {
   color: $color-polar-bear;
   grid-auto-rows: 1fr;
+
+  @include media-query(mobile) {
+    grid-auto-rows: auto;
+  }
 }
 
 .nft {
@@ -11,6 +16,11 @@
 
   a:hover {
     color: $color-polar-bear;
+  }
+
+  @include media-query(mobile) {
+    padding-top: 90px;
+    grid-column: 1/-1;
   }
 }
 
@@ -22,10 +32,19 @@
     box-shadow: 0 4px 20px $color-void;
     height: auto;
   }
+
+  @include media-query(mobile) {
+    width: initial;
+    height: initial;
+  }
 }
 
 .nftAuction {
   padding-top: 60px;
   grid-column: 13 / 24;
   z-index: 1;
+
+  @include media-query(mobile) {
+    grid-column: 1/-1;
+  }
 }

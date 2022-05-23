@@ -1,3 +1,9 @@
+@use '@usm/styles/layout.scss' as *;
+
 .BidHistory {
   padding: 24px 0 24px 24px;
+
+  @include media-query(mobile) {
+    padding: 10px 0 0;
+  }
 }

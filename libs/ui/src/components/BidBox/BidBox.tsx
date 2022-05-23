@@ -21,7 +21,7 @@ export const BidBox = ({ info, cta, history, isLoading }: IBidBoxProps) => {
         {info && <div className={styles.info}>{info}</div>}
         {cta && <div className={styles.cta}>{cta}</div>}
       </div>
-      {history}
+      <div className={styles.history}>{history}</div>
     </div>
   );
 };

@@ -99,6 +99,10 @@
 
 .live {
   @extend %font-body;
+
+  @include media-query(mobile) {
+    text-align: left;
+  }
 }
 
 .jambot2Image {

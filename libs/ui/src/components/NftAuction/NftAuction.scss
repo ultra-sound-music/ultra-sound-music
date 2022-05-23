@@ -11,6 +11,20 @@
     transition: opacity 0.2s linear;
     opacity: 1;
   }
+
+  button {
+    @include media-query(mobile) {
+      flex-basis: 45%;
+      margin-bottom: 16px;
+    }
+  }
+
+  @include media-query(mobile) {
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 16px;
+  }
 }
 
 .animate {
@@ -30,6 +44,12 @@
   display: inline-block;
   line-height: 25px;
   width: 35%;
+
+  @include media-query(mobile) {
+    width: 300px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
 }
 
 .name {

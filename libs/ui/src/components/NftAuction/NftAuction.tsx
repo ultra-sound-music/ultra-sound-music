@@ -45,7 +45,7 @@ export function NftAuction({
 
   useEffect(() => {
     const el = titleRef.current;
-    if (!el || !title) {
+    if (!el || !title || window.innerWidth < 481) {
       return;
     }
 

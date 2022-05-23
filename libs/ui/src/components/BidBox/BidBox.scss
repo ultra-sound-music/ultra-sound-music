@@ -12,6 +12,11 @@
   display: flex;
   justify-content: start;
   align-items: baseline;
+
+  @include media-query(mobile) {
+    flex-direction: column;
+    padding-bottom: 0;
+  }
 }
 
 .body {
@@ -26,4 +31,10 @@
 
 .cta {
   padding: 12px;
+}
+
+.history {
+  @include media-query(mobile) {
+    display: none;
+  }
 }

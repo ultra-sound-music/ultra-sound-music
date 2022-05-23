@@ -23,6 +23,14 @@
 
   button {
     margin: 9px 0 0 24px;
+
+    @include media-query(mobile) {
+      margin: 15px auto;
+    }
+  }
+
+  @include media-query(mobile) {
+    flex-direction: column;
   }
 }
 
@@ -49,11 +57,19 @@
     &:focus {
       outline: none;
     }
+
+    @include media-query(mobile) {
+      width: auto;
+    }
   }
 
   span {
     line-height: 46px;
     padding-right: 10px;
+  }
+
+  @include media-query(mobile) {
+    width: auto;
   }
 }
 
