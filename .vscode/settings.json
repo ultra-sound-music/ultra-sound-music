@@ -6,8 +6,16 @@
   "stylelint.enable": true,
   "stylelint.validate": ["css", "postcss", "scss"],
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "stylelint.snippet": ["css", "postcss", "scss"],
   "local-history.path": "~/.config/vscode-history",
-  "cSpell.words": ["nrwl", "solana", "svgr", "WINSTONS"]
+  "cSpell.words": ["nrwl", "solana", "svgr", "WINSTONS"],
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
