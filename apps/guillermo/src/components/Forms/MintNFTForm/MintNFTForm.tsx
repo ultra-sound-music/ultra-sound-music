@@ -43,7 +43,9 @@ export function MintNFTForm({ metadataUrl }: MintNFTFormProps) {
       });
   }
 
-  async function onExecuteTransaction() {}
+  async function onExecuteTransaction() {
+    console.log();
+  }
 
   async function onSubmit({
     nftOwner,

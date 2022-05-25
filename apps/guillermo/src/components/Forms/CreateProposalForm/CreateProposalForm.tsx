@@ -24,7 +24,9 @@ export interface CreateProposalFormProps {
   address?: string;
 }
 
-export async function validateMetadata(file: File, uploadedImageUrl?: string) {}
+export async function validateMetadata(file: File, uploadedImageUrl?: string) {
+  console.log();
+}
 
 export function CreateProposalForm({ address }: CreateProposalFormProps) {
   function renderIteratorFields(index: number) {
