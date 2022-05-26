@@ -1,7 +1,7 @@
 @use '../../../styles.scss' as *;
 
 .BidBoxInfo {
-  padding-bottom: 20px;
+  padding-bottom: 8px;
 
   &:not(:last-child) {
     border-right: 1px solid $color-old-towel;

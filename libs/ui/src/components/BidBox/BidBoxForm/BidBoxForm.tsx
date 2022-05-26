@@ -6,6 +6,7 @@ import styles from './BidBoxForm.scss';
 
 export interface IBidFormBoxProps {
   minBid?: number;
+  currentBid?: number;
   isWalletConnected?: boolean;
   connectButton?: ReactElement<typeof Button>;
   isProcessing?: boolean;
@@ -14,6 +15,7 @@ export interface IBidFormBoxProps {
 
 export function BidBoxForm({
   minBid = 0.1,
+  currentBid,
   isWalletConnected,
   connectButton,
   isProcessing,
@@ -39,7 +41,7 @@ export function BidBoxForm({
     <input
       className={styles.bidInput}
       type='number'
-      placeholder={`Bid more than ${minBid} SOL`}
+      placeholder={`Bid ${minBid} SOL or more`}
       min={minBid}
       value={bidAmount}
       onChange={onChangeBidAmount}
@@ -59,7 +61,7 @@ export function BidBoxForm({
 
   return (
     <form className={styles.BidBoxForm}>
-      <div className={styles.label}>Your Bid</div>
+      {currentBid && <div className={styles.label}>Your current Bid: {currentBid} SOL</div>}
       <div className={styles.formInputBox}>
         <div className={styles.formInput}>
           {inputField}

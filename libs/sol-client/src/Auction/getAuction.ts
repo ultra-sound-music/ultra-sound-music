@@ -5,6 +5,7 @@ import { Connection, Wallet } from '@metaplex/js';
 import {
   Auction,
   AuctionState as AuctionStateEnum,
+  AuctionExtended,
   BidderMetadataData
 } from '@metaplex-foundation/mpl-auction';
 
@@ -49,6 +50,8 @@ export type USMAuctionData = {
   participationNft?: NftData;
   acceptedToken: PublicKey;
   endTimestamp?: EpochTimeStamp;
+  tickSize: number;
+  floor: number;
   state: AuctionState;
   bids: UsmBidData[];
 };
@@ -74,8 +77,11 @@ export const transformAuctionData = async (
 ): Promise<USMAuctionData | undefined> => {
   const auctionManagerPk = await AuctionManager.getPDA(auction.pubkey);
   const auctionManager = await AuctionManager.load(connection, auctionManagerPk);
-  const vault = await Vault.load(connection, new PublicKey(auctionManager.data.vault));
+  const vaultPk = new PublicKey(auctionManager.data.vault);
+  const vault = await Vault.load(connection, vaultPk);
   const boxes = await vault.getSafetyDepositBoxes(connection);
+  const auctionExtendedPk = await AuctionExtended.getPDA(vaultPk);
+  const auctionExtended = await AuctionExtended.load(connection, auctionExtendedPk);
 
   // The NFTs inside the safetyDepositBox array are not in any particular order.
   // Instead we have to rely on each box's "order" property.
@@ -163,6 +169,8 @@ export const transformAuctionData = async (
       : undefined;
   }
 
+  const tickSize = (auctionExtended?.data?.tickSize?.toNumber() || 0) / LAMPORTS_PER_SOL || 0.05;
+
   return {
     pubkey: auction.pubkey,
     auctionNft: {
@@ -176,6 +184,8 @@ export const transformAuctionData = async (
         }
       : undefined,
     acceptedToken: new PublicKey(auction.data.tokenMint),
+    tickSize,
+    floor: tickSize, // @TODO - use actual floorPrice from Auction model
     endTimestamp,
     state: auctionStates[auctionState],
     bids: usmBidData

@@ -1,3 +1,4 @@
+export * from './components/NextStep/NextStep';
 export * from './components/Marquee/Marquee';
 export * from './components/Accordion/Accordion';
 export * from './components/Icons/SolanaIcon/SolanaIcon';
@@ -13,6 +14,7 @@ export * from './components/Col/Col';
 export * from './components/Container/Container';
 export * from './components/BidBox';
 export * from './components/BidHistory/BidHistory';
+export * from './components/BidBox/BidRedemptionStatus/BidRedemptionStatus';
 export * from './components/Button/Button';
 export * from './components/Buttons/NetworkButton/NetworkButton';
 export * from './components/Callout/Callout';

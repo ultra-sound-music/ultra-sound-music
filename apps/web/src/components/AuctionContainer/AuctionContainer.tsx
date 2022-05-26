@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { RiExternalLinkLine } from 'react-icons/ri';
 
-import { solana } from '@usm/app-state';
+import { solana, useShowModal } from '@usm/app-state';
 import { urls } from '@usm/content';
 import {
   Button,
@@ -15,7 +15,9 @@ import {
   BidBoxInfo,
   BidBoxForm,
   BidHistory,
-  SolanaIcon
+  BidRedemptionStatus,
+  SolanaIcon,
+  NextStepProps
 } from '@usm/ui';
 import { getAccountUrl } from '@usm/sol-client';
 import { getShortenedAccountAddress } from '@usm/util-string';
@@ -53,6 +55,7 @@ export function AuctionContainer() {
   const [activeAuctionPk, setActiveAuction] = useActiveAuction();
   const [auction, loadingState] = useAuction(activeAuctionPk);
   const loadAuction = useLoadAuction();
+  const showModal = useShowModal();
 
   const isConnected = networkStatus === 'CONNECTED';
   const isConnecting = networkStatus === 'CONNECTING';
@@ -68,9 +71,9 @@ export function AuctionContainer() {
   const iWon = hasCompleted && winningWallet === currentAddress;
   const iLost = hasCompleted && iBid && !iWon;
   const highestBid = auction?.bids[0]?.bid;
-  const step = 0.05;
+  const tickSize = auction?.tickSize || 0.05;
   const reserve = 0.25;
-  const minBid = highestBid ? highestBid + step : reserve;
+  const minBid = highestBid ? highestBid + tickSize : reserve;
   const walletBalance = balance && Math.round(balance * 10000) / 10000;
   const endTimestamp = auction?.endTimestamp;
 
@@ -139,6 +142,7 @@ export function AuctionContainer() {
     cta = (
       <BidBoxForm
         minBid={minBid}
+        currentBid={myBid?.bid}
         isWalletConnected={isConnected}
         connectButton={<SolanaButton />}
         isProcessing={isProcessing}
@@ -149,6 +153,90 @@ export function AuctionContainer() {
     cta = undefined;
   } else {
     cta = <Button isFullWidth={true} isProcessing={true} />;
+  }
+
+  let bidRedemptionStatus: ReactElement<typeof BidRedemptionStatus> | undefined;
+  if (hasCompleted && iBid) {
+    const redemptionStatusItems: NextStepProps[] = [];
+    let pretext: string;
+    if (iWon) {
+      const redemptionIsProcessing = false; // @TODO
+      const status = myBid.hasBeenRedeemed
+        ? 'completed'
+        : redemptionIsProcessing
+        ? 'processing'
+        : 'open';
+      const onClick = myBid.hasBeenRedeemed
+        ? undefined
+        : () =>
+            showModal({
+              withCloseX: false,
+              body: `Clicking the "Redeem NFT" button will transfer the ${auction?.auctionNft.metadata.name} NFT into your wallet.`
+            });
+
+      pretext = "Congratulations! As if winning wasn't enough.";
+      redemptionStatusItems.push({
+        number: 1,
+        status,
+        children: 'Claim your NFT',
+        onClick
+      });
+    } else if (iLost) {
+      const refundIsProcessing = false; // @TODO
+      const status = myBid.hasBeenRefunded
+        ? 'completed'
+        : refundIsProcessing
+        ? 'processing'
+        : 'open';
+      const onClick = myBid.hasBeenRefunded
+        ? undefined
+        : () =>
+            showModal({
+              withCloseX: false,
+              body: `Clicking the "Refund Bid" button will transfer your bid of ${myBid.bid} SOL back into your wallet.`
+            });
+
+      pretext = "You didn't win the auction but you're still a winner in our book!";
+      redemptionStatusItems.push({
+        number: 1,
+        status,
+        children: 'Claim a refund of your bid',
+        onClick
+      });
+    } else {
+      console.error('??');
+    }
+
+    const participationTokenRedemptionIsProcessing = false; // @TODO
+    const status = myBid.hasRedeemedParticipationToken
+      ? 'completed'
+      : participationTokenRedemptionIsProcessing
+      ? 'processing'
+      : 'open';
+
+    const onClick = myBid.hasRedeemedParticipationToken
+      ? undefined
+      : () =>
+          showModal({
+            withCloseX: false,
+            body: (
+              <div>
+                <p>{pretext} Please accept a USM Participation NFT as a thank you for bidding.</p>
+                <p>
+                  Clicking the "Redeem Gift NFT" button will transfer a gift NFT from us into your
+                  wallet .
+                </p>
+              </div>
+            )
+          });
+    redemptionStatusItems.push({
+      number: 2,
+      status,
+      children: 'Redeem gift NFT',
+      onClick
+    });
+
+    bidRedemptionStatus = <BidRedemptionStatus items={redemptionStatusItems} />;
   }
 
   return (
@@ -179,6 +267,7 @@ export function AuctionContainer() {
                 <BidBoxInfo key={2} {...bidBoxInfo2Props} isLoading={false} />
               ]}
               cta={cta}
+              message={bidRedemptionStatus}
               history={
                 <BidHistory
                   bids={auction?.bids}

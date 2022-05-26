@@ -16,7 +16,7 @@ export function EndedAuctionButton({ auction }: EndedAuctionButtonProps) {
 
   return (
     <Button type='primary' isFullWidth={true} onClick={onClick} isProcessing={false}>
-      Redeem
+      Redeem NFT
     </Button>
   );
 }

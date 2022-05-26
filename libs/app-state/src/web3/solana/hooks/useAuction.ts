@@ -31,10 +31,11 @@ export function usePlaceBid() {
         }
 
         const currentBid = auction?.bids[0]?.bid || 0;
+        const minBid = currentBid + auction.tickSize;
         if (amountInSol <= currentBid) {
           showModal({
             withCloseX: false,
-            body: 'Bid must be greater than the top bid'
+            body: `Bid must be at least ${minBid} SOL`
           });
           return;
         }

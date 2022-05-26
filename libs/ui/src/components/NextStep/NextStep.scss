@@ -1,0 +1,55 @@
+@use '../../styles.scss' as *;
+
+.NextStep {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 16px;
+  margin-bottom: 4px;
+}
+
+.clickable {
+  .text {
+    &:hover {
+      cursor: pointer;
+      color: $color-sassy;
+    }
+  }
+}
+
+.stepStatus {
+  border: 1px solid currentcolor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 2.4rem;
+}
+
+.completed {
+  background-color: $color-success;
+}
+
+.circle {
+  animation-name: flickr;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1.5s;
+}
+
+@keyframes flickr {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

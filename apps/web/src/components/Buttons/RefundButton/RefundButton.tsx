@@ -16,7 +16,7 @@ export function EndedAuctionButton({ auction }: RefundButtonProps) {
 
   return (
     <Button type='primary' isFullWidth={true} onClick={onClick} isProcessing={false}>
-      Refund
+      Refund Bid
     </Button>
   );
 }
