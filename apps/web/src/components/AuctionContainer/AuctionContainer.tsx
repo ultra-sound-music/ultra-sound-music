@@ -224,7 +224,7 @@ export function AuctionContainer() {
                 <p>{pretext} Please accept a USM Participation NFT as a thank you for bidding.</p>
                 <p>
                   Clicking the "Redeem Gift NFT" button will transfer a gift NFT from us into your
-                  wallet .
+                  wallet.
                 </p>
               </div>
             )
