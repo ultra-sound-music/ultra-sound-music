@@ -26,7 +26,7 @@ export function getLiveStatusMessage(endTimestamp?: number) {
 
   const days = dateDiff.days();
   const hrs = dateDiff.hours();
-  const hours = days ? days * hrs : hrs;
+  const hours = days ? days * 24 + hrs : hrs;
 
   return (
     <>

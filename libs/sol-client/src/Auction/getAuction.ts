@@ -160,15 +160,7 @@ export const transformAuctionData = async (
       return bidData;
     });
 
-  let endTimestamp;
-  if (auctionState === AuctionStateEnum.Ended) {
-    endTimestamp = auction.data.endedAt ? auction.data.endedAt.toNumber() * 1000 : undefined;
-  } else {
-    endTimestamp = auction.data.endAuctionAt
-      ? auction.data.endAuctionAt.toNumber() * 1000
-      : undefined;
-  }
-
+  const endTimestamp = auction.data.endedAt ? auction.data.endedAt.toNumber() * 1000 : undefined;
   const tickSize = (auctionExtended?.data?.tickSize?.toNumber() || 0) / LAMPORTS_PER_SOL || 0.05;
 
   return {
