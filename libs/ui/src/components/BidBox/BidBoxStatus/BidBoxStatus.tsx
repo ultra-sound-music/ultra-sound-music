@@ -47,11 +47,13 @@ export function getEndedStatusMessage(
   const iLost = !!myBid && !iWon;
 
   if (iWon && !myBid?.hasBeenRedeemed) {
-    return <strong>You won! Click the button to redeem your NFT</strong>;
+    return <strong>You won! Redeem your NFT and gift!</strong>;
+  } else if (iWon && !myBid?.hasRedeemedParticipationToken) {
+    return <strong>You won! Claim your gift!</strong>;
   } else if (iLost && !myBid.hasBeenRefunded) {
-    return <strong>Get refund and claim participation NFT</strong>;
+    return <strong>Auction Ended. Claim your refund and gift!</strong>;
   } else if (iLost && !myBid.hasRedeemedParticipationToken) {
-    return <strong>Redeem your participation NFT!</strong>;
+    return <strong>Auction Ended. Claim your gift!</strong>;
   } else {
     const today = dayjs();
     const endDate = dayjs(auctionEnd);

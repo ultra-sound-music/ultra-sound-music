@@ -188,13 +188,13 @@ export function AuctionContainer() {
         : refundIsProcessing
         ? 'processing'
         : 'open';
-      const onClick = myBid.hasBeenRefunded
-        ? undefined
-        : () =>
-            showModal({
-              withCloseX: false,
-              body: `Clicking the "Refund Bid" button will transfer your bid of ${myBid.bid} SOL back into your wallet.`
-            });
+      const onClick = () =>
+        showModal({
+          withCloseX: false,
+          body: myBid.hasBeenRefunded
+            ? `You bid of ${myBid.bid} SOL has been refunded back into your wallet.`
+            : `Clicking the "Refund Bid" button will transfer your bid of ${myBid.bid} SOL back into your wallet.`
+        });
 
       pretext = "You didn't win the auction but you're still a winner in our book!";
       redemptionStatusItems.push({
@@ -214,21 +214,21 @@ export function AuctionContainer() {
       ? 'processing'
       : 'open';
 
-    const onClick = myBid.hasRedeemedParticipationToken
-      ? undefined
-      : () =>
-          showModal({
-            withCloseX: false,
-            body: (
-              <div>
-                <p>{pretext} Please accept a USM Participation NFT as a thank you for bidding.</p>
-                <p>
-                  Clicking the "Redeem Gift NFT" button will transfer a gift NFT from us into your
-                  wallet.
-                </p>
-              </div>
-            )
-          });
+    const onClick = () =>
+      showModal({
+        withCloseX: false,
+        body: myBid.hasRedeemedParticipationToken ? (
+          <div>
+            Welcome to the USM platform. Your USM Participation NFT has been transferred to your
+            wallet.
+          </div>
+        ) : (
+          <div>
+            <p>{pretext} Please accept a USM Participation NFT as a thank you for bidding.</p>
+            <p>Clicking the "Redeem Gift NFT" button will transfer a gift NFT into your wallet.</p>
+          </div>
+        )
+      });
     redemptionStatusItems.push({
       number: 2,
       status,
