@@ -1,10 +1,11 @@
 {
+  "name": "guillermo",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/guillermo/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -46,7 +47,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/web:dev-server",
+      "executor": "@nrwl/webpack:dev-server",
       "options": {
         "buildTarget": "guillermo:build:development",
         "hmr": true
@@ -71,7 +72,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/guillermo"],
+      "outputs": ["{workspaceRoot}/coverage/apps/guillermo"],
       "options": {
         "jestConfig": "apps/guillermo/jest.config.ts",
         "passWithNoTests": true

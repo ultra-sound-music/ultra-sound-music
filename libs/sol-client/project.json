@@ -1,4 +1,5 @@
 {
+  "name": "sol-client",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/sol-client/src",
   "projectType": "library",
@@ -22,7 +23,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/sol-client"],
+      "outputs": ["{workspaceRoot}/coverage/libs/sol-client"],
       "options": {
         "jestConfig": "libs/sol-client/jest.config.ts",
         "passWithNoTests": true

@@ -1,11 +1,12 @@
 {
+  "name": "services-solanafm",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/services/solanafm/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/services/solanafm",
@@ -33,7 +34,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/services/solanafm"],
+      "outputs": ["{workspaceRoot}/coverage/libs/services/solanafm"],
       "options": {
         "jestConfig": "libs/services/solanafm/jest.config.ts",
         "passWithNoTests": true
