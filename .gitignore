@@ -48,3 +48,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Local agent planning workspace (specs, plans, status — local only, not shared)
+.agents/

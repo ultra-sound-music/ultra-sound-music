@@ -1,14 +1,25 @@
 # UltraSoundMusic
 
+> **Working on this project (human or AI agent)? Start with [`AGENTS.md`](./AGENTS.md)** — the canonical
+> guide to the project's goal, current state, decisions, architecture, and conventions.
+
 This project was generated using [Nx](https://nx.dev).
 
 ## Running the web application
 
 ### Basic setup
 
+Requires Node `v16.13.0` (see `.nvmrc`); newer Node majors are untested with this toolchain.
+Yarn 3.1.1 is vendored in `.yarn/releases` — any `yarn` on your PATH delegates to it; the easiest
+way to get one is corepack, which ships with Node 16.
+
 1. clone repo
-2. yarn install
-3. nx serve
+2. `nvm install` (reads `.nvmrc`; installs and activates Node 16.13.0)
+3. `corepack enable` (provides the `yarn` command)
+4. `yarn install`
+5. `npx nx serve web`, then open http://localhost:4200
+
+_Last verified 2026-06-12 on Linux (WSL2): clean install and serve, zero code changes needed._
 
 ### Enable auctions
 
