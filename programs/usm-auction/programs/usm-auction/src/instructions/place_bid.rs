@@ -14,17 +14,25 @@ pub fn handler(ctx: Context<PlaceBid>, amount: u64) -> Result<()> {
 
     let existing_bid = ctx.accounts.bid.amount;
     let is_new_bidder = existing_bid == 0;
+    let is_current_leader =
+        !is_new_bidder && ctx.accounts.bidder.key() == auction.highest_bidder;
 
     if auction.bid_count == 0 {
+        // First bid in the auction must meet the reserve.
         require!(amount >= auction.reserve, AuctionError::BidBelowReserve);
+    } else if is_current_leader {
+        // The current leader topping up their own bid only needs to strictly increase it —
+        // they should not have to outbid themselves by a full tick.
+        require!(amount > existing_bid, AuctionError::BidTooLow);
     } else {
+        // Outbidding someone else must clear the current high bid by at least one tick.
+        // (For a returning, previously-outbid bidder this also guarantees amount > existing_bid,
+        // since highest_bid > their existing_bid.)
         let min_bid = auction.highest_bid
             .checked_add(auction.tick)
             .ok_or(AuctionError::MathOverflow)?;
         require!(amount >= min_bid, AuctionError::BidBelowTick);
     }
-
-    require!(amount > existing_bid, AuctionError::BidTooLow);
 
     // Transfer only the increment into the Bid PDA
     let transfer_amount = amount

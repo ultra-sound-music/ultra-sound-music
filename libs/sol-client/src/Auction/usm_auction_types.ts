@@ -93,6 +93,7 @@ export type UsmAuction = {
         },
         {
           "name": "auction",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -355,27 +356,7 @@ export type UsmAuction = {
         },
         {
           "name": "winnerBid",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  98,
-                  105,
-                  100
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "auction"
-              },
-              {
-                "kind": "account",
-                "path": "winner"
-              }
-            ]
-          }
+          "writable": true
         },
         {
           "name": "treasury",

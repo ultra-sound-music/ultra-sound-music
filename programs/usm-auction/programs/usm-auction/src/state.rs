@@ -27,7 +27,7 @@ pub struct Auction {
 impl Auction {
     // 8 discriminator + sum of field sizes
     pub const LEN: usize = 8 + 32 + 32 + 32 + 32 + 8 + 8 + 8 + 8 + 32 + 8 + 8 + 1 + 1;
-    // = 208 bytes
+    // = 218 bytes
 }
 
 #[account]

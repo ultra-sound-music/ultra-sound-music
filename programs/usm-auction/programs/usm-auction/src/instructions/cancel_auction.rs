@@ -20,6 +20,7 @@ pub fn handler(ctx: Context<CancelAuction>) -> Result<()> {
     TransferV1CpiBuilder::new(&ctx.accounts.mpl_core_program)
         .asset(&ctx.accounts.asset)
         .collection(Some(&ctx.accounts.collection))
+        .payer(&ctx.accounts.seller.to_account_info())
         .authority(Some(&ctx.accounts.auction.to_account_info()))
         .new_owner(&ctx.accounts.seller.to_account_info())
         .system_program(Some(&ctx.accounts.system_program))

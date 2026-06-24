@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "types": ["mocha", "chai", "node"],
+    "lib": ["es2022"],
+    "target": "es2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "strict": true
+  }
+}

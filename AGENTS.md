@@ -34,7 +34,11 @@ questions live in `.agents/spec/` and `.agents/current_status.md`.
 - `apps/web` — main React 18 dApp / auction site.
 - `apps/docs` — Docusaurus docs site.
 - `apps/guillermo`, `apps/sandbox` — secondary or experimental apps.
-- `libs/sol-client` — deprecated on-chain client layer to rewrite.
+- `libs/sol-client` — on-chain client layer. The legacy Metaplex-v1 path
+  (`Auction/getAuction.ts`) is still the live read path; the Core/custom-auction adapter
+  (`Auction/auctionAdapter.ts`, `getProgramAuction`) is its replacement, not yet wired in.
+- `programs/usm-auction` — custom Anchor auction program (Rust) for Metaplex Core NFTs, plus its
+  TypeScript test suite. Source of truth for the on-chain account layout the adapter mirrors.
 - `libs/app-state` — web3 + UI app state.
 - `libs/store` — Redux store.
 - `libs/audio-player` — Web Audio playback.
@@ -51,10 +55,30 @@ questions live in `.agents/spec/` and `.agents/current_status.md`.
 - Auctions are gated behind `LFG=TRUE` in `apps/web/.env`.
 - Tests: `nx test <project>`. E2E: Cypress.
 
+### Auction program (Anchor)
+
+The custom program lives in `programs/usm-auction` (Anchor 0.32, Solana 4.0.2, mpl-core 0.12).
+Plain `anchor build` can fail: the default `cargo-build-sbf` ships a Cargo too old for an
+`edition2024` transitive dep. Build/test with the pinned toolchain at the head of PATH:
+
+```
+SOLANA_4=~/.local/share/solana/install/releases/stable-549805f3e85f345c9df98d59759691443eef57aa/solana-release/bin
+PATH="$SOLANA_4:$HOME/.avm/bin:$HOME/.cargo/bin:$PATH" anchor build   # or: anchor test
+```
+
+- `anchor test` runs the full lifecycle suite (`tests/usm_auction.ts`) on a local validator with the
+  Core program loaded from `target/core.so`.
+- `cargo check` (host cargo) type-checks the program quickly without the SBF toolchain.
+- Regenerate the IDL with `anchor idl build -o <file>` (host cargo works), then keep the committed
+  copies in `libs/sol-client/src/Auction/` (`usm_auction_idl.json`, `usm_auction_types.ts`) in sync.
+
 ## Hard Constraints
 
 - Do not revive the old Metaplex v1 Auction/Admin/Dao stack in `libs/sol-client`.
 - Mint new bots using the current Metaplex Core standard unless the spec changes.
-- Preserve the `USMAuctionData` shape in `libs/sol-client/src/lib/Auction/getAuction.ts` when
+- Preserve the `USMAuctionData` shape in `libs/sol-client/src/Auction/getAuction.ts` when
   replacing auction plumbing, so existing UI changes stay small.
+- The adapter (`libs/sol-client/src/Auction/auctionAdapter.ts`) hand-mirrors the program's account
+  byte layout (`programs/usm-auction/.../state.rs`). If you change the on-chain layout, update the
+  adapter offsets and regenerate the IDL in lockstep — they drift silently.
 - Anything touching real SOL is devnet-first and requires review before mainnet.

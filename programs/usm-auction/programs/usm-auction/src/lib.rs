@@ -128,6 +128,7 @@ pub struct ClaimRefund<'info> {
     pub bidder: UncheckedAccount<'info>,
 
     #[account(
+        mut,
         seeds = [b"auction", auction.asset.as_ref()],
         bump = auction.bump,
     )]
@@ -156,21 +157,17 @@ pub struct Settle<'info> {
     )]
     pub auction: Account<'info, Auction>,
 
-    /// CHECK: auction.seller — rent returned here on no-bid settle
+    /// CHECK: auction.seller — validated in handler
     #[account(mut, constraint = seller.key() == auction.seller)]
     pub seller: UncheckedAccount<'info>,
 
-    /// CHECK: auction.highest_bidder
-    #[account(mut, constraint = winner.key() == auction.highest_bidder)]
+    /// CHECK: highest bidder — ignored when bid_count == 0; validated in handler when bid_count > 0
+    #[account(mut)]
     pub winner: UncheckedAccount<'info>,
 
-    #[account(
-        mut,
-        seeds = [b"bid", auction.key().as_ref(), winner.key().as_ref()],
-        bump = winner_bid.bump,
-        constraint = winner_bid.bidder == winner.key(),
-    )]
-    pub winner_bid: Account<'info, Bid>,
+    /// CHECK: winner's bid PDA — ignored when bid_count == 0; validated and drained in handler
+    #[account(mut)]
+    pub winner_bid: UncheckedAccount<'info>,
 
     /// CHECK: auction.treasury — receives winning bid SOL
     #[account(mut, constraint = treasury.key() == auction.treasury)]

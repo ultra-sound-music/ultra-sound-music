@@ -65,14 +65,14 @@ export function AuctionContainer() {
   const state = auction?.state;
   const hasCompleted = state === 'ended';
   const auctionIsPending = state === undefined ? undefined : state === 'created';
-  const winningWallet = hasCompleted ? auction?.bids?.[0].bidder : undefined; // we can assume there is only 1 winner
+  const winningWallet = hasCompleted ? auction?.bids?.[0]?.bidder : undefined; // we can assume there is only 1 winner (and an ended auction may have zero bids)
   const myBid = auction?.bids.find((bid) => bid.bidder === currentAddress);
   const iBid = !!myBid;
   const iWon = hasCompleted && winningWallet === currentAddress;
   const iLost = hasCompleted && iBid && !iWon;
   const highestBid = auction?.bids[0]?.bid;
-  const tickSize = auction?.tickSize || 0.05;
-  const reserve = 0.25;
+  const tickSize = auction?.tickSize ?? 0.05;
+  const reserve = auction?.floor ?? 0.25;
   const minBid = highestBid ? highestBid + tickSize : reserve;
   const walletBalance = balance && Math.round(balance * 10000) / 10000;
   const endTimestamp = auction?.endTimestamp;
@@ -129,7 +129,7 @@ export function AuctionContainer() {
     cta = <RedeemBidButton auction={activeAuctionPk} />;
   } else if (iLost && !myBid.hasBeenRefunded) {
     cta = <RefundButton auction={activeAuctionPk} />;
-  } else if (hasCompleted && iBid && !myBid.hasRedeemedParticipationToken) {
+  } else if (hasCompleted && iBid && !myBid?.hasRedeemedParticipationToken) {
     cta = <RedeemParticipationButton auction={activeAuctionPk} />;
   } else if (state === 'created') {
     cta = (
