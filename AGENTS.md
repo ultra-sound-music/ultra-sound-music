@@ -28,6 +28,12 @@ questions live in `.agents/spec/` and `.agents/current_status.md`.
 - Write durable discoveries to one focused file in `.agents/spec/`.
 - Use `.agents/plans/` for roadmaps and implementation plans.
 - Keep committed files (`AGENTS.md`, `CLAUDE.md`, `README.md`) for stable instructions only.
+- **Pre-production — no back-compat burden.** Nothing is deployed yet (no mainnet; the auction
+  program isn't on devnet either), so refactor freely: no compatibility shims, deprecation cycles,
+  or data migrations — make the clean change directly. Preserving the `USMAuctionData` shape is an
+  effort-saver (keeps UI churn small), not a compatibility rule. This freedom ends at deploy: once
+  the program ships to devnet — and hard-stop at mainnet — on-chain account/IDL layout changes
+  become real migrations.
 
 ## Repo Layout
 
