@@ -1,4 +1,11 @@
 {
   "name": "@usm/web",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "@usm-web/components": "workspace:^",
+    "@usm-web/configs": "workspace:^",
+    "@usm/ui": "workspace:^",
+    "react": "^18.2.0",
+    "recoil": "^0.7.7"
+  }
 }

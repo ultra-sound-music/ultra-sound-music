@@ -1,0 +1,16 @@
+{
+  "name": "@usm-web/app-module",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@usm-web/arweave-module": "workspace:^",
+    "@usm-web/configs": "workspace:^",
+    "@usm-web/solana-module": "workspace:^",
+    "lodash-es": "^4.17.21"
+  }
+}

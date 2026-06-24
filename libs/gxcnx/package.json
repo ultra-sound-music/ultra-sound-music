@@ -1,0 +1,19 @@
+{
+  "name": "@usm-tools/gxcnx",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./src/index.ts",
+  "typings": "./src/index.d.ts",
+  "executors": "./executors.json",
+  "dependencies": {
+    "@nx/devkit": "18.0.5",
+    "change-case": "^5.4.3",
+    "nconf": "^0.12.1",
+    "nconf-yaml": "^1.0.2",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/change-case": "^2.3.1",
+    "@types/nconf": "^0.10.6"
+  }
+}

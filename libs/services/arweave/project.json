@@ -1,0 +1,29 @@
+{
+  "name": "arweave",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/services/arweave/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/arweave",
+        "main": "libs/services/arweave/src/index.ts",
+        "tsConfig": "libs/services/arweave/tsconfig.lib.json",
+        "assets": ["libs/services/arweave/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/arweave"],
+      "options": {
+        "jestConfig": "libs/services/arweave/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

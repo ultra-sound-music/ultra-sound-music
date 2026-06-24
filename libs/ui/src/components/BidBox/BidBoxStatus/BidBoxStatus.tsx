@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
-import { AuctionState, UsmBidData } from '@usm/sol-client';
+import { AuctionState, UsmBidData } from 'libs/shared/sol-client/src';
 import styles from './BidBoxStatus.scss';
 
 export interface IBidBoxStatusProps {
@@ -37,11 +37,7 @@ export function getLiveStatusMessage(endTimestamp?: number) {
   );
 }
 
-export function getEndedStatusMessage(
-  auctionEnd?: number,
-  currentAddress?: string,
-  bids?: UsmBidData[]
-) {
+export function getEndedStatusMessage(auctionEnd?: number, currentAddress?: string, bids?: UsmBidData[]) {
   const myBid = bids?.find(({ bidder }) => bidder === currentAddress);
   const iWon = bids?.[0].bidder === currentAddress;
   const iLost = !!myBid && !iWon;

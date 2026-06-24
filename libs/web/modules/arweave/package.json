@@ -1,0 +1,21 @@
+{
+  "name": "@usm-web/arweave-module",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@usm-web/configs": "workspace:^",
+    "@usm-web/ui-module": "workspace:^",
+    "@usm-web/utils-module": "workspace:^",
+    "@usm/logger": "workspace:^",
+    "lodash-es": "^4.17.21",
+    "recoil": "^0.7.7"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12"
+  }
+}

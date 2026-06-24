@@ -3,7 +3,7 @@ const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const svgToMiniDataURI = require('mini-svg-data-uri');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const getDefaultConfig = require('@nrwl/react/plugins/webpack');
+const getDefaultConfig = require('@nx/react/plugins/webpack');
 
 function parseContext(context) {
   const arr = context.split('/');
@@ -20,6 +20,7 @@ module.exports = (initialConfigs) => {
       // Find any default CSS & SCSS rules and remove them so
       // we can use our own in order to support css modules
       (
+        rule.test.test('.mjs') ||
         rule.test.test('.css') ||
         rule.test.test('.scss') ||
         rule.test.test('.png') ||
@@ -31,6 +32,12 @@ module.exports = (initialConfigs) => {
   });
 
   config.module.rules.push(
+    {
+      test: /\.m?js/,
+      resolve: {
+        fullySpecified: false
+      }
+    },
     {
       test: /\.s[ac]ss$/i,
       use: [
@@ -129,6 +136,7 @@ module.exports = (initialConfigs) => {
       inject: true
     }),
     new webpack.ProvidePlugin({
+      process: 'process/browser',
       Buffer: ['buffer', 'Buffer'],
       Stream: ['stream', 'Stream']
     })
@@ -146,9 +154,16 @@ module.exports = (initialConfigs) => {
 
   config.resolve.fallback = {
     // The slash is important: https://www.npmjs.com/package/buffer#usage
-    crypto: require.resolve('crypto-browserify/'),
+    crypto: 'crypto-browserify/',
     buffer: require.resolve('buffer/'),
-    stream: require.resolve('stream/')
+    stream: 'stream/',
+    http: 'stream-http',
+    https: 'https-browserify',
+    util: 'util',
+    path: 'path-browserify',
+    assert: 'assert',
+    process: 'process/browser',
+    zlib: 'browserify-zlib'
   };
 
   return config;

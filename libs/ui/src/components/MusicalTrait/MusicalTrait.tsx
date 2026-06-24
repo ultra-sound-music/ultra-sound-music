@@ -15,7 +15,7 @@ import styles from './MusicalTrait.scss';
 
 export type IMusicalTraitProps = {
   name: string;
-  value: string;
+  value?: string;
   play?: boolean;
 };
 

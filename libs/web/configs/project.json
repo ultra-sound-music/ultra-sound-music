@@ -1,0 +1,39 @@
+{
+  "name": "web-configs",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/web/configs/src",
+  "projectType": "library",
+  "targets": {
+    "//pre-build": {
+      "executor": "@usm-tools/gxcnx:echo",
+      "options": {
+        "app": "web",
+        "buildMode": "production"
+      }
+    },
+    "//build": {
+      "executor": "@TODO write a custom executor to generate a json file from the configs in /apps/web/src/configs",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/web/configs"
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs web-configs {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{workspaceRoot}/coverage/libs/web/configs"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../coverage/libs/web/configs"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@usm-web/ui-module",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "recoil": "^0.7.7"
+  }
+}

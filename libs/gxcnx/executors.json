@@ -1,0 +1,9 @@
+{
+  "executors": {
+    "gen-configs": {
+      "implementation": "./executors/gen-configs/executor",
+      "schema": "./executors/gen-configs/schema.json",
+      "description": "gen-configs executor"
+    }
+  }
+}

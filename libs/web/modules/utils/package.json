@@ -1,0 +1,13 @@
+{
+  "name": "@usm-web/utils-module",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "recoil": "^0.7.7"
+  }
+}

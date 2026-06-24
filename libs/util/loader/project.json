@@ -1,9 +1,0 @@
-{
-  "name": "util-loader",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/util/loader/src",
-  "projectType": "library",
-  "generators": {},
-  "targets": {},
-  "tags": []
-}

@@ -1,0 +1,19 @@
+{
+  "name": "@usm-web/solana-module",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@metaplex-foundation/js": "^0.19.4",
+    "@solana/web3.js": "^1.90.0",
+    "@usm-web/configs": "workspace:^",
+    "@usm-web/ui-module": "workspace:^",
+    "@usm/logger": "workspace:^",
+    "@usm/sol-client": "workspace:^",
+    "recoil": "^0.7.7"
+  }
+}

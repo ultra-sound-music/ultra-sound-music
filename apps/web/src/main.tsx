@@ -4,19 +4,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import * as Sentry from '@sentry/react';
 
-import config from '@usm/config';
+import { configs } from '@usm-web/configs';
 import { Spinner } from '@usm/ui';
+import { App, Borked } from '@usm-web/components';
 
 import DebugObserver from './tools/Debug/Debug';
-import App from './components/App/App';
-import Borked from './components/Borked/Borked';
 
 import '@usm/styles/global.scss';
 
-if (config.sentryIsEnabled) {
-  const sentryDsn = config.sentryDNS;
+if (configs.sentryIsEnabled) {
+  const sentryDsn = configs.sentryDNS;
   Sentry.init({
-    environment: config.environment,
+    environment: configs.environment,
     dsn: sentryDsn,
     integrations: [],
     tracesSampleRate: 0

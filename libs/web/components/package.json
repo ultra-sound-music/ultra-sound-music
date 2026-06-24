@@ -1,0 +1,24 @@
+{
+  "name": "@usm-web/components",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@usm-web/app-module": "workspace:^",
+    "@usm-web/configs": "workspace:^",
+    "@usm-web/copy": "workspace:^",
+    "@usm-web/routes": "workspace:^",
+    "@usm-web/solana-module": "workspace:^",
+    "@usm-web/ui-module": "workspace:^",
+    "@usm/components": "workspace:^",
+    "@usm/logger": "workspace:^",
+    "@usm/services-solanafm": "workspace:^",
+    "@usm/string-utils": "workspace:^",
+    "@usm/ui": "workspace:^",
+    "react": "^18.2.0"
+  }
+}

@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/.nx
 
 # dependencies
 node_modules
@@ -24,7 +25,7 @@ node_modules
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Yarn 
+# Package managers 
 .pnp.*
 .yarn/*
 !.yarn/patches

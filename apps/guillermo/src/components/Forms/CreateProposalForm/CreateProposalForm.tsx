@@ -15,7 +15,6 @@ import {
   Accordion
 } from '@usm/ui';
 
-import { createArray } from '@usm/util-utils';
 
 import styles from './CreateProposalForm.scss';
 import { VaultInstructions } from '@metaplex-foundation/mpl-token-vault';

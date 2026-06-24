@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, createHttpLink, from, ApolloProvider } fro
 import { setContext } from '@apollo/client/link/context';
 import { ErrorResponse, onError as onApiError } from '@apollo/client/link/error';
 
-import config from '@usm/config';
+import { configs } from '@usm-web/configs';
 
 export type IErrorResponse = ErrorResponse;
 

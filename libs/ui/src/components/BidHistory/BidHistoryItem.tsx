@@ -3,7 +3,7 @@ import { RiFileCopyLine, RiArrowRightLine } from 'react-icons/ri';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
-import { useShowNotification } from '@usm/app-state';
+import { useShowNotification } from '@usm-web/ui-module';
 import { getAccountUrl } from '@usm/sol-client';
 
 import Link from '../Link/Link';

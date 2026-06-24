@@ -29,13 +29,13 @@ This project was generated using [Nx](https://nx.dev).
 
 ### Generate an application
 
-Run `nx g @nrwl/react:app my-app` to generate an application. See the [docs](https://nx.dev/generators/using-schematics) for more details.
+Run `nx g @nx/react:app my-app` to generate an application. See the [docs](https://nx.dev/generators/using-schematics) for more details.
 
 Note. With Nx you can create multiple applications and libraries in the same workspace.
 
 ### Generate a library
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+Run `nx g @nx/react:lib my-lib` to generate a library.
 
 Libraries are shareable across libraries and applications. They can be imported from `@usm/<name-of-your-library>`.
 
@@ -47,7 +47,7 @@ Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The 
 
 ### Code scaffolding
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+Run `nx g @nx/react:component my-component --project=my-app` to generate a new component.
 
 ### Build
 

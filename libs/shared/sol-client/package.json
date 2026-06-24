@@ -1,0 +1,11 @@
+{
+  "name": "@usm/sol-client",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {}
+}

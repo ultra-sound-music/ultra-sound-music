@@ -1,7 +1,7 @@
 import BidHistoryItem, { IBidHistoryItem } from './BidHistoryItem';
 
 import styles from './BidHistory.scss';
-import { UsmBidData } from '@usm/sol-client';
+import { UsmBidData } from 'libs/shared/sol-client/src';
 
 export type { IBidHistoryItem };
 
@@ -23,11 +23,7 @@ export function BidHistory({ bids, currentAddress, isProcessing }: IBidHistoryPr
       <p>Bid history</p>
       <div className={styles.bidHistoryList}>
         {bids?.slice(0, 3).map((bid) => (
-          <BidHistoryItem
-            key={bid.timestamp}
-            isCurrentWallet={bid.bidder === currentAddress}
-            {...bid}
-          />
+          <BidHistoryItem key={bid.timestamp} isCurrentWallet={bid.bidder === currentAddress} {...bid} />
         ))}
       </div>
     </div>

@@ -1,0 +1,9 @@
+{
+  "executors": {
+    "echo": {
+      "implementation": "./tools/gxcnx/executors/echo/executor",
+      "schema": "./tools/gxcnx/executors/echo/schema.json",
+      "description": "echo executor"
+    }
+  }
+}

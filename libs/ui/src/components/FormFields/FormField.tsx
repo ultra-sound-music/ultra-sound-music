@@ -1,4 +1,4 @@
-import { ComponentType, RefObject, useRef, HTMLAttributes } from 'react';
+import { ComponentType, RefObject, useRef, HTMLAttributes, AllHTMLAttributes } from 'react';
 import isNil from 'lodash/isNil';
 
 import useFormContext from '../../util/Forms/useFormContext';
@@ -10,13 +10,17 @@ export type IFormFieldElement<T> = HTMLAttributes<T> & {
   defaultValue: string; //@TODO add more
 };
 
-export type IFormFieldComponentProps<P> = IBaseFormElementProps<P>;
+export type IFormFieldComponentProps<P extends AllHTMLAttributes<HTMLElement>> = IBaseFormElementProps<P>;
 
-export type IFormFieldProps<P> = IBaseFormFieldProps<P> & {
+export type IFormFieldProps<P extends AllHTMLAttributes<HTMLElement>> = IBaseFormFieldProps<P> & {
   component: ComponentType<P>;
 };
 
-export function FormField<P>({ defaultValue, component: Component, ...props }: IFormFieldProps<P>) {
+export function FormField<P extends AllHTMLAttributes<HTMLElement>>({
+  defaultValue,
+  component: Component,
+  ...props
+}: IFormFieldProps<P>) {
   const {
     innerRef,
     isControlled,

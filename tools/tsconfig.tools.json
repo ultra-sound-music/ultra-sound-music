@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "../dist/out-tsc/tools",
     "rootDir": ".",
-    "module": "commonjs",
+    "module": "es2022",
+    "moduleResolution": "bundler",
     "target": "es5",
     "types": ["node"],
     "importHelpers": false

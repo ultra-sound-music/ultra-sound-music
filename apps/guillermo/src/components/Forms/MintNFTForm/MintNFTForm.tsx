@@ -57,7 +57,7 @@ export function MintNFTForm({ metadataUrl }: MintNFTFormProps) {
     const wallet = await getWallet();
 
     // test with my wallet instead
-    daoTreasury = wallet.publicKey.toBase58();
+    daoTreasury = wallet?.publicKey?.toBase58();
 
     const { mint, metadata, transaction } = await mintNft(
       metadataUrl as string,
@@ -68,7 +68,9 @@ export function MintNFTForm({ metadataUrl }: MintNFTFormProps) {
 
     setNft(mint);
     setMetadata(metadata);
-    setTransaction(JSON.stringify(transaction));
+
+    const tx = JSON.stringify(transaction);
+    setTransaction(tx);
 
     if (!daoTreasury) {
       setIsProcessing(false);
@@ -78,6 +80,7 @@ export function MintNFTForm({ metadataUrl }: MintNFTFormProps) {
     console.log('daoTreasury: ', daoTreasury);
     console.log('nftOwner: ', nftOwner);
     console.log('new mint: ', mint);
+    console.log('transaction', tx);
 
     const newProposalPk = await createProposal(
       daoTreasury as string,

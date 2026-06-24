@@ -1,9 +1,4 @@
 {
   "name": "assets",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/assets/src",
-  "projectType": "library",
-  "generators": {},
-  "targets": {},
-  "tags": []
+  "$schema": "../../node_modules/nx/schemas/project-schema.json"
 }

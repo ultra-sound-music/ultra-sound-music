@@ -1,0 +1,32 @@
+{
+  "name": "sol-client-deprecated",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/services/solana/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/sol-client",
+        "main": "libs/services/solana/src/index.ts",
+        "tsConfig": "libs/services/solana/tsconfig.lib.json",
+        "assets": ["libs/services/solana/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/services/solana/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/sol-client"],
+      "options": {
+        "jestConfig": "libs/services/solana/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

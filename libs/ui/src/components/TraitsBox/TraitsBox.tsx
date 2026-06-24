@@ -6,12 +6,12 @@ import MusicalTrait from '../MusicalTrait/MusicalTrait';
 import Badges from '../Badges/Badges';
 
 import styles from './TraitsBox.scss';
+import { JsonMetadata } from '@metaplex-foundation/js';
 
-export interface IUsmNftAttributes {
-  trait_type: string;
-  value: string;
-  display_type: string;
-}
+export type SingleAttr = Required<NonNullable<JsonMetadata['attributes']>>[number];
+export type IUsmNftAttributes = SingleAttr & {
+  display_type?: string;
+};
 
 export interface TraitsBoxProps {
   description?: string;
@@ -35,16 +35,18 @@ export const TraitsBox = ({ description, attributes = [] }: TraitsBoxProps): JSX
     display_type: attr.display_type?.toLowerCase()
   }));
 
-  const characterTraits = attributes.filter((attr) => character.includes(attr.trait_type));
+  const characterTraits = attributes.filter(
+    (attr) => attr.trait_type && character.includes(attr.trait_type)
+  );
   const hasCharacterTraits = !!characterTraits.length;
   const musicalTraits = attributes.flatMap(({ trait_type, value }) =>
-    trait_type?.toLocaleLowerCase() in musicalTraitsMap
+    trait_type && trait_type.toLocaleLowerCase() in musicalTraitsMap
       ? [{ name: musicalTraitsMap[trait_type as MusicalTraitType], value }]
       : []
   );
   const hasMusicalTraits = !!musicalTraits.length;
 
-  const badges = attributes.filter((attr) => badge.includes(attr.trait_type));
+  const badges = attributes.filter((attr) => attr.trait_type && badge.includes(attr.trait_type));
   const hasBadges = true; //!!badges.length;
 
   return (

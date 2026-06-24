@@ -1,0 +1,9 @@
+packages:
+  - 'apps/*'
+  - 'libs/*'
+  - 'libs/services/*'
+  - 'libs/shared/*'
+  - 'libs/web/*'
+  - 'libs/web/modules/*'
+  - 'libs/tools/*'
+  - 'tools/*'
