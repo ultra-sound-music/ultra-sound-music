@@ -1,9 +1,12 @@
 import { Connection, PublicKey, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
-import { USMAuctionData, UsmBidData, NftData, AuctionState } from './getAuction';
+import { USMAuctionData, UsmBidData, NftData, AuctionState } from './types';
 
-export const USM_AUCTION_PROGRAM_ID = new PublicKey(
-  '97snzjXWqi3GhnjxtqFcYhL9q2RyPbAmJmMxLDz8gNC3'
-);
+export const USM_AUCTION_PROGRAM_ID = new PublicKey('97snzjXWqi3GhnjxtqFcYhL9q2RyPbAmJmMxLDz8gNC3');
+
+// sha256("account:Auction")[0:8] — Anchor discriminator for the Auction account type.
+const AUCTION_DISCRIMINATOR = Buffer.from([218, 94, 247, 242, 126, 233, 131, 81]);
+// Minimum byte length of a serialised Auction account (discriminator through bump field).
+const AUCTION_MIN_SIZE = 218;
 
 // Byte offsets within the Auction account (after 8-byte Anchor discriminator)
 const A = {
@@ -19,7 +22,7 @@ const A = {
   highestBid: 200,
   bidCount: 208,
   state: 216,
-  bump: 217,
+  bump: 217
 } as const;
 
 // Byte offsets within a Bid account (after 8-byte Anchor discriminator)
@@ -28,7 +31,7 @@ const B = {
   auction: 40,
   amount: 72,
   timestamp: 80,
-  bump: 88,
+  bump: 88
 } as const;
 
 const BID_SIZE = 89;
@@ -98,7 +101,11 @@ async function fetchCoreNftData(connection: Connection, assetPubkey: PublicKey):
       offset += 4;
       const uri = buf.slice(offset, offset + uriLen).toString('utf8');
       if (uri.startsWith('http')) {
-        const meta = await fetch(uri).then((r) => r.json());
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        const meta = await fetch(uri, { signal: controller.signal })
+          .then((r) => r.json())
+          .finally(() => clearTimeout(timeoutId));
         return { pubKey: assetPubkey, metadata: meta };
       }
     }
@@ -108,7 +115,7 @@ async function fetchCoreNftData(connection: Connection, assetPubkey: PublicKey):
   return { pubKey: assetPubkey, metadata: { name: '', image: '' } };
 }
 
-export async function getProgramAuction(
+export async function getAuction(
   connection: Connection,
   auctionPubkey: PublicKey
 ): Promise<USMAuctionData | undefined> {
@@ -116,6 +123,10 @@ export async function getProgramAuction(
   if (!info) return undefined;
 
   const buf = info.data as Buffer;
+
+  if (!info.owner.equals(USM_AUCTION_PROGRAM_ID)) return undefined;
+  if (buf.length < AUCTION_MIN_SIZE || !buf.slice(0, 8).equals(AUCTION_DISCRIMINATOR))
+    return undefined;
 
   const assetPubkey = pk(buf, A.asset);
   const startTimeSec = i64(buf, A.startTime);
@@ -134,8 +145,8 @@ export async function getProgramAuction(
   const bidAccounts = await connection.getProgramAccounts(USM_AUCTION_PROGRAM_ID, {
     filters: [
       { dataSize: BID_SIZE },
-      { memcmp: { offset: B.auction, bytes: auctionPubkey.toBase58() } },
-    ],
+      { memcmp: { offset: B.auction, bytes: auctionPubkey.toBase58() } }
+    ]
   });
 
   const bids: UsmBidData[] = bidAccounts.map(({ account }) => {
@@ -146,15 +157,16 @@ export async function getProgramAuction(
       bidder,
       bid: amount / LAMPORTS_PER_SOL,
       timestamp: i64(b, B.timestamp) * 1000,
-      won: isSettled ? bidder === highestBidderStr : undefined,
+      won: isSettled ? bidder === highestBidderStr : undefined
     } as UsmBidData;
   });
 
   // settle closes the winning bid's PDA (returning its rent to the winner), so the scan above
   // can't return it. Reconstruct the winner from the auction's own highest_bidder/highest_bid
   // so the winner is never dropped and bids[0] stays the winner after sorting.
+  // Only do this for settled auctions: a cancelled auction has no winner to reconstruct.
   const winnerInScan = bids.some((bid) => bid.bidder === highestBidderStr);
-  if (highestBid > 0 && !highestBidder.equals(PublicKey.default) && !winnerInScan) {
+  if (isSettled && highestBid > 0 && !highestBidder.equals(PublicKey.default) && !winnerInScan) {
     bids.push({
       bidder: highestBidderStr,
       bid: highestBid / LAMPORTS_PER_SOL,
@@ -164,7 +176,7 @@ export async function getProgramAuction(
       won: isSettled ? true : undefined,
       // settle atomically transfers the NFT to the winner, so once the winning bid is closed
       // there is nothing left for the winner to "redeem".
-      hasBeenRedeemed: isSettled ? true : undefined,
+      hasBeenRedeemed: isSettled ? true : undefined
     } as UsmBidData);
   }
 
@@ -181,5 +193,6 @@ export async function getProgramAuction(
     floor: reserve / LAMPORTS_PER_SOL,
     state,
     bids,
+    isCancelled: rawState === 2
   };
 }

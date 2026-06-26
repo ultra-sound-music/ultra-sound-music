@@ -68,7 +68,7 @@ export function AuctionContainer() {
   const winningWallet = hasCompleted ? auction?.bids?.[0]?.bidder : undefined; // we can assume there is only 1 winner (and an ended auction may have zero bids)
   const myBid = auction?.bids.find((bid) => bid.bidder === currentAddress);
   const iBid = !!myBid;
-  const iWon = hasCompleted && winningWallet === currentAddress;
+  const iWon = hasCompleted && !auction?.isCancelled && winningWallet === currentAddress;
   const iLost = hasCompleted && iBid && !iWon;
   const highestBid = auction?.bids[0]?.bid;
   const tickSize = auction?.tickSize ?? 0.05;
