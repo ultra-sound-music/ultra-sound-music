@@ -5,6 +5,7 @@ pub mod events;
 pub mod instructions;
 pub mod state;
 
+use errors::AuctionError;
 use state::*;
 
 declare_id!("97snzjXWqi3GhnjxtqFcYhL9q2RyPbAmJmMxLDz8gNC3");
@@ -38,6 +39,10 @@ pub mod usm_auction {
 
     pub fn settle(ctx: Context<Settle>) -> Result<()> {
         instructions::settle::handler(ctx)
+    }
+
+    pub fn settle_no_bids(ctx: Context<SettleNoBids>) -> Result<()> {
+        instructions::settle_no_bids::handler(ctx)
     }
 }
 
@@ -146,7 +151,62 @@ pub struct ClaimRefund<'info> {
 
 #[derive(Accounts)]
 pub struct Settle<'info> {
-    /// CHECK: permissionless — anyone may call settle
+    /// Permissionless — anyone may crank settle.
+    #[account(mut)]
+    pub payer: Signer<'info>,
+
+    #[account(
+        mut,
+        seeds = [b"auction", auction.asset.as_ref()],
+        bump = auction.bump,
+        constraint = auction.state == AuctionState::Active @ AuctionError::AuctionAlreadyFinalised,
+    )]
+    pub auction: Account<'info, Auction>,
+
+    /// CHECK: validated by auction.seller constraint
+    #[account(mut, constraint = seller.key() == auction.seller @ AuctionError::UnauthorisedSeller)]
+    pub seller: UncheckedAccount<'info>,
+
+    /// CHECK: validated by auction.highest_bidder constraint
+    #[account(
+        mut,
+        constraint = winner.key() == auction.highest_bidder @ AuctionError::RefundDenied,
+    )]
+    pub winner: UncheckedAccount<'info>,
+
+    /// Winner's bid PDA. `close = winner` transfers the rent back to the winner after
+    /// the handler moves the bid amount to treasury.
+    #[account(
+        mut,
+        close = winner,
+        seeds = [b"bid", auction.key().as_ref(), winner.key().as_ref()],
+        bump = winner_bid.bump,
+        constraint = winner_bid.bidder == winner.key() @ AuctionError::RefundDenied,
+    )]
+    pub winner_bid: Account<'info, Bid>,
+
+    /// CHECK: validated by auction.treasury constraint
+    #[account(mut, constraint = treasury.key() == auction.treasury @ AuctionError::UnauthorisedSeller)]
+    pub treasury: UncheckedAccount<'info>,
+
+    /// CHECK: validated by auction.asset constraint
+    #[account(mut, constraint = asset.key() == auction.asset)]
+    pub asset: UncheckedAccount<'info>,
+
+    /// CHECK: validated by auction.collection constraint
+    #[account(constraint = collection.key() == auction.collection)]
+    pub collection: UncheckedAccount<'info>,
+
+    /// CHECK: Metaplex Core program
+    #[account(address = mpl_core::ID)]
+    pub mpl_core_program: UncheckedAccount<'info>,
+
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct SettleNoBids<'info> {
+    /// Permissionless — anyone may crank settle_no_bids.
     #[account(mut)]
     pub payer: Signer<'info>,
 
@@ -157,27 +217,15 @@ pub struct Settle<'info> {
     )]
     pub auction: Account<'info, Auction>,
 
-    /// CHECK: auction.seller — validated in handler
-    #[account(mut, constraint = seller.key() == auction.seller)]
+    /// CHECK: validated by auction.seller constraint
+    #[account(mut, constraint = seller.key() == auction.seller @ AuctionError::UnauthorisedSeller)]
     pub seller: UncheckedAccount<'info>,
 
-    /// CHECK: highest bidder — ignored when bid_count == 0; validated in handler when bid_count > 0
-    #[account(mut)]
-    pub winner: UncheckedAccount<'info>,
-
-    /// CHECK: winner's bid PDA — ignored when bid_count == 0; validated and drained in handler
-    #[account(mut)]
-    pub winner_bid: UncheckedAccount<'info>,
-
-    /// CHECK: auction.treasury — receives winning bid SOL
-    #[account(mut, constraint = treasury.key() == auction.treasury)]
-    pub treasury: UncheckedAccount<'info>,
-
-    /// CHECK: validated by auction.asset
+    /// CHECK: validated by auction.asset constraint
     #[account(mut, constraint = asset.key() == auction.asset)]
     pub asset: UncheckedAccount<'info>,
 
-    /// CHECK: validated by auction.collection
+    /// CHECK: validated by auction.collection constraint
     #[account(constraint = collection.key() == auction.collection)]
     pub collection: UncheckedAccount<'info>,
 
