@@ -11,7 +11,9 @@ export const urls = Object.freeze({
 
 export const routes = Object.freeze({
   home: '/',
-  blog: '/blog'
+  blog: '/blog',
+  gallery: '/drop',
+  demoBand: '/drop/band/:bandId'
 });
 
 export const team = Object.freeze([

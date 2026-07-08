@@ -1,9 +1,12 @@
 # Band-Jam Spike
 
-This directory is currently a copy of `../sound-jam/`, kept as the staging area for the next
-iteration. Do not treat its current code as the final domain model: before changing the renderer, we
-still need to settle the artist-aware mechanism where Artists jam, each Artist has a sound inventory,
-and the resolver chooses valid sounds for each performer.
+The **forward-going, artist-aware** jam spike (its frozen predecessor is `../sound-jam/`, the pure
+mechanical transport proof). Here **Artists jam, not loose sound files**: each Artist owns a
+`signature` sound in a manifest inventory, each sound is coupled to a `sonicIdentity` source
+profile, and a trait-driven **resolver** (`src/resolver.mjs`) turns a Band `JamIntent` into a
+`JamRecipe` — see "Artist-aware resolver" below. This directory began as a copy of `sound-jam` but
+its domain model has since diverged; treat the resolver + schemas here as the current model, per
+`.agents/spec/data-model.md` ("Band jam mechanism contract").
 
 Plan 04, workstream A (`.agents/plans/04-product-validation.md`). Proves the **mechanical**
 product risk: can signature-sound instrument loops play in sync on a shared clock and render a

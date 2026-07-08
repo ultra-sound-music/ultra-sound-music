@@ -1,3 +1,4 @@
+export * from './components/Avatar/Avatar';
 export * from './components/NextStep/NextStep';
 export * from './components/Marquee/Marquee';
 export * from './components/Accordion/Accordion';

@@ -2,7 +2,7 @@ import { ReactElement, useEffect } from 'react';
 import { RiExternalLinkLine } from 'react-icons/ri';
 
 import { solana, useShowModal } from '@usm/app-state';
-import { urls } from '@usm/content';
+import { routes, urls } from '@usm/content';
 import {
   Button,
   NftAuction,
@@ -23,6 +23,7 @@ import { getAccountUrl } from '@usm/sol-client';
 import { getShortenedAccountAddress } from '@usm/util-string';
 import { SolanaButton } from '@usm/components';
 
+import { demoBands } from '../../data/jamBots';
 import RedeemBidButton from '../Buttons/RedeemBidButton/RedeemBidButton';
 import RefundButton from '../Buttons/RefundButton/RefundButton';
 import RedeemParticipationButton from '../Buttons/RedeemParticipationButton/RedeemParticipationButton';
@@ -286,6 +287,15 @@ export function AuctionContainer() {
           }
         />
       </div>
+      {hasCompleted && iBid && (
+        <div className={styles.keepExploring}>
+          {iWon
+            ? 'While you wait to redeem: '
+            : "You didn't win this one, but you're still part of the story — "}
+          <Link to={routes.gallery}>hear the rest of the Jam Bots</Link> or see what forming a{' '}
+          <Link to={routes.demoBand.replace(':bandId', demoBands[0].id)}>Band</Link> sounds like.
+        </div>
+      )}
     </Grid>
   );
 }

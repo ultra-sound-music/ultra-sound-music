@@ -12,10 +12,16 @@ import { Modal } from '@usm/components';
 import { useAppInit } from '@usm/app-state';
 
 import PageNotFound from '../PageNotFound/PageNotFound';
+import Gallery from '../Gallery/Gallery';
+import DemoBand from '../DemoBand/DemoBand';
 
 import styles from './App.scss';
 
 export let nav: INavItem[] = [
+  {
+    content: 'The Drop',
+    to: routes.gallery
+  },
   {
     content: copy.blog,
     to: urls.usmBlog
@@ -52,6 +58,8 @@ export function App() {
       <Routes>
         <Route path={routes.home} element={<Home />} />
         <Route path={routes.blog} element={<Link to={urls.usmBlog} />} />
+        <Route path={routes.gallery} element={<Gallery />} />
+        <Route path={routes.demoBand} element={<DemoBand />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
       <div className={styles.footer}>

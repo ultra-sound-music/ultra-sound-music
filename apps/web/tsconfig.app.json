@@ -4,7 +4,11 @@
     "outDir": "../../dist/out-tsc",
     "types": ["node"]
   },
-  "files": ["../../node_modules/@nrwl/react/typings/image.d.ts", "../../types/cssmodule.d.ts"],
+  "files": [
+    "../../node_modules/@nrwl/react/typings/image.d.ts",
+    "../../types/cssmodule.d.ts",
+    "../../types/audio.d.ts"
+  ],
   "exclude": [
     "**/*.spec.ts",
     "**/*.test.ts",

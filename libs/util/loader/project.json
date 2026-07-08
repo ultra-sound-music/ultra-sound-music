@@ -2,6 +2,17 @@
   "sourceRoot": "libs/util/loader/src",
   "projectType": "library",
   "generators": {},
-  "targets": {},
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/util/loader",
+        "main": "libs/util/loader/src/index.ts",
+        "tsConfig": "libs/util/loader/tsconfig.lib.json",
+        "assets": ["libs/util/loader/*.md"]
+      }
+    }
+  },
   "tags": []
 }

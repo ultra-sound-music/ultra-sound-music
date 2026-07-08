@@ -22,9 +22,9 @@ export interface IUsmPlayerEvent {
 
 export interface IUsmPlayerProps {
   logger?: ILogger;
-  onLoad?: () => void;
-  onPlay?: () => void;
-  onStop?: () => void;
+  onLoad?: (e: IUsmPlayerEvent) => void;
+  onPlay?: (e: IUsmPlayerEvent) => void;
+  onStop?: (e: IUsmPlayerEvent) => void;
 }
 
 export interface IUsmPlayerPlayArgs {
@@ -45,6 +45,8 @@ export default class UsmPlayer {
   isPlaying = false;
   audioContext: AudioContext;
   audioSource: AudioBufferSourceNode | undefined;
+  audioBuffer: AudioBuffer | undefined;
+  playRequestId = 0;
   onLoad: (e: IUsmPlayerEvent) => void;
   onPlay: (e: IUsmPlayerEvent) => void;
   onStop: (e: IUsmPlayerEvent) => void;
@@ -61,26 +63,74 @@ export default class UsmPlayer {
     this.onStop = onStop || noop;
   }
 
-  connectAudioSource = (audioBuffer: AudioBuffer): AudioBufferSourceNode => {
+  createEvent = (id = this.currentId, audioUrl = this.currentUrl): IUsmPlayerEvent => ({
+    id,
+    audioUrl,
+    currentTime: this.currentTime,
+    isPlaying: this.isPlaying
+  });
+
+  stopCurrentSource = (cancelPendingPlay = true): void => {
+    if (cancelPendingPlay) {
+      this.playRequestId += 1;
+    }
+
+    const id = this.currentId;
+    const audioUrl = this.currentUrl;
+    const audioSource = this.audioSource;
+
+    this.currentTime = START_TIME;
+    this.isPlaying = false;
+    this.audioSource = undefined;
+
+    if (audioSource) {
+      audioSource.onended = null;
+      audioSource.stop();
+    }
+
+    this.onStop(this.createEvent(id, audioUrl));
+  };
+
+  connectAudioSource = (
+    audioBuffer: AudioBuffer,
+    id = this.currentId,
+    audioUrl = this.currentUrl
+  ): AudioBufferSourceNode => {
     const audioSource = this.audioContext.createBufferSource();
     this.audioSource = audioSource;
+    this.audioBuffer = audioBuffer;
 
     audioSource.buffer = audioBuffer;
     audioSource.connect(this.audioContext.destination);
-    this.onLoad({
-      id: this.currentId,
-      audioUrl: this.currentUrl,
-      currentTime: this.currentTime,
-      isPlaying: this.isPlaying
-    });
+    audioSource.onended = () => {
+      // stop()/pause() already set isPlaying=false synchronously before calling
+      // audioSource.stop(), which also fires this same 'ended' event — skip the
+      // duplicate callback and only report natural playback completion here. The
+      // source identity check also keeps old 'ended' events from clearing newer
+      // playback after a quick handoff.
+      if (this.audioSource !== audioSource || !this.isPlaying) {
+        return;
+      }
+      this.isPlaying = false;
+      this.currentTime = START_TIME;
+      this.audioSource = undefined;
+      this.onStop(this.createEvent(id, audioUrl));
+    };
+    this.onLoad(this.createEvent(id, audioUrl));
     return audioSource;
   };
 
   reConnectAudioSource = (): AudioBufferSourceNode => {
-    return this.connectAudioSource(this.audioSource.buffer);
+    // Only called from play()'s "same URL" branch, which is unreachable until a prior
+    // play() has already run connectAudioSource() at least once.
+    if (!this.audioBuffer) {
+      throw new Error('Cannot reconnect audio source before audio is loaded');
+    }
+
+    return this.connectAudioSource(this.audioBuffer);
   };
 
-  loadAudio = async (audioUrl: TAudioUrl): Promise<AudioBuffer> => {
+  loadAudio = async (audioUrl: TAudioUrl): Promise<AudioBuffer | undefined> => {
     const arrayBuffer = await loadAudio(audioUrl);
     if (!arrayBuffer) {
       return;
@@ -95,52 +145,61 @@ export default class UsmPlayer {
       return;
     }
 
-    if (this.currentUrl !== audioUrl) {
-      this.currentId = id;
-      this.currentUrl = audioUrl;
-      this.currentTime = 0;
-      const audioBuffer = await this.loadAudio(audioUrl);
+    const playRequestId = this.playRequestId + 1;
+    this.playRequestId = playRequestId;
 
-      if (this.isPlaying) {
-        this.stop();
+    let audioSource: AudioBufferSourceNode;
+    if (this.currentUrl !== audioUrl || !this.audioBuffer) {
+      const audioBuffer = await this.loadAudio(audioUrl);
+      if (this.playRequestId !== playRequestId) {
+        return;
       }
 
-      this.connectAudioSource(audioBuffer);
+      if (!audioBuffer) {
+        return;
+      }
+
+      if (this.isPlaying) {
+        this.stopCurrentSource(false);
+      }
+
+      this.currentId = id;
+      this.currentUrl = audioUrl;
+      this.currentTime = START_TIME;
+      audioSource = this.connectAudioSource(audioBuffer, id, audioUrl);
     } else {
-      this.reConnectAudioSource();
+      if (this.isPlaying) {
+        this.stopCurrentSource(false);
+      }
+
+      this.currentId = id;
+      this.currentUrl = audioUrl;
+      audioSource = this.reConnectAudioSource();
     }
 
-    this.audioSource.start(WHEN_TIME, this.currentTime);
+    audioSource.start(WHEN_TIME, this.currentTime);
     this.isPlaying = true;
-    this.onPlay({
-      id: this.currentId,
-      audioUrl: this.currentUrl,
-      currentTime: this.currentTime,
-      isPlaying: this.isPlaying
-    });
+    this.onPlay(this.createEvent());
   };
 
   pause(): void {
     this.currentTime = this.audioContext.currentTime;
-    this.audioSource.stop();
+    const id = this.currentId;
+    const audioUrl = this.currentUrl;
+    const audioSource = this.audioSource;
+    this.playRequestId += 1;
     this.isPlaying = false;
-    this.onStop({
-      id: this.currentId,
-      audioUrl: this.currentUrl,
-      currentTime: this.currentTime,
-      isPlaying: this.isPlaying
-    });
+    this.audioSource = undefined;
+
+    if (audioSource) {
+      audioSource.onended = null;
+      audioSource.stop();
+    }
+
+    this.onStop(this.createEvent(id, audioUrl));
   }
 
   stop(): void {
-    this.currentTime = 0;
-    this.audioSource.stop();
-    this.isPlaying = false;
-    this.onStop({
-      id: this.currentId,
-      audioUrl: this.currentUrl,
-      currentTime: this.currentTime,
-      isPlaying: this.isPlaying
-    });
+    this.stopCurrentSource();
   }
 }

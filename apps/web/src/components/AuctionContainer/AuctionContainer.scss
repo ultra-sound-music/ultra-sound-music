@@ -48,3 +48,18 @@
     grid-column: 1/-1;
   }
 }
+
+.keepExploring {
+  grid-column: 2 / 24;
+  padding-top: 24px;
+  padding-bottom: 40px;
+  color: $color-breakwater;
+
+  a {
+    color: $color-lavish;
+  }
+
+  @include media-query(mobile) {
+    grid-column: 1/-1;
+  }
+}

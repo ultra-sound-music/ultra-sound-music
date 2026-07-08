@@ -1,0 +1,176 @@
+@use '@usm/styles/colors.scss' as *;
+@use '@usm/styles/layout.scss' as *;
+@use '@usm/styles/typo.scss' as *;
+
+.Gallery {
+  color: $color-polar-bear;
+  background-color: $color-empty-sky;
+  padding-top: 160px;
+  padding-bottom: 80px;
+
+  @include media-query(mobile) {
+    padding-top: 90px;
+  }
+}
+
+.intro {
+  margin-bottom: 40px;
+
+  > * {
+    grid-column: 2 / span 16;
+
+    @include media-query(tablet mobile) {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: $app-width-max;
+  min-width: $app-width-min;
+  margin: 0 auto;
+  padding: 0 15px;
+
+  @include media-query(laptop tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include media-query(mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.demoBandTeaser {
+  margin-top: 56px;
+
+  > * {
+    grid-column: 2 / span 16;
+
+    @include media-query(tablet mobile) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  a {
+    color: $color-lavish;
+  }
+}
+
+.JamBotCard {
+  display: flex;
+  flex-direction: column;
+  background: $color-evening-sky;
+  border: 1px solid $color-dusk;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.art {
+  aspect-ratio: 1 / 1;
+}
+
+.artImage {
+  width: 100%;
+  height: 100%;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.credit {
+  color: $color-breakwater;
+  @extend %font-iconic;
+
+  margin-bottom: 8px;
+}
+
+.traits {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.traitBar {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.traitBarLabel {
+  color: $color-breakwater;
+  @extend %font-mini;
+
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.traitBarTrack {
+  height: 4px;
+  background: $color-dusk;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.traitBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);
+}
+
+.styleTags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.styleTag {
+  @extend %font-mini;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-taffy;
+  border: 1px solid $color-dusk;
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+
+.auditionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1px solid $color-lavish;
+  color: $color-polar-bear;
+  border-radius: 24px;
+  padding: 10px 16px;
+  cursor: pointer;
+  @extend %font-mini;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &:hover {
+    background: $color-dusk;
+  }
+
+  svg {
+    font-size: 1.8rem;
+  }
+}
+
+.auditionButtonError {
+  border-color: $color-fail;
+  color: $color-fail;
+}
