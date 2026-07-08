@@ -4,6 +4,7 @@
   background-color: $color-sassy;
   position: relative;
   overflow: hidden;
+
   --offset: 20vw;
   --move-initial: calc(-25% + var(--offset));
   --move-final: calc(-50% + var(--offset));

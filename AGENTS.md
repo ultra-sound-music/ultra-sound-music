@@ -40,9 +40,9 @@ questions live in `.agents/spec/` and `.agents/current_status.md`.
 - `apps/web` — main React 18 dApp / auction site.
 - `apps/docs` — Docusaurus docs site.
 - `apps/guillermo`, `apps/sandbox` — secondary or experimental apps.
-- `libs/sol-client` — on-chain client layer. The legacy Metaplex-v1 path
-  (`Auction/getAuction.ts`) is still the live read path; the Core/custom-auction adapter
-  (`Auction/auctionAdapter.ts`, `getProgramAuction`) is its replacement, not yet wired in.
+- `libs/sol-client` — on-chain client layer. The Core/custom-auction adapter
+  (`Auction/auctionAdapter.ts`, exporting `getAuction`) is the live read path. The old
+  Metaplex-v1 `Auction/getAuction.ts` file is now only a compatibility re-export for shared types.
 - `programs/usm-auction` — custom Anchor auction program (Rust) for Metaplex Core NFTs, plus its
   TypeScript test suite. Source of truth for the on-chain account layout the adapter mirrors.
 - `libs/app-state` — web3 + UI app state.
