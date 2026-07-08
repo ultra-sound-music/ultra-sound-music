@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ultrasoundmusic.xyz/schema/sonic-identity.json",
+  "title": "SonicIdentityRegistry",
+  "type": "object",
+  "required": ["drop", "schemaVersion", "identities"],
+  "properties": {
+    "drop": { "type": "string" },
+    "schemaVersion": { "type": "string" },
+    "identities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "artistId",
+          "sonicIdentityId",
+          "sourcePerformerCredits",
+          "sourceSessions",
+          "primaryInstrument",
+          "instrumentFamily",
+          "qualityBrief",
+          "paletteTags",
+          "rightsUri",
+          "provenanceUri"
+        ],
+        "properties": {
+          "artistId": { "type": "string" },
+          "sonicIdentityId": { "type": "string" },
+          "sourcePerformerCredits": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "role", "instrument"],
+              "properties": {
+                "name": { "type": "string" },
+                "role": { "type": "string" },
+                "instrument": { "type": "string" }
+              }
+            }
+          },
+          "sourceSessions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["sessionId", "sourceFileHashes"],
+              "properties": {
+                "sessionId": { "type": "string" },
+                "takeId": { "type": "string" },
+                "date": { "type": "string" },
+                "location": { "type": "string" },
+                "notes": { "type": "string" },
+                "sourceFileHashes": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          },
+          "primaryInstrument": { "type": "string" },
+          "instrumentFamily": { "type": "string" },
+          "qualityBrief": { "type": "string" },
+          "paletteTags": { "type": "array", "items": { "type": "string" } },
+          "rightsUri": { "type": "string" },
+          "provenanceUri": { "type": "string" }
+        }
+      }
+    }
+  }
+}

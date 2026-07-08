@@ -1,0 +1,33 @@
+{
+  "drop": "jam-bots-genesis-placeholders",
+  "schemaVersion": "0.1.0",
+  "artists": [
+    {
+      "artistId": "jambot-placeholder-violin",
+      "spark": 65,
+      "swagger": 80,
+      "fame": 75,
+      "melodicStyle": "lyrical",
+      "rhythmicStyle": "flowing",
+      "energy": 70
+    },
+    {
+      "artistId": "jambot-placeholder-mandolin",
+      "spark": 85,
+      "swagger": 60,
+      "fame": 45,
+      "melodicStyle": "arpeggiated",
+      "rhythmicStyle": "syncopated",
+      "energy": 80
+    },
+    {
+      "artistId": "jambot-placeholder-bassoon",
+      "spark": 35,
+      "swagger": 50,
+      "fame": 20,
+      "melodicStyle": "droning",
+      "rhythmicStyle": "sustained",
+      "energy": 40
+    }
+  ]
+}

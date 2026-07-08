@@ -1,0 +1,22 @@
+{
+  "name": "@usm/band-jam-spike",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Plan 04 workstream A: staging copy for the artist-aware band-jam spike.",
+  "scripts": {
+    "gen": "node src/gen-placeholders.mjs",
+    "render": "node src/jam.mjs",
+    "render:ambient": "node src/jam.mjs --recipe manifests/demo-jam-ambient.json --out out/jam-ambient.wav",
+    "resolve:trio-driving": "node src/jam.mjs --intent manifests/demo-intent-trio-driving.json --out out/jam-trio-driving.wav",
+    "resolve:duo-neon": "node src/jam.mjs --intent manifests/demo-intent-duo-neon.json --out out/jam-duo-neon.wav",
+    "resolve:trio-gritty": "node src/jam.mjs --intent manifests/demo-intent-trio-gritty.json --out out/jam-trio-gritty.wav",
+    "share": "ffmpeg -y -loglevel error -i out/jam.wav -codec:a libmp3lame -qscale:a 3 out/jam.mp3 && echo wrote out/jam.mp3",
+    "share:trio-driving": "ffmpeg -y -loglevel error -i out/jam-trio-driving.wav -codec:a libmp3lame -qscale:a 3 out/jam-trio-driving.mp3 && echo wrote out/jam-trio-driving.mp3",
+    "share:duo-neon": "ffmpeg -y -loglevel error -i out/jam-duo-neon.wav -codec:a libmp3lame -qscale:a 3 out/jam-duo-neon.mp3 && echo wrote out/jam-duo-neon.mp3",
+    "share:trio-gritty": "ffmpeg -y -loglevel error -i out/jam-trio-gritty.wav -codec:a libmp3lame -qscale:a 3 out/jam-trio-gritty.mp3 && echo wrote out/jam-trio-gritty.mp3",
+    "verify": "node src/verify.mjs",
+    "verify:resolve": "node src/verify-resolve.mjs",
+    "all": "npm run gen && npm run render && npm run share && npm run verify && npm run verify:resolve"
+  }
+}

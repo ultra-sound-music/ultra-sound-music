@@ -1,0 +1,8 @@
+{
+  "bandId": "band-placeholder-duo",
+  "memberIds": ["jambot-placeholder-violin", "jambot-placeholder-bassoon"],
+  "seed": 99,
+  "vibe": "neon",
+  "intensity": 15,
+  "engineVersion": "jam-engine-0.1.0"
+}

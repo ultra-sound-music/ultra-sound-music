@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ultrasoundmusic.xyz/schema/jam-recipe.json",
+  "title": "JamRecipe",
+  "type": "object",
+  "required": [
+    "bandId",
+    "memberIds",
+    "seed",
+    "tempo",
+    "keyCenter",
+    "bars",
+    "tracks",
+    "mix",
+    "engineVersion",
+    "sourceHashes"
+  ],
+  "properties": {
+    "bandId": { "type": "string" },
+    "memberIds": { "type": "array", "items": { "type": "string" } },
+    "seed": { "type": "integer" },
+    "tempo": { "type": "number", "exclusiveMinimum": 0 },
+    "keyCenter": { "type": "string" },
+    "bars": { "type": "integer", "minimum": 1 },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "performerArtistId",
+          "soundId",
+          "sonicIdentityId",
+          "role",
+          "patternId",
+          "gain",
+          "pan"
+        ],
+        "properties": {
+          "performerArtistId": { "type": "string" },
+          "soundId": { "type": "string" },
+          "sonicIdentityId": { "type": "string" },
+          "sourceComponentId": { "type": "string" },
+          "role": { "enum": ["signature"] },
+          "patternId": { "type": "string" },
+          "gain": { "type": "number", "minimum": 0 },
+          "pan": { "type": "number", "minimum": -1, "maximum": 1 }
+        }
+      }
+    },
+    "mix": {
+      "type": "object",
+      "required": ["masterGain", "reverbSend"],
+      "properties": {
+        "masterGain": { "type": "number", "minimum": 0 },
+        "reverbSend": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "engineVersion": { "type": "string" },
+    "sourceHashes": { "type": "object" }
+  }
+}

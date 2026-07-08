@@ -1,0 +1,51 @@
+{
+  "drop": "jam-bots-genesis-placeholders",
+  "schemaVersion": "0.1.0",
+  "identities": [
+    {
+      "artistId": "jambot-placeholder-bassoon",
+      "sonicIdentityId": "sonic-identity-bassoon-chaves",
+      "sourcePerformerCredits": [
+        { "name": "Sebastian Chaves", "role": "performer", "instrument": "bassoon" },
+        { "name": "Vijatsu", "role": "producer", "instrument": "production" }
+      ],
+      "sourceSessions": [],
+      "primaryInstrument": "bassoon",
+      "instrumentFamily": "double reed / woodwind",
+      "qualityBrief": "Low, sustained, driving root/drone bed — the gritty engine-room low end for an 80s tech-punk / Daft Punk-leaning mix, not a raw chamber-folk bassoon tone. Close-mic'd, dry, attack preserved; heavier processing (saturation, tight low-end shaping) happens downstream, not baked into the source take.",
+      "paletteTags": ["low", "drone", "sustained", "root", "gritty", "driving"],
+      "rightsUri": "TBD — rights/provenance page not yet published; see .agents/spec/blocker-decisions.md (\"Audio derivative rights\")",
+      "provenanceUri": "TBD — same as rightsUri until a durable page exists"
+    },
+    {
+      "artistId": "jambot-placeholder-violin",
+      "sonicIdentityId": "sonic-identity-violin-rose",
+      "sourcePerformerCredits": [
+        { "name": "Alisa Rose", "role": "performer", "instrument": "violin" },
+        { "name": "Vijatsu", "role": "producer", "instrument": "production" }
+      ],
+      "sourceSessions": [],
+      "primaryInstrument": "violin",
+      "instrumentFamily": "bowed strings",
+      "qualityBrief": "Lead melodic voice with vibrato and a little edge — the neon top line. Dry, present, attack-forward takes so downstream processing can push it toward a driving electronic/rock lead rather than a soft chamber tone. Should read as the hook, not background texture.",
+      "paletteTags": ["melody", "lead", "vibrato", "neon", "driving"],
+      "rightsUri": "TBD — rights/provenance page not yet published; see .agents/spec/blocker-decisions.md (\"Audio derivative rights\")",
+      "provenanceUri": "TBD — same as rightsUri until a durable page exists"
+    },
+    {
+      "artistId": "jambot-placeholder-mandolin",
+      "sonicIdentityId": "sonic-identity-mandolin-scroggins",
+      "sourcePerformerCredits": [
+        { "name": "Tristan Scroggins", "role": "performer", "instrument": "mandolin" },
+        { "name": "Vijatsu", "role": "producer", "instrument": "production" }
+      ],
+      "sourceSessions": [],
+      "primaryInstrument": "mandolin",
+      "instrumentFamily": "plucked strings",
+      "qualityBrief": "Rhythmic pulse and arpeggiated texture — tremolo and pluck detail that gives the groove its motion and surprise. Dry, transient-preserved takes so the tremolo reads clearly before any electronic-rock processing is applied; this is the part that should reward a second listen.",
+      "paletteTags": ["pluck", "tremolo", "arpeggio", "rhythmic", "gritty"],
+      "rightsUri": "TBD — rights/provenance page not yet published; see .agents/spec/blocker-decisions.md (\"Audio derivative rights\")",
+      "provenanceUri": "TBD — same as rightsUri until a durable page exists"
+    }
+  ]
+}

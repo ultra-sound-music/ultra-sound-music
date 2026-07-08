@@ -1,0 +1,15 @@
+{
+  "name": "@usm/sound-jam-spike",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Plan 04 workstream A: deterministic, manifest-driven sound-jam spike (dependency-free).",
+  "scripts": {
+    "gen": "node src/gen-placeholders.mjs",
+    "render": "node src/jam.mjs",
+    "render:ambient": "node src/jam.mjs --recipe manifests/demo-jam-ambient.json --out out/jam-ambient.wav",
+    "share": "ffmpeg -y -loglevel error -i out/jam.wav -codec:a libmp3lame -qscale:a 3 out/jam.mp3 && echo wrote out/jam.mp3",
+    "verify": "node src/verify.mjs",
+    "all": "npm run gen && npm run render && npm run share && npm run verify"
+  }
+}

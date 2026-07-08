@@ -1,0 +1,51 @@
+{
+  "bandId": "band-placeholder-trio",
+  "memberIds": [
+    "jambot-placeholder-violin",
+    "jambot-placeholder-mandolin",
+    "jambot-placeholder-bassoon"
+  ],
+  "seed": 20260706,
+  "tempo": 90,
+  "keyCenter": "Dm",
+  "bars": 16,
+  "tracks": [
+    {
+      "performerArtistId": "jambot-placeholder-bassoon",
+      "soundId": "ph-bassoon-signature",
+      "sonicIdentityId": "sonic-identity-bassoon-chaves",
+      "role": "signature",
+      "patternId": "sustain-root-per-bar",
+      "gain": 0.9,
+      "pan": 0.0
+    },
+    {
+      "performerArtistId": "jambot-placeholder-violin",
+      "soundId": "ph-violin-signature",
+      "sonicIdentityId": "sonic-identity-violin-rose",
+      "role": "signature",
+      "patternId": "melodic-phrase",
+      "gain": 0.85,
+      "pan": -0.25
+    },
+    {
+      "performerArtistId": "jambot-placeholder-mandolin",
+      "soundId": "ph-mandolin-signature",
+      "sonicIdentityId": "sonic-identity-mandolin-scroggins",
+      "role": "signature",
+      "patternId": "tremolo-arp-16ths",
+      "gain": 0.6,
+      "pan": 0.3
+    }
+  ],
+  "mix": {
+    "masterGain": 1.1,
+    "reverbSend": 0.18
+  },
+  "engineVersion": "jam-engine-0.1.0",
+  "sourceHashes": {
+    "ph-bassoon-signature": "sha256:fedc27053e2cfc01",
+    "ph-violin-signature": "sha256:8bbc20380c8d23d8",
+    "ph-mandolin-signature": "sha256:7cd1210291d8e6bf"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "bandId": "band-placeholder-trio",
+  "memberIds": [
+    "jambot-placeholder-violin",
+    "jambot-placeholder-mandolin",
+    "jambot-placeholder-bassoon"
+  ],
+  "seed": 20260706,
+  "vibe": "gritty",
+  "intensity": 50,
+  "engineVersion": "jam-engine-0.1.0"
+}

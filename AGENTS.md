@@ -40,6 +40,10 @@ questions live in `.agents/spec/` and `.agents/current_status.md`.
 - `apps/web` — main React 18 dApp / auction site.
 - `apps/docs` — Docusaurus docs site.
 - `apps/guillermo`, `apps/sandbox` — secondary or experimental apps.
+- `apps/spikes` — standalone, dependency-free Node proof-of-concept mini-projects (each has its own
+  `package.json`; not Nx-registered projects). `apps/spikes/sound-jam` is the completed sound-level
+  jam transport proof; `apps/spikes/band-jam` is the active artist-aware iteration (trait-driven
+  resolver). See `.agents/plans/04-product-validation.md` Workstream A.
 - `libs/sol-client` — on-chain client layer. The Core/custom-auction adapter
   (`Auction/auctionAdapter.ts`, exporting `getAuction`) is the live read path. The old
   Metaplex-v1 `Auction/getAuction.ts` file is now only a compatibility re-export for shared types.

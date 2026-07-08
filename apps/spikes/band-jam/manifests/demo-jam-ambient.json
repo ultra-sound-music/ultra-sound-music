@@ -1,0 +1,37 @@
+{
+  "bandId": "band-placeholder-duo",
+  "memberIds": ["jambot-placeholder-violin", "jambot-placeholder-bassoon"],
+  "seed": 71,
+  "tempo": 90,
+  "keyCenter": "Dm",
+  "bars": 8,
+  "tracks": [
+    {
+      "performerArtistId": "jambot-placeholder-bassoon",
+      "soundId": "ph-bassoon-signature",
+      "sonicIdentityId": "sonic-identity-bassoon-chaves",
+      "role": "signature",
+      "patternId": "sustain-root-per-bar",
+      "gain": 1.0,
+      "pan": -0.15
+    },
+    {
+      "performerArtistId": "jambot-placeholder-violin",
+      "soundId": "ph-violin-signature",
+      "sonicIdentityId": "sonic-identity-violin-rose",
+      "role": "signature",
+      "patternId": "melodic-phrase",
+      "gain": 0.7,
+      "pan": 0.2
+    }
+  ],
+  "mix": {
+    "masterGain": 1.0,
+    "reverbSend": 0.42
+  },
+  "engineVersion": "jam-engine-0.1.0",
+  "sourceHashes": {
+    "ph-bassoon-signature": "sha256:fedc27053e2cfc01",
+    "ph-violin-signature": "sha256:8bbc20380c8d23d8"
+  }
+}

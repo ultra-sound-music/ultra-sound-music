@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ultrasoundmusic.xyz/schema/jam-intent.json",
+  "title": "JamIntent",
+  "type": "object",
+  "required": ["bandId", "memberIds", "seed", "vibe", "intensity", "engineVersion"],
+  "properties": {
+    "bandId": { "type": "string" },
+    "memberIds": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 2,
+      "maxItems": 6
+    },
+    "seed": { "type": "integer" },
+    "vibe": { "enum": ["driving", "neon", "gritty"] },
+    "intensity": { "type": "number", "minimum": 0, "maximum": 100 },
+    "engineVersion": { "type": "string" }
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ultrasoundmusic.xyz/schema/sound-manifest.json",
+  "title": "SoundManifest",
+  "type": "object",
+  "required": ["drop", "schemaVersion", "sounds"],
+  "properties": {
+    "drop": { "type": "string" },
+    "schemaVersion": { "type": "string" },
+    "sounds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "sourceBot",
+          "sonicIdentityId",
+          "sourceProfileMatchStatus",
+          "role",
+          "bpm",
+          "tempoRange",
+          "meter",
+          "bars",
+          "keyCenter",
+          "loopPoints",
+          "durationSeconds",
+          "beats",
+          "loudness",
+          "peak",
+          "tags",
+          "credit",
+          "rights",
+          "sourceHash",
+          "canonicalUri",
+          "playbackUri"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "sourceBot": { "type": "string" },
+          "sonicIdentityId": { "type": "string" },
+          "sourceProfileMatchStatus": { "enum": ["match", "approvedExtension"] },
+          "approvedExtension": {
+            "type": "object",
+            "required": ["rationale", "approvedBy", "date", "rightsUri", "extendsSonicIdentityId"],
+            "properties": {
+              "rationale": { "type": "string" },
+              "approvedBy": { "type": "string" },
+              "date": { "type": "string" },
+              "rightsUri": { "type": "string" },
+              "extendsSonicIdentityId": { "type": "string" }
+            }
+          },
+          "sourceSessionRef": {
+            "type": "object",
+            "required": ["sessionId"],
+            "properties": {
+              "sessionId": { "type": "string" },
+              "takeId": { "type": "string" }
+            }
+          },
+          "role": { "enum": ["signature"] },
+          "bpm": { "type": "number", "exclusiveMinimum": 0 },
+          "tempoRange": {
+            "type": "array",
+            "items": { "type": "number" },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "meter": { "type": "string" },
+          "bars": { "type": "integer", "minimum": 1 },
+          "keyCenter": { "type": "string" },
+          "loopPoints": {
+            "type": "array",
+            "items": { "type": "integer" },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "durationSeconds": { "type": "number", "exclusiveMinimum": 0 },
+          "beats": { "type": "number", "exclusiveMinimum": 0 },
+          "loudness": { "type": "number" },
+          "peak": { "type": "number", "minimum": 0, "maximum": 1 },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "credit": { "type": "string" },
+          "rights": { "type": "string" },
+          "sourceHash": { "type": "string" },
+          "canonicalUri": { "type": "string" },
+          "playbackUri": { "type": "string" },
+          "sourceBundle": {
+            "type": "object",
+            "required": ["auditionExcerpt", "components"],
+            "properties": {
+              "auditionExcerpt": {
+                "type": "object",
+                "required": ["durationSeconds", "sourceHash", "canonicalUri", "playbackUri"],
+                "properties": {
+                  "durationSeconds": { "type": "number", "exclusiveMinimum": 0 },
+                  "sourceHash": { "type": "string" },
+                  "canonicalUri": { "type": "string" },
+                  "playbackUri": { "type": "string" }
+                }
+              },
+              "components": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "componentId",
+                    "kind",
+                    "bpm",
+                    "tempoRange",
+                    "meter",
+                    "bars",
+                    "keyCenter",
+                    "loopPoints",
+                    "durationSeconds",
+                    "beats",
+                    "loudness",
+                    "peak",
+                    "tags",
+                    "sourceHash",
+                    "canonicalUri",
+                    "playbackUri"
+                  ],
+                  "properties": {
+                    "componentId": { "type": "string" },
+                    "kind": { "enum": ["slice", "phrase", "loop"] },
+                    "bpm": { "type": "number", "exclusiveMinimum": 0 },
+                    "tempoRange": {
+                      "type": "array",
+                      "items": { "type": "number" },
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    "meter": { "type": "string" },
+                    "bars": { "type": "integer", "minimum": 1 },
+                    "keyCenter": { "type": "string" },
+                    "loopPoints": {
+                      "type": "array",
+                      "items": { "type": "integer" },
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    "durationSeconds": { "type": "number", "exclusiveMinimum": 0 },
+                    "beats": { "type": "number", "exclusiveMinimum": 0 },
+                    "loudness": { "type": "number" },
+                    "peak": { "type": "number", "minimum": 0, "maximum": 1 },
+                    "tags": { "type": "array", "items": { "type": "string" } },
+                    "sourceHash": { "type": "string" },
+                    "canonicalUri": { "type": "string" },
+                    "playbackUri": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
