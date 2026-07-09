@@ -30,11 +30,11 @@ const clamp = (lo, hi, x) => Math.max(lo, Math.min(hi, x));
 const round4 = (x) => +x.toFixed(4);
 
 // R6 — pattern label, cosmetic/provenance only (jam.mjs never reads track.patternId).
-const PATTERN_BY_RHYTHMIC_STYLE = {
-  sustained: 'sustain-root-per-bar',
-  flowing: 'melodic-phrase',
-  syncopated: 'tremolo-arp-16ths'
-};
+function rhythmBucket(rhythm) {
+  if (rhythm < 34) return { label: 'flowing', patternId: 'flowing-long-lines' };
+  if (rhythm > 66) return { label: 'groove-driven', patternId: 'groove-lock-16ths' };
+  return { label: 'balanced pulse', patternId: 'balanced-pulse' };
+}
 
 // R7 — mix effects base reverb per Band vibe (loosely grounded in the mood words).
 const VIBE_BASE_REVERB = { driving: 0.12, neon: 0.2, gritty: 0.1 };
@@ -145,11 +145,13 @@ export function resolveJam(intent, { soundManifest, sonicIdentities, artistTrait
     const pan = round4(clamp(-1, 1, basePan + (jitterRng() - 0.5) * 0.16));
 
     // R6 — pattern label: cosmetic/provenance only.
-    const patternId = PATTERN_BY_RHYTHMIC_STYLE[m.traits.rhythmicStyle];
+    const rhythmProfile = rhythmBucket(m.traits.rhythm);
+    const patternId = rhythmProfile.patternId;
 
     log.push(
       `  track ${m.artistId}: swagger=${m.traits.swagger} fame=${m.traits.fame} energy=${m.traits.energy} ` +
-        `-> gain=${gain}, pan=${pan}, pattern=${patternId} (rhythmicStyle=${m.traits.rhythmicStyle})`
+        `rhythm=${m.traits.rhythm} melody=${m.traits.melody} ` +
+        `-> gain=${gain}, pan=${pan}, pattern=${patternId} (rhythm=${rhythmProfile.label})`
     );
 
     return {

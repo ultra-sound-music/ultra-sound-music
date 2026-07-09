@@ -65,7 +65,7 @@ schema/jam-intent.{ts,schema.json}        <- canonical shape (data-model.md "Ban
                                             contract") — the resolver's input: Band lineup, seed,
                                             vibe/intensity, engine version
 schema/artist-traits.{ts,schema.json}     <- canonical shape (data-model.md "Identity & DNA") —
-                                            Spark/Swagger/Fame/Melodic Style/Rhythmic Style/Energy
+                                            Sanity/Swagger/Fame/Energy/Rhythm/Melody
 
 manifests/artist-traits.json              <- concrete trait values for the 3 placeholder bots
 manifests/demo-intent-*.json              <- 3 demo JamIntents proving the mapping is trait-driven
@@ -144,9 +144,9 @@ to deterministically produce a `JamRecipe` — not a hand-typed one. `blocker-de
 "the exact trait-to-arrangement mapping" as undecided; this is the first concrete implementation.
 
 **New:** `schema/jam-intent.{ts,schema.json}`, `schema/artist-traits.{ts,schema.json}`,
-`manifests/artist-traits.json` (concrete Spark/Swagger/Fame/Melodic Style/Rhythmic Style/Energy
-values for the 3 placeholder bots, grounded in each bot's `sonic-identities.json` quality brief, with
-no ties on any trait so every rule's ordering is unambiguous), `src/resolver.mjs`
+`manifests/artist-traits.json` (concrete Sanity/Swagger/Fame/Energy/Rhythm/Melody values for the 3
+placeholder bots, grounded in each bot's `sonic-identities.json` quality brief, with no ties on the
+traits currently consumed by resolver rules so every rule's ordering is unambiguous), `src/resolver.mjs`
 (`resolveJam(intent, refs) -> {recipe, log}`), `manifests/demo-intent-*.json` (3 demo intents), and
 `src/verify-resolve.mjs`. `jam.mjs`'s `renderJam` is unchanged; the CLI only gained an additive
 `--intent <path>` flag whose resolved recipe passes through the exact same `jam-recipe.schema.json`
@@ -162,7 +162,8 @@ sanity-check by ear before treating any of it as final):
 | Band vibe + Intensity                      | `reverbSend` / `masterGain`                       | **Yes**                                                           |
 | Band Intensity                             | `bars` (8/12/16, buckets)                         | **Yes**                                                           |
 | Energy (max across lineup)                 | tempo bucket                                      | Computed + logged only — **clamped to native bpm** (see below)    |
-| Rhythmic Style                             | `patternId` label                                 | No — cosmetic/provenance only, confirmed `jam.mjs` never reads it |
+| Rhythm                                     | `patternId` label                                 | No — cosmetic/provenance only, confirmed `jam.mjs` never reads it |
+| Melody                                     | not consumed yet                                  | No — reserved for future phrase/source-component selection        |
 | (uniform across lineup)                    | `keyCenter`                                       | No — confirmed `renderJam` never reads this field either          |
 
 **Every lineup member is always audible** — deliberately, not by default. An earlier design had a
@@ -189,11 +190,10 @@ spike's outputs, correctly. The resolver's actual output is `out/jam-trio-drivin
 generate them (not part of `npm run all`, so they don't exist until you ask for them).
 
 **Not in scope here:** `sourceComponentId` selection (no `sourceBundle` components exist on any
-placeholder yet), audible pattern-family/tempo/key variation (needs real multi-take source material
-or stretch/shift tooling, neither of which exists), and the real Melodic/Rhythmic Style category
-vocabulary (the values here are spike-local, not a locked taxonomy). The D3-gated listening pass still
-waits on real recordings and a fuller pattern-selection mechanism — this resolver makes the mechanism
-real and provably trait-driven, but doesn't by itself resolve the aesthetic risk.
+placeholder yet) and audible pattern-family/tempo/key variation (needs real multi-take source material
+or stretch/shift tooling, neither of which exists). The D3-gated listening pass still waits on real
+recordings and a fuller pattern-selection mechanism — this resolver makes the mechanism real and
+provably trait-driven, but doesn't by itself resolve the aesthetic risk.
 
 ## Honest limitations (placeholder-stage, by design)
 

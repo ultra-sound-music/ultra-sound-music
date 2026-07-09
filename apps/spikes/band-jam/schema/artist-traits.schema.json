@@ -11,23 +11,15 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "artistId",
-          "spark",
-          "swagger",
-          "fame",
-          "melodicStyle",
-          "rhythmicStyle",
-          "energy"
-        ],
+        "required": ["artistId", "sanity", "swagger", "fame", "energy", "rhythm", "melody"],
         "properties": {
           "artistId": { "type": "string" },
-          "spark": { "type": "number", "minimum": 0, "maximum": 100 },
+          "sanity": { "type": "number", "minimum": 0, "maximum": 100 },
           "swagger": { "type": "number", "minimum": 0, "maximum": 100 },
           "fame": { "type": "number", "minimum": 0, "maximum": 100 },
-          "melodicStyle": { "enum": ["droning", "lyrical", "arpeggiated"] },
-          "rhythmicStyle": { "enum": ["sustained", "flowing", "syncopated"] },
-          "energy": { "type": "number", "minimum": 0, "maximum": 100 }
+          "energy": { "type": "number", "minimum": 0, "maximum": 100 },
+          "rhythm": { "type": "number", "minimum": 0, "maximum": 100 },
+          "melody": { "type": "number", "minimum": 0, "maximum": 100 }
         }
       }
     }

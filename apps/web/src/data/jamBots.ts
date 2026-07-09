@@ -15,23 +15,126 @@ import bassoonAudio from '@usm/assets/audio/bassoon-signature.wav';
 import demoBandAudio from '@usm/assets/audio/demo-band-neon-static.mp3';
 
 export interface JamBotTraits {
-  spark: number;
+  sanity: number;
   swagger: number;
   fame: number;
-  melodicStyle: string;
-  rhythmicStyle: string;
   energy: number;
+  rhythm: number;
+  melody: number;
 }
+
+export type JamBotTraitKey = keyof JamBotTraits;
+
+export interface JamBotTraitDefinition {
+  label: string;
+  lowPole: string;
+  highPole: string;
+  descriptors: [string, string, string];
+}
+
+export interface JamBotTraitDisplay extends JamBotTraitDefinition {
+  key: JamBotTraitKey;
+  value: number;
+  descriptor: string;
+}
+
+export const jamBotTraitOrder: JamBotTraitKey[] = [
+  'sanity',
+  'swagger',
+  'fame',
+  'energy',
+  'rhythm',
+  'melody'
+];
+
+export const jamBotTraitDefinitions: Record<JamBotTraitKey, JamBotTraitDefinition> = {
+  sanity: {
+    label: 'Sanity',
+    lowPole: 'Controlled',
+    highPole: 'Chaotic',
+    descriptors: ['controlled', 'balanced', 'chaotic']
+  },
+  swagger: {
+    label: 'Swagger',
+    lowPole: 'Humble',
+    highPole: 'Flamboyant',
+    descriptors: ['humble', 'self-possessed', 'flamboyant']
+  },
+  fame: {
+    label: 'Fame',
+    lowPole: 'Cult',
+    highPole: 'Superstar',
+    descriptors: ['cult', 'breakout', 'superstar']
+  },
+  energy: {
+    label: 'Energy',
+    lowPole: 'Calm',
+    highPole: 'Explosive',
+    descriptors: ['calm', 'charged', 'explosive']
+  },
+  rhythm: {
+    label: 'Rhythm',
+    lowPole: 'Flowing',
+    highPole: 'Groove-driven',
+    descriptors: ['flowing', 'pulsed', 'groove-driven']
+  },
+  melody: {
+    label: 'Melody',
+    lowPole: 'Minimal',
+    highPole: 'Lyrical',
+    descriptors: ['minimal', 'motif-led', 'lyrical']
+  }
+};
 
 export interface JamBot {
   id: string;
   name: string;
   performerCredit: string;
   instrument: string;
-  bio: string;
   image: string;
   auditionAudioUrl: string;
   traits: JamBotTraits;
+}
+
+function descriptorIndex(value: number) {
+  if (value < 34) return 0;
+  if (value > 66) return 2;
+  return 1;
+}
+
+export function getTraitDescriptor(key: JamBotTraitKey, value: number) {
+  return jamBotTraitDefinitions[key].descriptors[descriptorIndex(value)];
+}
+
+export function getJamBotTraitDisplays(traits: JamBotTraits): JamBotTraitDisplay[] {
+  return jamBotTraitOrder.map((key) => {
+    const definition = jamBotTraitDefinitions[key];
+    const value = traits[key];
+
+    return {
+      key,
+      value,
+      ...definition,
+      descriptor: getTraitDescriptor(key, value)
+    };
+  });
+}
+
+export function getJamBotStyleTags(traits: JamBotTraits) {
+  return (['energy', 'rhythm', 'melody'] as JamBotTraitKey[]).map((key) => {
+    const definition = jamBotTraitDefinitions[key];
+    return `${getTraitDescriptor(key, traits[key])} ${definition.label.toLowerCase()}`;
+  });
+}
+
+export function getJamBotBio(bot: JamBot, styleTags: string[] = getJamBotStyleTags(bot.traits)) {
+  const { traits } = bot;
+  const musicalProfile = styleTags.join(', ');
+  const characterProfile = (['sanity', 'swagger', 'fame'] as JamBotTraitKey[])
+    .map((key) => getTraitDescriptor(key, traits[key]))
+    .join(', ');
+
+  return `${bot.instrument} voice shaped by ${musicalProfile}; character reads ${characterProfile}.`;
 }
 
 export const jamBots: JamBot[] = [
@@ -40,16 +143,15 @@ export const jamBots: JamBot[] = [
     name: 'Rosewire',
     performerCredit: 'Alisa Rose — violin',
     instrument: 'violin',
-    bio: 'Lead melodic voice with vibrato and a little edge — the neon top line of the band. Reads as the hook, not background texture.',
     image: heroJambot1,
     auditionAudioUrl: violinAudio,
     traits: {
-      spark: 65,
+      sanity: 65,
       swagger: 80,
       fame: 75,
-      melodicStyle: 'lyrical',
-      rhythmicStyle: 'flowing',
-      energy: 70
+      energy: 70,
+      rhythm: 35,
+      melody: 80
     }
   },
   {
@@ -57,16 +159,15 @@ export const jamBots: JamBot[] = [
     name: 'Tremolux',
     performerCredit: 'Tristan Scroggins — mandolin',
     instrument: 'mandolin',
-    bio: 'Rhythmic pulse and arpeggiated texture — tremolo and pluck detail that gives the groove its motion and surprise.',
     image: heroJambot2,
     auditionAudioUrl: mandolinAudio,
     traits: {
-      spark: 85,
+      sanity: 85,
       swagger: 60,
       fame: 45,
-      melodicStyle: 'arpeggiated',
-      rhythmicStyle: 'syncopated',
-      energy: 80
+      energy: 80,
+      rhythm: 85,
+      melody: 60
     }
   },
   {
@@ -74,16 +175,15 @@ export const jamBots: JamBot[] = [
     name: 'Lowreed',
     performerCredit: 'Sebastian Chaves — bassoon',
     instrument: 'bassoon',
-    bio: 'Low, sustained, driving root/drone bed — the gritty engine-room low end that holds the whole band down.',
     image: heroJambot3,
     auditionAudioUrl: bassoonAudio,
     traits: {
-      spark: 35,
+      sanity: 35,
       swagger: 50,
       fame: 20,
-      melodicStyle: 'droning',
-      rhythmicStyle: 'sustained',
-      energy: 40
+      energy: 40,
+      rhythm: 25,
+      melody: 20
     }
   }
 ];

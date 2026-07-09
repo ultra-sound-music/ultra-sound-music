@@ -102,31 +102,57 @@
   gap: 8px;
 }
 
-.traitBar {
-  display: grid;
-  grid-template-columns: 70px 1fr;
-  align-items: center;
-  gap: 8px;
+.traitSpectrum {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.traitBarLabel {
+.traitSpectrumHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.traitSpectrumLabel,
+.traitSpectrumDescriptor {
   color: $color-breakwater;
   @extend %font-mini;
 
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 }
 
-.traitBarTrack {
+.traitSpectrumDescriptor {
+  color: $color-taffy;
+  text-align: right;
+}
+
+.traitSpectrumTrack {
+  position: relative;
   height: 4px;
+  margin: 6px 0;
   background: $color-dusk;
   border-radius: 2px;
-  overflow: hidden;
 }
 
-.traitBarFill {
-  height: 100%;
+.traitSpectrumMarker {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border: 2px solid $color-polar-bear;
+  border-radius: 50%;
   background: linear-gradient(90deg, $gradient-brilliant-start, $gradient-brilliant-end);
+  transform: translate(-50%, -50%);
+}
+
+.traitSpectrumPoles {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: $color-breakwater;
+  @extend %font-mini;
 }
 
 .styleTags {
