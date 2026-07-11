@@ -42,4 +42,4 @@ export type USMAuctionData = {
 };
 
 const auctionStates = ['created', 'started', 'ended'] as const;
-export type AuctionState = typeof auctionStates[number];
+export type AuctionState = (typeof auctionStates)[number];
