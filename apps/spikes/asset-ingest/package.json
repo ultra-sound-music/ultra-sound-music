@@ -1,0 +1,14 @@
+{
+  "name": "@usm/asset-ingest-spike",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Plan 04 item 0: turns raw player recordings into validated, hashed, uploaded sound-manifest/sonicIdentity entries for band-jam.",
+  "scripts": {
+    "ingest": "node src/ingest.mjs",
+    "gen-test-intake": "node src/gen-test-intake.mjs",
+    "test-ingest": "npm run gen-test-intake && node src/ingest.mjs --session intake/_test-session-violin/session.json --manifest-out out/test-sound-manifest.json --identities-file out/test-sonic-identities.json && node src/ingest.mjs --session intake/_test-session-mandolin/session.json --manifest-out out/test-sound-manifest.json --identities-file out/test-sonic-identities.json && node src/ingest.mjs --session intake/_test-session-stereo/session.json --manifest-out out/test-sound-manifest.json --identities-file out/test-sonic-identities.json",
+    "verify-stereo": "node src/verify-stereo.mjs",
+    "all": "npm run test-ingest && npm run verify-stereo"
+  }
+}

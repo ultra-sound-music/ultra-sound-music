@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ultrasoundmusic.xyz/schema/intake-session.json",
+  "title": "IntakeSession",
+  "type": "object",
+  "required": [
+    "sonicIdentityId",
+    "sessionId",
+    "date",
+    "bpm",
+    "tempoRange",
+    "keyCenter",
+    "meter",
+    "credit",
+    "rights",
+    "hero",
+    "excerpt",
+    "slices"
+  ],
+  "properties": {
+    "sonicIdentityId": { "type": "string" },
+    "sessionId": { "type": "string" },
+    "date": { "type": "string" },
+    "location": { "type": "string" },
+    "notes": { "type": "string" },
+    "bpm": { "type": "number", "exclusiveMinimum": 0 },
+    "tempoRange": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "keyCenter": { "type": "string" },
+    "meter": { "type": "string" },
+    "credit": { "type": "string" },
+    "rights": { "type": "string" },
+    "id": { "type": "string" },
+    "hero": {
+      "type": "object",
+      "required": ["file", "bars", "tags"],
+      "properties": {
+        "file": { "type": "string" },
+        "bars": { "type": "integer", "minimum": 1 },
+        "loopPoints": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "excerpt": {
+      "type": "object",
+      "required": ["file"],
+      "properties": {
+        "file": { "type": "string" }
+      }
+    },
+    "slices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "kind", "bars", "tags"],
+        "properties": {
+          "file": { "type": "string" },
+          "kind": { "enum": ["slice", "phrase", "loop"] },
+          "bars": { "type": "integer", "minimum": 1 },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "componentId": { "type": "string" },
+          "bpm": { "type": "number", "exclusiveMinimum": 0 },
+          "tempoRange": {
+            "type": "array",
+            "items": { "type": "number" },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "keyCenter": { "type": "string" },
+          "meter": { "type": "string" }
+        }
+      }
+    }
+  }
+}

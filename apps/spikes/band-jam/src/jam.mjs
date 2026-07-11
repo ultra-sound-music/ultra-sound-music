@@ -83,6 +83,25 @@ function panGains(pan) {
   return [Math.cos(a), Math.sin(a)];
 }
 
+// Each recipe track is one mono "voice" panned into the stereo field by the
+// resolver's seed-driven pan (see resolver.mjs). Real recordings may arrive
+// stereo (the recording brief doesn't require mono); downmix to mono here so
+// every source — however many channels it was captured with — still goes
+// through the exact same panning model. This only affects the render-time
+// mix: the source file on disk (and its sourceHash/canonicalUri) always keeps
+// its original channel count untouched.
+function downmixToMono(channels) {
+  if (channels.length === 1) return channels[0];
+  const n = channels[0].length;
+  const out = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    let sum = 0;
+    for (let c = 0; c < channels.length; c++) sum += channels[c][i];
+    out[i] = sum / channels.length;
+  }
+  return out;
+}
+
 export function renderJam({ recipe, manifest, assetBase }) {
   const sr = SAMPLE_RATE;
   const samplesPerBeat = Math.round((sr * 60) / recipe.tempo);
@@ -119,7 +138,12 @@ export function renderJam({ recipe, manifest, assetBase }) {
     const wavPath = resolve(assetBase, sound.playbackUri);
     if (!existsSync(wavPath)) throw new Error(`missing audio for ${sound.id}: ${wavPath}`);
     const { channels } = readWav(wavPath);
-    const loop = channels[0]; // placeholders are mono
+    if (channels.length > 1) {
+      log.push(
+        `  note: ${sound.id} source is ${channels.length}-channel; downmixed to mono for the ensemble mix`
+      );
+    }
+    const loop = downmixToMono(channels);
     const [gL, gR] = panGains(track.pan);
     const g = track.gain;
     // Tile the loop across the whole timeline (the shared clock).

@@ -13,6 +13,11 @@ product risk: can signature-sound instrument loops play in sync on a shared cloc
 deterministic, shareable jam artifact — driven entirely by manifests, so real recordings replace
 the placeholders with **zero code change**.
 
+**`manifests/sound-manifest.json`/`sonic-identities.json` now have an ingest-tool producer**:
+`../asset-ingest/` (plan 04 item 0) turns raw recording sessions into validated entries and
+upserts them directly into these two files. That's a deliberate cross-spike coupling — ingestion
+is upstream of this render engine — not an accident; see `../asset-ingest/README.md`.
+
 Dependency-free: pure Node (no Tone.js, no Web Audio, no browser). Audio is synthesized and mixed by
 writing PCM directly, then encoded to MP3 with the system `ffmpeg`. A sample-indexed clock makes the
 render **bit-identical run to run**.
@@ -195,11 +200,24 @@ or stretch/shift tooling, neither of which exists). The D3-gated listening pass 
 recordings and a fuller pattern-selection mechanism — this resolver makes the mechanism real and
 provably trait-driven, but doesn't by itself resolve the aesthetic risk.
 
+## Mono/stereo (2026-07-09)
+
+The recording brief doesn't require mono, so real takes may arrive stereo. `renderJam` downmixes
+any stereo source to mono `(L+R)/2` at render time, before applying the resolver's seed-driven pan
+— every Artist is still one mono "voice" positioned in the stereo field, regardless of how many
+channels the source recording had. This only affects the render-time mix: the source file on disk
+(and its `sourceHash`/`canonicalUri`) always keeps its original channel count untouched, so
+preserving full stereo width through the whole mix later (if ever wanted) needs no re-ingestion —
+just a change to this downmix step and to what `pan` means for an already-stereo source.
+Regression-tested in `../asset-ingest/src/verify-stereo.mjs` (a phase-inverted stereo fixture that
+must render exact silence if the downmix is correct).
+
 ## Honest limitations (placeholder-stage, by design)
 
 - The instruments are **synthesized stand-ins**, not real violin/mandolin/bassoon. They prove sync,
   structure, and reproducibility — not the aesthetic (that is risk 2, for human ears).
-- Placeholder loops are mono, one 4-bar loop each at 90 BPM in Dm.
+- Placeholder loops are mono, one 4-bar loop each at 90 BPM in Dm (real recordings may be stereo —
+  see "Mono/stereo" above).
 - No time-stretch: if a recipe `tempo` differs from a sound's `bpm`, the loop tiles at native length
   (a warning prints). Real recordings should be recorded at the drop tempo, or a stretch step added.
 - Patterns live in `synth.mjs` for the placeholders; the recipe's `patternId` is carried as
